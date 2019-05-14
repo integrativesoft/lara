@@ -99,4 +99,4 @@ Whenever the browser triggers an event (e.g. click on a button), it sends to the
 
 Razor Components is its own 'Razor' language that calls into C#, and your code will look like a more C-Sharpish version of PHP. This may be an attractive option if you come from a PHP background.
 
-Clara's approach is to let you develop in C# by providing you with methods to manipulate the DOM tree. This way you can structure your code and classes using object-oriented design patterns and architect your software with all the resources available in C#.
+Clara's approach is to let you develop in C# by providing you with methods to manipulate the DOM tree. This way you can structure your code and classes using object-oriented design patterns.
