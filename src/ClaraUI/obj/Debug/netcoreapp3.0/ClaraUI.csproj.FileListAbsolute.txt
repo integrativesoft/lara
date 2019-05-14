@@ -1,0 +1,3 @@
+C:\Users\Pablo\OneDrive\2019\Integrative\studio\ClaraUI\obj\Debug\netcoreapp3.0\ClaraUI.csproj.CoreCompileInputs.cache
+C:\Users\Pablo\OneDrive\2019\Integrative\studio\ClaraUI\obj\Debug\netcoreapp3.0\ClaraUI.AssemblyInfoInputs.cache
+C:\Users\Pablo\OneDrive\2019\Integrative\studio\ClaraUI\obj\Debug\netcoreapp3.0\ClaraUI.AssemblyInfo.cs

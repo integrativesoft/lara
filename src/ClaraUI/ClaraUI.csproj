@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+    <RootNamespace>Integrative.Clara</RootNamespace>
+    <AssemblyName>Integrative.Clara</AssemblyName>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <Version>0.4.0</Version>
+    <Authors>Pablo Carbonell</Authors>
+    <Company>Integrative Software LLC</Company>
+    <Product>Clara UI</Product>
+    <Description>Clara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.</Description>
+    <Copyright>Copyright (c) Integrative Software LLC</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ClaraUI.js" />
+    <None Remove="Client\ClaraUI.ts" />
+    <None Remove="Client\ContentInterfaces.ts" />
+    <None Remove="Client\DeltaInterfaces.ts" />
+    <None Remove="Client\InputCollector.ts" />
+    <None Remove="Client\Worker.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ClaraUI.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="Client\ClaraUI.ts">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </TypeScriptCompile>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile>ClaraUI.js</TypeScriptOutFile>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="rem copy $(ProjectDir)ClaraUI.js $(TargetDir)\*.* /y" />
+  </Target>
+
+</Project>

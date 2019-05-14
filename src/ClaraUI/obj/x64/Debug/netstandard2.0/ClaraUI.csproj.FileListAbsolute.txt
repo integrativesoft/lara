@@ -1,0 +1,9 @@
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\ClaraUI.csprojAssemblyReference.cache
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\ClaraUI.csproj.CoreCompileInputs.cache
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\ClaraUI.AssemblyInfoInputs.cache
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\ClaraUI.AssemblyInfo.cs
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netstandard2.0\Integrative.Clara.deps.json
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netstandard2.0\Integrative.Clara.dll
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netstandard2.0\Integrative.Clara.pdb
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\Integrative.Clara.dll
+C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netstandard2.0\Integrative.Clara.pdb

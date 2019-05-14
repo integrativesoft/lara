@@ -1,0 +1,24 @@
+﻿extensions: designer.cs generated.cs
+extensions: .cs .cpp .h .js .ts
+/*
+Copyright (c) %CurrentYear% Integrative Software LLC
+Created: %CreationMonth%/%CreationYear%
+Author: Pablo Carbonell
+*/
+
+extensions: .aspx .ascx
+<%-- 
+Copyright (c) %CurrentYear% Integrative Software LLC
+Created: %CreationMonth%/%CreationYear%
+Author: Pablo Carbonell
+--%>
+extensions: .vb
+'Copyright (c) %CurrentYear% Integrative Software LLC
+'Created: %CreationMonth%/%CreationYear%
+'Author: Pablo Carbonell
+extensions:  .xml .config .xsd
+<!--
+Copyright (c) %CurrentYear% Integrative Sofware LLC
+Created: %CreationMonth%/%CreationYear%
+Author: Pablo Carbonell
+-->
