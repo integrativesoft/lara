@@ -1,9 +1,0 @@
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netcoreapp2.2\Integrative.Clara.deps.json
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netcoreapp2.2\Integrative.Clara.dll
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\bin\x64\Debug\netcoreapp2.2\Integrative.Clara.pdb
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\ClaraUI.csprojAssemblyReference.cache
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\ClaraUI.csproj.CoreCompileInputs.cache
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\ClaraUI.AssemblyInfoInputs.cache
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\ClaraUI.AssemblyInfo.cs
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\Integrative.Clara.dll
-C:\Users\Pablo\OneDrive\2019\ClaraUI\ClaraUI\obj\x64\Debug\netcoreapp2.2\Integrative.Clara.pdb
