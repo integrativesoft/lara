@@ -88,9 +88,8 @@ app.UseMiddleware<ClaraMiddleware>()
 
 Here you need to choose a tool to load your locally-hosted website inside a desktop window. Some options available:
 - Creating an electron app using [electron-cgi](https://github.com/ruidfigueiredo/electron-cgi) (recommended). This seems to be the most resilient way to run a web desktop app. It comes at the cost of having to distribute electron with nodejs.
-- Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux.
-- Creating your own desktop window using [GeckoFX](https://www.nuget.org/profiles/geckofx). .NET Core does not seem to be supported.
-
+- Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Some platform-specific troubleshooting is required. Their Windows version based on CefSharp works very well.
+- Creating your own desktop window using [GeckoFX](https://www.nuget.org/profiles/geckofx). .NET Core does not seem to be supported, and html5test.com scores lower than using Gecko on Firefox.
 
 ## How does Clara work?
 
