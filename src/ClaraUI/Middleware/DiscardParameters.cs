@@ -17,6 +17,11 @@ namespace Integrative.Clara.Middleware
         public static bool TryParse(HttpContext context, out DiscardParameters parameters)
         {
             var query = context.Request.Query;
+            return TryParse(query, out parameters);
+        }
+
+        public static bool TryParse(IQueryCollection query, out DiscardParameters parameters)
+        {
             if (MiddlewareCommon.TryGetParameter(query, "doc", out var documentText)
                 && Guid.TryParseExact(documentText, GlobalConstants.GuidFormat, out var documentId))
             {

@@ -70,8 +70,6 @@ namespace Integrative.Clara.DOM
 
         internal void OpenEventQueue() => QueueOpen = true;
 
-        internal void CloseEventQueue() => QueueOpen = false;
-
         internal void Enqueue(BaseDelta delta)
         {
             _queue.Enqueue(delta);

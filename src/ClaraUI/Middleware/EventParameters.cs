@@ -9,21 +9,22 @@ using Integrative.Clara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
 namespace Integrative.Clara.Middleware
 {
-    sealed class EventParameters
+    class EventParameters
     {
         public Guid DocumentId { get; set; }
         public string ElementId { get; set; }
         public string EventName { get; set; }
         public ClientEventMessage Message { get; set; }
 
-        public static bool TryParse(HttpContext http, out EventParameters parameters)
+        public static bool TryParse(IQueryCollection query, out EventParameters parameters)
         {
-            var query = http.Request.Query;
             if (MiddlewareCommon.TryGetParameter(query, "doc", out var documentText)
                 && MiddlewareCommon.TryGetParameter(query, "el", out var elementId)
                 && MiddlewareCommon.TryGetParameter(query, "ev", out var eventName)
@@ -50,7 +51,7 @@ namespace Integrative.Clara.Middleware
             Message = ClaraTools.Deserialize<ClientEventMessage>(body);
         }
 
-        private async Task<string> ReadBody(HttpContext http)
+        internal static async Task<string> ReadBody(HttpContext http)
         {
             if (http.Request.Body == null)
             {

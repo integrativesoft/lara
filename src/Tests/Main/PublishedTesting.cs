@@ -14,11 +14,11 @@ namespace Integrative.Clara.Tests.Main
         [Fact]
         public void UnpublishRemoves()
         {
-            using (var published = new Published())
+            using (var published = ClaraUI.GetPublished())
             {
                 published.Publish("/", new StaticContent(new byte[0]));
                 published.Publish("/lala", new StaticContent(new byte[0]));
-                published.UnPublish("/");
+                ClaraUI.UnPublish("/");
                 Assert.True(published.TryGetNode("/lala", out _));
                 Assert.False(published.TryGetNode("/", out _));
             }

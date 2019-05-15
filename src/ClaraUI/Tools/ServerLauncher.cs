@@ -35,17 +35,22 @@ namespace Integrative.Clara.Tools
                 .UseStartup<BrowserAppStartup>()
                 .Configure(app =>
                 {
-                    if (options.AllowLocalhostOnly)
-                    {
-                        app.UseMiddleware<LocalhostFilter>();
-                    }
-                    app.UseMiddleware<ClaraMiddleware>();
-                    if (options.ShowNotFoundPage)
-                    {
-                        app.UseMiddleware<NotFoundMiddleware>();
-                    }
+                    ConfigureApp(app, options);
                 })
                 .Build();
+        }
+
+        internal static void ConfigureApp(IApplicationBuilder app, ServerOptions options)
+        {
+            if (options.AllowLocalhostOnly)
+            {
+                app.UseMiddleware<LocalhostFilter>();
+            }
+            app.UseMiddleware<ClaraMiddleware>();
+            if (options.ShowNotFoundPage)
+            {
+                app.UseMiddleware<NotFoundMiddleware>();
+            }
         }
 
         public static void LaunchBrowser(string address)

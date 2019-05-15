@@ -66,5 +66,11 @@ namespace Integrative.Clara.Main
             => ServerLauncher.GetFirstUrl(host);
 
         #endregion
+
+        #region Methods to help testing
+
+        internal static Published GetPublished() => _published;
+
+        #endregion
     }
 }

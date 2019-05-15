@@ -12,16 +12,16 @@ namespace Integrative.Clara.DOM
     {
         public override NodeType NodeType => NodeType.Text;
 
-        string _text;
+        string _data;
 
         public string Data
         {
-            get => _text;
+            get => _data;
             set
             {
-                if (_text != value)
+                if (_data != value)
                 {
-                    _text = value;
+                    _data = value;
                     TextModifiedDelta.Enqueue(this);
                 }
             }
@@ -29,6 +29,11 @@ namespace Integrative.Clara.DOM
 
         public TextNode() : base(null)
         {
+        }
+
+        public TextNode(string data): base(null)
+        {
+            _data = data;
         }
 
         internal TextNode(Document document) : base(document)
@@ -39,7 +44,7 @@ namespace Integrative.Clara.DOM
         {
             return new ContentTextNode
             {
-                Data = _text,
+                Data = _data,
             };
         }
     }
