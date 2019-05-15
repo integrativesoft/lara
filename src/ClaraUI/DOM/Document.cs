@@ -29,6 +29,8 @@ namespace Integrative.Clara.DOM
 
         internal DateTime LastUTC { get; private set; }
 
+        internal Queue<BaseDelta> GetQueue() => _queue;
+
         internal Document(IPage page, Guid virtualId)
         {
             VirtualId = virtualId;
@@ -36,8 +38,14 @@ namespace Integrative.Clara.DOM
             _map = new DocumentIdMap();
             _queue = new Queue<BaseDelta>();
             Semaphore = new SemaphoreSlim(1);
-            Head = new Element(this, "head");
-            Body = new Element(this, "body");
+            Head = new Element("head")
+            {
+                Document = this
+            };
+            Body = new Element("body")
+            {
+                Document = this
+            };
             UpdateTimestamp();
         }
 

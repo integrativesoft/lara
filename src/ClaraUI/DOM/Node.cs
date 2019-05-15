@@ -17,34 +17,22 @@ namespace Integrative.Clara.DOM
 
     public abstract class Node
     {
-        private Document _document;
-
-        public Document Document
+        protected Node()
         {
-            get => _document;
-            set
-            {
-                SetDocument(value);
-            }
-        }
-
-        protected virtual void SetDocument(Document newDocument)
-        {
-            _document = newDocument;
         }
 
         public Element ParentElement { get; internal set; }
+        public Document Document { get; internal set; }
 
         public abstract NodeType NodeType { get; }
 
-        protected Node(Document document)
-        {
-            _document = document;
-        }
-
         internal abstract ContentNode GetContentNode();
 
-        internal virtual bool QueueOpen =>
-            _document != null && _document.QueueOpen;
+        internal bool QueueOpen =>
+            Document != null && Document.QueueOpen;
+
+        internal virtual void UpdateBranchDocument(Document document)
+        {
+        }
     }
 }

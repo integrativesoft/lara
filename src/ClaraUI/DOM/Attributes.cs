@@ -31,7 +31,7 @@ namespace Integrative.Clara.DOM
         {
             _values.Remove(nameLower);
             _values.Add(nameLower, value);
-            if (nameLower == "value" && _element.QueueOpen)
+            if (nameLower == "value")
             {
                 SetValueDelta.Enqueue(_element, value);
             }
@@ -63,11 +63,11 @@ namespace Integrative.Clara.DOM
         {
             if (value)
             {
-                _values.Remove(nameLower);
+                _values.Add(nameLower, null);
             }
             else
             {
-                _values.Add(nameLower, null);
+                _values.Remove(nameLower);
             }
         }
 

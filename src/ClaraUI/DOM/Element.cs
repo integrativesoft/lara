@@ -20,14 +20,15 @@ namespace Integrative.Clara.DOM
         private readonly Dictionary<string, Func<IPageContext, Task>> _events;
 
         private string _id;
-        public string TagName { get; }        
+        public string TagName { get; }
 
-        public Element(string tagName) : this(null, tagName)
+        public Element(string tagName, string id) : this(tagName)
         {
+            Id = id;
         }
 
-        internal Element(Document document, string tagName)
-            : base(document)
+        public Element(string tagName)
+            : base()
         {
             _attributes = new Attributes(this);
             _children = new List<Node>();
@@ -36,6 +37,8 @@ namespace Integrative.Clara.DOM
         }
 
         public override NodeType NodeType => NodeType.Element;
+
+        public bool HasEvents => _events.Count > 0;
 
         #region Attributes
 
@@ -221,105 +224,57 @@ namespace Integrative.Clara.DOM
             }
         }
 
+        public bool ContainsChild(Node node)
+        {
+            return _children.Contains(node);
+        }
+
         #endregion
 
         #region DOM operations
 
+        internal void OnChildRemoved(Node child)
+        {
+            _children.Remove(child);
+        }
+
+        internal void OnChildAppend(Node child)
+        {
+            _children.Add(child);
+        }
+
+        internal void OnChildInsert(int index, Node child)
+        {
+            _children.Insert(index, child);
+        }
+
         public void AppendChild(Node node)
         {
-            PreventCycles(node);
-            node.ParentElement?.RemoveChild(node);
-            _children.Add(node);
-            node.ParentElement = this;
-            node.Document = Document;
-            EnsureIdChildrenWithEvents();
-            NodeAddedDelta.Enqueue(node);
+            var append = new DomSurgeon(this, node);
+            append.Append();
         }
 
         public void InsertChildBefore(Node before, Node node)
         {
-            InsertChildRelative(before, 0, node);
+            var append = new DomSurgeon(this, node);
+            append.InsertChildBefore(before);
         }
 
         public void InsertChildAfter(Node after, Node node)
         {
-            InsertChildRelative(after, 1, node);
-        }
-
-        private void InsertChildRelative(Node reference, int offset, Node node)
-        {
-            PreventCycles(node);
-            node.ParentElement?.RemoveChild(node);
-            int index = GetChildPosition(reference);
-            VerifyNodeFound(index);
-            ExecuteInsertChild(index + offset, node);
-        }
-
-        public void InsertChildAt(int index, Node node)
-        {
-            PreventCycles(node);
-            node.ParentElement?.RemoveChild(node);
-            ExecuteInsertChild(index, node);
-        }
-
-        private void ExecuteInsertChild(int index, Node node)
-        {
-            _children.Insert(index, node);
-            node.ParentElement = this;
-            node.Document = Document;
-            EnsureIdChildrenWithEvents();
-            NodeInsertedDelta.Enqueue(node, index);
-        }
-
-        private void PreventCycles(Node child)
-        {
-            if (child is Element element && DescendsFrom(element))
-            {
-                throw new InvalidOperationException("Cannot add an element inside itself.");
-            }
-        }
-
-        internal static void VerifyNodeFound(int index)
-        {
-            if (index == -1)
-            {
-                throw new InvalidOperationException("Node not found within specified parent.");
-            }
+            var append = new DomSurgeon(this, node);
+            append.InsertChildAfter(after);
         }
 
         public void RemoveChild(Node child)
         {
-            int index = GetChildPosition(child);
-            if (index > -1)
-            {
-                _children.RemoveAt(index);
-                child.ParentElement = null;
-                child.Document = null;
-                NodeRemovedDelta.Enqueue(this, index);
-            }
-            else
-            {
-                throw new InvalidOperationException("The specified node isn't a child of the specified parent.");
-            }
+            var remover = new DomSurgeon(this, child);
+            remover.Remove();
         }
 
         public void Remove()
         {
             ParentElement?.RemoveChild(this);
-        }
-
-        protected override void SetDocument(Document newDocument)
-        {
-            if (newDocument != Document)
-            {
-                Document?.OnElementRemoved(this);
-                newDocument?.OnElementAdded(this);
-                foreach (var child in _children)
-                {
-                    child.Document = newDocument;
-                }
-            }
-            base.SetDocument(newDocument);
         }
 
         internal void NotifyValue(string value)
@@ -403,21 +358,6 @@ namespace Integrative.Clara.DOM
         private static string GetEventAttribute(string eventName)
         {
             return "on" + eventName;
-        }
-
-        private void EnsureIdChildrenWithEvents()
-        {
-            if (_events.Count > 0 && string.IsNullOrEmpty(_id))
-            {
-                EnsureElementId();
-            }
-            foreach (var child in _children)
-            {
-                if (child is Element element)
-                {
-                    element.EnsureElementId();
-                }
-            }
         }
 
         #endregion

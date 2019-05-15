@@ -27,17 +27,13 @@ namespace Integrative.Clara.DOM
             }
         }
 
-        public TextNode() : base(null)
+        public TextNode()
         {
         }
 
-        public TextNode(string data): base(null)
+        public TextNode(string data)
         {
             _data = data;
-        }
-
-        internal TextNode(Document document) : base(document)
-        {
         }
 
         internal override ContentNode GetContentNode()
