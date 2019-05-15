@@ -16,7 +16,7 @@ namespace Integrative.Clara.Main
 {
     public class StaticContent : IPublishedItem
     {
-        const float RequiredCompressionFactor = 0.95f;
+        const float RequiredCompressionFactor = 0.9f;
 
         public byte[] Bytes { get; }
         public string ContentType { get; }
@@ -56,7 +56,7 @@ namespace Integrative.Clara.Main
 
         public async Task Run(HttpContext http)
         {
-            if (IsMatchETag(http))
+            if (IsMatchETag(http.Request.Headers))
             {
                 SendMatchStatus(http);
             }
@@ -66,9 +66,9 @@ namespace Integrative.Clara.Main
             }
         }
 
-        private bool IsMatchETag(HttpContext http)
+        private bool IsMatchETag(IHeaderDictionary headers)
         {
-            if (http.Request.Headers.TryGetValue("If-None-Match", out var values))
+            if (headers.TryGetValue("If-None-Match", out var values))
             {
                 string eTagClient = values[values.Count - 1];
                 return ETag == eTagClient;
