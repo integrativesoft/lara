@@ -13,7 +13,7 @@ Clara can be used to either develop websites or desktop apps with an HTML5 front
 ## Sample application
 
 To create a web page:
-- Create a class that derives 'BasePage' and implements the 'OnGet' method
+- Create a class that implements the interface 'IPage'
 - Call ClaraUI.Publish(...) to make your page available
 
 Source code example:
@@ -52,11 +52,11 @@ namespace SampleProject
         }
     }
 
-    class MyPage : BasePage
+    class MyPage : IPage
     {
         int counter = 0;
 
-        public override Task OnGet(IPageContext context)
+        public Task OnGet(IPageContext context)
         {
             var button = new Element("button");
             var text = new TextNode { Data = "Click me" };
