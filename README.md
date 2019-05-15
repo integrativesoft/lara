@@ -95,8 +95,3 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
-## How is Clara different from Razor Components (aka Server-side Blazor)?
-
-Razor Components is its own 'Razor' language that calls into C#, and your code will look like a more C-Sharpish version of PHP. This may be an attractive option if you come from a PHP background.
-
-Clara's approach is to let you develop in C# by providing you with methods to manipulate the DOM tree. This way you can structure your code and classes using object-oriented design patterns.
