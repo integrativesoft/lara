@@ -35,9 +35,14 @@ namespace Integrative.Clara.Main
             return _connections.TryGetValue(id, out connection);
         }
 
-        internal void Discard(Guid key)
+        public void Discard(Guid key)
         {
             _connections.Remove(key);
+        }
+
+        public void ClearAll()
+        {
+            _connections.Clear();
         }
 
         public static Guid CreateCryptographicallySecureGuid()

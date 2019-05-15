@@ -37,6 +37,12 @@ namespace Integrative.Clara.Main
             return _published.TryGetValue(path, out item);
         }
 
+        public void ClearAll()
+        {
+            _published.Clear();
+            Connections.ClearAll();
+        }
+
         bool _disposed;
 
         public void Dispose()

@@ -6,11 +6,11 @@ Author: Pablo Carbonell
 
 using Integrative.Clara.Main;
 using Integrative.Clara.Middleware;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using Moq;
 using System;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using Xunit;
 
@@ -18,6 +18,22 @@ namespace Integrative.Clara.Tests.Main
 {
     public class StaticContentTesting
     {
+        static readonly HttpClient _client;
+
+        static StaticContentTesting()
+        {
+            var handler = new HttpClientHandler
+            {
+                AutomaticDecompression = DecompressionMethods.Deflate
+            };
+            _client = new HttpClient(handler);
+        }            
+
+        public StaticContentTesting()
+        {
+            ClaraUI.Restart();
+        }
+
         [Fact]
         public void AreadyCompressedFileDoesNotGetCompressed()
         {
@@ -32,6 +48,11 @@ namespace Integrative.Clara.Tests.Main
         private byte[] LoadSampleJPEG()
         {
             return LoadAsset("pexels-photo-248673.jpeg");
+        }
+
+        private byte[] LoadCompressibleBMP()
+        {
+            return LoadAsset("Compressible.bmp");
         }
 
         private byte[] LoadAsset(string filename)
@@ -63,40 +84,89 @@ namespace Integrative.Clara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            // create mock
-            var responseHeaders = new Mock<HeaderDictionary>();
-            var body = new Mock<Stream>();
-            var response = new Mock<HttpResponse>();
-            response.Setup(x => x.Headers).Returns(responseHeaders.Object);
-            response.Setup(x => x.Body).Returns(body.Object);
-            var mock = new Mock<HttpContext>();
-            StringValues values;
-            mock.Setup(x => x.Request.Headers.TryGetValue("If-None-Match", out values)).Returns(false);
-            mock.Setup(x => x.Response).Returns(response.Object);
-
-            // execute
-            await content.Run(mock.Object);
-
-            // verify
-
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                ClaraUI.Publish("/", content);
+                var response = await _client.GetAsync(address);
+                var downloaded = await response.Content.ReadAsByteArrayAsync();
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                Assert.Equal(content.ETag, values.FirstOrDefault());
+                Assert.Equal(bytes, downloaded);
+            }
         }
 
         [Fact]
-        public void RequestWrongETagReceivesFile()
+        public async void RequestWrongETagReceivesFile()
         {
+            var bytes = LoadSampleJPEG();
+            var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                ClaraUI.Publish("/", content);
+
+                var request = new HttpRequestMessage
+                {
+                    Method = new HttpMethod("GET"),
+                    RequestUri = new Uri(address)
+                };
+                request.Headers.TryAddWithoutValidation("If-None-Match", "lalalalala");
+
+                var response = await _client.SendAsync(request);
+                var downloaded = await response.Content.ReadAsByteArrayAsync();
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                Assert.Equal(content.ETag, values.FirstOrDefault());
+                Assert.Equal(bytes, downloaded);
+            }
         }
 
         [Fact]
-        public void RequestCorrectETagReceivesNotModified()
+        public async void RequestCorrectETagReceivesNotModified()
         {
+            var bytes = LoadSampleJPEG();
+            var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                ClaraUI.Publish("/", content);
+
+                var request = new HttpRequestMessage
+                {
+                    Method = new HttpMethod("GET"),
+                    RequestUri = new Uri(address)
+                };
+                request.Headers.TryAddWithoutValidation("If-None-Match", content.ETag);
+
+                var response = await _client.SendAsync(request);
+                var downloaded = await response.Content.ReadAsByteArrayAsync();
+                Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
+                Assert.False(response.Headers.Contains("ETag"));
+                Assert.Empty(downloaded);
+            }
         }
 
         [Fact]
-        public void CompressibleFileIsSentCompressed()
+        public async void CompressibleFileIsSentCompressed()
         {
+            var bytes = LoadCompressibleBMP();
+            var content = new StaticContent(bytes, "image");
 
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                ClaraUI.Publish("/", content);
+                var response = await _client.GetAsync(address);
+                var downloaded = await response.Content.ReadAsByteArrayAsync();
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                Assert.Equal(content.ETag, values.FirstOrDefault());
+                Assert.Equal(bytes, downloaded);
+            }
         }
 
     }
