@@ -16,9 +16,10 @@ namespace Integrative.Clara.DOM
     public class Document
     {
         internal BasePage Page { get; }
+        internal Guid VirtualId { get; }
         private readonly DocumentIdMap _map;
         private readonly Queue<BaseDelta> _queue;
-        internal readonly SemaphoreSlim Semaphore;
+        internal SemaphoreSlim Semaphore { get; }
 
         int _serializer;
 
@@ -28,8 +29,9 @@ namespace Integrative.Clara.DOM
 
         internal DateTime LastUTC { get; private set; }
 
-        internal Document(BasePage page)
+        internal Document(BasePage page, Guid virtualId)
         {
+            VirtualId = virtualId;
             Page = page;
             _map = new DocumentIdMap();
             _queue = new Queue<BaseDelta>();
@@ -42,6 +44,11 @@ namespace Integrative.Clara.DOM
         public void UpdateTimestamp()
         {
             LastUTC = DateTime.UtcNow;
+        }
+
+        internal void ModifyLastUtcForTesting(DateTime value)
+        {
+            LastUTC = value;
         }
 
         internal string GenerateElementId()

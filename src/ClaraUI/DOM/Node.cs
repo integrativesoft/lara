@@ -17,7 +17,7 @@ namespace Integrative.Clara.DOM
 
     public abstract class Node
     {
-        Document _document;
+        private Document _document;
 
         public Document Document
         {

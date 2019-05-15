@@ -4,7 +4,10 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <Platforms>x64</Platforms>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
+    <ApplicationIcon />
+    <StartupObject />
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

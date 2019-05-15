@@ -14,13 +14,13 @@ namespace Integrative.Clara.Main
     sealed class Connection
     {
         public Guid Id { get; }
-        public IPAddress RemoteId { get; }
+        public IPAddress RemoteIP { get; }
         readonly Dictionary<Guid, Document> _documents;
 
         public Connection(Guid id, IPAddress remoteId)
         {
             Id = id;
-            RemoteId = remoteId;
+            RemoteIP = remoteId;
             _documents = new Dictionary<Guid, Document>();
         }
 
@@ -39,8 +39,8 @@ namespace Integrative.Clara.Main
 
         public Document CreateDocument(BasePage page)
         {
-            var document = new Document(page);
             var virtualId = Connections.CreateCryptographicallySecureGuid();
+            var document = new Document(page, virtualId);
             _documents.Add(virtualId, document);
             FillTemplate(document, virtualId);
             document.UpdateTimestamp();

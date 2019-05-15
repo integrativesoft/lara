@@ -10,7 +10,7 @@ namespace Integrative.Clara.DOM
 {
     static class HtmlReference
     {
-        readonly static HashSet<string> _selfClosingTags;
+        static readonly HashSet<string> _selfClosingTags;
 
         static HtmlReference()
         {

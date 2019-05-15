@@ -11,9 +11,9 @@ namespace Integrative.Clara.Middleware
 {
     abstract class BaseHandler
     {
-        readonly RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
-        public BaseHandler(RequestDelegate next)
+        protected BaseHandler(RequestDelegate next)
         {
             _next = next;
         }

@@ -6,7 +6,9 @@ Author: Pablo Carbonell
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Tests")]
 namespace Integrative.Clara.Tools
 {
     class BrowserAppStartup

@@ -14,7 +14,7 @@ namespace Integrative.Clara.Main
 {
     public static class ClaraUI
     {
-        readonly static Published _published;
+        static readonly Published _published;
 
         static ClaraUI()
         {

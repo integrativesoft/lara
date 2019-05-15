@@ -65,7 +65,7 @@ namespace Integrative.Clara.Middleware
             return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out string value)
                 && Guid.TryParseExact(value, GlobalConstants.GuidFormat, out var guid)
                 && ClaraUI.TryGetConnection(guid, out connection)
-                && connection.RemoteId.Equals(http.Connection.RemoteIpAddress);
+                && connection.RemoteIP.Equals(http.Connection.RemoteIpAddress);
         }
 
         public static bool TryGetParameter(IQueryCollection query, string name, out string value)

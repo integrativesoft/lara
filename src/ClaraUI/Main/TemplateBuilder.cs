@@ -12,7 +12,7 @@ namespace Integrative.Clara.Main
 {
     sealed class TemplateBuilder
     {
-        readonly static string _libraryUrl;
+        static readonly string _libraryUrl;
 
         static TemplateBuilder()
         {

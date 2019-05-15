@@ -15,11 +15,11 @@ namespace Integrative.Clara.DOM
 {
     public class Element : Node
     {
-        readonly Attributes _attributes;
-        readonly List<Node> _children;
-        readonly Dictionary<string, Func<IPageContext, Task>> _events;
+        private readonly Attributes _attributes;
+        private readonly List<Node> _children;
+        private readonly Dictionary<string, Func<IPageContext, Task>> _events;
 
-        string _id;
+        private string _id;
         public string TagName { get; }        
 
         public Element(string tagName) : this(null, tagName)
