@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Integrative.Clara.Main
 {
-    public abstract class BasePage
+    public interface IPage
     {
-        public abstract Task OnGet(IPageContext context);
+        Task OnGet(IPageContext context);
     }
 }

@@ -37,11 +37,11 @@ namespace SampleProject
         }
     }
 
-    class MyPage : BasePage
+    class MyPage : IPage
     {
         int counter = 0;
 
-        public override Task OnGet(IPageContext context)
+        public Task OnGet(IPageContext context)
         {
             var button = new Element("button");
             var text = new TextNode { Data = "Click me" };

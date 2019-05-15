@@ -15,9 +15,9 @@ namespace Integrative.Clara.Main
 {
     sealed class PagePublished : IPublishedItem
     {
-        readonly Func<BasePage> _factory;
+        readonly Func<IPage> _factory;
 
-        public PagePublished(Func<BasePage> factory)
+        public PagePublished(Func<IPage> factory)
         {
             _factory = factory;
         }
@@ -28,7 +28,7 @@ namespace Integrative.Clara.Main
             await RunGetHandler(http, page);
         }
 
-        private static async Task RunGetHandler(HttpContext http, BasePage page)
+        private static async Task RunGetHandler(HttpContext http, IPage page)
         {
             var connection = GetConnection(http);
             var document = connection.CreateDocument(page);

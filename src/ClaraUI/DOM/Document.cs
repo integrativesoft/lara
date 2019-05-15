@@ -15,7 +15,7 @@ namespace Integrative.Clara.DOM
 {
     public class Document
     {
-        internal BasePage Page { get; }
+        internal IPage Page { get; }
         internal Guid VirtualId { get; }
         private readonly DocumentIdMap _map;
         private readonly Queue<BaseDelta> _queue;
@@ -29,7 +29,7 @@ namespace Integrative.Clara.DOM
 
         internal DateTime LastUTC { get; private set; }
 
-        internal Document(BasePage page, Guid virtualId)
+        internal Document(IPage page, Guid virtualId)
         {
             VirtualId = virtualId;
             Page = page;

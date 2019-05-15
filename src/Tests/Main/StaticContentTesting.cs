@@ -31,7 +31,7 @@ namespace Integrative.Clara.Tests.Main
 
         public StaticContentTesting()
         {
-            ClaraUI.Restart();
+            ClaraUI.ClearAll();
         }
 
         [Fact]

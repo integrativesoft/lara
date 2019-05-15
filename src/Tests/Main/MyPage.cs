@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Integrative.Clara.Tests.Main
 {
-    class MyPage : BasePage, IDisposable
+    class MyPage : IPage, IDisposable
     {
         public bool Disposed { get; private set; }
 
@@ -19,7 +19,7 @@ namespace Integrative.Clara.Tests.Main
             Disposed = true;
         }
 
-        public override Task OnGet(IPageContext context)
+        public Task OnGet(IPageContext context)
         {
             throw new NotImplementedException();
         }

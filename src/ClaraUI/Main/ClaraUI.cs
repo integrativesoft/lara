@@ -21,14 +21,14 @@ namespace Integrative.Clara.Main
             _published = new Published();
         }
 
-        public static void Restart()
+        public static void ClearAll()
         {
             _published.ClearAll();
         }
 
         #region Publishing
 
-        public static void Publish(string path, Func<BasePage> pageFactory)
+        public static void Publish(string path, Func<IPage> pageFactory)
             => _published.Publish(path, new PagePublished(pageFactory));
 
         public static void Publish(string path, StaticContent content)

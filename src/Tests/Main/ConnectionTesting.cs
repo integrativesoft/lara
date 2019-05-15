@@ -5,9 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Clara.Main;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Clara.Tests.Main

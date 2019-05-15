@@ -37,7 +37,7 @@ namespace Integrative.Clara.Main
             }
         }
 
-        public Document CreateDocument(BasePage page)
+        public Document CreateDocument(IPage page)
         {
             var virtualId = Connections.CreateCryptographicallySecureGuid();
             var document = new Document(page, virtualId);
