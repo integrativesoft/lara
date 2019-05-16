@@ -6,10 +6,6 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
-using Integrative.Lara.Tests.Main;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
