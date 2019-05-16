@@ -4,13 +4,10 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;

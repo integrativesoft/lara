@@ -175,5 +175,29 @@ namespace Integrative.Lara.Tests.Main
                 return Task.CompletedTask;
             }
         }
+
+        [Fact]
+        public async void MainExampleWorks()
+        {
+            var page = new SampleProject.MyPage();
+            LaraUI.Publish("/", () => page);
+            using (var host = await LaraUI.StartServer())
+            {
+                string address = LaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var button = _driver.FindElement(By.TagName("button"));
+                string before = button.Text;
+
+                await WaitForEvent(() => button.Click());
+                string after1 = button.Text;
+
+                await WaitForEvent(() => button.Click());
+                string after2 = button.Text;
+
+                Assert.Equal("Click me", before);
+                Assert.Equal("Times clicked: 1", after1);
+                Assert.Equal("Times clicked: 2", after2);
+            }
+        }
     }
 }

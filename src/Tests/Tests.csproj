@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LaraUI\LaraUI.csproj" />
+    <ProjectReference Include="..\SampleProject\SampleProject.csproj" />
   </ItemGroup>
 
 </Project>

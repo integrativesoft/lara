@@ -296,5 +296,12 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(doc.Body.Id, step.Locator.StartingId);
             Assert.Equal(div.Id, step.NewId);
         }
+
+        [Fact]
+        public void FocusFailsOnGet()
+        {
+            var div = new Element("div");
+            Throws<InvalidOperationException>(() => div.Focus());
+        }
     }
 }

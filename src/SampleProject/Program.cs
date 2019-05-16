@@ -49,7 +49,7 @@ namespace SampleProject
             button.On("click", app =>
             {
                 counter++;
-                text.Data = $"Clicked {counter} times";
+                text.Data = $"Times clicked: {counter}";
                 return Task.CompletedTask;
             });
             context.Document.Body.AppendChild(button);
