@@ -1,26 +1,24 @@
-# Clara
+# Lara
 
-** UNDER DEVELOPMENT, DO NOT USE IN PRODUCTION **
-
-Clara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
+Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
 
 - Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS.
 - Web UI: Create HTML5 web applications with full control of the DOM tree.
 - Server-side rendering: The server keeps a virtual copy of the page and sends to the client the changes after each event.
 
-Clara can be used to develop either websites or desktop apps with an HTML5 frontend.
+Lara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
 ## Sample application
 
 To create a web page:
 - Create a class that implements the interface 'IPage'
-- Call ClaraUI.Publish(...) to make your page available
+- Call LaraUI.Publish(...) to make your page available
 
 Source code example:
 
 ```csharp
-using Integrative.Clara.DOM;
-using Integrative.Clara.Main;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Threading.Tasks;
@@ -34,17 +32,17 @@ namespace SampleProject
             Console.WriteLine("Starting...");
 
             // create home page
-            ClaraUI.Publish("/", () => new MyPage());
+            LaraUI.Publish("/", () => new MyPage());
 
             // start web server
-            var host = await ClaraUI.StartServer();
+            var host = await LaraUI.StartServer();
 
             // write address in console
-            string address = ClaraUI.GetFirstURL(host);
+            string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
 
             // launch browser tab
-            ClaraUI.LaunchBrowser(address);
+            LaraUI.LaunchBrowser(address);
 
             // wait for termination
             Console.WriteLine("Press Ctrl+C to terminate");
@@ -74,14 +72,14 @@ namespace SampleProject
 }
 ```
 
-## Integrating Clara into your existing web server
+## Integrating Lara into your existing web server
 
-The example above calls into Clara's StartServer() method to create a default web host.
+The example above calls into Lara's StartServer() method to create a default web host.
 
-Alternatively, you can and add Clara as one more service with the following line:
+Alternatively, you can and add Lara as one more service with the following line:
 
 ```csharp
-app.UseMiddleware<ClaraMiddleware>()
+app.UseMiddleware<LaraMiddleware>()
 ```
 
 ## Developing a desktop application
@@ -91,7 +89,7 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 - Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Some platform-specific troubleshooting is required. Their Windows version based on CefSharp works very well.
 - Creating your own desktop window using [GeckoFX](https://www.nuget.org/profiles/geckofx). .NET Core does not seem to be supported, and html5test.com scores lower than using Gecko on Firefox.
 
-## How does Clara work?
+## How does Lara work?
 
 Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
