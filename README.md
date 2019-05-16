@@ -79,7 +79,7 @@ The example above calls into Lara's StartServer() method to create a default web
 Alternatively, you can and add Lara as one more service with the following line:
 
 ```csharp
-app.UseMiddleware<LaraMiddleware>()
+app.UseLara(options);
 ```
 
 ## Developing a desktop application
