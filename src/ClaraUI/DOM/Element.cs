@@ -40,6 +40,18 @@ namespace Integrative.Clara.DOM
 
         public bool HasEvents => _events.Count > 0;
 
+        public override string ToString()
+        {
+            if (string.IsNullOrEmpty(_id))
+            {
+                return TagName;
+            }
+            else
+            {
+                return TagName + $" id='{_id}'";
+            }
+        }
+
         #region Attributes
 
         public string Id
@@ -47,8 +59,11 @@ namespace Integrative.Clara.DOM
             get => _id;
             set
             {
+                if (value == _id)
+                {
+                    return;
+                }
                 Document?.NotifyChangeId(this, _id, value);
-                _id = value;
                 if (value is null)
                 {
                     _attributes.RemoveAttributeLower("id");
@@ -57,6 +72,7 @@ namespace Integrative.Clara.DOM
                 {
                     _attributes.SetAttributeLower("id", value);
                 }
+                _id = value;
             }
         }
 
@@ -144,7 +160,7 @@ namespace Integrative.Clara.DOM
 
         public bool Hidden
         {
-            get => _attributes.HasAttributeLower("hiddden");
+            get => _attributes.HasAttributeLower("hidden");
             set { _attributes.SetFlagAttributeLower("hidden", value); }
         }
 
@@ -274,7 +290,11 @@ namespace Integrative.Clara.DOM
 
         public void Remove()
         {
-            ParentElement?.RemoveChild(this);
+            if (ParentElement == null)
+            {
+                throw new InvalidOperationException("Cannot remove from parent, the node has no parent element already");
+            }
+            ParentElement.RemoveChild(this);
         }
 
         internal void NotifyValue(string value)
@@ -358,6 +378,15 @@ namespace Integrative.Clara.DOM
         private static string GetEventAttribute(string eventName)
         {
             return "on" + eventName;
+        }
+
+        #endregion
+
+        #region Other methods
+
+        public void Focus()
+        {
+            FocusDelta.Enqueue(this);
         }
 
         #endregion

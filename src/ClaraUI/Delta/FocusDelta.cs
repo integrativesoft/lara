@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Clara.DOM;
 using System.Runtime.Serialization;
 
 namespace Integrative.Clara.Delta
@@ -16,6 +17,17 @@ namespace Integrative.Clara.Delta
 
         public FocusDelta() : base(DeltaType.Focus)
         {
-        }        
+        }
+
+        public static void Enqueue(Element element)
+        {
+            if (element.QueueOpen)
+            {
+                element.Document.Enqueue(new FocusDelta
+                {
+                    ElementId = element.EnsureElementId(),
+                });
+            }
+        }
     }
 }

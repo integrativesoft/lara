@@ -25,7 +25,7 @@ namespace Integrative.Clara.Delta
         {
         }
 
-        public static void Enqueue(Element element, string attribute)
+        public static void Enqueue(Element element, string attribute, string value)
         {
             if (element.QueueOpen)
             {
@@ -33,7 +33,7 @@ namespace Integrative.Clara.Delta
                 {
                     Attribute = attribute,
                     ElementId = element.EnsureElementId(),
-                    Value = element.GetAttribute(attribute)
+                    Value = value
                 });
             }
         }

@@ -35,9 +35,20 @@ namespace Integrative.Clara.DOM
             {
                 SetValueDelta.Enqueue(_element, value);
             }
+            else if (nameLower == "id")
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    AttributeRemovedDelta.Enqueue(_element, "id");
+                }
+                else
+                {
+                    SetIdDelta.Enqueue(_element, value);
+                }
+            }
             else
             {
-                AttributeEditedDelta.Enqueue(_element, nameLower);
+                AttributeEditedDelta.Enqueue(_element, nameLower, value);
             }
         }
 
@@ -73,8 +84,8 @@ namespace Integrative.Clara.DOM
 
         internal void RemoveAttributeLower(string nameLower)
         {
-            _values.Remove(nameLower);
             AttributeRemovedDelta.Enqueue(_element, nameLower);
+            _values.Remove(nameLower);
         }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()

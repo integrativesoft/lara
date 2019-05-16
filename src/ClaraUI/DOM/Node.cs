@@ -30,9 +30,5 @@ namespace Integrative.Clara.DOM
 
         internal bool QueueOpen =>
             Document != null && Document.QueueOpen;
-
-        internal virtual void UpdateBranchDocument(Document document)
-        {
-        }
     }
 }

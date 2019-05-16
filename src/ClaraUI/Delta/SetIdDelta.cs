@@ -22,7 +22,7 @@ namespace Integrative.Clara.Delta
         {
         }
 
-        public static void Enqueue(Element element)
+        public static void Enqueue(Element element, string newValue)
         {
             if (element.QueueOpen)
             {
@@ -30,7 +30,7 @@ namespace Integrative.Clara.Delta
                 element.Document.Enqueue(new SetIdDelta
                 {
                     Locator = locator,
-                    NewId = element.Id
+                    NewId = newValue
                 });
             }
         }

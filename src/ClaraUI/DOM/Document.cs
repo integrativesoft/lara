@@ -31,6 +31,10 @@ namespace Integrative.Clara.DOM
 
         internal Queue<BaseDelta> GetQueue() => _queue;
 
+        internal Document(IPage page) : this(page, Connections.CreateCryptographicallySecureGuid())
+        {
+        }
+
         internal Document(IPage page, Guid virtualId)
         {
             VirtualId = virtualId;

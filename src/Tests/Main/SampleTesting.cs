@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Clara.DOM;
 using Integrative.Clara.Main;
 using Integrative.Clara.Middleware;
 using OpenQA.Selenium;
@@ -28,9 +29,11 @@ namespace Integrative.Clara.Tests.Main
             ClaraUI.ClearAll();
         }
 
+        private int _counter = 0;
+
         private void PostEventHandler_EventComplete(object sender, EventArgs e)
         {
-            _tcs.SetResult(true);
+            _counter++;
         }
 
         public void Dispose()
@@ -50,13 +53,11 @@ namespace Integrative.Clara.Tests.Main
                 var button = _driver.FindElement(By.Id(ButtonCounterPage.ButtonId));
                 string before = button.Text;
 
-                button.Click();
-                await WaitForEvent();
+                await WaitForEvent(() => button.Click());
                 string after1 = button.Text;
                 string path = page.LastPath;
-
-                button.Click();
-                await WaitForEvent();
+                
+                await WaitForEvent(() => button.Click());
                 string after2 = button.Text;
 
                 Assert.Equal("/_event", path);
@@ -88,9 +89,53 @@ namespace Integrative.Clara.Tests.Main
             }
         }
 
-        private async Task WaitForEvent()
+        [Fact]
+        public async void FocusFocuses()
         {
-            await _tcs.Task;
+            ClaraUI.Publish("/", () => new TwoButtonPage());
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var b1 = _driver.FindElement(By.Id("b1"));
+                await WaitForEvent(() => b1.Click());
+
+                var b3 = _driver.FindElement(By.Id("b3"));
+                var sel = _driver.SwitchTo().ActiveElement();
+                Assert.True(b3.Equals(sel));
+            }
+        }
+
+        class TwoButtonPage : IPage
+        {
+            public Task OnGet(IPageContext context)
+            {
+                var b1 = new Element("button", "b1");
+                b1.AppendChild(new TextNode("one"));
+                var b2 = new Element("button", "b2");
+                b2.AppendChild(new TextNode("two"));
+                var b3 = new Element("button", "b3");
+                b3.AppendChild(new TextNode("three"));
+                context.Document.Body.AppendChild(b1);
+                context.Document.Body.AppendChild(b2);
+                context.Document.Body.AppendChild(b3);
+                b1.On("click", app =>
+                {
+                    b3.Focus();
+                    return Task.CompletedTask;
+                });
+                return Task.CompletedTask;
+            }
+        }
+
+        private async Task WaitForEvent(Action action)
+        {
+            _counter = 0;
+            action();
+            while (_counter == 0)
+            {
+                await Task.Delay(50);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Integrative.Clara.Tools
         {
             private readonly SemaphoreSlim _semaphore;
 
-            private bool _isDisposed;
+            private bool _disposed;
 
             public ReleaseWrapper(SemaphoreSlim semaphore)
             {
@@ -33,12 +33,11 @@ namespace Integrative.Clara.Tools
 
             public void Dispose()
             {
-                if (_isDisposed)
+                if (!_disposed)
                 {
-                    return;
+                    _disposed = true;
+                    _semaphore.Release();
                 }
-                _semaphore.Release();
-                _isDisposed = true;
             }
         }
     }

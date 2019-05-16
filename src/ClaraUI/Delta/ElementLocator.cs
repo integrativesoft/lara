@@ -25,17 +25,17 @@ namespace Integrative.Clara.Delta
             {
                 Steps = new List<int>()
             };
-            BuildIgnoringId(locator, element);
+            Build(locator, element);
             return locator;
         }
 
-        private static void BuildIgnoringId(ElementLocator locator, Element element)
+        /*private static void BuildIgnoringId(ElementLocator locator, Element element)
         {
             var parent = element.ParentElement;
             int index = parent.GetChildPosition(element);
             locator.Steps.Add(index);
             Build(locator, parent);
-        }
+        }*/
 
         private static void Build(ElementLocator locator, Element element)
         {
