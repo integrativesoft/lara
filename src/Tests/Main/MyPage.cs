@@ -4,11 +4,11 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.Main;
+using Integrative.Lara.Main;
 using System;
 using System.Threading.Tasks;
 
-namespace Integrative.Clara.Tests.Main
+namespace Integrative.Lara.Tests.Main
 {
     class MyPage : IPage, IDisposable
     {

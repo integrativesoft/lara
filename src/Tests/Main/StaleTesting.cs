@@ -4,12 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.Main;
+using Integrative.Lara.Main;
 using System;
 using System.Net;
 using Xunit;
 
-namespace Integrative.Clara.Tests.Main
+namespace Integrative.Lara.Tests.Main
 {
     public class StaleTesting
     {

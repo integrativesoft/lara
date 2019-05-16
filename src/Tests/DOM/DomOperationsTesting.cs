@@ -4,16 +4,16 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.Delta;
-using Integrative.Clara.DOM;
-using Integrative.Clara.Main;
-using Integrative.Clara.Tests.Main;
+using Integrative.Lara.Delta;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Main;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Integrative.Clara.Tests.DOM
+namespace Integrative.Lara.Tests.DOM
 {
     public class DomOperationsTesting
     {

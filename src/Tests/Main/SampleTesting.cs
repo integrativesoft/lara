@@ -4,9 +4,9 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.DOM;
-using Integrative.Clara.Main;
-using Integrative.Clara.Middleware;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Integrative.Clara.Tests.Main
+namespace Integrative.Lara.Tests.Main
 {
     public class SampleTesting : IDisposable
     {
@@ -24,7 +24,7 @@ namespace Integrative.Clara.Tests.Main
         {
             _driver = new FirefoxDriver(Environment.CurrentDirectory);
             PostEventHandler.EventComplete += PostEventHandler_EventComplete;
-            ClaraUI.ClearAll();
+            LaraUI.ClearAll();
         }
 
         private int _counter = 0;
@@ -43,10 +43,10 @@ namespace Integrative.Clara.Tests.Main
         public async void CounterButton()
         {
             var page = new ButtonCounterPage();
-            ClaraUI.Publish("/", () => page);
-            using (var host = await ClaraUI.StartServer())
+            LaraUI.Publish("/", () => page);
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
+                string address = LaraUI.GetFirstURL(host);
                 _driver.Navigate().GoToUrl(address);
                 var button = _driver.FindElement(By.Id(ButtonCounterPage.ButtonId));
                 string before = button.Text;
@@ -68,13 +68,13 @@ namespace Integrative.Clara.Tests.Main
         [Fact]
         public async void SecondPageReusesConnection()
         {
-            ClaraUI.Publish("/", () => new ButtonCounterPage());
-            using (var host = await ClaraUI.StartServer())
+            LaraUI.Publish("/", () => new ButtonCounterPage());
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
+                string address = LaraUI.GetFirstURL(host);
                 _driver.Navigate().GoToUrl(address);
 
-                var published = ClaraUI.GetPublished();
+                var published = LaraUI.GetPublished();
                 var pair1 = published.Connections.GetConnections().FirstOrDefault();
 
                 _driver.Navigate().GoToUrl(address);
@@ -90,10 +90,10 @@ namespace Integrative.Clara.Tests.Main
         [Fact]
         public async void FocusFocuses()
         {
-            ClaraUI.Publish("/", () => new TwoButtonPage());
-            using (var host = await ClaraUI.StartServer())
+            LaraUI.Publish("/", () => new TwoButtonPage());
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
+                string address = LaraUI.GetFirstURL(host);
                 _driver.Navigate().GoToUrl(address);
                 var b1 = _driver.FindElement(By.Id("b1"));
                 await WaitForEvent(() => b1.Click());
@@ -140,10 +140,10 @@ namespace Integrative.Clara.Tests.Main
         public async void EnterInputValue()
         {
             var page = new MySubmitPage();
-            ClaraUI.Publish("/", () => page);
-            using (var host = await ClaraUI.StartServer())
+            LaraUI.Publish("/", () => page);
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
+                string address = LaraUI.GetFirstURL(host);
                 _driver.Navigate().GoToUrl(address);
 
                 var input = _driver.FindElement(By.TagName("input"));

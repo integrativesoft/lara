@@ -4,8 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.DOM;
-using Integrative.Clara.Main;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Threading.Tasks;
@@ -19,17 +19,17 @@ namespace SampleProject
             Console.WriteLine("Starting...");
 
             // create home page
-            ClaraUI.Publish("/", () => new MyPage());
+            LaraUI.Publish("/", () => new MyPage());
 
             // start web server
-            var host = await ClaraUI.StartServer();
+            var host = await LaraUI.StartServer();
 
             // write address in console
-            string address = ClaraUI.GetFirstURL(host);
+            string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
 
             // launch browser tab
-            ClaraUI.LaunchBrowser(address);
+            LaraUI.LaunchBrowser(address);
 
             // wait for termination
             Console.WriteLine("Press Ctrl+C to terminate");

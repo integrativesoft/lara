@@ -4,8 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.Main;
-using Integrative.Clara.Middleware;
+using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Net.Http;
 using System.Reflection;
 using Xunit;
 
-namespace Integrative.Clara.Tests.Main
+namespace Integrative.Lara.Tests.Main
 {
     public class StaticContentTesting
     {
@@ -31,7 +31,7 @@ namespace Integrative.Clara.Tests.Main
 
         public StaticContentTesting()
         {
-            ClaraUI.ClearAll();
+            LaraUI.ClearAll();
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Integrative.Clara.Tests.Main
 
         private byte[] LoadAsset(string filename)
         {
-            return LoadResource($"Integrative.Clara.Tests.Assets.{filename}");
+            return LoadResource($"Integrative.Lara.Tests.Assets.{filename}");
         }
 
         private byte[] LoadResource(string filename)
@@ -84,10 +84,10 @@ namespace Integrative.Clara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await ClaraUI.StartServer())
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
-                ClaraUI.Publish("/", content);
+                string address = LaraUI.GetFirstURL(host);
+                LaraUI.Publish("/", content);
                 var response = await _client.GetAsync(address);
                 var downloaded = await response.Content.ReadAsByteArrayAsync();
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -103,10 +103,10 @@ namespace Integrative.Clara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await ClaraUI.StartServer())
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
-                ClaraUI.Publish("/", content);
+                string address = LaraUI.GetFirstURL(host);
+                LaraUI.Publish("/", content);
 
                 var request = new HttpRequestMessage
                 {
@@ -130,10 +130,10 @@ namespace Integrative.Clara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await ClaraUI.StartServer())
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
-                ClaraUI.Publish("/", content);
+                string address = LaraUI.GetFirstURL(host);
+                LaraUI.Publish("/", content);
 
                 var request = new HttpRequestMessage
                 {
@@ -156,10 +156,10 @@ namespace Integrative.Clara.Tests.Main
             var bytes = LoadCompressibleBMP();
             var content = new StaticContent(bytes, "image");
 
-            using (var host = await ClaraUI.StartServer())
+            using (var host = await LaraUI.StartServer())
             {
-                string address = ClaraUI.GetFirstURL(host);
-                ClaraUI.Publish("/", content);
+                string address = LaraUI.GetFirstURL(host);
+                LaraUI.Publish("/", content);
                 var response = await _client.GetAsync(address);
                 var downloaded = await response.Content.ReadAsByteArrayAsync();
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);

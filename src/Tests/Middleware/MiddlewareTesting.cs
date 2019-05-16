@@ -4,8 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.DOM;
-using Integrative.Clara.Middleware;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -15,7 +15,7 @@ using System.IO;
 using System.Net;
 using Xunit;
 
-namespace Integrative.Clara.Tests.Middleware
+namespace Integrative.Lara.Tests.Middleware
 {
     public class MiddlewareTesting
     {

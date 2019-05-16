@@ -4,11 +4,11 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.DOM;
-using Integrative.Clara.Main;
+using Integrative.Lara.DOM;
+using Integrative.Lara.Main;
 using System.Threading.Tasks;
 
-namespace Integrative.Clara.Tests.Main
+namespace Integrative.Lara.Tests.Main
 {
     class ButtonCounterPage : IPage
     {

@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>Integrative.Clara.Tests</RootNamespace>
+    <RootNamespace>Integrative.Lara.Tests</RootNamespace>
 
     <Platforms>x64</Platforms>
 
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClaraUI\ClaraUI.csproj" />
+    <ProjectReference Include="..\LaraUI\LaraUI.csproj" />
   </ItemGroup>
 
 </Project>

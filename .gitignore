@@ -223,5 +223,5 @@ project.lock.json
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
-/src/ClaraUI/ClaraUI.js
+/src/LaraUI/LaraUI.js
 /src/.axoCover/runs/run_2019-05-14_19-16-46/coverageReport.xml

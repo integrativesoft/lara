@@ -4,12 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Clara.Delta;
-using Integrative.Clara.DOM;
+using Integrative.Lara.Delta;
+using Integrative.Lara.DOM;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Integrative.Clara.Tests.DOM
+namespace Integrative.Lara.Tests.DOM
 {
     public class GlobalAttributesTesting
     {
