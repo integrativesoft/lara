@@ -19,12 +19,10 @@ namespace Integrative.Clara.Tests.Main
     public class SampleTesting : IDisposable
     {
         readonly IWebDriver _driver;
-        readonly TaskCompletionSource<bool> _tcs;
 
         public SampleTesting()
         {
             _driver = new FirefoxDriver(Environment.CurrentDirectory);
-            _tcs = new TaskCompletionSource<bool>();
             PostEventHandler.EventComplete += PostEventHandler_EventComplete;
             ClaraUI.ClearAll();
         }
@@ -135,6 +133,46 @@ namespace Integrative.Clara.Tests.Main
             while (_counter == 0)
             {
                 await Task.Delay(50);
+            }
+        }
+
+        [Fact]
+        public async void EnterInputValue()
+        {
+            var page = new MySubmitPage();
+            ClaraUI.Publish("/", () => page);
+            using (var host = await ClaraUI.StartServer())
+            {
+                string address = ClaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+
+                var input = _driver.FindElement(By.TagName("input"));
+                input.SendKeys("hello!");
+
+                var b1 = _driver.FindElement(By.TagName("button"));
+                await WaitForEvent(() => b1.Click());
+
+                Assert.Equal("hello!", page.Value);
+            }
+        }
+
+        class MySubmitPage : IPage
+        {
+            public string Value { get; private set; }
+
+            public Task OnGet(IPageContext context)
+            {
+                var submit = new Element("button");
+                submit.AppendChild(new TextNode("submit"));
+                var input = new Element("input");
+                context.Document.Body.AppendChild(input);
+                context.Document.Body.AppendChild(submit);
+                submit.On("click", app =>
+                {
+                    Value = input.GetAttribute("value");
+                    return Task.CompletedTask;
+                });
+                return Task.CompletedTask;
             }
         }
     }

@@ -37,14 +37,7 @@ namespace Integrative.Clara.DOM
             }
             else if (nameLower == "id")
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    AttributeRemovedDelta.Enqueue(_element, "id");
-                }
-                else
-                {
-                    SetIdDelta.Enqueue(_element, value);
-                }
+                SetIdDelta.Enqueue(_element, value);
             }
             else
             {

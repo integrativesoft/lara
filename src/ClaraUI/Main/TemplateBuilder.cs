@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using Integrative.Clara.DOM;
 using Integrative.Clara.Middleware;
-using System;
 
 namespace Integrative.Clara.Main
 {
@@ -20,15 +19,19 @@ namespace Integrative.Clara.Main
         }
 
         readonly Document _document;
-        readonly Guid _guid;
 
-        public TemplateBuilder(Document document, Guid guid)
+        private TemplateBuilder(Document document)
         {
             _document = document;
-            _guid = guid;
         }
 
-        public void Build()
+        public static void Build(Document document)
+        {
+            var builder = new TemplateBuilder(document);
+            builder.BuildInternal();
+        }
+
+        private void BuildInternal()
         {
             var head = _document.Head;
             var body = _document.Body;
@@ -53,7 +56,7 @@ namespace Integrative.Clara.Main
 
             // initialization script
             script = new Element("script");
-            string value = _guid.ToString(GlobalConstants.GuidFormat);
+            string value = _document.VirtualId.ToString(GlobalConstants.GuidFormat);
             string code = $"document.addEventListener('DOMContentLoaded', function() {{ ClaraUI.initialize('{value}'); }});";
             script.AppendChild(new TextNode { Data = code });
             head.AppendChild(script);

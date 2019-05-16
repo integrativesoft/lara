@@ -57,6 +57,38 @@ namespace Integrative.Clara.Tests.Delta
             Assert.Empty(queue);
         }
 
+        [Fact]
+        public void SetValueDeltaProperties()
+        {
+            var div = new Element("div", "mydiv");
+            var doc = CreateDocument();
+            doc.Body.AppendChild(div);
+            doc.OpenEventQueue();
+            div.SetAttribute("value", "x");
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as SetValueDelta;
+            Assert.NotNull(step);
+            Assert.Equal("mydiv", step.ElementId);
+            Assert.Equal("x", step.Value);
+        }
+
+        [Fact]
+        public void EditAttributeClearId()
+        {
+            var div = new Element("div", "mydiv");
+            var doc = CreateDocument();
+            doc.Body.AppendChild(div);
+            doc.OpenEventQueue();
+            div.SetAttribute("id", null);
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as AttributeRemovedDelta;
+            Assert.NotNull(step);
+            Assert.Equal("mydiv", step.ElementId);
+            Assert.Equal("id", step.Attribute);
+        }
+
         private static Document CreateDocument()
         {
             var page = new MyPage();

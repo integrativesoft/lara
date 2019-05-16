@@ -218,5 +218,83 @@ namespace Integrative.Clara.Tests.DOM
             Assert.True(doc2.TryGetElementById("mybutton", out var found));
             Assert.Same(button, found);
         }
+
+        [Fact]
+        public void RemoveNode()
+        {
+            var div = new Element("div", "mydiv");
+            var doc = CreateDocument();
+            doc.Body.AppendChild(new TextNode("hi"));
+            doc.Body.AppendChild(div);
+            doc.OpenEventQueue();
+            div.Remove();
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as NodeRemovedDelta;
+            Assert.NotNull(step);
+            Assert.Equal(doc.Body.Id, step.ParentId);
+            Assert.Equal(1, step.ChildIndex);
+        }
+
+        [Fact]
+        public void NodeAdded()
+        {
+            var div = new Element("div", "mydiv");
+            var doc = CreateDocument();
+            doc.OpenEventQueue();
+            doc.Body.AppendChild(div);
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as NodeAddedDelta;
+            Assert.NotNull(step);
+            Assert.Equal(doc.Body.Id, step.ParentId);
+            var content = step.Node as ContentElementNode;
+            Assert.NotNull(content);
+            Assert.Equal("div", content.TagName);
+            Assert.NotEmpty(content.Attributes);
+            var att = content.Attributes[0];
+            Assert.Equal("id", att.Attribute);
+            Assert.Equal("mydiv", att.Value);
+        }
+
+        [Fact]
+        public void NodeInsertedDelta()
+        {
+            var div = new Element("div", "mydiv");
+            var doc = CreateDocument();
+            var text = new TextNode("lala");
+            doc.Body.AppendChild(text);
+            doc.OpenEventQueue();
+            doc.Body.InsertChildAfter(text, div);
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as NodeInsertedDelta;
+            Assert.NotNull(step);
+            Assert.Equal(doc.Body.Id, step.ParentElementId);
+            Assert.Equal(1, step.Index);
+            var content = step.Node as ContentElementNode;
+            Assert.NotNull(content);
+            Assert.Equal("div", content.TagName);
+            Assert.NotEmpty(content.Attributes);
+            var att = content.Attributes[0];
+            Assert.Equal("id", att.Attribute);
+            Assert.Equal("mydiv", att.Value);
+        }
+
+        [Fact]
+        public void SetIdOnAttribute()
+        {
+            var div = new Element("div");
+            var doc = CreateDocument();
+            doc.Body.AppendChild(div);
+            doc.OpenEventQueue();
+            div.SetAttribute("data-test", "x");
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as SetIdDelta;
+            Assert.NotNull(step);
+            Assert.Equal(doc.Body.Id, step.Locator.StartingId);
+            Assert.Equal(div.Id, step.NewId);
+        }
     }
 }

@@ -58,7 +58,7 @@ namespace Integrative.Clara.DOM
             UpdateChildParentLinks();
             if (needGenerateIds)
             {
-                GenerateIdsForEvents();
+                GenerateRequiredIds();
             }
         }
 
@@ -74,7 +74,7 @@ namespace Integrative.Clara.DOM
             UpdateChildParentLinks(reference, offset);
             if (needGenerateIds)
             {
-                GenerateIdsForEvents();
+                GenerateRequiredIds();
             }
         }
 
@@ -240,22 +240,22 @@ namespace Integrative.Clara.DOM
                 && _parent.Document != null;
         }
 
-        private void GenerateIdsForEvents()
+        private void GenerateRequiredIds()
         {
-            GenerateIdsForEvents(_child);
+            GenerateRequiredIds(_child);
         }
 
-        private void GenerateIdsForEvents(Node node)
+        private void GenerateRequiredIds(Node node)
         {
             if (node is Element element)
             {
-                if (element.HasEvents)
+                if (element.NeedsId)
                 {
                     element.EnsureElementId();
                 }
                 foreach (var child in element.Children)
                 {
-                    GenerateIdsForEvents(child);
+                    GenerateRequiredIds(child);
                 }
             }
         }

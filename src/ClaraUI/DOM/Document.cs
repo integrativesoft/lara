@@ -51,6 +51,7 @@ namespace Integrative.Clara.DOM
                 Document = this
             };
             UpdateTimestamp();
+            TemplateBuilder.Build(this);
         }
 
         public void UpdateTimestamp()

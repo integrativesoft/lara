@@ -42,15 +42,7 @@ namespace Integrative.Clara.Main
             var virtualId = Connections.CreateCryptographicallySecureGuid();
             var document = new Document(page, virtualId);
             _documents.Add(virtualId, document);
-            FillTemplate(document, virtualId);
-            document.UpdateTimestamp();
             return document;
-        }
-
-        private void FillTemplate(Document document, Guid virtualId)
-        {
-            var builder = new TemplateBuilder(document, virtualId);
-            builder.Build();
         }
 
         public void Discard(Guid documentId)

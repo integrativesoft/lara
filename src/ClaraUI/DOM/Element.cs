@@ -38,7 +38,8 @@ namespace Integrative.Clara.DOM
 
         public override NodeType NodeType => NodeType.Element;
 
-        public bool HasEvents => _events.Count > 0;
+        internal bool NeedsId => string.IsNullOrEmpty(_id)
+            && (_events.Count > 0 || HtmlReference.RequiresId(TagName));
 
         public override string ToString()
         {

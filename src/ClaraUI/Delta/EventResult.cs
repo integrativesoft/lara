@@ -20,7 +20,7 @@ namespace Integrative.Clara.Delta
         {
         }
 
-        public EventResult(List<BaseDelta> list)
+        public EventResult(List<BaseDelta> list) : this()
         {
             List = list;
         }
