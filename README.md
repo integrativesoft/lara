@@ -8,7 +8,7 @@ Clara is a lightweight cross-platform C# library for Web UI development with DOM
 - Web UI: Create HTML5 web applications with full control of the DOM tree.
 - Server-side rendering: The server keeps a virtual copy of the page and sends to the client the changes after each event.
 
-Clara can be used to either develop websites or desktop apps with an HTML5 frontend.
+Clara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
 ## Sample application
 
