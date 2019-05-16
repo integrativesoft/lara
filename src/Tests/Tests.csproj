@@ -7,7 +7,7 @@
 
     <RootNamespace>Integrative.Lara.Tests</RootNamespace>
 
-    <Platforms>x64</Platforms>
+    <Platforms>x64;AnyCPU</Platforms>
 
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
