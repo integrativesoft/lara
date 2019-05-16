@@ -24,5 +24,10 @@ namespace Integrative.Lara.Tools
             }
             return app;
         }
+
+        public static IApplicationBuilder UseLara(this IApplicationBuilder app)
+        {
+            return UseLara(app, new LaraOptions());
+        }
     }
 }
