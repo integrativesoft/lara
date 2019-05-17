@@ -17,5 +17,11 @@ namespace Integrative.Lara.Main
     public interface IPageContext : IExecutionContext
     {
         Document Document { get; }
+        IJSBridge JSBridge { get; }
+    }
+
+    public interface IJSBridge
+    {
+        void Submit(string javaScriptCode);
     }
 }

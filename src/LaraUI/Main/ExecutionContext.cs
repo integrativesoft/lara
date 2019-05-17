@@ -14,10 +14,15 @@ namespace Integrative.Lara.Main
         public HttpContext Http { get; }
         public Document Document { get; }
 
+        readonly JSBridge _bridge;
+
         public ExecutionContext(HttpContext http, Document document)
         {
             Http = http;
             Document = document;
+            _bridge = new JSBridge(document);
         }
+
+        public IJSBridge JSBridge => _bridge;
     }
 }

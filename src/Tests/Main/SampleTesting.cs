@@ -199,5 +199,40 @@ namespace Integrative.Lara.Tests.Main
                 Assert.Equal("Times clicked: 2", after2);
             }
         }
+
+        [Fact]
+        public async void ExecuteJavascript()
+        {
+            LaraUI.Publish("/", () => new MyJS());
+            using (var host = await LaraUI.StartServer())
+            {
+                string address = LaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var button = _driver.FindElement(By.TagName("button"));
+                await WaitForEvent(() => button.Click());
+
+                string text = button.Text;
+                Assert.Equal("clicked!", text);
+            }
+        }
+
+        class MyJS : IPage
+        {
+            const string Code = "document.getElementById('mybutton').innerText = 'clicked!';";
+
+            public Task OnGet(IPageContext context)
+            {
+                var button = new Element("button", "mybutton");
+                var text = new TextNode("test JS");
+                button.AppendChild(text);
+                button.On("click", app =>
+                {
+                    app.JSBridge.Submit(Code);
+                    return Task.CompletedTask;
+                });
+                context.Document.Body.AppendChild(button);
+                return Task.CompletedTask;
+            }
+        }
     }
 }

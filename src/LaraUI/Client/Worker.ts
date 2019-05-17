@@ -41,6 +41,9 @@ namespace LaraUI {
             case DeltaType.SetValue:
                 setValue(step as SetValueDelta);
                 break;
+            case DeltaType.SubmitJS:
+                submitJS(step as SubmitJsDelta);
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }
@@ -133,5 +136,13 @@ namespace LaraUI {
     function setValue(delta: SetValueDelta): void {
         let input = document.getElementById(delta.ElementId) as HTMLInputElement;
         input.value = delta.Value;
+    }
+
+    function submitJS(delta: SubmitJsDelta): void {
+        try {
+            eval(delta.Code);
+        } catch (e) {
+            console.log((<Error>e).message);
+        }
     }
 }

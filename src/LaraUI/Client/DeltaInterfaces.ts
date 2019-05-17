@@ -15,7 +15,8 @@ namespace LaraUI {
         RemoveAttribute = 6,
         Focus = 7,
         SetId = 8,
-        SetValue = 9
+        SetValue = 9,
+        SubmitJS = 10
     }
 
     export interface BaseDelta {
@@ -77,4 +78,9 @@ namespace LaraUI {
         ElementId: string;
         Value: string;
     }
+
+    export interface SubmitJsDelta extends BaseDelta {
+        Code: string;
+    }
+
 }

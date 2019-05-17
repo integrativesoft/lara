@@ -15,7 +15,6 @@ namespace Integrative.Lara.DOM
 {
     public class Element : Node
     {
-        private const string FocusAllowedOnlyInEvents = "The Focus() method is not allowed during the page's initial GET, and only within events.";
         private readonly Attributes _attributes;
         private readonly List<Node> _children;
         private readonly Dictionary<string, Func<IPageContext, Task>> _events;
@@ -388,10 +387,7 @@ namespace Integrative.Lara.DOM
 
         public void Focus()
         {
-            if (!QueueOpen)
-            {
-                throw new InvalidOperationException(FocusAllowedOnlyInEvents);
-            }
+            JSBridge.VerifyQueueOpen(Document);
             FocusDelta.Enqueue(this);
         }
 

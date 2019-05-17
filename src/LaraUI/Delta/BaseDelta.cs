@@ -18,7 +18,8 @@ namespace Integrative.Lara.Delta
         RemoveAttribute = 6,
         Focus = 7,
         SetId = 8,
-        SetValue = 9
+        SetValue = 9,
+        SubmitJS = 10
     }
 
     [DataContract]
@@ -31,6 +32,7 @@ namespace Integrative.Lara.Delta
     [KnownType(typeof(FocusDelta))]
     [KnownType(typeof(SetIdDelta))]
     [KnownType(typeof(SetValueDelta))]
+    [KnownType(typeof(SubmitJsDelta))]
     abstract class BaseDelta
     {
         [DataMember]
