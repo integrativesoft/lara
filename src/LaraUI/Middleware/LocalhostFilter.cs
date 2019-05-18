@@ -15,22 +15,17 @@ namespace Integrative.Lara.Middleware
     {
         readonly RequestDelegate _next;
         readonly ILogger<LocalhostFilter> _logger;
-        readonly IPAddress _ip4, _ip6;
 
         public LocalhostFilter(RequestDelegate next, ILogger<LocalhostFilter> logger)
         {
             _next = next;
             _logger = logger;
-            _ip4 = IPAddress.Parse("127.0.0.1");
-            _ip6 = IPAddress.Parse("::1");
         }
-
-        private bool IsLocal(IPAddress address) => address.Equals(_ip4) || address.Equals(_ip6);
 
         public async Task Invoke(HttpContext context)
         {
             var remote = context.Connection.RemoteIpAddress;
-            if (!IsLocal(remote))
+            if (!IPAddress.IsLoopback(remote))
             {
                 string msg = $"Forbidden request from {remote}";
                 _logger.LogInformation(msg);
