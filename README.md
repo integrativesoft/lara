@@ -17,12 +17,6 @@ To create a web page:
 Source code example:
 
 ```csharp
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Threading.Tasks;
-
 namespace SampleProject
 {
     class Program
