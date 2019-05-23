@@ -89,10 +89,4 @@ Whenever the browser triggers an event (e.g. click on a button), it sends to the
 
 ## Feedback
 
-We would love to hear your feedback!
-
-  <form action="https://www.elformo.com/forms/ee5e8238-4b3e-421c-b9b5-b2fc499b0f0d" method="post" accept-charset="UTF-8">
-    <input id="email" name="email" type="email" />
-    <textarea id="comment" name="comment"></textarea>
-    <input id="submit" name="submit" type="Submit" />
-  </form>
+We would love to hear your feedback! Write to us at https://integrative.io/ContactUs
