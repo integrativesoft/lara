@@ -87,3 +87,12 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
+## Feedback
+
+We would love to hear your feedback!
+
+  <form action="https://www.elformo.com/forms/ee5e8238-4b3e-421c-b9b5-b2fc499b0f0d" method="post" accept-charset="UTF-8">
+    <input id="email" name="email" type="email" />
+    <textarea id="comment" name="comment"></textarea>
+    <input id="submit" name="submit" type="Submit" />
+  </form>
