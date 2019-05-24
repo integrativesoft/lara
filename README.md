@@ -50,7 +50,7 @@ namespace SampleProject
 
         public Task OnGet(IPageContext context)
         {
-            var button = new Element("button");
+            var button = Element.Create("button");
             var text = new TextNode { Data = "Click me" };
             button.AppendChild(text);
             button.On("click", app =>
