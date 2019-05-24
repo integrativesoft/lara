@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using System.Diagnostics;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
     public class LaraOptions
     {

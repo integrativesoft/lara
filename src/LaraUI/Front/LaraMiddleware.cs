@@ -4,10 +4,11 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     public sealed class LaraMiddleware
     {

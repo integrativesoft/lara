@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
     public sealed class TextNode : Node
     {

@@ -4,12 +4,13 @@ Created: 4/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     public sealed class LocalhostFilter
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tools
 {
-    public static class SemaphoreSlimExtensions
+    static class SemaphoreSlimExtensions
     {
         public static async Task<IDisposable> UseWaitAsync(
             this SemaphoreSlim semaphore,

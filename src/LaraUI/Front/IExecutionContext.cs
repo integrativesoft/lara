@@ -7,7 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.DOM;
 using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
     public interface IExecutionContext
     {

@@ -5,13 +5,14 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
     public class Document
     {

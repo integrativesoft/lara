@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tools
 {
-    public static class ServerLauncher
+    static class ServerLauncher
     {
         public static async Task<IWebHost> StartServer()
         {

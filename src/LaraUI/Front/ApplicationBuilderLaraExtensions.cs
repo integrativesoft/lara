@@ -7,7 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Builder;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
     public static class ApplicationBuilderLaraExtensions
     {

@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
     public interface IPage
     {

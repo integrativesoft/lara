@@ -4,7 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     public static class ContentTypes
     {

@@ -4,8 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
+using Integrative.Lara;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ namespace SampleProject
 
             // launch browser tab
             LaraUI.LaunchBrowser(address);
-
+            
             // wait for termination
             Console.WriteLine("Press Ctrl+C to terminate");
             await host.WaitForShutdownAsync();

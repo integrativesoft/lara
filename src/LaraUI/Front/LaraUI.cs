@@ -4,13 +4,14 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
     public static class LaraUI
     {

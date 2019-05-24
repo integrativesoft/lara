@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +13,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
     public class StaticContent : IPublishedItem
     {

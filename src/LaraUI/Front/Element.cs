@@ -5,13 +5,14 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
     public class Element : Node
     {
