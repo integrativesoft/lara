@@ -17,12 +17,6 @@ To create a web page:
 Source code example:
 
 ```csharp
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Threading.Tasks;
-
 namespace SampleProject
 {
     class Program
@@ -93,3 +87,6 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
+## Feedback
+
+We would love to hear your feedback! Write to us at https://integrative.io/ContactUs
