@@ -108,11 +108,11 @@ namespace Integrative.Lara.Tests.Main
         {
             public Task OnGet(IPageContext context)
             {
-                var b1 = new Element("button", "b1");
+                var b1 = Element.Create("button", "b1");
                 b1.AppendChild(new TextNode("one"));
-                var b2 = new Element("button", "b2");
+                var b2 = Element.Create("button", "b2");
                 b2.AppendChild(new TextNode("two"));
-                var b3 = new Element("button", "b3");
+                var b3 = Element.Create("button", "b3");
                 b3.AppendChild(new TextNode("three"));
                 context.Document.Body.AppendChild(b1);
                 context.Document.Body.AppendChild(b2);
@@ -162,9 +162,9 @@ namespace Integrative.Lara.Tests.Main
 
             public Task OnGet(IPageContext context)
             {
-                var submit = new Element("button");
+                var submit = Element.Create("button");
                 submit.AppendChild(new TextNode("submit"));
-                var input = new Element("input");
+                var input = Element.Create("input");
                 context.Document.Body.AppendChild(input);
                 context.Document.Body.AppendChild(submit);
                 submit.On("click", app =>
@@ -222,7 +222,7 @@ namespace Integrative.Lara.Tests.Main
 
             public Task OnGet(IPageContext context)
             {
-                var button = new Element("button", "mybutton");
+                var button = Element.Create("button", "mybutton");
                 var text = new TextNode("test JS");
                 button.AppendChild(text);
                 button.On("click", app =>

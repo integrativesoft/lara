@@ -27,7 +27,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddElementWithId()
         {
-            var button = new Element("button", "mybutton");
+            var button = Element.Create("button", "mybutton");
             var document = CreateDocument();
             document.Body.AppendChild(button);
             Assert.True(document.TryGetElementById("mybutton", out var found));
@@ -44,8 +44,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddBranchWithId()
         {
-            var button = new Element("button", "mybutton");
-            var span = new Element("span", "myspan");
+            var button = Element.Create("button", "mybutton");
+            var span = Element.Create("span", "myspan");
             button.AppendChild(span);
             var document = CreateDocument();
             document.Body.AppendChild(button);
@@ -56,7 +56,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void RemoveElementWithId()
         {
-            var button = new Element("button", "mybutton");
+            var button = Element.Create("button", "mybutton");
             var document = CreateDocument();
             document.Body.AppendChild(button);
             button.Remove();
@@ -66,8 +66,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void RemoveBranchWithIdInside()
         {
-            var button = new Element("button");
-            var span = new Element("span", "myspan");
+            var button = Element.Create("button");
+            var span = Element.Create("span", "myspan");
             button.AppendChild(span);
             var doc = CreateDocument();
             doc.Body.AppendChild(button);
@@ -92,9 +92,9 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CannotAddDuplicateId()
         {
-            var button1 = new Element("button", "mybutton");
-            var button2 = new Element("button", "mybutton");
-            var div = new Element("div");
+            var button1 = Element.Create("button", "mybutton");
+            var button2 = Element.Create("button", "mybutton");
+            var div = Element.Create("div");
             div.AppendChild(button1);
             div.AppendChild(button2);
             var doc = CreateDocument();
@@ -104,13 +104,13 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CannotInsertDuplicateId()
         {
-            var button1 = new Element("button", "mybutton");
-            var button2 = new Element("button", "mybutton");
-            var div = new Element("div");
+            var button1 = Element.Create("button", "mybutton");
+            var button2 = Element.Create("button", "mybutton");
+            var div = Element.Create("div");
             div.AppendChild(button1);
             div.AppendChild(button2);
             var doc = CreateDocument();
-            var pane = new Element("div");
+            var pane = Element.Create("div");
             doc.Body.AppendChild(pane);
             Throws<InvalidOperationException>(() => doc.Body.InsertChildAfter(pane, div));
         }
@@ -118,13 +118,13 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CannotAddNodeInsideItself()
         {
-            var e1 = new Element("span");
-            var e2 = new Element("span");
+            var e1 = Element.Create("span");
+            var e2 = Element.Create("span");
             e1.AppendChild(e2);
             Throws<InvalidOperationException>(() => e2.AppendChild(e1));
         }
 
-        private void Throws<T>(Action action) where T : Exception
+        internal static void Throws<T>(Action action) where T : Exception
         {
             bool error = false;
             try
@@ -152,9 +152,9 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InsertBeforeInserts()
         {
-            var div = new Element("div");
-            var span1 = new Element("span");
-            var span2 = new Element("span");
+            var div = Element.Create("div");
+            var span1 = Element.Create("span");
+            var span2 = Element.Create("span");
             div.AppendChild(span2);
             div.InsertChildBefore(span2, span1);
             var list = new List<Node>(div.Children);
@@ -168,9 +168,9 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GenerateIdsForEvents()
         {
-            var span = new Element("span");
+            var span = Element.Create("span");
             span.On("click", _emptyHandler);
-            var div = new Element("div");
+            var div = Element.Create("div");
             div.On("click", _emptyHandler);
             div.AppendChild(span);
             var doc = CreateDocument();
@@ -183,12 +183,12 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GenerateIdsForEventsInsert()
         {
-            var span = new Element("span");
+            var span = Element.Create("span");
             span.On("click", _emptyHandler);
-            var div = new Element("div");
+            var div = Element.Create("div");
             div.On("click", _emptyHandler);
             div.AppendChild(span);
-            var dummy = new Element("button");
+            var dummy = Element.Create("button");
             var doc = CreateDocument();
             doc.Body.AppendChild(dummy);
             doc.Body.InsertChildBefore(dummy, div);
@@ -199,7 +199,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ElementRemoveHandler()
         {
-            var x = new Element("button");
+            var x = Element.Create("button");
             x.On("click", _emptyHandler);
             Assert.True(x.HasAttribute("onclick"));
             x.On("click", null);
@@ -209,7 +209,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void TransferElementBetweenDocuments()
         {
-            var button = new Element("button", "mybutton");
+            var button = Element.Create("button", "mybutton");
             var doc1 = CreateDocument();
             var doc2 = CreateDocument();
             doc1.Body.AppendChild(button);
@@ -222,7 +222,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void RemoveNode()
         {
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             doc.Body.AppendChild(new TextNode("hi"));
             doc.Body.AppendChild(div);
@@ -239,7 +239,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NodeAdded()
         {
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             doc.OpenEventQueue();
             doc.Body.AppendChild(div);
@@ -260,7 +260,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NodeInsertedDelta()
         {
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             var text = new TextNode("lala");
             doc.Body.AppendChild(text);
@@ -284,7 +284,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetIdOnAttribute()
         {
-            var div = new Element("div");
+            var div = Element.Create("div");
             var doc = CreateDocument();
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();
@@ -300,7 +300,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void FocusFailsOnGet()
         {
-            var div = new Element("div");
+            var div = Element.Create("div");
             Throws<InvalidOperationException>(() => div.Focus());
         }
     }

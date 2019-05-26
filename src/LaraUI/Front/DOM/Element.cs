@@ -9,12 +9,13 @@ using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace Integrative.Lara
 {
-    public class Element : Node
+    public abstract class Element : Node
     {
         private readonly Attributes _attributes;
         private readonly List<Node> _children;
@@ -93,20 +94,35 @@ namespace Integrative.Lara
 
         public void SetAttribute(string name, string value)
         {
-            name = name.ToLower();
-            if (name == "id")
+            SetAttributeLower(name.ToLower(), value);
+        }
+
+        protected void SetAttributeLower(string nameLower, string value)
+        {
+            if (nameLower == "id")
             {
                 Id = value;
             }
             else
             {
-                _attributes.SetAttributeLower(name, value);
+                _attributes.SetAttributeLower(nameLower, value);
             }
         }
 
         public bool HasAttribute(string name) => _attributes.HasAttribute(name);
 
+        protected bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
+
         public string GetAttribute(string name) => _attributes.GetAttribute(name);
+
+        protected string GetAttributeLower(string nameLower)
+            => _attributes.GetAttributeLower(nameLower);
+
+        public void SetFlagAttribute(string name, bool value)
+            => _attributes.SetFlagAttributeLower(name.ToLower(), value);
+
+        protected void SetFlagAttributeLower(string nameLower, bool value)
+            => _attributes.SetFlagAttributeLower(nameLower, value);
 
         public void RemoveAttribute(string name)
         {
@@ -118,6 +134,31 @@ namespace Integrative.Lara
             else
             {
                 _attributes.RemoveAttributeLower(name);
+            }
+        }
+
+        protected int? GetIntAttribute(string nameLower)
+        {
+            if (int.TryParse(GetAttributeLower(nameLower), out int value))
+            {
+                return value;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected void SetIntAttribute(string nameLower, int? value)
+        {
+            if (value == null)
+            {
+                _attributes.RemoveAttributeLower(nameLower);
+            }
+            else
+            {
+                string text = ((int)value).ToString(CultureInfo.InvariantCulture);
+                SetAttributeLower(nameLower, text);
             }
         }
 

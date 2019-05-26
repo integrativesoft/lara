@@ -17,7 +17,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void HasAttributeFindsAttribute()
         {
-            var x = new Attributes(new Element("button"));
+            var x = new Attributes(Element.Create("button"));
             x.SetAttributeLower("href", "lala");
             Assert.True(x.HasAttribute("href"));
             Assert.False(x.HasAttribute("lala"));
@@ -30,10 +30,7 @@ namespace Integrative.Lara.Tests.DOM
             var guid = Connections.CreateCryptographicallySecureGuid();
             var page = new MyPage();
             var document = new Document(page, guid);
-            var element = new Element("button")
-            {
-                Id = "mybutton"
-            };
+            var element = Element.Create("button", "mybutton");
             document.Body.AppendChild(element);
             document.OpenEventQueue();
             element.SetAttribute("value", "5");
@@ -46,10 +43,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetFlagAttributeAddsNullValue()
         {
-            var element = new Element("button")
-            {
-                Hidden = true
-            };
+            var element = Element.Create("button");
+            element.Hidden = true;
             Assert.True(element.HasAttribute("hidden"));
             Assert.Null(element.GetAttribute("hidden"));
             int count = 0;
@@ -67,14 +62,14 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GetNonExistingReturnsEmpty()
         {
-            var element = new Element("button");
+            var element = Element.Create("button");
             Assert.Equal(string.Empty, element.GetAttribute("lele"));
         }
 
         [Fact]
         public void RemovingAttributeRemovesValue()
         {
-            var element = new Element("button");
+            var element = Element.Create("button");
             element.SetAttribute("data-test", "lala");
             element.RemoveAttribute("data-test");
             Assert.Empty(element.GetAttribute("data-test"));

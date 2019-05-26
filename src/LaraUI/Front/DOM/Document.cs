@@ -43,17 +43,16 @@ namespace Integrative.Lara
             _map = new DocumentIdMap();
             _queue = new Queue<BaseDelta>();
             Semaphore = new SemaphoreSlim(1);
-            Head = new Element("head")
-            {
-                Document = this
-            };
-            Body = new Element("body")
-            {
-                Document = this
-            };
+            Head = Element.Create("head");
+            Head.Document = this;
+            Body = Element.Create("body");
+            Body.Document = this;
             UpdateTimestamp();
             TemplateBuilder.Build(this);
         }
+
+        public Element CreateElement(string tagName) => Element.Create(tagName);
+        public TextNode CreateTextNode(string data) => new TextNode(data);
 
         public void UpdateTimestamp()
         {

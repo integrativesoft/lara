@@ -6,13 +6,13 @@ Author: Pablo Carbonell
 
 namespace Integrative.Lara
 {
-    public sealed class Button : Element
+    public sealed class Select : Element
     {
-        public Button() : base("button")
+        public Select() : base("select")
         {
         }
 
-        public bool AutoFocus
+        public bool Autofocus
         {
             get => HasAttributeLower("autofocus");
             set { SetFlagAttributeLower("autofocus", value); }
@@ -20,8 +20,14 @@ namespace Integrative.Lara
 
         public bool Disabled
         {
-            get => HasAttribute("disabled");
+            get => HasAttributeLower("disabled");
             set { SetFlagAttributeLower("disabled", value); }
+        }
+
+        public bool Multiple
+        {
+            get => HasAttributeLower("multiple");
+            set { SetFlagAttributeLower("multiple", value); }
         }
 
         public string Name
@@ -30,16 +36,16 @@ namespace Integrative.Lara
             set { SetAttributeLower("name", value); }
         }
 
-        public string Type
+        public bool Required
         {
-            get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            get => HasAttributeLower("required");
+            set { SetFlagAttributeLower("required", value); }
         }
 
-        public string Value
+        public int? Size
         {
-            get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            get => GetIntAttribute("size");
+            set { SetIntAttribute("size", value); }
         }
     }
 }

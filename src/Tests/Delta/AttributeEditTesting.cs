@@ -18,7 +18,7 @@ namespace Integrative.Lara.Tests.Delta
         public void AttributeEdited()
         {
             var doc = CreateDocument();
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();
             div.SetAttribute("data-test", "x");
@@ -34,7 +34,7 @@ namespace Integrative.Lara.Tests.Delta
         public void IdRemoved()
         {
             var doc = CreateDocument();
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();
             div.Id = null;
@@ -49,7 +49,7 @@ namespace Integrative.Lara.Tests.Delta
         public void UnchangedIdNoSteps()
         {
             var doc = CreateDocument();
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();
             div.Id = "mydiv";
@@ -60,7 +60,7 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void SetValueDeltaProperties()
         {
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();
@@ -76,7 +76,7 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void EditAttributeClearId()
         {
-            var div = new Element("div", "mydiv");
+            var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             doc.Body.AppendChild(div);
             doc.OpenEventQueue();

@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
@@ -15,7 +14,7 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void LocateElementWithId()
         {
-            var x = new Element("span", "x");
+            var x = Element.Create("span", "x");
             var locator = ElementLocator.FromElement(x);
             Assert.Equal(x.Id, locator.StartingId);
             Assert.NotNull(locator.Steps);
@@ -25,13 +24,13 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void LocateWithSteps()
         {
-            var x0 = new Element("div", "x0");
-            x0.AppendChild(new Element("div"));
-            x0.AppendChild(new Element("div"));
-            x0.AppendChild(new Element("div"));
-            var a = new Element("div");
+            var x0 = Element.Create("div", "x0");
+            x0.AppendChild(Element.Create("div"));
+            x0.AppendChild(Element.Create("div"));
+            x0.AppendChild(Element.Create("div"));
+            var a = Element.Create("div");
             x0.AppendChild(a);
-            var b = new Element("div");
+            var b = Element.Create("div");
             a.AppendChild(b);
             var locator = ElementLocator.FromElement(b);
             var steps = locator.Steps;

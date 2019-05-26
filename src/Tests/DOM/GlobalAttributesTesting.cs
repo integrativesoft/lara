@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
 using System.Collections.Generic;
 using Xunit;
 
@@ -16,7 +15,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AccessKey()
         {
-            var x = new Element("button")
+            var x = new Button
             {
                 AccessKey = "1",
                 Class = "2",
@@ -65,7 +64,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ElementToString()
         {
-            var x = new Element("button");
+            var x = new Button();
             Assert.Equal("button", x.ToString());
             x.Id = "hi";
             Assert.Equal("button id='hi'", x.ToString());
@@ -74,7 +73,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ClearingIdRemovesAttribute()
         {
-            var x = new Element("button", "mybutton");
+            var x = Element.Create("button", "mybutton");
             Assert.Equal(NodeType.Element, x.NodeType);
             Assert.True(x.HasAttribute("id"));
             x.Id = null;
@@ -84,7 +83,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetAttributeId()
         {
-            var x = new Element("button");
+            var x = Element.Create("button");
             x.SetAttribute("ID", "x");
             Assert.Equal("x", x.Id);
         }
@@ -92,7 +91,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void RemoveAttributeId()
         {
-            var x = new Element("span", "x");
+            var x = Element.Create("span", "x");
             x.RemoveAttribute("id");
             Assert.True(string.IsNullOrEmpty(x.Id));            
         }
@@ -100,8 +99,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GetChildPositionNotFound()
         {
-            var x1 = new Element("span");
-            var x2 = new Element("span");
+            var x1 = Element.Create("span");
+            var x2 = Element.Create("span");
             int index = x1.GetChildPosition(x2);
             Assert.Equal(-1, index);
         }
@@ -109,9 +108,9 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GrandchildDescendsFromElement()
         {
-            var x1 = new Element("span");
-            var x2 = new Element("span");
-            var x3 = new Element("span");
+            var x1 = Element.Create("span");
+            var x2 = Element.Create("span");
+            var x3 = Element.Create("span");
             x1.AppendChild(x2);
             x2.AppendChild(x3);
             Assert.True(x3.DescendsFrom(x1));
@@ -120,10 +119,10 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InsertChildAfter()
         {
-            var div = new Element("div");
-            var x1 = new Element("span");
-            var x2 = new Element("span");
-            var x3 = new Element("span");
+            var div = Element.Create("div");
+            var x1 = Element.Create("span");
+            var x2 = Element.Create("span");
+            var x3 = Element.Create("span");
             div.AppendChild(x1);
             div.AppendChild(x3);
             div.InsertChildAfter(x1, x2);
@@ -135,9 +134,9 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void GetContentNodeElement()
         {
-            var div = new Element("div", "mydiv");
-            var span = new Element("span");
-            var text = new TextNode("hello");
+            var div = Element.Create("div", "mydiv");
+            var span = Element.Create("span");
+            var text = Element.Create("hello");
             div.AppendChild(span);
             span.AppendChild(text);
             var content = div.GetContentNode();

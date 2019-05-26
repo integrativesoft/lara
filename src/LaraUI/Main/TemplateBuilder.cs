@@ -44,18 +44,18 @@ namespace Integrative.Lara.Main
             _document.Lang = "en";
 
             // UTF-8
-            var meta = new Element("meta");
+            var meta = Element.Create("meta");
             meta.SetAttribute("charset", "utf-8");
             head.AppendChild(meta);
 
             // LaraUI.js
-            var script = new Element("script");
+            var script = Element.Create("script");
             script.SetAttribute("src", _libraryUrl);
             script.SetAttribute("defer", null);
             head.AppendChild(script);
 
             // initialization script
-            script = new Element("script");
+            script = Element.Create("script");
             string value = _document.VirtualId.ToString(GlobalConstants.GuidFormat);
             string code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{value}'); }});";
             script.AppendChild(new TextNode { Data = code });

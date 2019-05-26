@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Front.Elements;
 using System;
 using System.Collections.Generic;
 
@@ -41,7 +40,7 @@ namespace Integrative.Lara.DOM
             }
             else
             {
-                return new Element(tagName);
+                return new GenericElement(tagName);
             }
         }
 

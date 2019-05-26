@@ -20,12 +20,9 @@ namespace Integrative.Lara.Tests.Main
 
         public Task OnGet(IPageContext context)
         {
-            var span = new Element("span");
+            var span = Element.Create("span");
             var text = new TextNode("Click me");
-            var button = new Element("button")
-            {
-                Id = ButtonId
-            };
+            var button = Element.Create("button", ButtonId);
             button.AppendChild(text);
             context.Document.Body.AppendChild(span);
             context.Document.Body.AppendChild(button);
