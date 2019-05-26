@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using System;
-
 namespace Integrative.Lara
 {
     public sealed class Table : Element
