@@ -303,5 +303,29 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             Throws<InvalidOperationException>(() => div.Focus());
         }
+
+        [Fact]
+        public void RemoveOrphanThrows()
+        {
+            var div = Element.Create("div");
+            Throws<InvalidOperationException>(() => div.Remove());
+        }
+
+        [Fact]
+        public void InsertBeforeUnknownThrows()
+        {
+            var div1 = Element.Create("div");
+            var div2 = Element.Create("div");
+            var div3 = Element.Create("div");
+            Throws<InvalidOperationException>(() => div1.InsertChildBefore(div2, div3));
+        }
+
+        [Fact]
+        public void RemoveUnknownChildThrows()
+        {
+            var a = Element.Create("span");
+            var b = Element.Create("span");
+            Throws<InvalidOperationException>(() => a.RemoveChild(b));
+        }
     }
 }

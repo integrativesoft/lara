@@ -36,7 +36,7 @@ namespace Integrative.Lara.DOM
             _builder.AppendLine("</html>");
         }
 
-        public void PrintElement(Element element, int indent)
+        private void PrintElement(Element element, int indent)
         {
             if (IsInlineElement(element))
             {

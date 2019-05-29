@@ -5,6 +5,8 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using Integrative.Lara.DOM;
+using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
@@ -148,6 +150,81 @@ namespace Integrative.Lara.Tests.DOM
             var att = ce.Attributes[0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
+        }
+
+        [Fact]
+        public void InlineChildElementsPrintedInline()
+        {
+            var doc = new Document(null);
+            var b = Element.Create("span");
+            doc.Body.AppendChild(b);
+            doc.Body.AppendChild(new TextNode("hello"));
+            var writer = new DocumentWriter(doc);
+            writer.Print();
+            string result = writer.ToString();
+            Assert.Contains("/span>hello", result);
+        }
+
+        [Fact]
+        public void AddDuplicateIdThrows()
+        {
+            var map = new DocumentIdMap();
+            var a1 = Element.Create("span", "a");
+            var a2 = Element.Create("span", "a");
+            map.NotifyAdded(a1);
+            DomOperationsTesting.Throws<DuplicateElementId>(() => map.NotifyAdded(a2));
+        }
+
+        [Fact]
+        public void CheckedFalseFlushed()
+        {
+            var doc = new Document(null);
+            var x = new Input
+            {
+                Id = "x"
+            };
+            doc.Body.AppendChild(x);
+            x.Checked = true;
+            doc.OpenEventQueue();
+            x.Checked = false;
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var top = queue.Peek() as SetCheckedDelta;
+            Assert.NotNull(top);
+            Assert.Equal(x.Id, top.ElementId);
+            Assert.False(top.Checked);
+        }
+
+        [Fact]
+        public void CheckedTrueFlushed()
+        {
+            var doc = new Document(null);
+            var x = new Input
+            {
+                Id = "x"
+            };
+            doc.Body.AppendChild(x);
+            doc.OpenEventQueue();
+            x.Checked = true;
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var top = queue.Peek() as SetCheckedDelta;
+            Assert.NotNull(top);
+            Assert.Equal(x.Id, top.ElementId);
+            Assert.True(top.Checked);
+        }
+
+        [Fact]
+        public void NotifyCheckedTrueAdds()
+        {
+            var div = Element.Create("div");
+            var a = new Attributes(div);
+            a.NotifyChecked(true);
+            Assert.True(a.HasAttribute("checked"));
+            IEnumerator e = ((IEnumerable)a).GetEnumerator();
+            Assert.True(e.MoveNext());
+            a.NotifyChecked(false);
+            Assert.False(a.HasAttribute("checked"));
         }
     }
 }
