@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using System;
 using System.Collections.Generic;
 
 namespace Integrative.Lara.DOM
@@ -47,7 +46,7 @@ namespace Integrative.Lara.DOM
         {
             if (_map.ContainsKey(after))
             {
-                throw new InvalidOperationException("Cannot have duplicate element IDs in the same document.");
+                throw DuplicateElementId.Create(after);
             }
             _map.Add(after, element);
         }

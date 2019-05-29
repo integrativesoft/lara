@@ -13,7 +13,6 @@ namespace Integrative.Lara.DOM
     sealed class DomSurgeon
     {
         const string CannotAddInsideItself = "Cannot add an element inside itself.";
-        const string DuplicateIdMessage = "Cannot have duplicate element IDs inside a document";
         const string ReferenceNodeNotFound = "Reference before/after node not found";
         const string NodeNotFoundInsideParent = "Invalid child/parent nodes specified";
 
@@ -176,7 +175,7 @@ namespace Integrative.Lara.DOM
                     string id = element.Id;
                     if (hash.Contains(id) || document.TryGetElementById(id, out _))
                     {
-                        throw new InvalidOperationException(DuplicateIdMessage);
+                        throw DuplicateElementId.Create(id);
                     }
                     hash.Add(id);
                 }

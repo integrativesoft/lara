@@ -44,6 +44,9 @@ namespace LaraUI {
             case DeltaType.SubmitJS:
                 submitJS(step as SubmitJsDelta);
                 break;
+            case DeltaType.SetChecked:
+                setChecked(step as SetCheckedDelta);
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }
@@ -144,5 +147,10 @@ namespace LaraUI {
         } catch (e) {
             console.log((<Error>e).message);
         }
+    }
+
+    function setChecked(delta: SetCheckedDelta): void {
+        let input = document.getElementById(delta.ElementId) as HTMLInputElement;
+        input.checked = delta.Checked;
     }
 }

@@ -9,26 +9,26 @@ using System.Runtime.Serialization;
 namespace Integrative.Lara.Delta
 {
     [DataContract]
-    sealed class SetValueDelta : BaseDelta
+    sealed class SetCheckedDelta : BaseDelta
     {
         [DataMember]
         public string ElementId { get; set; }
 
         [DataMember]
-        public string Value { get; set; }
+        public bool Checked { get; set; }
 
-        public SetValueDelta() : base(DeltaType.SetValue)
+        public SetCheckedDelta() : base(DeltaType.SetChecked)
         {
         }
 
-        public static void Enqueue(Element element, string value)
+        public static void Enqueue(Element element, bool value)
         {
             if (element.QueueOpen)
             {
-                element.Document.Enqueue(new SetValueDelta
+                element.Document.Enqueue(new SetCheckedDelta
                 {
                     ElementId = element.EnsureElementId(),
-                    Value = value
+                    Checked = value
                 });
             }
         }

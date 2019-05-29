@@ -10,6 +10,7 @@ namespace Integrative.Lara
     {
         public Button() : base("button")
         {
+            Type = "button";
         }
 
         public bool AutoFocus

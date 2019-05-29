@@ -67,7 +67,7 @@ namespace Integrative.Lara.Middleware
             {
                 if (document.TryGetElementById(row.ElementId, out var element))
                 {
-                    element.NotifyValue(row.Value);
+                    element.NotifyValue(row);
                 }
             }
         }

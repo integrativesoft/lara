@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
+using Integrative.Lara.Front.Tools;
 using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
@@ -164,6 +165,12 @@ namespace Integrative.Lara
 
         public IEnumerable<KeyValuePair<string, string>> Attributes => _attributes;
 
+        public bool HasClass(string className) => ClassEditor.HasClass(Class, className);
+
+        public void AddClass(string className) => Class = ClassEditor.AddClass(Class, className);
+
+        public void RemoveClass(string className) => Class = ClassEditor.RemoveClass(Class, className);
+
         #endregion
 
         #region Global attributes
@@ -172,6 +179,12 @@ namespace Integrative.Lara
         {
             get => _attributes.GetAttributeLower("accesskey");
             set { _attributes.SetAttributeLower("accesskey", value); }
+        }
+
+        public string AutoCapitalize
+        {
+            get => _attributes.GetAttributeLower("autocapitalize");
+            set { _attributes.SetAttributeLower("autocapitalize", value); }
         }
 
         public string Class
@@ -184,6 +197,12 @@ namespace Integrative.Lara
         {
             get => _attributes.GetAttributeLower("contenteditable");
             set { _attributes.SetAttributeLower("contenteditable", value); }
+        }
+
+        public string ContextMenu
+        {
+            get => _attributes.GetAttributeLower("contextmenu");
+            set { _attributes.SetAttributeLower("contextmenu", value); }
         }
 
         public string Dir
@@ -208,6 +227,12 @@ namespace Integrative.Lara
         {
             get => _attributes.HasAttributeLower("hidden");
             set { _attributes.SetFlagAttributeLower("hidden", value); }
+        }
+
+        public bool InputMode
+        {
+            get => _attributes.HasAttributeLower("inputmode");
+            set { _attributes.SetFlagAttributeLower("inputmode", value); }
         }
 
         public string Lang
@@ -343,9 +368,10 @@ namespace Integrative.Lara
             ParentElement.RemoveChild(this);
         }
 
-        internal void NotifyValue(string value)
+        internal void NotifyValue(ElementValue entry)
         {
-            _attributes.NotifyValue(value);
+            _attributes.NotifyValue(entry.Value);
+            _attributes.NotifyChecked(entry.Checked);
         }
 
         #endregion

@@ -35,6 +35,10 @@ namespace Integrative.Lara.DOM
             {
                 SetValueDelta.Enqueue(_element, value);
             }
+            else if (nameLower == "checked")
+            {
+                SetCheckedDelta.Enqueue(_element, true);
+            }
             else if (nameLower == "id")
             {
                 SetIdDelta.Enqueue(_element, value);
@@ -45,10 +49,55 @@ namespace Integrative.Lara.DOM
             }
         }
 
+        internal void RemoveAttributeLower(string nameLower)
+        {
+            _values.Remove(nameLower);
+            if (nameLower == "checked")
+            {
+                SetCheckedDelta.Enqueue(_element, false);
+            }
+            else
+            {
+                AttributeRemovedDelta.Enqueue(_element, nameLower);
+            }
+        }
+
+        internal void SetFlagAttributeLower(string nameLower, bool value)
+        {
+            bool current = _values.ContainsKey(nameLower);
+            if (value != current)
+            {
+                if (value)
+                {
+                    SetAttributeLower(nameLower, null);
+                }
+                else
+                {
+                    RemoveAttributeLower(nameLower);
+                }
+            }
+        }
+
         internal void NotifyValue(string value)
         {
             _values.Remove("value");
             _values.Add("value", value);
+        }
+
+        internal void NotifyChecked(bool isChecked)
+        {
+            bool current = _values.ContainsKey("checked");
+            if (current != isChecked)
+            {
+                if (isChecked)
+                {
+                    _values.Add("checked", null);
+                }
+                else
+                {
+                    _values.Remove("checked");
+                }
+            }
         }
 
         internal string GetAttributeLower(string nameLower)
@@ -61,24 +110,6 @@ namespace Integrative.Lara.DOM
             {
                 return string.Empty;
             }
-        }
-
-        internal void SetFlagAttributeLower(string nameLower, bool value)
-        {
-            if (value)
-            {
-                _values.Add(nameLower, null);
-            }
-            else
-            {
-                _values.Remove(nameLower);
-            }
-        }
-
-        internal void RemoveAttributeLower(string nameLower)
-        {
-            AttributeRemovedDelta.Enqueue(_element, nameLower);
-            _values.Remove(nameLower);
         }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()

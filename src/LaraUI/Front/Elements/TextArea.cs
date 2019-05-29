@@ -72,6 +72,12 @@ namespace Integrative.Lara
             set { SetIntAttribute("rows", value); }
         }
 
+        public string Value
+        {
+            get => GetAttributeLower("value");
+            set { SetAttributeLower("value", value); }
+        }
+
         public string Wrap
         {
             get => GetAttributeLower("wrap");

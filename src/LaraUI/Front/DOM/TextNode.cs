@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using System.Web;
 
 namespace Integrative.Lara
 {
@@ -31,9 +32,20 @@ namespace Integrative.Lara
         {
         }
 
-        public TextNode(string data)
+        public TextNode(string data) : this(data, false)
         {
-            _data = data;
+        }
+
+        public TextNode(string data, bool encode)
+        {
+            if (encode)
+            {
+                SetEncodedText(data);
+            }
+            else
+            {
+                _data = data;
+            }
         }
 
         internal override ContentNode GetContentNode()
@@ -42,6 +54,11 @@ namespace Integrative.Lara
             {
                 Data = _data,
             };
+        }
+
+        public void SetEncodedText(string unencoded)
+        {
+            Data = HttpUtility.HtmlEncode(unencoded);
         }
     }
 }

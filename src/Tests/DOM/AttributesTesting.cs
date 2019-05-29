@@ -43,7 +43,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetFlagAttributeAddsNullValue()
         {
-            var element = Element.Create("button");
+            var element = Element.Create("span");
             element.Hidden = true;
             Assert.True(element.HasAttribute("hidden"));
             Assert.Null(element.GetAttribute("hidden"));

@@ -16,5 +16,8 @@ namespace Integrative.Lara.Delta
 
         [DataMember]
         public string Value { get; set; }
+
+        [DataMember]
+        public bool Checked { get; set; }
     }
 }

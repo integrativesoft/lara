@@ -9,6 +9,7 @@ namespace LaraUI {
     export class ClientEventValue {
         ElementId: string;
         Value: string;
+        Checked: boolean;
     }
 
     export class ClientEventMessage {
@@ -37,6 +38,9 @@ namespace LaraUI {
                 var value = new ClientEventValue();
                 value.ElementId = input.id;
                 value.Value = input.value;
+                if (input.checked) {
+                    value.Checked = true;
+                }
                 message.Values.push(value);
             }
         }

@@ -16,7 +16,25 @@ namespace Integrative.Lara.DOM
         static ElementFactory()
         {
             _map = new Dictionary<string, Type>();
+            Register<Anchor>("a");
             Register<Button>("button");
+            Register<ColGroup>("colgroup");
+            Register<Image>("img");
+            Register<Input>("input");
+            Register<Label>("label");
+            Register<Link>("link");
+            Register<ListItem>("li");
+            Register<Meta>("meta");
+            Register<Meter>("meter");
+            Register<Option>("option");
+            Register<OptionGroup>("optgroup");
+            Register<OrderedList>("ol");
+            Register<Script>("script");
+            Register<Select>("select");
+            Register<Table>("table");
+            Register<TableCell>("td");
+            Register<TableHeader>("th");
+            Register<TextArea>("textarea");
         }
 
         private static void Register<T>(string lowerTagName) where T : Element

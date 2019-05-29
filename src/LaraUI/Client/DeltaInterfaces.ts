@@ -16,7 +16,8 @@ namespace LaraUI {
         Focus = 7,
         SetId = 8,
         SetValue = 9,
-        SubmitJS = 10
+        SubmitJS = 10,
+        SetChecked = 11
     }
 
     export interface BaseDelta {
@@ -81,6 +82,11 @@ namespace LaraUI {
 
     export interface SubmitJsDelta extends BaseDelta {
         Code: string;
+    }
+
+    export interface SetCheckedDelta extends BaseDelta {
+        ElementId: string;
+        Checked: boolean;
     }
 
 }

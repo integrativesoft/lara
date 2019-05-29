@@ -47,5 +47,11 @@ namespace Integrative.Lara
             get => GetIntAttribute("size");
             set { SetIntAttribute("size", value); }
         }
+
+        public string Value
+        {
+            get => GetAttributeLower("value");
+            set { SetAttributeLower("value", value); }
+        }
     }
 }
