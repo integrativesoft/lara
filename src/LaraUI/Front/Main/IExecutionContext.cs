@@ -4,18 +4,13 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using Microsoft.AspNetCore.Http;
 
 namespace Integrative.Lara
 {
-    public interface IExecutionContext
+    public interface IPageContext
     {
         HttpContext Http { get; }
-    }
-
-    public interface IPageContext : IExecutionContext
-    {
         Document Document { get; }
         IJSBridge JSBridge { get; }
     }
