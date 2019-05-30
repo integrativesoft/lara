@@ -18,7 +18,7 @@ namespace SampleProject
             Console.WriteLine("Starting...");
 
             // create home page
-            LaraUI.Publish("/", () => new MyPage());
+            LaraUI.Publish("/", () => new KitchenSinkForm());
 
             // start web server
             var host = await LaraUI.StartServer();
@@ -33,26 +33,6 @@ namespace SampleProject
             // wait for termination
             Console.WriteLine("Press Ctrl+C to terminate");
             await host.WaitForShutdownAsync();
-        }
-    }
-
-    class MyPage : IPage
-    {
-        int counter = 0;
-
-        public Task OnGet(IPageContext context)
-        {
-            var button = Element.Create("button");
-            var text = new TextNode("Click me");
-            button.AppendChild(text);
-            button.On("click", app =>
-            {
-                counter++;
-                text.Data = $"Times clicked: {counter}";
-                return Task.CompletedTask;
-            });
-            context.Document.Body.AppendChild(button);
-            return Task.CompletedTask;
         }
     }
 }

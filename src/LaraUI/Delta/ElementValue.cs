@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 namespace Integrative.Lara.Delta
 {
     [DataContract]
-    sealed class ElementValue
+    sealed class ElementEventValue
     {
         [DataMember]
         public string ElementId { get; set; }

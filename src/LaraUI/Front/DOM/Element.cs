@@ -171,6 +171,12 @@ namespace Integrative.Lara
 
         public void RemoveClass(string className) => Class = ClassEditor.RemoveClass(Class, className);
 
+        protected void NotifyValue(string value) => _attributes.NotifyValue(value);
+
+        protected void NotifyChecked(bool value) => _attributes.NotifyChecked(value);
+
+        protected void NotifySelected(bool value) => _attributes.NotifySelected(value);
+
         #endregion
 
         #region Global attributes
@@ -368,10 +374,8 @@ namespace Integrative.Lara
             ParentElement.RemoveChild(this);
         }
 
-        internal void NotifyValue(ElementValue entry)
+        internal virtual void NotifyValue(ElementEventValue entry)
         {
-            _attributes.NotifyValue(entry.Value);
-            _attributes.NotifyChecked(entry.Checked);
         }
 
         #endregion

@@ -4,12 +4,20 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Delta;
+
 namespace Integrative.Lara
 {
     public sealed class TextArea : Element
     {
         public TextArea() : base("textarea")
         {
+        }
+
+        internal override void NotifyValue(ElementEventValue entry)
+        {
+            base.NotifyValue(entry);
+            NotifyValue(entry.Value);
         }
 
         public bool Autofocus

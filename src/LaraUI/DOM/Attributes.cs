@@ -86,16 +86,26 @@ namespace Integrative.Lara.DOM
 
         internal void NotifyChecked(bool isChecked)
         {
-            bool current = _values.ContainsKey("checked");
-            if (current != isChecked)
+            NotifyFlag("checked", isChecked);
+        }
+
+        internal void NotifySelected(bool selected)
+        {
+            NotifyFlag("selected", selected);
+        }
+
+        private void NotifyFlag(string nameLower, bool value)
+        {
+            bool current = _values.ContainsKey(nameLower);
+            if (current != value)
             {
-                if (isChecked)
+                if (value)
                 {
-                    _values.Add("checked", null);
+                    _values.Add(nameLower, null);
                 }
                 else
                 {
-                    _values.Remove("checked");
+                    _values.Remove(nameLower);
                 }
             }
         }

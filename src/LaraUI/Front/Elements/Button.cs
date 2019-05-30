@@ -4,6 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Delta;
+
 namespace Integrative.Lara
 {
     public sealed class Button : Element
@@ -11,6 +13,12 @@ namespace Integrative.Lara
         public Button() : base("button")
         {
             Type = "button";
+        }
+
+        internal override void NotifyValue(ElementEventValue entry)
+        {
+            base.NotifyValue(entry);
+            NotifyValue(entry.Value);
         }
 
         public bool AutoFocus

@@ -4,12 +4,21 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Delta;
+
 namespace Integrative.Lara
 {
     public sealed class Input : Element
     {
         public Input() : base("input")
         {
+        }
+
+        internal override void NotifyValue(ElementEventValue entry)
+        {
+            base.NotifyValue(entry);
+            NotifyValue(entry.Value);
+            NotifyChecked(entry.Checked);
         }
 
         public string Accept

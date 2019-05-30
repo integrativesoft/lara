@@ -6,15 +6,16 @@ Author: Pablo Carbonell
 
 namespace LaraUI {
 
-    export class ClientEventValue {
+    type SimpleValueElement = HTMLButtonElement | HTMLSelectElement | HTMLTextAreaElement;
+
+    export class ElementEventValue {
         ElementId: string;
         Value: string;
         Checked: boolean;
     }
 
     export class ClientEventMessage {
-        Values: ClientEventValue[];
-
+        Values: ElementEventValue[];
         isEmpty(): boolean {
             return this.Values.length == 0;
         }
@@ -23,27 +24,42 @@ namespace LaraUI {
     export function collectValues(): ClientEventMessage {
         var message = new ClientEventMessage();
         message.Values = [];
-        collectElementType("input", message);
-        collectElementType("textarea", message);
-        collectElementType("select", message);
-        collectElementType("button", message);
+        collectType("input", message, collectInput);
+        collectType("textarea", message, collectSimpleValue);
+        collectType("button", message, collectSimpleValue);
+        collectType("select", message, collectSimpleValue);
+        collectType("option", message, collectOption);
         return message;
     }
 
-    function collectElementType(tagName: string, message: ClientEventMessage) {
+    function collectType(tagName: string,
+        message: ClientEventMessage,
+        processor: (el: Element, m: ElementEventValue) => void) {
         let list = document.getElementsByTagName(tagName);
         for (let index = 0; index < list.length; index++) {
-            let input = list[index] as HTMLInputElement;
-            if (input.id) {
-                var value = new ClientEventValue();
-                value.ElementId = input.id;
-                value.Value = input.value;
-                if (input.checked) {
-                    value.Checked = true;
-                }
-                message.Values.push(value);
+            let el = list[index];
+            if (el.id) {
+                let entry = new ElementEventValue();
+                entry.ElementId = el.id;
+                processor(el, entry);
+                message.Values.push(entry);
             }
         }
     }
 
+    function collectInput(el: Element, entry: ElementEventValue): void {
+        let input = el as HTMLInputElement;
+        entry.Value = input.value;
+        entry.Checked = input.checked;
+    }
+
+    function collectSimpleValue(el: Element, entry: ElementEventValue): void {
+        let input = el as SimpleValueElement;
+        entry.Value = input.value;
+    }
+
+    function collectOption(el: Element, entry: ElementEventValue): void {
+        let option = el as HTMLOptionElement;
+        entry.Checked = option.selected;
+    }
 }

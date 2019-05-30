@@ -8,7 +8,7 @@ namespace Integrative.Lara
 {
     public sealed class GenericElement : Element
     {
-        public GenericElement(string tagName) : base(tagName)
+        internal GenericElement(string tagName) : base(tagName)
         {
         }
     }

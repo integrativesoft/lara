@@ -4,12 +4,30 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Delta;
+
 namespace Integrative.Lara
 {
     public sealed class Select : Element
     {
         public Select() : base("select")
         {
+        }
+
+        internal override void NotifyValue(ElementEventValue entry)
+        {
+            base.NotifyValue(entry);
+            NotifyValue(entry.Value);
+        }
+
+        public void AddOption(string value, string text)
+        {
+            var option = new Option
+            {
+                Value = value
+            };
+            option.AppendChild(new TextNode(text));
+            AppendChild(option);
         }
 
         public bool Autofocus

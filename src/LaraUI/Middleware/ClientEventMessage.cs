@@ -14,6 +14,6 @@ namespace Integrative.Lara.Middleware
     sealed class ClientEventMessage
     {
         [DataMember]
-        public List<ElementValue> Values { get; set; }
+        public List<ElementEventValue> Values { get; set; }
     }
 }
