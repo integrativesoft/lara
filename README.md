@@ -8,6 +8,8 @@ Lara is a lightweight cross-platform C# library for Web UI development with DOM 
 
 Lara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
+The source code contains a [Sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
+
 ## Sample application
 
 To create a web page:
