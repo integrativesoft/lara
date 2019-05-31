@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
@@ -17,6 +18,16 @@ namespace Integrative.Lara.Tools
 {
     static class LaraTools
     {
+        static DataContractJsonSerializerSettings _jsonSettings;
+
+        static LaraTools()
+        {
+            _jsonSettings = new DataContractJsonSerializerSettings
+            {
+                EmitTypeInformation = EmitTypeInformation.Never
+            };
+        }
+
         public static void LaunchBrowser(string url)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -38,7 +49,7 @@ namespace Integrative.Lara.Tools
             var stream = new MemoryStream();
             using (var reader = new StreamReader(stream))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T));
+                var serializer = new DataContractJsonSerializer(typeof(T), _jsonSettings);
                 serializer.WriteObject(stream, instance);
                 stream.Position = 0;
                 return reader.ReadToEnd();
