@@ -93,7 +93,7 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 ## How does Lara work?
 
-Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
+Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
 ## Feedback
 
