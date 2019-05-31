@@ -1,10 +1,8 @@
 # Lara
 
-Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
+Lara is a lightweight, high-performance cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
 
 The purpose of Lara is to give you full control of the HTML document tree from the server in C#.
-
-Lara avoids page reloads by buffering the changes made on the server and flushing them to the client after each event's execution.
 
 - Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS.
 - Web UI: Create HTML5 web applications with full control of the DOM tree in C#.
