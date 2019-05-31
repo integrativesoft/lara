@@ -103,7 +103,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x1 = Element.Create("span");
             var x2 = Element.Create("span");
-            int index = x1.GetChildPosition(x2);
+            int index = x1.GetChildNodePosition(x2);
             Assert.Equal(-1, index);
         }
 

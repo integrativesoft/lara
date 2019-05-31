@@ -29,6 +29,7 @@ namespace SampleProject
             root.AppendChild(new CounterSample().Build());
             root.AppendChild(new CheckboxSample().Build());
             root.AppendChild(new SelectSample().Build());
+            root.AppendChild(new MultiselectSample().Build());
             return root;
         }
     }

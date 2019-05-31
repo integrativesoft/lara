@@ -109,12 +109,22 @@ namespace LaraUI {
 
     function editAttribute(delta: AttributeEditedDelta): void {
         let el = document.getElementById(delta.ElementId);
-        el.setAttribute(delta.Attribute, delta.Value);
+        if (el.tagName == "OPTION" && delta.Attribute == "selected") {
+            let option = el as HTMLOptionElement;
+            option.selected = true;
+        } else {
+            el.setAttribute(delta.Attribute, delta.Value);
+        }
     }
 
     function removeAttribute(delta: AttributeRemovedDelta): void {
         let el = document.getElementById(delta.ElementId);
-        el.removeAttribute(delta.Attribute);
+        if (el.tagName == "OPTION" && delta.Attribute == "selected") {
+            let option = el as HTMLOptionElement;
+            option.selected = false;
+        } else {
+            el.removeAttribute(delta.Attribute);
+        }
     }
 
     function focus(delta: FocusDelta): void {
@@ -129,9 +139,9 @@ namespace LaraUI {
 
     function resolveElement(locator: ElementLocator): HTMLElement {
         let el = document.getElementById(locator.StartingId);
-        for (let index = locator.Steps.length; index >= 0; index--) {
+        for (let index = locator.Steps.length - 1; index >= 0; index--) {
             let step = locator.Steps[index];
-            el = el.childNodes[step] as HTMLElement;
+            el = el.children[step] as HTMLElement;
         }
         return el;
     }

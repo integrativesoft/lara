@@ -83,7 +83,7 @@ namespace Integrative.Lara.DOM
             {
                 throw new InvalidOperationException(NodeNotFoundInsideParent);
             }
-            int index = _parent.GetChildPosition(_child);
+            int index = _parent.GetChildNodePosition(_child);
             if (_child is Element && _parent.Document != null)
             {
                 var list = CollectNodes();
@@ -222,7 +222,7 @@ namespace Integrative.Lara.DOM
         private void UpdateChildParentLinks(Node reference, int offset)
         {
             _child.ParentElement?.OnChildRemoved(_child);
-            int index = _parent.GetChildPosition(reference) + offset;
+            int index = _parent.GetChildNodePosition(reference) + offset;
             _parent.OnChildInsert(index, _child);
             _child.ParentElement = _parent;
             NodeInsertedDelta.Enqueue(_child, index);

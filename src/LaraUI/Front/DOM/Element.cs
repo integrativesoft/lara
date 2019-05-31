@@ -287,7 +287,7 @@ namespace Integrative.Lara
 
         public Node GetChildAt(int index) => _children[index];
 
-        public int GetChildPosition(Node node)
+        public int GetChildNodePosition(Node node)
         {
             int index = 0;
             foreach (var child in _children)
@@ -300,6 +300,24 @@ namespace Integrative.Lara
             }
             return -1;
         }
+
+        public int GetChildElementPosition(Element element)
+        {
+            int index = 0;
+            foreach (var child in _children)
+            {
+                if (child == element)
+                {
+                    return index;
+                }
+                else if (child is Element)
+                {
+                    index++;
+                }
+            }
+            return -1;
+        }
+
 
         public bool DescendsFrom(Element element)
         {

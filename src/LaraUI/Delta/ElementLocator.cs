@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -29,14 +28,6 @@ namespace Integrative.Lara.Delta
             return locator;
         }
 
-        /*private static void BuildIgnoringId(ElementLocator locator, Element element)
-        {
-            var parent = element.ParentElement;
-            int index = parent.GetChildPosition(element);
-            locator.Steps.Add(index);
-            Build(locator, parent);
-        }*/
-
         private static void Build(ElementLocator locator, Element element)
         {
             if (string.IsNullOrEmpty(element.Id))
@@ -44,7 +35,7 @@ namespace Integrative.Lara.Delta
                 var parent = element.ParentElement;
                 if (parent != null)
                 {
-                    int index = parent.GetChildPosition(element);
+                    int index = parent.GetChildElementPosition(element);
                     locator.Steps.Add(index);
                     Build(locator, parent);
                 }

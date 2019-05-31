@@ -29,7 +29,7 @@ namespace Integrative.Lara.Delta
         {
             if (node.QueueOpen)
             {
-                int index = node.ParentElement.GetChildPosition(node);
+                int index = node.ParentElement.GetChildNodePosition(node);
                 node.Document.Enqueue(new TextModifiedDelta
                 {
                     ParentElementId = node.ParentElement.EnsureElementId(),

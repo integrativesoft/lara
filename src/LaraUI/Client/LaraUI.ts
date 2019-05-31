@@ -17,6 +17,7 @@ namespace LaraUI {
     export function initialize(id: string): void {
         documentId = id;
         window.addEventListener("unload", terminate, false);
+        clean(document);
     }
     
     function terminate(): void {
@@ -67,6 +68,24 @@ namespace LaraUI {
             document.write(ajax.responseText);
         } else {
             console.log("Internal Server Error on AJAX call. Detailed exception information on the client is turned off.")
+        }
+    }
+
+    function clean(node: Node): void {
+        for (let n = 0; n < node.childNodes.length; n++) {
+            let child = node.childNodes[n];
+            if
+                (
+                child.nodeType === 8
+                ||
+                (child.nodeType === 3 && !/\S/.test(child.nodeValue))
+            ) {
+                node.removeChild(child);
+                n--;
+            }
+            else if (child.nodeType === 1) {
+                clean(child);
+            }
         }
     }
 }
