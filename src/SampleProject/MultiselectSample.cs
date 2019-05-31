@@ -40,7 +40,6 @@ namespace SampleProject
                         option.Selected = !option.Selected;
                     }
                 }
-                //_select.Disabled = !_select.Disabled;
                 return Task.CompletedTask;
             });
         }
