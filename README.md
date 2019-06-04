@@ -1,6 +1,8 @@
 # Lara
 
-Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
+Lara is a lightweight, high-performance cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
+
+The purpose of Lara is to give you full control of the HTML document tree from the server in C#.
 
 - Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS.
 - Web UI: Create HTML5 web applications with full control of the DOM tree in C#.
@@ -18,7 +20,7 @@ To create a web page:
 
 Lara uses async/await to allow for high server throughput. If you're new to these, simply follow the examples that return 'Task.CompletedTask' at the end.
 
-Source code example:
+Example:
 
 ```csharp
 namespace SampleProject
@@ -89,7 +91,7 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 ## How does Lara work?
 
-Whenever the browser triggers an event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
+Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
 ## Feedback
 
