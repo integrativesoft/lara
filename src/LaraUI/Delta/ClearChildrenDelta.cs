@@ -1,6 +1,6 @@
 ﻿/*
 Copyright (c) 2019 Integrative Software LLC
-Created: 5/2019
+Created: 6/2019
 Author: Pablo Carbonell
 */
 
@@ -9,12 +9,12 @@ using System.Runtime.Serialization;
 namespace Integrative.Lara.Delta
 {
     [DataContract]
-    sealed class FocusDelta : BaseDelta
+    sealed class ClearChildrenDelta : BaseDelta
     {
         [DataMember]
         public string ElementId { get; set; }
 
-        public FocusDelta() : base(DeltaType.Focus)
+        public ClearChildrenDelta() : base(DeltaType.ClearChildren)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Integrative.Lara.Delta
         {
             if (element.QueueOpen)
             {
-                element.Document.Enqueue(new FocusDelta
+                element.Document.Enqueue(new ClearChildrenDelta
                 {
                     ElementId = element.EnsureElementId(),
                 });

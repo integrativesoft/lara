@@ -38,11 +38,7 @@ namespace LaraUI {
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function () {
             if (this.readyState == 4) {
-                if (this.status == 200) {
-                    processAjaxResult(this);
-                } else {
-                    processAjaxError(this);
-                }
+                processAjax(this);
                 unblock(plug);
             }
         };
@@ -52,6 +48,18 @@ namespace LaraUI {
             ajax.send();
         } else {
             ajax.send(JSON.stringify(message));
+        }
+    }
+
+    function processAjax(ajax: XMLHttpRequest): void {
+        try {
+            if (ajax.status == 200) {
+                processAjaxResult(ajax);
+            } else {
+                processAjaxError(ajax);
+            }
+        } catch (error) {
+            console.log(error.message);
         }
     }
 

@@ -362,26 +362,32 @@ namespace Integrative.Lara
 
         public void AppendChild(Node node)
         {
-            var append = new DomSurgeon(this, node);
-            append.Append();
+            var append = new DomSurgeon(this);
+            append.Append(node);
         }
 
         public void InsertChildBefore(Node before, Node node)
         {
-            var append = new DomSurgeon(this, node);
-            append.InsertChildBefore(before);
+            var append = new DomSurgeon(this);
+            append.InsertChildBefore(before, node);
         }
 
         public void InsertChildAfter(Node after, Node node)
         {
-            var append = new DomSurgeon(this, node);
-            append.InsertChildAfter(after);
+            var append = new DomSurgeon(this);
+            append.InsertChildAfter(after, node);
         }
 
         public void RemoveChild(Node child)
         {
-            var remover = new DomSurgeon(this, child);
-            remover.Remove();
+            var remover = new DomSurgeon(this);
+            remover.Remove(child);
+        }
+
+        public void ClearChildren()
+        {
+            var remover = new DomSurgeon(this);
+            remover.ClearChildren();
         }
 
         public void Remove()

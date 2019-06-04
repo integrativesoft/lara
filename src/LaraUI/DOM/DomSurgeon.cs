@@ -17,81 +17,99 @@ namespace Integrative.Lara.DOM
         const string NodeNotFoundInsideParent = "Invalid child/parent nodes specified";
 
         readonly Element _parent;
-        readonly Node _child;
 
-        public DomSurgeon(Element parent, Node child)
+        public DomSurgeon(Element parent)
         {
             _parent = parent;
-            _child = child;
         }
 
         #region Public methods
 
-        public void Append()
+        public void Append(Node child)
         {
-            AppendInternal();
+            AppendInternal(child);
         }
 
-        public void InsertChildBefore(Node reference)
+        public void InsertChildBefore(Node reference, Node child)
         {
-            InsertChild(reference, 0);
+            InsertChild(reference, 0, child);
         }
 
-        public void InsertChildAfter(Node reference)
+        public void InsertChildAfter(Node reference, Node child)
         {
-            InsertChild(reference, 1);
+            InsertChild(reference, 1, child);
         }
 
-        public void Remove()
+        public void Remove(Node child)
         {
-            RemoveInternal();
+            RemoveInternal(child);
+        }
+
+        public void ClearChildren()
+        {
+            ClearChildrenInternal();
         }
 
         #region Operations
 
-        public void AppendInternal()
+        public void AppendInternal(Node child)
         {
-            bool needGenerateIds = NeedsGenerateIdsEvents();
-            PreventCycles();
-            UpdateDocumentMappings();
-            UpdateChildParentLinks();
+            bool needGenerateIds = NeedsGenerateIdsEvents(child);
+            PreventCycles(child);
+            UpdateDocumentMappings(child);
+            UpdateChildParentLinks(child);
             if (needGenerateIds)
             {
-                GenerateRequiredIds();
+                GenerateRequiredIds(child);
             }
         }
 
-        private void InsertChild(Node reference, int offset)
+        private void InsertChild(Node reference, int offset, Node child)
         {
             if (!_parent.ContainsChild(reference))
             {
                 throw new InvalidOperationException(ReferenceNodeNotFound);
             }
-            bool needGenerateIds = NeedsGenerateIdsEvents();
-            PreventCycles();
-            UpdateDocumentMappings();
-            UpdateChildParentLinks(reference, offset);
+            bool needGenerateIds = NeedsGenerateIdsEvents(child);
+            PreventCycles(child);
+            UpdateDocumentMappings(child);
+            UpdateChildParentLinks(reference, offset, child);
             if (needGenerateIds)
             {
-                GenerateRequiredIds();
+                GenerateRequiredIds(child);
             }
         }
 
-        private void RemoveInternal()
+        private void RemoveInternal(Node child)
         {
-            if (_child.ParentElement != _parent)
+            if (child.ParentElement != _parent)
             {
                 throw new InvalidOperationException(NodeNotFoundInsideParent);
             }
-            int index = _parent.GetChildNodePosition(_child);
-            if (_child is Element && _parent.Document != null)
+            int index = _parent.GetChildNodePosition(child);
+            RemoveInternalCommon(child);
+            NodeRemovedDelta.Enqueue(_parent, index);
+        }
+
+        private void ClearChildrenInternal()
+        {
+            while (_parent.ChildCount > 0)
             {
-                var list = CollectNodes();
+                var child = _parent.GetChildAt(_parent.ChildCount - 1);
+                RemoveInternalCommon(child);
+            }
+            ClearChildrenDelta.Enqueue(_parent);
+        }
+
+        private void RemoveInternalCommon(Node child)
+        {
+            if (child is Element && _parent.Document != null)
+            {
+                var list = CollectNodes(child);
                 RemoveFromPreviousDocument(list, _parent.Document);
             }
-            _parent.OnChildRemoved(_child);
-            _child.ParentElement = null;
-            NodeRemovedDelta.Enqueue(_parent, index);
+            _parent.OnChildRemoved(child);
+            child.ParentElement = null;
         }
 
         #endregion
@@ -100,9 +118,9 @@ namespace Integrative.Lara.DOM
 
         #region Prevent cycles in DOM tree
 
-        private void PreventCycles()
+        private void PreventCycles(Node child)
         {
-            if (_child is Element element && _parent.DescendsFrom(element))
+            if (child is Element element && _parent.DescendsFrom(element))
             {
                 throw new InvalidOperationException(CannotAddInsideItself);
             }
@@ -112,14 +130,14 @@ namespace Integrative.Lara.DOM
 
         #region Update parent document and ID maps
 
-        private void UpdateDocumentMappings()
+        private void UpdateDocumentMappings(Node child)
         {
-            bool newToDocument = NewToDocument();
-            bool leavingPrevious = LeavingPrevious();
+            bool newToDocument = NewToDocument(child);
+            bool leavingPrevious = LeavingPrevious(child);
             if (newToDocument || leavingPrevious)
             {
-                var previous = _child.Document;
-                var list = CollectNodes();
+                var previous = child.Document;
+                var list = CollectNodes(child);
                 if (leavingPrevious)
                 {
                     RemoveFromPreviousDocument(list, previous);
@@ -132,22 +150,22 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private bool NewToDocument()
+        private bool NewToDocument(Node child)
         {
             return _parent.Document != null
-                && _child.Document != _parent.Document;
+                && child.Document != _parent.Document;
         }
 
-        private bool LeavingPrevious()
+        private bool LeavingPrevious(Node child)
         {
-            return _child.Document != null
-                && _child.Document != _parent.Document;
+            return child.Document != null
+                && child.Document != _parent.Document;
         }
 
-        private List<Node> CollectNodes()
+        private List<Node> CollectNodes(Node child)
         {
             var list = new List<Node>();
-            CollectElements(list, _child);
+            CollectElements(list, child);
             return list;
         }
 
@@ -211,37 +229,32 @@ namespace Integrative.Lara.DOM
 
         #region Update Children collections and ParentElement reference
 
-        private void UpdateChildParentLinks()
+        private void UpdateChildParentLinks(Node child)
         {
-            _child.ParentElement?.OnChildRemoved(_child);
-            _parent.OnChildAppend(_child);
-            _child.ParentElement = _parent;
-            NodeAddedDelta.Enqueue(_child);
+            child.ParentElement?.OnChildRemoved(child);
+            _parent.OnChildAppend(child);
+            child.ParentElement = _parent;
+            NodeAddedDelta.Enqueue(child);
         }
 
-        private void UpdateChildParentLinks(Node reference, int offset)
+        private void UpdateChildParentLinks(Node reference, int offset, Node child)
         {
-            _child.ParentElement?.OnChildRemoved(_child);
+            child.ParentElement?.OnChildRemoved(child);
             int index = _parent.GetChildNodePosition(reference) + offset;
-            _parent.OnChildInsert(index, _child);
-            _child.ParentElement = _parent;
-            NodeInsertedDelta.Enqueue(_child, index);
+            _parent.OnChildInsert(index, child);
+            child.ParentElement = _parent;
+            NodeInsertedDelta.Enqueue(child, index);
         }
 
         #endregion
 
         #region Generate IDs for elements with events
 
-        private bool NeedsGenerateIdsEvents()
+        private bool NeedsGenerateIdsEvents(Node child)
         {
-            return _child is Element
-                && _child.Document == null
+            return child is Element
+                && child.Document == null
                 && _parent.Document != null;
-        }
-
-        private void GenerateRequiredIds()
-        {
-            GenerateRequiredIds(_child);
         }
 
         private void GenerateRequiredIds(Node node)

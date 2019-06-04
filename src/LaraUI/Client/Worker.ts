@@ -47,6 +47,9 @@ namespace LaraUI {
             case DeltaType.SetChecked:
                 setChecked(step as SetCheckedDelta);
                 break;
+            case DeltaType.ClearChildren:
+                clearChildren(step as ClearChildrenDelta);
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }
@@ -54,7 +57,7 @@ namespace LaraUI {
 
     function append(delta: NodeAddedDelta): void {
         let el = document.getElementById(delta.ParentId);
-        let child = createNode(delta.NodeAdded);
+        let child = createNode(delta.Node);
         el.appendChild(child);
     }
 
@@ -81,7 +84,9 @@ namespace LaraUI {
     }
 
     function createTextNode(node: ContentTextNode): Node {
-        return document.createTextNode(node.Data);
+        let div = document.createElement("div");
+        div.innerHTML = node.Data;
+        return document.createTextNode(div.innerText);
     }
 
     function createElementNode(node: ContentElementNode): Node {
@@ -162,5 +167,12 @@ namespace LaraUI {
     function setChecked(delta: SetCheckedDelta): void {
         let input = document.getElementById(delta.ElementId) as HTMLInputElement;
         input.checked = delta.Checked;
+    }
+
+    function clearChildren(delta: ClearChildrenDelta): void {
+        let parent = document.getElementById(delta.ElementId);
+        while (parent.lastChild) {
+            parent.removeChild(parent.lastChild);
+        }
     }
 }

@@ -63,6 +63,11 @@ namespace Integrative.Lara
 
         public LaraBuilder AddTextNode(TextNode node)
         {
+            return AddNode(node);
+        }
+
+        public LaraBuilder AddNode(Node node)
+        {
             var current = _stack.Peek();
             current.AppendChild(node);
             return this;

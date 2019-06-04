@@ -17,7 +17,8 @@ namespace LaraUI {
         SetId = 8,
         SetValue = 9,
         SubmitJS = 10,
-        SetChecked = 11
+        SetChecked = 11,
+        ClearChildren = 12
     }
 
     export interface BaseDelta {
@@ -30,7 +31,7 @@ namespace LaraUI {
 
     export interface NodeAddedDelta extends BaseDelta {
         ParentId: string;
-        NodeAdded: ContentNode;
+        Node: ContentNode;
     }
 
     export interface NodeInsertedDelta extends BaseDelta {
@@ -87,6 +88,10 @@ namespace LaraUI {
     export interface SetCheckedDelta extends BaseDelta {
         ElementId: string;
         Checked: boolean;
+    }
+
+    export interface ClearChildrenDelta extends BaseDelta {
+        ElementId: string;
     }
 
 }

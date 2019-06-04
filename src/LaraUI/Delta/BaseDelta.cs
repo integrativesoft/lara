@@ -20,7 +20,8 @@ namespace Integrative.Lara.Delta
         SetId = 8,
         SetValue = 9,
         SubmitJS = 10,
-        SetChecked = 11
+        SetChecked = 11,
+        ClearChildren = 12
     }
 
     [DataContract]
@@ -35,6 +36,7 @@ namespace Integrative.Lara.Delta
     [KnownType(typeof(SetValueDelta))]
     [KnownType(typeof(SubmitJsDelta))]
     [KnownType(typeof(SetCheckedDelta))]
+    [KnownType(typeof(ClearChildrenDelta))]
     abstract class BaseDelta
     {
         [DataMember]
