@@ -12,7 +12,7 @@
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara UI</Product>
-    <Description>Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering. For more information see our github page available from https://laraui.com</Description>
+    <Description>Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering. For more information see our Github page available from https://laraui.com</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
