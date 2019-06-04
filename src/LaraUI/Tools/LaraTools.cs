@@ -18,7 +18,7 @@ namespace Integrative.Lara.Tools
 {
     static class LaraTools
     {
-        static DataContractJsonSerializerSettings _jsonSettings;
+        readonly static DataContractJsonSerializerSettings _jsonSettings;
 
         static LaraTools()
         {
@@ -32,15 +32,15 @@ namespace Integrative.Lara.Tools
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}")); // Works ok on windows
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}"));
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                Process.Start("xdg-open", url);  // Works ok on linux
+                Process.Start("xdg-open", url);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                Process.Start("open", url); // Not tested
+                Process.Start("open", url);
             }
         }
 

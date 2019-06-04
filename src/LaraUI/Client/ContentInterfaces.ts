@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 namespace LaraUI {
+
     export enum ContentNodeType {
         Element = 1,
         Text = 2

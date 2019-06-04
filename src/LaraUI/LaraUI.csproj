@@ -12,7 +12,7 @@
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara UI</Product>
-    <Description>Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.</Description>
+    <Description>Lara is a lightweight cross-platform C# library for Web UI development with DOM manipulation and server-side rendering. For more information see our github page available from https://laraui.com</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -30,6 +30,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <None Remove="Client\Blocker.ts" />
     <None Remove="Client\ContentInterfaces.ts" />
     <None Remove="Client\DeltaInterfaces.ts" />
     <None Remove="Client\InputCollector.ts" />
@@ -48,7 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.4.5">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.5.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -25,18 +25,16 @@ namespace LaraUI {
         navigator.sendBeacon(url);
     }
 
-    export function plug(el: Element, eventName: string): void {
-        let url = getEventUrl(el, eventName);
-        sendAjax(url);
+    export interface PlugOptions {
+        EventName: string;
+        Block: boolean;
+        BlockElementId: string;
+        BlockHTML: string;
     }
 
-    function getEventUrl(el: Element, eventName: string): string {
-        return "/_event?doc=" + documentId
-            + "&el=" + el.id
-            + "&ev=" + eventName;
-    }
-
-    function sendAjax(url: string): void {
+    export function plug(el: Element, plug: PlugOptions): void {
+        block(plug);
+        let url = getEventUrl(el, plug.EventName);
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function () {
             if (this.readyState == 4) {
@@ -45,6 +43,7 @@ namespace LaraUI {
                 } else {
                     processAjaxError(this);
                 }
+                unblock(plug);
             }
         };
         let message = collectValues();
@@ -54,6 +53,12 @@ namespace LaraUI {
         } else {
             ajax.send(JSON.stringify(message));
         }
+    }
+
+    function getEventUrl(el: Element, eventName: string): string {
+        return "/_event?doc=" + documentId
+            + "&el=" + el.id
+            + "&ev=" + eventName;
     }
 
     function processAjaxResult(ajax: XMLHttpRequest): void {

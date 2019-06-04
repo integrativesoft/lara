@@ -20,7 +20,8 @@ namespace Integrative.Lara
     {
         private readonly Attributes _attributes;
         private readonly List<Node> _children;
-        private readonly Dictionary<string, Func<IPageContext, Task>> _events;
+
+        internal Dictionary<string, Func<IPageContext, Task>> Events { get; }
 
         private string _id;
         public string TagName { get; }
@@ -38,14 +39,14 @@ namespace Integrative.Lara
         {
             _attributes = new Attributes(this);
             _children = new List<Node>();
-            _events = new Dictionary<string, Func<IPageContext, Task>>();
+            Events = new Dictionary<string, Func<IPageContext, Task>>();
             TagName = tagName.ToLowerInvariant();
         }
 
         public override NodeType NodeType => NodeType.Element;
 
         internal bool NeedsId => string.IsNullOrEmpty(_id)
-            && (_events.Count > 0 || HtmlReference.RequiresId(TagName));
+            && (Events.Count > 0 || HtmlReference.RequiresId(TagName));
 
         public override string ToString()
         {
@@ -440,7 +441,7 @@ namespace Integrative.Lara
 
         internal async Task NotifyEvent(string eventName, IPageContext context)
         {
-            if (_events.TryGetValue(eventName, out var handler))
+            if (Events.TryGetValue(eventName, out var handler))
             {
                 await handler(context);
             }
@@ -448,30 +449,12 @@ namespace Integrative.Lara
 
         public void On(string eventName, Func<IPageContext, Task> handler)
         {
-            eventName = HttpUtility.HtmlEncode(eventName.ToLowerInvariant());
-            _events.Remove(eventName);
-            if (handler == null)
-            {
-                string attribute = GetEventAttribute(eventName);
-                RemoveAttribute(attribute);
-            }
-            else
-            {
-                _events.Add(eventName, handler);
-                WriteEvent(eventName);
-            }
+            EventWriter.On(this, eventName, handler);
         }
 
-        private void WriteEvent(string eventName)
+        public void On(EventSettings settings)
         {
-            string attribute = GetEventAttribute(eventName);
-            string value = $"LaraUI.plug(this, '{eventName}');";
-            SetAttribute(attribute, value);
-        }
-
-        private static string GetEventAttribute(string eventName)
-        {
-            return "on" + eventName;
+            EventWriter.On(this, settings);
         }
 
         #endregion

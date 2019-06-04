@@ -101,7 +101,7 @@ namespace Integrative.Lara.DOM
                 {
                     _builder.Append('=');
                     _builder.Append('"');
-                    _builder.Append(value);
+                    _builder.Append(HttpUtility.HtmlAttributeEncode(value));
                     _builder.Append('"');
                 }
             }

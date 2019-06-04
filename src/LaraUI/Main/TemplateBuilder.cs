@@ -48,18 +48,36 @@ namespace Integrative.Lara.Main
             meta.SetAttribute("charset", "utf-8");
             head.AppendChild(meta);
 
+            // jQuery.js
+            var script = new Script
+            {
+                Src = "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js",
+                Defer = true
+            };
+            head.AppendChild(script);
+
+            // BlockUI.js
+            script = new Script
+            {
+                Src = "https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js",
+                Defer = true
+            };
+            head.AppendChild(script);
+
             // LaraUI.js
-            var script = Element.Create("script");
-            script.SetAttribute("src", _libraryUrl);
-            script.SetAttribute("defer", null);
+            script = new Script
+            {
+                Src = _libraryUrl,
+                Defer = true
+            };
             head.AppendChild(script);
 
             // initialization script
-            script = Element.Create("script");
+            var tag = Element.Create("script");
             string value = _document.VirtualId.ToString(GlobalConstants.GuidFormat);
             string code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{value}'); }});";
-            script.AppendChild(new TextNode { Data = code });
-            head.AppendChild(script);
+            tag.AppendChild(new TextNode { Data = code });
+            head.AppendChild(tag);
         }
     }
 }
