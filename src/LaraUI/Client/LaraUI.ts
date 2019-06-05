@@ -5,7 +5,7 @@ Author: Pablo Carbonell
 */
 
 /*
-Lara is a server-side DOM rendering library for C#
+Lara is a server-side DOM rendering library for C#.
 This file is the client runtime for Lara.
 https://laraui.com
 */
