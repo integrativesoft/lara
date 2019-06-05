@@ -32,11 +32,18 @@ namespace Integrative.Lara.Main
         {
             var connection = GetConnection(http);
             var document = connection.CreateDocument(page);
-            var execution = new ExecutionContext(http, document);
+            var execution = new PageContext(http, document);
             await page.OnGet(execution);
-            document.OpenEventQueue();
-            string html = WriteDocument(execution.Document);
-            await ReplyDocument(http, html);
+            if (!string.IsNullOrEmpty(execution.RedirectLocation))
+            {
+                http.Response.Redirect(execution.RedirectLocation);
+            }
+            else
+            {
+                document.OpenEventQueue();
+                string html = WriteDocument(execution.Document);
+                await ReplyDocument(http, html);
+            }
         }
 
         private static Connection GetConnection(HttpContext http)

@@ -13,6 +13,7 @@ namespace Integrative.Lara
         HttpContext Http { get; }
         Document Document { get; }
         IJSBridge JSBridge { get; }
+        INavigation Navigation { get; }
     }
 
     public interface IJSBridge

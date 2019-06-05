@@ -45,7 +45,7 @@ namespace Integrative.Lara.Middleware
         internal static async Task RunEvent(HttpContext http, EventParameters parameters, Element element)
         {
             var document = element.Document;
-            var context = new ExecutionContext(http, document);
+            var context = new PageContext(http, document);
             ProcessMessageIfNeeded(document, parameters);
             await element.NotifyEvent(parameters.EventName, context);
             string queue = document.FlushQueue();

@@ -50,6 +50,9 @@ namespace LaraUI {
             case DeltaType.ClearChildren:
                 clearChildren(step as ClearChildrenDelta);
                 break;
+            case DeltaType.Replace:
+                replaceLocation(step as ReplaceDelta);
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }
@@ -174,5 +177,9 @@ namespace LaraUI {
         while (parent.lastChild) {
             parent.removeChild(parent.lastChild);
         }
+    }
+
+    function replaceLocation(delta: ReplaceDelta): void {
+        location.replace(delta.Location);
     }
 }
