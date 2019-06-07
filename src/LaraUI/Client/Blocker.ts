@@ -13,7 +13,7 @@ namespace LaraUI {
             if (target) {
                 ($(target) as any).block(params);
             } else {
-                ($ as any).blockUI(params);
+                $.blockUI(params);
             }
         }
     }
@@ -24,13 +24,13 @@ namespace LaraUI {
             if (target) {
                 ($(target) as any).unblock();
             } else {
-                ($ as any).unblockUI();
+                $.unblockUI();
             }
         }
     }
 
-    function buildParameters(plug: PlugOptions): any {
-        let result: any = {};
+    function buildParameters(plug: PlugOptions): blockUISettings {
+        let result: blockUISettings = {};
         if (plug.BlockHTML == "") {
             result.message = null;
         } else if (plug.BlockHTML) {

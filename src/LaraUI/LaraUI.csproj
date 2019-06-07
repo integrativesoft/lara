@@ -19,6 +19,8 @@ In a nutshell, Lara:
 - Avoids page refreshes by exchanging differentials between server and client.
 - Has a pure C# approach that makes it easy to extend and feels natural to program with.
 
+Lara is a C# alternative to JavaScript frameworks like React, Angular or Vue.
+
 For more information see our Github page available from laraui.com</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
@@ -38,6 +40,7 @@ For more information see our Github page available from laraui.com</Description>
   
   <ItemGroup>
     <None Remove="Client\Blocker.ts" />
+    <None Remove="Client\BlockUiDeclarations.ts" />
     <None Remove="Client\ContentInterfaces.ts" />
     <None Remove="Client\DeltaInterfaces.ts" />
     <None Remove="Client\InputCollector.ts" />

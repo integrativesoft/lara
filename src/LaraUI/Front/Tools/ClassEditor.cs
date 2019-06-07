@@ -54,6 +54,18 @@ namespace Integrative.Lara.Front.Tools
             return left + right;
         }
 
+        public static string ToggleClass(string previous, string name, bool value)
+        {
+            if (value)
+            {
+                return AddClass(previous, name);
+            }
+            else
+            {
+                return RemoveClass(previous, name);
+            }
+        }
+
         public static bool HasClass(string elementClass, string className)
         {
             if (string.IsNullOrWhiteSpace(className))

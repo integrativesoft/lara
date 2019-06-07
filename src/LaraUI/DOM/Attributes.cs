@@ -29,7 +29,14 @@ namespace Integrative.Lara.DOM
 
         internal void SetAttributeLower(string nameLower, string value)
         {
-            _values.Remove(nameLower);
+            if (_values.TryGetValue(nameLower, out var previous))
+            {
+                if (previous == value)
+                {
+                    return;
+                }
+                _values.Remove(nameLower);
+            }
             _values.Add(nameLower, value);
             if (nameLower == "value")
             {

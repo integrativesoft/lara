@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
@@ -73,10 +74,55 @@ namespace Integrative.Lara
             return this;
         }
 
+        public LaraBuilder AddNodes(IEnumerable<Node> nodes)
+        {
+            var current = _stack.Peek();
+            foreach (var node in nodes)
+            {
+                current.AppendChild(node);
+            }
+            return this;
+        }
+
+        public LaraBuilder AddNodes(IEnumerable<Element> nodes)
+        {
+            var current = _stack.Peek();
+            foreach (var node in nodes)
+            {
+                current.AppendChild(node);
+            }
+            return this;
+        }
+
+        public LaraBuilder Add(Action<LaraBuilder> action)
+        {
+            action(this);
+            return this;
+        }
+
         public LaraBuilder Attribute(string attribute, string value)
         {
             var current = _stack.Peek();
             current.SetAttribute(attribute, value);
+            return this;
+        }
+
+        public LaraBuilder FlagAttribute(string attribute, bool value)
+        {
+            var current = _stack.Peek();
+            current.SetFlagAttribute(attribute, value);
+            return this;
+        }
+
+        public LaraBuilder On(string eventName, Func<IPageContext, Task> handler)
+        {
+            _stack.Peek().On(eventName, handler);
+            return this;
+        }
+
+        public LaraBuilder On(EventSettings settings)
+        {
+            _stack.Peek().On(settings);
             return this;
         }
     }

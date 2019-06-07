@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Integrative.Lara
 {
@@ -172,6 +171,8 @@ namespace Integrative.Lara
 
         public void RemoveClass(string className) => Class = ClassEditor.RemoveClass(Class, className);
 
+        public void ToggleClass(string className, bool value) => Class = ClassEditor.ToggleClass(Class, className, value);
+
         protected void NotifyValue(string value) => _attributes.NotifyValue(value);
 
         protected void NotifyChecked(bool value) => _attributes.NotifyChecked(value);
@@ -322,7 +323,11 @@ namespace Integrative.Lara
 
         public bool DescendsFrom(Element element)
         {
-            if (element == null || ParentElement == null)
+            if (this == element)
+            {
+                return true;
+            }
+            else if (element == null || ParentElement == null)
             {
                 return false;
             }
