@@ -71,8 +71,12 @@ namespace LaraUI {
 
     function processAjaxResult(ajax: XMLHttpRequest): void {
         let result = JSON.parse(ajax.responseText) as EventResult;
-        if (result.List) {
-            processResult(result.List);
+        if (result.ResultType == EventResultType.Success) {
+            if (result.List) {
+                processResult(result.List);
+            }
+        } else {
+            location.reload();
         }
     }
 

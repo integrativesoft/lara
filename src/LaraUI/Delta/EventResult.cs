@@ -10,9 +10,18 @@ using System.Runtime.Serialization;
 
 namespace Integrative.Lara.Delta
 {
+    enum EventResultType
+    {
+        Success = 0,
+        NoSession = 1,
+    }
+
     [DataContract]
     sealed class EventResult
     {
+        [DataMember]
+        public EventResultType ResultType { get; set; }
+
         [DataMember]
         public List<BaseDelta> List { get; set; }
 

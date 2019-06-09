@@ -36,6 +36,7 @@ namespace LaraUI {
         } else if (plug.BlockHTML) {
             result.message = plug.BlockHTML;
         }
+        result.baseZ = 2000;
         return result;
     }
 

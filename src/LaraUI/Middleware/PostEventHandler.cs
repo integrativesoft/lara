@@ -4,7 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
+using Integrative.Lara.Delta;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
@@ -27,19 +27,28 @@ namespace Integrative.Lara.Middleware
         {
             if (http.Request.Method == "POST"
                 && http.Request.Path == "/_event"
-                && EventParameters.TryParse(http.Request.Query, out var parameters)
-                && MiddlewareCommon.TryFindConnection(http, out var connection)
-                && connection.TryGetDocument(parameters.DocumentId, out var document)
-                && document.TryGetElementById(parameters.ElementId, out var element))
+                && EventParameters.TryParse(http.Request.Query, out var parameters))
             {
-                await parameters.ReadMessage(http);
-                using (var access = await document.Semaphore.UseWaitAsync())
+                if (MiddlewareCommon.TryFindConnection(http, out var connection)
+                    && connection.TryGetDocument(parameters.DocumentId, out var document)
+                    && document.TryGetElementById(parameters.ElementId, out var element))
                 {
-                    await RunEvent(http, parameters, element);
+                    await parameters.ReadMessage(http);
+                    using (var access = await document.Semaphore.UseWaitAsync())
+                    {
+                        await RunEvent(http, parameters, element);
+                    }
+                }
+                else
+                {
+                    await SendReload(http);
                 }
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         internal static async Task RunEvent(HttpContext http, EventParameters parameters, Element element)
@@ -78,6 +87,16 @@ namespace Integrative.Lara.Middleware
             MiddlewareCommon.AddHeaderJSON(http);
             await MiddlewareCommon.WriteUtf8Buffer(http, json);
             EventComplete?.Invoke(http, _eventArgs);
+        }
+
+        private static async Task SendReload(HttpContext http)
+        {
+            var reply = new EventResult
+            {
+                ResultType = EventResultType.NoSession
+            };
+            string json = reply.ToJSON();
+            await SendReply(http, json);
         }
     }
 }

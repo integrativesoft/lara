@@ -6,6 +6,11 @@ Author: Pablo Carbonell
 
 namespace LaraUI {
 
+    export enum EventResultType {
+        Success = 0,
+        NoSession = 1
+    }
+
     export enum DeltaType {
         Append = 1,
         Insert = 2,
@@ -27,6 +32,7 @@ namespace LaraUI {
     }
 
     export interface EventResult {
+        ResultType: EventResultType;
         List: BaseDelta[];
     }
 
