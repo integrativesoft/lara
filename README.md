@@ -12,6 +12,8 @@ Lara can be used to develop either websites or desktop apps with an HTML5 fronte
 
 The source code contains a [Sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
+We'd love to hear your feedback. Write to us [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
+
 ## Sample application
 
 To create a web page:
