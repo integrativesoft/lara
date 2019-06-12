@@ -34,6 +34,11 @@ namespace Integrative.Lara.Main
             var document = connection.CreateDocument(page);
             var execution = new PageContext(http, document);
             await page.OnGet(execution);
+            await ProcessGetResult(http, document, execution);
+        }
+
+        internal static async Task ProcessGetResult(HttpContext http, Document document, PageContext execution)
+        {
             if (!string.IsNullOrEmpty(execution.RedirectLocation))
             {
                 http.Response.Redirect(execution.RedirectLocation);

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
@@ -101,6 +102,11 @@ namespace Integrative.Lara
             }
             var result = new EventResult(list);
             return result.ToJSON();
+        }
+
+        internal void OnMessage(string key, Func<IPageContext, Task> handler)
+        {
+            Head.On("_" + key, handler);
         }
     }
 }

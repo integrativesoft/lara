@@ -55,19 +55,24 @@ namespace Integrative.Lara.Middleware
         {
             var document = element.Document;
             var context = new PageContext(http, document);
-            ProcessMessageIfNeeded(document, parameters);
+            ProcessMessageIfNeeded(context, parameters);
             await element.NotifyEvent(parameters.EventName, context);
             string queue = document.FlushQueue();
             await SendReply(http, queue);
         }
 
-        private static void ProcessMessageIfNeeded(Document document, EventParameters parameters)
+        internal static void ProcessMessageIfNeeded(PageContext context, EventParameters parameters)
         {
             var message = parameters.Message;
-            if (message != null && message.Values != null)
+            if (message == null)
             {
-                ProcessMessage(document, message);
+                return;
             }
+            if (message.Values != null)
+            {
+                ProcessMessage(context.Document, message);
+            }
+            context.SetExtraData(message.ExtraData);
         }
 
         private static void ProcessMessage(Document document, ClientEventMessage message)

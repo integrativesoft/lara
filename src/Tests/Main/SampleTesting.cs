@@ -210,5 +210,87 @@ namespace Integrative.Lara.Tests.Main
                 return Task.CompletedTask;
             }
         }
+
+        class MyMessagePage : IPage
+        {
+            public string Received { get; private set; }
+
+            public Task OnGet(IPageContext context)
+            {
+                var button = Element.Create("button", "mybutton");
+                var text = new TextNode("test message");
+                button.AppendChild(text);
+                button.SetAttribute("onclick", "LaraUI.sendMessage( { key: 'hello', data: 'mydata' } );");
+                context.Document.Body.AppendChild(button);
+                context.JSBridge.OnMessage("hello", app =>
+                {
+                    Received = app.JSBridge.EventData;
+                    return Task.CompletedTask;
+                });
+                return Task.CompletedTask;
+            }
+        }
+
+        [Fact]
+        public async void RunJsMessage()
+        {
+            var page = new MyMessagePage();
+            LaraUI.Publish("/", () => page);
+            using (var host = await LaraUI.StartServer())
+            {
+                string address = LaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var button = _driver.FindElement(By.TagName("button"));
+                await WaitForEvent(() => button.Click());
+
+                Assert.Equal("mydata", page.Received);
+            }
+        }
+
+        [Fact]
+        public async void ReplacePost()
+        {
+            var page = new MyReplacePage();
+            var redirect = new MyLandingPage();
+            LaraUI.Publish("/", () => page);
+            LaraUI.Publish("/landing", () => redirect);
+            using (var host = await LaraUI.StartServer())
+            {
+                string address = LaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var button = _driver.FindElement(By.TagName("button"));
+                await WaitForEvent(() => button.Click());
+
+                Assert.Equal(1, redirect.Counter);
+            }
+        }
+
+        class MyReplacePage : IPage
+        {
+            public Task OnGet(IPageContext context)
+            {
+                var button = Element.Create("button", "mybutton");
+                var text = new TextNode("test replace post");
+                button.AppendChild(text);
+                button.On("click", app =>
+                {
+                    app.Navigation.Replace("landing");
+                    return Task.CompletedTask;
+                });
+                context.Document.Body.AppendChild(button);
+                return Task.CompletedTask;
+            }
+        }
+
+        class MyLandingPage : IPage
+        {
+            public int Counter { get; private set; } = 0;
+
+            public Task OnGet(IPageContext context)
+            {
+                Counter++;
+                return Task.CompletedTask;
+            }
+        }
     }
 }

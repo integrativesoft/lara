@@ -369,18 +369,21 @@ namespace Integrative.Lara
         {
             var append = new DomSurgeon(this);
             append.Append(node);
+            OnChildAdded(node);
         }
 
         public void InsertChildBefore(Node before, Node node)
         {
             var append = new DomSurgeon(this);
             append.InsertChildBefore(before, node);
+            OnChildAdded(node);
         }
 
         public void InsertChildAfter(Node after, Node node)
         {
             var append = new DomSurgeon(this);
             append.InsertChildAfter(after, node);
+            OnChildAdded(node);
         }
 
         public void RemoveChild(Node child)
@@ -405,6 +408,10 @@ namespace Integrative.Lara
         }
 
         internal virtual void NotifyValue(ElementEventValue entry)
+        {
+        }
+
+        protected virtual void OnChildAdded(Node child)
         {
         }
 

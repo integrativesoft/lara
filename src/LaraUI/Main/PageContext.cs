@@ -28,5 +28,7 @@ namespace Integrative.Lara.Main
         public INavigation Navigation => _navigation;
 
         public string RedirectLocation => _navigation.RedirectLocation;
+
+        internal void SetExtraData(string data) => _bridge.EventData = data;
     }
 }

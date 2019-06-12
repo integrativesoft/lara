@@ -16,8 +16,10 @@ namespace LaraUI {
 
     export class ClientEventMessage {
         Values: ElementEventValue[];
+        ExtraData: string;
         isEmpty(): boolean {
-            return this.Values.length == 0;
+            return this.Values.length == 0
+                && !this.ExtraData;
         }
     }
 

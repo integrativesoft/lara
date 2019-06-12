@@ -30,6 +30,7 @@ namespace LaraUI {
         Block: boolean;
         BlockElementId: string;
         BlockHTML: string;
+        ExtraData?: string;
     }
 
     export function plug(el: Element, plug: PlugOptions): void {
@@ -43,12 +44,32 @@ namespace LaraUI {
             }
         };
         let message = collectValues();
+        message.ExtraData = plug.ExtraData;
         ajax.open("POST", url, true);
         if (message.isEmpty()) {
             ajax.send();
         } else {
             ajax.send(JSON.stringify(message));
         }
+    }
+
+    export interface MessageOptions {
+        key: string;
+        data?: string;
+        block?: boolean;
+        blockElementId?: string;
+        blockHtml?: string;
+    }
+
+    export function sendMessage(options: MessageOptions): void {
+        let params: PlugOptions = {
+            EventName: "_" + options.key,
+            Block: options.block,
+            BlockElementId: options.blockHtml,
+            BlockHTML: options.blockHtml,
+            ExtraData: options.data
+        };
+        plug(document.head, params);
     }
 
     function processAjax(ajax: XMLHttpRequest): void {
@@ -85,24 +106,6 @@ namespace LaraUI {
             document.write(ajax.responseText);
         } else {
             console.log("Internal Server Error on AJAX call. Detailed exception information on the client is turned off.")
-        }
-    }
-
-    function clean(node: Node): void {
-        for (let n = 0; n < node.childNodes.length; n++) {
-            let child = node.childNodes[n];
-            if
-                (
-                child.nodeType === 8
-                ||
-                (child.nodeType === 3 && !/\S/.test(child.nodeValue))
-            ) {
-                node.removeChild(child);
-                n--;
-            }
-            else if (child.nodeType === 1) {
-                clean(child);
-            }
         }
     }
 }

@@ -75,5 +75,28 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Empty(element.GetAttribute("data-test"));
         }
 
+        [Fact]
+        public void ReplacingSameValueNoQueue()
+        {
+            var element = Element.Create("div");
+            element.Class = "lala";
+            var document = new Document(new MyPage());
+            document.Body.AppendChild(element);
+            document.OpenEventQueue();
+            element.Class = "lala";
+            Assert.Empty(document.GetQueue());
+        }
+
+        [Fact]
+        public void NotifySelectedSetsSelected()
+        {
+            var option = new Option();
+            option.NotifyValue(new ElementEventValue
+            {
+                Checked = true,
+            });
+            Assert.True(option.Selected);
+        }
+
     }
 }

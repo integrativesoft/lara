@@ -15,5 +15,8 @@ namespace Integrative.Lara.Middleware
     {
         [DataMember]
         public List<ElementEventValue> Values { get; set; }
+
+        [DataMember]
+        public string ExtraData { get; set; }
     }
 }

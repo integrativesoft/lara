@@ -327,5 +327,18 @@ namespace Integrative.Lara.Tests.DOM
             var b = Element.Create("span");
             Throws<InvalidOperationException>(() => a.RemoveChild(b));
         }
+
+        [Fact]
+        public void ClearChildrenRemovesThem()
+        {
+            var div = Element.Create("div");
+            var span1 = Element.Create("span");
+            var span2 = Element.Create("span");
+            div.AppendChild(span1);
+            div.AppendChild(span2);
+            div.ClearChildren();
+            Assert.Empty(div.Children);
+            Assert.Equal(0, div.ChildCount);
+        }
     }
 }

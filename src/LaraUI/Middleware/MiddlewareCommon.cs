@@ -46,7 +46,7 @@ namespace Integrative.Lara.Middleware
 
         public static void AddHeaderNeverExpires(HttpContext context)
         {
-            context.Request.Headers.Add("Cache-Control", "max-age=31556926");
+            context.Response.Headers.Add("Cache-Control", "max-age=31556926");
         }
 
         public static void AddHeaderTextHtml(HttpContext http)

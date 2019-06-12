@@ -6,12 +6,15 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using System;
+using System.Threading.Tasks;
 
 namespace Integrative.Lara.Main
 {
     sealed class JSBridge : IJSBridge
     {
         readonly Document _document;
+
+        public string EventData { get; internal set; }
 
         public JSBridge(Document document)
         {
@@ -33,6 +36,11 @@ namespace Integrative.Lara.Main
             {
                 throw new InvalidOperationException("This operation is not supported during the page's GET, only in events.");
             }
+        }
+
+        public void OnMessage(string key, Func<IPageContext, Task> handler)
+        {
+            _document.OnMessage(key, handler);
         }
     }
 }

@@ -8,6 +8,7 @@ using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using System;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
@@ -94,6 +95,54 @@ namespace Integrative.Lara.Tests.Delta
             var page = new MyPage();
             var doc = new Document(page, Connections.CreateCryptographicallySecureGuid());
             return doc;
+        }
+
+        [Fact]
+        public void PlugOptionsHasEmptyConstructor()
+        {
+            var instance = Activator.CreateInstance<PlugOptions>();
+            Assert.NotNull(instance);
+        }
+
+        [Fact]
+        public void ClearChildrenOnEvent()
+        {
+            var div = Element.Create("div");
+            var document = new Document(new MyPage());
+            document.Body.AppendChild(div);
+            document.OpenEventQueue();
+            document.Body.ClearChildren();
+            var queue = document.GetQueue();
+            Assert.NotEmpty(queue);
+            var first = queue.Peek() as ClearChildrenDelta;
+            Assert.NotNull(first);
+        }
+
+        [Fact]
+        public void ToggleClassToggles()
+        {
+            var button = new Button();
+            button.ToggleClass("disabled", true);
+            Assert.True(button.Disabled);
+            button.ToggleClass("disabled", false);
+            Assert.False(button.Disabled);
+        }
+
+        [Fact]
+        public void DocumentCreatesElements()
+        {
+            var document = new Document(new MyPage());
+            var button = document.CreateElement("button");
+            Assert.NotNull(button);
+        }
+
+        [Fact]
+        public void DocumentCreatesText()
+        {
+            var document = new Document(new MyPage());
+            var text = document.CreateTextNode("hello");
+            Assert.NotNull(text);
+            Assert.Equal("hello", text.Data);
         }
     }
 }
