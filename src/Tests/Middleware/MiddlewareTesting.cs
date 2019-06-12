@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -154,6 +155,13 @@ namespace Integrative.Lara.Tests.Middleware
                 ExtraData = "lala"
             };
             Assert.Equal("lala", x.ExtraData);
+        }
+
+        [Fact]
+        public void UseLaraEmpty()
+        {
+            var app = new Mock<IApplicationBuilder>();
+            Assert.Same(app.Object, ApplicationBuilderLaraExtensions.UseLara(app.Object));
         }
     }
 }

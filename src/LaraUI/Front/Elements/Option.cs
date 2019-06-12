@@ -43,5 +43,13 @@ namespace Integrative.Lara
             get => GetAttributeLower("value");
             set { SetAttributeLower("value", value); }
         }
+
+        internal void NotifyAdded(string parentValue)
+        {
+            if (parentValue == Value)
+            {
+                Selected = true;
+            }
+        }
     }
 }

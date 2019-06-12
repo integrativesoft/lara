@@ -32,7 +32,7 @@ namespace Integrative.Lara
         {
         }
 
-        public TextNode(string data) : this(data, false)
+        public TextNode(string text) : this(text, true)
         {
         }
 

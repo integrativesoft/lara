@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -220,7 +218,8 @@ namespace Integrative.Lara.Tests.Main
                 var button = Element.Create("button", "mybutton");
                 var text = new TextNode("test message");
                 button.AppendChild(text);
-                button.SetAttribute("onclick", "LaraUI.sendMessage( { key: 'hello', data: 'mydata' } );");
+                button.SetAttribute("onclick",
+                    "LaraUI.sendMessage( { key: 'hello', data: 'mydata' } );");
                 context.Document.Body.AppendChild(button);
                 context.JSBridge.OnMessage("hello", app =>
                 {

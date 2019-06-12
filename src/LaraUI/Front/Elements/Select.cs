@@ -110,13 +110,18 @@ namespace Integrative.Lara
 
         protected override void OnChildAdded(Node child)
         {
-            string value = GetAttribute("value");
-            if (!string.IsNullOrEmpty(value)
-                && child is Element element
-                && element.TagName == "option"
-                && element.GetAttribute("value") == value)
+            string value = Value;
+            if (string.IsNullOrEmpty(value))
             {
-                element.SetFlagAttribute("selected", true);
+                return;
+            }
+            if (child is Option option)
+            {
+                option.NotifyAdded(value);
+            }
+            else if (child is OptionGroup group)
+            {
+                group.NotifyAdded(value);
             }
         }
 
@@ -130,14 +135,11 @@ namespace Integrative.Lara
                 {
                     yield return option;
                 }
-                else if (child is Element element && element.TagName == "optgroup")
+                else if (child is OptionGroup group)
                 {
-                    foreach (var grandchild in element.Children)
+                    foreach (var grandchild in group.Options)
                     {
-                        if (grandchild is Option categoryOption)
-                        {
-                            yield return categoryOption;
-                        }
+                        yield return grandchild;
                     }
                 }
             }

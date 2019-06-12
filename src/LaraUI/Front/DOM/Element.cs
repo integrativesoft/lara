@@ -28,11 +28,6 @@ namespace Integrative.Lara
         public static Element Create(string tagName) => ElementFactory.CreateElement(tagName);
         public static Element Create(string tagName, string id) => ElementFactory.CreateElement(tagName, id);
 
-        internal Element(string tagName, string id) : this(tagName)
-        {
-            Id = id;
-        }
-
         internal Element(string tagName)
             : base()
         {
