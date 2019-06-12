@@ -122,10 +122,10 @@ namespace Integrative.Lara.Tests.Delta
         public void ToggleClassToggles()
         {
             var button = new Button();
-            button.ToggleClass("disabled", true);
-            Assert.True(button.Disabled);
-            button.ToggleClass("disabled", false);
-            Assert.False(button.Disabled);
+            button.ToggleClass("red", true);
+            Assert.True(button.HasClass("red"));
+            button.ToggleClass("red", false);
+            Assert.False(button.HasClass("red"));
         }
 
         [Fact]
