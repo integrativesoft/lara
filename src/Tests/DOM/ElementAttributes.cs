@@ -420,5 +420,50 @@ namespace Integrative.Lara.Tests.DOM
             group.AppendChild(option);
             Assert.True(option.Selected);
         }
+
+        [Fact]
+        public void SelectValueChangeOnChildOptions()
+        {
+            var select = new Select();
+            var opt1 = new Option
+            {
+                Value = "a"
+            };
+            var opt2 = new Option
+            {
+                Value = "b"
+            };
+            var group = new OptionGroup();
+            group.AppendChild(opt2);
+            select.AppendChild(opt1);
+            select.AppendChild(group);
+            select.Value = "a";
+            Assert.True(opt1.Selected);
+            Assert.False(opt2.Selected);
+            select.Multiple = true;
+            select.Value = "b";
+            Assert.True(opt1.Selected);
+            Assert.True(opt2.Selected);
+        }
+
+        [Fact]
+        public void MeterProperties()
+        {
+            var x = new Meter
+            {
+                High = 80,
+                Low = 20,
+                Max = 100,
+                Min = 1,
+                Optimum = 50,
+                Value = 55
+            };
+            Assert.Equal(80, x.High);
+            Assert.Equal(20, x.Low);
+            Assert.Equal(100, x.Max);
+            Assert.Equal(1, x.Min);
+            Assert.Equal(50, x.Optimum);
+            Assert.Equal(55, x.Value);
+        }
     }
 }
