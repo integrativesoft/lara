@@ -94,4 +94,4 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## Feedback
 
-We would love to hear your feedback! Write to us at https://integrative.io/ContactUs
+We'd love to hear your feedback. Write to us [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
