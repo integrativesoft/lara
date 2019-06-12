@@ -36,7 +36,7 @@ namespace Integrative.Lara.DOM
             };
             _requiresId = new HashSet<string>
             {
-                "input", "textarea", "select", "button"
+                "input", "textarea", "select", "button", "option"
             };
         }
 

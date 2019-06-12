@@ -39,8 +39,27 @@ namespace Integrative.Lara
 
         public override NodeType NodeType => NodeType.Element;
 
-        internal bool NeedsId => string.IsNullOrEmpty(_id)
-            && (Events.Count > 0 || HtmlReference.RequiresId(TagName));
+        internal bool NeedsId => GetNeedsId();
+
+        protected virtual bool GetNeedsId()
+        {
+            if (!string.IsNullOrEmpty(_id))
+            {
+                return false;
+            }
+            else if (Events.Count > 0)
+            {
+                return true;
+            }
+            else if (HtmlReference.RequiresId(TagName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override string ToString()
         {
