@@ -10,12 +10,19 @@ using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
+using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara.Middleware
 {
     sealed class PostEventHandler : BaseHandler
     {
+        public const string EventPrefix = "/_event";
+        public const string AjaxMethod = "POST";
+        public const int MaxSizeBytes = 1024000;
+
         public static event EventHandler EventComplete;
         private static readonly EventArgs _eventArgs = new EventArgs();
 
@@ -25,24 +32,18 @@ namespace Integrative.Lara.Middleware
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
         {
-            if (http.Request.Method == "POST"
-                && http.Request.Path == "/_event"
-                && EventParameters.TryParse(http.Request.Query, out var parameters))
+            if (http.Request.Path != EventPrefix)
             {
-                if (MiddlewareCommon.TryFindConnection(http, out var connection)
-                    && connection.TryGetDocument(parameters.DocumentId, out var document)
-                    && document.TryGetElementById(parameters.ElementId, out var element))
-                {
-                    await parameters.ReadMessage(http);
-                    using (var access = await document.Semaphore.UseWaitAsync())
-                    {
-                        await RunEvent(http, parameters, element);
-                    }
-                }
-                else
-                {
-                    await SendReload(http);
-                }
+                return false;
+            }
+            else if (http.WebSockets.IsWebSocketRequest)
+            {
+                await ProcessWebSocketRequest(http);
+                return true;
+            }
+            else if (http.Request.Method == AjaxMethod)
+            {
+                await ProcessAjaxRequest(http);
                 return true;
             }
             else
@@ -51,14 +52,74 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        internal static async Task RunEvent(HttpContext http, EventParameters parameters, Element element)
+        private static async Task ProcessWebSocketRequest(HttpContext http)
         {
-            var document = element.Document;
-            var context = new PageContext(http, document);
-            ProcessMessageIfNeeded(context, parameters);
-            await element.NotifyEvent(parameters.EventName, context);
+            var socket = await http.WebSockets.AcceptWebSocketAsync();
+            var result = await MiddlewareCommon.ReadWebSocketMessage<EventParameters>(socket, MaxSizeBytes);
+            if (result.Item1)
+            {
+                var context = new PostEventContext
+                {
+                    Http = http,
+                    Socket = socket,
+                    Parameters = result.Item2
+                };
+                await ProcessRequest(context);
+            }
+            else
+            {
+                await socket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
+                    "Bad request", CancellationToken.None);
+            }
+        }
+
+        private static async Task ProcessAjaxRequest(HttpContext http)
+        {
+            if (EventParameters.TryParse(http.Request.Query, out var parameters))
+            {
+                await parameters.ReadMessage(http);
+                var post = new PostEventContext
+                {
+                    Http = http,
+                    Parameters = parameters
+                };
+                await ProcessRequest(post);
+            }
+            else
+            {
+                await MiddlewareCommon.SendStatusReply(http, HttpStatusCode.BadRequest, "Bad request");
+            }
+        }
+
+        private static async Task ProcessRequest(PostEventContext context)
+        {
+            if (MiddlewareCommon.TryFindConnection(context.Http, out var connection)
+                && connection.TryGetDocument(context.Parameters.DocumentId, out var document)
+                && document.TryGetElementById(context.Parameters.ElementId, out var element))
+            {
+                context.Element = element;
+                using (var access = await document.Semaphore.UseWaitAsync())
+                {
+                    await RunEvent(context);
+                }
+            }
+            else
+            {
+                await SendReload(context);
+            }
+        }
+
+        internal static async Task RunEvent(PostEventContext post)
+        {
+            var document = post.Element.Document;
+            var context = new PageContext(post.Http, document)
+            {
+                Socket = post.Socket
+            };
+            ProcessMessageIfNeeded(context, post.Parameters);
+            await post.Element.NotifyEvent(post.Parameters.EventName, context);
             string queue = document.FlushQueue();
-            await SendReply(http, queue);
+            await SendReply(post, queue);
         }
 
         internal static void ProcessMessageIfNeeded(PageContext context, EventParameters parameters)
@@ -86,22 +147,65 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task SendReply(HttpContext http, string json)
+        private static async Task SendReply(PostEventContext post, string json)
+        {
+            if (post.Http.WebSockets.IsWebSocketRequest)
+            {
+                await SendSocketReply(post.Socket, json);
+            }
+            else
+            {
+                await SendAjaxReply(post.Http, json);
+            }
+            EventComplete?.Invoke(post.Http, _eventArgs);
+        }
+
+        private static async Task SendSocketReply(WebSocket socket, string json)
+        {
+            await FlushMessage(socket, json);
+            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+        }
+
+        private static async Task FlushMessage(WebSocket socket, string json)
+        {
+            var buffer = BuildArraySegment(json);
+            await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public static async Task FlushPartialChanges(WebSocket socket, Document document)
+        {
+            string json = document.FlushQueue();
+            await FlushMessage(socket, json);
+        }
+
+        internal static ArraySegment<byte> BuildArraySegment(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                return new ArraySegment<byte>(new byte[0]);
+            }
+            else
+            {
+                var bytes = Encoding.UTF8.GetBytes(json);
+                return new ArraySegment<byte>(bytes);
+            }
+        }
+
+        private static async Task SendAjaxReply(HttpContext http, string json)
         {
             MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
             MiddlewareCommon.AddHeaderJSON(http);
             await MiddlewareCommon.WriteUtf8Buffer(http, json);
-            EventComplete?.Invoke(http, _eventArgs);
         }
 
-        private static async Task SendReload(HttpContext http)
+        private static async Task SendReload(PostEventContext post)
         {
             var reply = new EventResult
             {
                 ResultType = EventResultType.NoSession
             };
             string json = reply.ToJSON();
-            await SendReply(http, json);
+            await SendReply(post, json);
         }
     }
 }

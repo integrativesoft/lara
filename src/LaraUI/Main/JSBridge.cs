@@ -12,19 +12,20 @@ namespace Integrative.Lara.Main
 {
     sealed class JSBridge : IJSBridge
     {
-        readonly Document _document;
+        readonly PageContext _parent;
 
         public string EventData { get; internal set; }
 
-        public JSBridge(Document document)
+        public JSBridge(PageContext parent)
         {
-            _document = document;
+            _parent = parent;
         }
 
         public void Submit(string javaScriptCode)
         {
-            VerifyQueueOpen(_document);
-            _document.Enqueue(new SubmitJsDelta
+            var document = _parent.Document;
+            VerifyQueueOpen(document);
+            document.Enqueue(new SubmitJsDelta
             {
                 Code = javaScriptCode
             });
@@ -40,7 +41,7 @@ namespace Integrative.Lara.Main
 
         public void OnMessage(string key, Func<IPageContext, Task> handler)
         {
-            _document.OnMessage(key, handler);
+            _parent.Document.OnMessage(key, handler);
         }
     }
 }

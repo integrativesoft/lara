@@ -5,10 +5,14 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.IO;
 using System.Net;
+using System.Net.WebSockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara.Middleware
@@ -80,6 +84,40 @@ namespace Integrative.Lara.Middleware
             {
                 value = default;
                 return false;
+            }
+        }
+
+        public static async Task<(bool, T)>
+            ReadWebSocketMessage<T>(WebSocket socket, int maxSize) where T : class
+        {
+            var buffer = new ArraySegment<byte>(new byte[8192]);
+            using (var ms = new MemoryStream())
+            {
+                WebSocketReceiveResult result;
+                do
+                {
+                    result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                    ms.Write(buffer.Array, buffer.Offset, result.Count);
+                }
+                while (!result.EndOfMessage && result.Count <= maxSize);
+                ms.Seek(0, SeekOrigin.Begin);
+                if (result.MessageType != WebSocketMessageType.Text)
+                {
+                    return (false, default);
+                }
+                else if (result.Count > maxSize)
+                {
+                    return (false, default);
+                }
+                try
+                {
+                    var parameters = LaraTools.Deserialize<T>(ms);
+                    return (true, parameters);
+                }
+                catch
+                {
+                    return (false, default);
+                }
             }
         }
     }

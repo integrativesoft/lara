@@ -64,9 +64,14 @@ namespace Integrative.Lara.Tools
             }
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                return serializer.ReadObject(stream) as T;
+                return Deserialize<T>(stream);
             }
+        }
+
+        public static T Deserialize<T>(Stream stream) where T : class
+        {
+            var serializer = new DataContractJsonSerializer(typeof(T));
+            return serializer.ReadObject(stream) as T;
         }
 
         public static byte[] Compress(byte[] data)

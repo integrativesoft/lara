@@ -13,8 +13,8 @@ namespace Integrative.Lara
     {
         public string EventName { get; set; }
         public bool Block { get; set; }
-        public string BlockElementId { get; set; }
-        public string BlockHtmlMessage { get; set; }
+        public BlockOptions BlockOptions { get; set; }
         public Func<IPageContext, Task> Handler { get; set; }
+        public bool LongRunning { get; set; }
     }
 }

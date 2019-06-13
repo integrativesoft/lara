@@ -13,6 +13,7 @@ namespace Integrative.Lara
         public bool AllowLocalhostOnly { get; set; } = true;
         public bool ShowNotFoundPage { get; set; } = true;
         public int Port { get; set; } = 0;
+        public bool AddWebSocketsMiddleware { get; set; } = true;
     }
 
     public class StartServerOptions : LaraOptions

@@ -18,11 +18,11 @@ namespace SampleProject
         public Task OnGet(IPageContext context)
         {
             BootstrapLoader.AddBootstrap(context.Document.Head);
-            context.Document.Body.AppendChild(BuildLayout());
+            context.Document.Body.AppendChild(BuildLayout(context.Document));
             return Task.CompletedTask;
         }
 
-        private Element BuildLayout()
+        private Element BuildLayout(Document document)
         {
             var root = Element.Create("form");
             root.Class = "container p-4";
@@ -31,7 +31,7 @@ namespace SampleProject
             root.AppendChild(new SelectSample().Build());
             root.AppendChild(new MultiselectSample().Build());
             root.AppendChild(new LockingSample().Build());
-            root.AppendChild(new ReplaceSample().Build());
+            root.AppendChild(new LongRunningSample().Build(document));
             return root;
         }
     }

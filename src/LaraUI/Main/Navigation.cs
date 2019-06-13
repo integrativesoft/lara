@@ -4,12 +4,16 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
+using System;
+using System.Threading.Tasks;
 using Integrative.Lara.Delta;
+using Integrative.Lara.Middleware;
 
 namespace Integrative.Lara.Main
 {
     sealed class Navigation : INavigation
     {
+        private const string FlushNotAvailable = "The FlushPartialChanges() method is available only for events declared with the option LongRunnning = true.";
         readonly PageContext _context;
 
         public string RedirectLocation { get; private set; }
@@ -39,6 +43,15 @@ namespace Integrative.Lara.Main
         private void ReplacePost(string location)
         {
             ReplaceDelta.Enqueue(_context.Document, location);
+        }
+
+        public async Task FlushPartialChanges()
+        {
+            if (_context.Socket == null)
+            {
+                throw new InvalidOperationException(FlushNotAvailable);
+            }
+            await PostEventHandler.FlushPartialChanges(_context.Socket, _context.Document);
         }
     }
 }

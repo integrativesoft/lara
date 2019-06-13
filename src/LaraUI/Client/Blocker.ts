@@ -31,7 +31,10 @@ namespace LaraUI {
 
     function buildParameters(plug: PlugOptions): blockUISettings {
         let result: blockUISettings = {};
-        if (plug.BlockHTML == "") {
+        let shownId = plug.BlockShownId;
+        if (shownId) {
+            result.message = $("#" + shownId);
+        } else if (plug.BlockHTML == "") {
             result.message = null;
         } else if (plug.BlockHTML) {
             result.message = plug.BlockHTML;

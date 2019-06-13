@@ -24,6 +24,12 @@ namespace Integrative.Lara.Delta
         [DataMember]
         public string BlockHTML { get; set; }
 
+        [DataMember]
+        public string BlockShownId { get; set; }
+
+        [DataMember]
+        public bool LongRunning { get; set; }
+
         public PlugOptions()
         {
         }
@@ -32,8 +38,13 @@ namespace Integrative.Lara.Delta
         {
             EventName = settings.EventName;
             Block = settings.Block;
-            BlockElementId = settings.BlockElementId;
-            BlockHTML = settings.BlockHtmlMessage;
+            if (settings.BlockOptions != null)
+            {
+                BlockElementId = settings.BlockOptions.BlockedElementId;
+                BlockHTML = settings.BlockOptions.ShowHtmlMessage;
+                BlockShownId = settings.BlockOptions.ShowElementId;
+            }
+            LongRunning = settings.LongRunning;
         }
 
         public string ToJSON() => LaraTools.Serialize(this);

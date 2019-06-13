@@ -138,6 +138,20 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(error);
         }
 
+        internal static async Task ThrowsAsync<T>(Func<Task> action) where T : Exception
+        {
+            bool error = false;
+            try
+            {
+                await action();
+            }
+            catch (T)
+            {
+                error = true;
+            }
+            Assert.True(error);
+        }
+
         [Fact]
         public void TextNodeContent()
         {

@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Http;
+using System.Net.WebSockets;
 
 namespace Integrative.Lara.Main
 {
@@ -21,8 +22,10 @@ namespace Integrative.Lara.Main
             Http = http;
             Document = document;
             _navigation = new Navigation(this);
-            _bridge = new JSBridge(document);
+            _bridge = new JSBridge(this);
         }
+
+        internal WebSocket Socket { get; set; }
 
         public IJSBridge JSBridge => _bridge;
         public INavigation Navigation => _navigation;

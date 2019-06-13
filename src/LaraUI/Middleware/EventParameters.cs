@@ -10,17 +10,26 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
 namespace Integrative.Lara.Middleware
 {
-    class EventParameters
+    [DataContract]
+    sealed class EventParameters
     {
+        [DataMember]
         public Guid DocumentId { get; set; }
+
+        [DataMember]
         public string ElementId { get; set; }
+
+        [DataMember]
         public string EventName { get; set; }
+
+        [DataMember]
         public ClientEventMessage Message { get; set; }
 
         public static bool TryParse(IQueryCollection query, out EventParameters parameters)

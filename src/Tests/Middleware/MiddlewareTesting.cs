@@ -6,16 +6,19 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
+using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Moq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.WebSockets;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
@@ -97,13 +100,16 @@ namespace Integrative.Lara.Tests.Middleware
             var response = new Mock<HttpResponse>();
             var headers = new Mock<IHeaderDictionary>();
             var body = new Mock<Stream>();
+            var sockets = new Mock<WebSocketManager>();
             http.Setup(x => x.Request).Returns(request.Object);
             http.Setup(x => x.Response).Returns(response.Object);
+            http.Setup(x => x.WebSockets).Returns(sockets.Object);
             request.Setup(x => x.Method).Returns("POST");
             request.Setup(x => x.Path).Returns("/_event");
             request.Setup(x => x.Cookies).Returns(cookies.Object);
             response.Setup(x => x.Headers).Returns(headers.Object);
             response.Setup(x => x.Body).Returns(body.Object);
+            sockets.Setup(x => x.IsWebSocketRequest).Returns(false);
             var query = new MyQueryCollection();
             request.Setup(x => x.Query).Returns(query);
             query.Add("doc", "EF2FF98720E34A2EA29E619977A5F04A");
@@ -162,6 +168,52 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var app = new Mock<IApplicationBuilder>();
             Assert.Same(app.Object, ApplicationBuilderLaraExtensions.UseLara(app.Object));
+        }
+
+        [Fact]
+        public void PageContextSocket()
+        {
+            var http = new Mock<HttpContext>();
+            var document = new Document(new MyPage());
+            var page = new PageContext(http.Object, document);
+            var socket = new Mock<WebSocket>();
+            page.Socket = socket.Object;
+            Assert.Same(socket.Object, page.Socket);
+        }
+
+        [Fact]
+        public async void CannotFlushAjax()
+        {
+            var http = new Mock<HttpContext>();
+            var document = new Document(new MyPage());
+            var page = new PageContext(http.Object, document);
+            await DomOperationsTesting.ThrowsAsync<InvalidOperationException>(async ()
+                => await page.Navigation.FlushPartialChanges());
+        }
+
+        [Fact]
+        public async void FlushSendsMessage()
+        {
+            var http = new Mock<HttpContext>();
+            var document = new Document(new MyPage());
+            var socket = new Mock<WebSocket>();
+            var page = new PageContext(http.Object, document)
+            {
+                Socket = socket.Object
+            };
+            var button = new Button();
+            document.OpenEventQueue();
+            document.Body.AppendChild(button);
+            await page.Navigation.FlushPartialChanges();
+            Assert.Empty(document.GetQueue());
+            Assert.Same(socket.Object, page.Socket);
+        }
+
+        [Fact]
+        public void EmptyArraySegment()
+        {
+            var x = PostEventHandler.BuildArraySegment("");
+            Assert.Empty(x.Array);
         }
     }
 }

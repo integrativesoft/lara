@@ -265,12 +265,19 @@ namespace Integrative.Lara.Tests.DOM
             var x = new EventSettings
             {
                 Block = true,
-                BlockElementId = "aaa",
-                BlockHtmlMessage = "baa"
+                LongRunning = true,
+                BlockOptions = new BlockOptions
+                {
+                    BlockedElementId = "aaa",
+                    ShowHtmlMessage = "baa",
+                    ShowElementId = "xxx"
+                }
             };
             Assert.True(x.Block);
-            Assert.Equal("aaa", x.BlockElementId);
-            Assert.Equal("baa", x.BlockHtmlMessage);
+            Assert.Equal("aaa", x.BlockOptions.BlockedElementId);
+            Assert.Equal("baa", x.BlockOptions.ShowHtmlMessage);
+            Assert.Equal("xxx", x.BlockOptions.ShowElementId);
+            Assert.True(x.LongRunning);
         }
 
         [Fact]
@@ -280,11 +287,13 @@ namespace Integrative.Lara.Tests.DOM
             {
                 AllowLocalhostOnly = false,
                 ShowNotFoundPage = false,
-                Port = 1234
+                Port = 1234,
+                AddWebSocketsMiddleware = false
             };
             Assert.False(x.AllowLocalhostOnly);
             Assert.False(x.ShowNotFoundPage);
             Assert.Equal(1234, x.Port);
+            Assert.False(x.AddWebSocketsMiddleware);
         }
 
         [Fact]

@@ -30,10 +30,72 @@ namespace LaraUI {
         Block: boolean;
         BlockElementId: string;
         BlockHTML: string;
-        ExtraData?: string;
+        BlockShownId: string;
+        ExtraData: string;
+        LongRunning: boolean;
+    }
+
+    export class EventParameters {
+        DocumentId: string;
+        ElementId: string;
+        EventName: string;
+        Message: ClientEventMessage;
     }
 
     export function plug(el: Element, plug: PlugOptions): void {
+        if (plug.LongRunning) {
+            plugWebSocket(el, plug);
+        } else {
+            plugAjax(el, plug);
+        }
+    }
+
+    function plugWebSocket(el: Element, plug: PlugOptions): void {
+        block(plug);
+        let url = getSocketUrl();
+        let socket = new WebSocket(url);
+        socket.onopen = function (event) {
+            socket.onmessage = function (e1) {
+                onSocketMessage(e1.data);
+            };
+            socket.onclose = function (e2) {
+                unblock(plug);
+            }
+            let json = buildEventParameters(el, plug);
+            socket.send(json);
+        };
+        socket.onerror = function (event) {
+            console.log('Error on websocket communication. Reloading.');
+            location.reload();
+        }
+    }
+
+    function getSocketUrl(): string {
+        var url: string;
+        if (location.protocol == "https:") {
+            url = "wss://";
+        } else {
+            url = "ws://";
+        }
+        return url + window.location.host + "/_event";
+    }
+
+    function buildEventParameters(el: Element, plug: PlugOptions): string {
+        let params = new EventParameters();
+        params.DocumentId = documentId;
+        params.ElementId = el.id;
+        params.EventName = plug.EventName;
+        params.Message = collectValues();
+        params.Message.ExtraData = plug.ExtraData;
+        return JSON.stringify(params);
+    }
+
+    function onSocketMessage(json: string): void {
+        let result = JSON.parse(json) as EventResult;
+        processEventResult(result);
+    }
+
+    function plugAjax(el: Element, plug: PlugOptions): void {
         block(plug);
         let url = getEventUrl(el, plug.EventName);
         let ajax = new XMLHttpRequest();
@@ -59,6 +121,7 @@ namespace LaraUI {
         block?: boolean;
         blockElementId?: string;
         blockHtml?: string;
+        blockShowElementId?: string;
     }
 
     export function sendMessage(options: MessageOptions): void {
@@ -67,7 +130,9 @@ namespace LaraUI {
             Block: options.block,
             BlockElementId: options.blockHtml,
             BlockHTML: options.blockHtml,
-            ExtraData: options.data
+            BlockShownId: options.blockShowElementId,
+            ExtraData: options.data,
+            LongRunning: false
         };
         plug(document.head, params);
     }
@@ -92,6 +157,10 @@ namespace LaraUI {
 
     function processAjaxResult(ajax: XMLHttpRequest): void {
         let result = JSON.parse(ajax.responseText) as EventResult;
+        processEventResult(result);
+    }
+
+    function processEventResult(result: EventResult): void {
         if (result.ResultType == EventResultType.Success) {
             if (result.List) {
                 processResult(result.List);

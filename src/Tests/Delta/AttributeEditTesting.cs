@@ -144,5 +144,33 @@ namespace Integrative.Lara.Tests.Delta
             Assert.NotNull(text);
             Assert.Equal("hello", text.Data);
         }
+
+        [Fact]
+        public void ClearChildrenElement()
+        {
+            var x = new ClearChildrenDelta
+            {
+                ElementId = "x"
+            };
+            Assert.Equal("x", x.ElementId);
+        }
+
+        [Fact]
+        public void PlugOptionsBlocking()
+        {
+            var settings = new EventSettings
+            {
+                BlockOptions = new BlockOptions
+                {
+                    BlockedElementId = "a",
+                    ShowElementId = "b",
+                    ShowHtmlMessage = "c"
+                }
+            };
+            var x = new PlugOptions(settings);
+            Assert.Equal("a", x.BlockElementId);
+            Assert.Equal("b", x.BlockShownId);
+            Assert.Equal("c", x.BlockHTML);
+        }
     }
 }

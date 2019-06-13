@@ -16,6 +16,10 @@ namespace Integrative.Lara
             {
                 app.UseMiddleware<LocalhostFilter>();
             }
+            if (options.AddWebSocketsMiddleware)
+            {
+                app.UseWebSockets();
+            }
             app.UseMiddleware<LaraMiddleware>();
             if (options.ShowNotFoundPage)
             {

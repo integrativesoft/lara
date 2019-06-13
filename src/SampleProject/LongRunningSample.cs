@@ -6,52 +6,55 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace SampleProject
 {
-    class LockingSample
+    class LongRunningSample
     {
-        private const string SpinnerPath = "https://cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif";
-
         readonly Button _button;
+        readonly Element _message;
 
-        public LockingSample()
+        public LongRunningSample()
         {
             _button = new Button
             {
                 Class = "btn btn-primary my-2"
             };
+            _message = Element.Create("div");
+            _message.Id = "mymessage";
+            _message.Style = "display: none";
         }
 
-        public Element Build()
+        public Element Build(Document document)
         {
             var div = Element.Create("div");
             div.Class = "form-row";
             div.AppendChild(_button);
-            _button.AppendChild(new TextNode("Action that locks UI"));
+            _button.AppendChild(new TextNode("Long-running event"));
             _button.On(new EventSettings
             {
                 EventName = "click",
-                Block = true,
+                LongRunning = true,
                 Handler = ButtonHandler,
+                Block = true,
                 BlockOptions = new BlockOptions
                 {
-                    ShowHtmlMessage = GetSpinnerHtml(" Please wait...")
+                    ShowElementId = "mymessage",
                 }
             });
+            document.Body.AppendChild(_message);
             return div;
         }
 
         private async Task ButtonHandler(IPageContext arg)
         {
-            await Task.Delay(1000);
-        }
-
-        public static string GetSpinnerHtml(string message)
-        {
-            string encoded = HttpUtility.HtmlEncode(" " + message);
-            return $"<h1><img src=\"{SpinnerPath}\"/>{encoded}</h1>";
+            for (int index = 10; index > 0; index--)
+            {
+                _message.ClearChildren();
+                _message.AppendChild(new TextNode($"Server says to wait {index}"));
+                await arg.Navigation.FlushPartialChanges();
+                await Task.Delay(1000);
+            }
         }
     }
 }
