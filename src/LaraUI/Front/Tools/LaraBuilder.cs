@@ -47,6 +47,13 @@ namespace Integrative.Lara
             return this;
         }
 
+        public LaraBuilder Push(Element element, string className)
+        {
+            Push(element);
+            element.Class = className;
+            return this;
+        }
+
         public LaraBuilder Pop()
         {
             if (_stack.Count <= 1)
