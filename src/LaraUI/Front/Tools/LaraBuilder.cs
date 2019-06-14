@@ -39,6 +39,12 @@ namespace Integrative.Lara
             return Push(added);
         }
 
+        public LaraBuilder PushNS(string ns, string tagName)
+        {
+            var added = Element.CreateNS(ns, tagName);
+            return Push(added);
+        }
+
         public LaraBuilder Push(Element element)
         {
             var current = _stack.Peek();

@@ -26,6 +26,7 @@ namespace LaraUI {
 
     export interface ContentElementNode extends ContentNode {
         TagName: string;
+        NS: string;
         Attributes: ContentAttribute[];
         Children: ContentNode[];
     }

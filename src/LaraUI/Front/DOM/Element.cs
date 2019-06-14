@@ -27,6 +27,7 @@ namespace Integrative.Lara
 
         public static Element Create(string tagName) => ElementFactory.CreateElement(tagName);
         public static Element Create(string tagName, string id) => ElementFactory.CreateElement(tagName, id);
+        public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
 
         internal Element(string tagName)
             : base()
@@ -438,6 +439,7 @@ namespace Integrative.Lara
             return new ContentElementNode
             {
                 TagName = TagName,
+                NS = GetAttributeLower("xlmns"),
                 Attributes = CopyAttributes(),
                 Children = CopyChildren()
             };

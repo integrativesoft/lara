@@ -92,8 +92,8 @@ namespace LaraUI {
         return document.createTextNode(div.innerText);
     }
 
-    function createElementNode(node: ContentElementNode): Node {
-        let child = document.createElement(node.TagName);
+    function createElementNode(node: ContentElementNode): Element {
+        let child = createRootNode(node);
         for (var attribute of node.Attributes) {
             child.setAttribute(attribute.Attribute, attribute.Value);
         }
@@ -101,6 +101,14 @@ namespace LaraUI {
             child.appendChild(createNode(branch));
         }
         return child;
+    }
+
+    function createRootNode(node: ContentElementNode): Element {
+        if (node.NS) {
+            return document.createElementNS(node.NS, node.TagName);
+        } else {
+            return document.createElement(node.TagName);
+        }
     }
 
     function textModified(delta: TextModifiedDelta): void {

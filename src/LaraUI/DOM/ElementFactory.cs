@@ -68,5 +68,12 @@ namespace Integrative.Lara.DOM
             element.Id = id;
             return element;
         }
+
+        public static Element CreateElementNS(string ns, string tagName)
+        {
+            var element = CreateElement(tagName);
+            element.SetAttribute("xlmns", ns);
+            return element;
+        }
     }
 }

@@ -16,13 +16,16 @@ namespace Integrative.Lara.Delta
         public string TagName { get; set; }
 
         [DataMember]
+        public string NS { get; set; }
+
+        [DataMember]
         public List<ContentAttribute> Attributes { get; set; }
 
         [DataMember]
         public List<ContentNode> Children { get; set; }
 
         public ContentElementNode() : base(ContentNodeType.Element)
-        {
+        {            
         }
     }
 }
