@@ -31,17 +31,17 @@ namespace SampleProject
         {
             Console.WriteLine("Starting...");
 
-            // create home page
+            // associate home address with code that creates home page
             LaraUI.Publish("/", () => new MyPage());
 
-            // start web server
+            // start web server using default settings on a dynamic port number
             var host = await LaraUI.StartServer();
 
             // write address in console
             string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
 
-            // launch browser tab
+            // launch browser tab (alternatively, the user can navigate to the address)
             LaraUI.LaunchBrowser(address);
 
             // wait for termination
