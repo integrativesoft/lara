@@ -120,7 +120,7 @@ namespace Integrative.Lara
         /// <param name="text">The text.</param>
         /// <param name="encode">if set to <c>true</c> [encode].</param>
         /// <returns>This instance</returns>
-/        public LaraBuilder AddTextNode(string text, bool encode = true)
+        public LaraBuilder AddTextNode(string text, bool encode = true)
         {
             return AddTextNode(new TextNode(text, encode));
         }

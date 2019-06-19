@@ -92,7 +92,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal async Task Run(HttpContext http)
+        public async Task Run(HttpContext http)
         {
             if (IsMatchETag(http.Request.Headers))
             {
