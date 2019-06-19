@@ -8,24 +8,40 @@ using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// The 'optgroup' HTML5 element.
+    /// </summary>
+    /// <seealso cref="Integrative.Lara.Element" />
     public sealed class OptionGroup : Element
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OptionGroup"/> class.
+        /// </summary>
         public OptionGroup() : base("optgroup")
         {
         }
 
+        /// <summary>
+        /// Gets or sets the 'disabled' HTML5 attribute.
+        /// </summary>
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
             set { SetFlagAttributeLower("disabled", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'label' HTML5 attribute.
+        /// </summary>
         public string Label
         {
             get => GetAttributeLower("label");
             set { SetAttributeLower("label", value); }
         }
 
+        /// <summary>
+        /// Gets the child options.
+        /// </summary>
         public IEnumerable<Option> Options => GetOptions();
 
         private IEnumerable<Option> GetOptions()

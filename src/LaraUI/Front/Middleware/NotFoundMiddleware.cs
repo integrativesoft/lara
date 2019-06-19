@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// A middleware to show a simple 'not found' page
+    /// </summary>
     public class NotFoundMiddleware
     {
 #pragma warning disable IDE0060 // Remove unused parameter: required by ASP.NET Core
@@ -19,6 +22,12 @@ namespace Integrative.Lara
         {
         }
 
+
+        /// <summary>
+        /// Invokes this middleware
+        /// </summary>
+        /// <param name="context">The HttpContext.</param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             await MiddlewareCommon.SendStatusReply(context, HttpStatusCode.NotFound, "HTTP 404: Not found.");

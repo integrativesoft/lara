@@ -6,6 +6,10 @@ Author: Pablo Carbonell
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// A generic element class for all elements that are not handled by specialized classes.
+    /// </summary>
+    /// <seealso cref="Integrative.Lara.Element" />
     public sealed class GenericElement : Element
     {
         internal GenericElement(string tagName) : base(tagName)

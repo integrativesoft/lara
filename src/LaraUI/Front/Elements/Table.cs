@@ -6,8 +6,15 @@ Author: Pablo Carbonell
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// The 'table' HTML5 element.
+    /// </summary>
+    /// <seealso cref="Integrative.Lara.Element" />
     public sealed class Table : Element
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Table"/> class.
+        /// </summary>
         public Table() : base("table")
         {
         }

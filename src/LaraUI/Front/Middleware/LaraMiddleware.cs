@@ -10,10 +10,17 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Lara middleware class for the ASP.NET Core framework
+    /// </summary>
     public sealed class LaraMiddleware
     {
         readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LaraMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next.</param>
         public LaraMiddleware(RequestDelegate next)
         {
             next = new ClientLibraryHandler(next).Invoke;
@@ -22,6 +29,10 @@ namespace Integrative.Lara
             _next = new PostEventHandler(next).Invoke;
         }
 
+        /// <summary>
+        /// Invokes this middleware.
+        /// </summary>
+        /// <param name="http">The HttpContext.</param>
         public async Task Invoke(HttpContext http)
         {
             await _next.Invoke(http);

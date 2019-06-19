@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Interface for web pages
+    /// </summary>
     public interface IPage
     {
+        /// <summary>
+        /// Called when replying to the initial HTTP GET request.
+        /// </summary>
+        /// <param name="context">The execution context.</param>
         Task OnGet(IPageContext context);
     }
 }

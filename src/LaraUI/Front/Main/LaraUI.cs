@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// The main Lara static class
+    /// </summary>
     public static class LaraUI
     {
         static readonly Published _published;
@@ -22,6 +25,9 @@ namespace Integrative.Lara
             _published = new Published();
         }
 
+        /// <summary>
+        /// Removes all published elements
+        /// </summary>
         public static void ClearAll()
         {
             _published.ClearAll();
@@ -29,12 +35,26 @@ namespace Integrative.Lara
 
         #region Publishing
 
-        public static void Publish(string path, Func<IPage> pageFactory)
-            => _published.Publish(path, new PagePublished(pageFactory));
+        /// <summary>
+        /// Publishes a page.
+        /// </summary>
+        /// <param name="address">The address of the page.</param>
+        /// <param name="pageFactory">The page factory.</param>
+        public static void Publish(string address, Func<IPage> pageFactory)
+            => _published.Publish(address, new PagePublished(pageFactory));
 
-        public static void Publish(string path, StaticContent content)
-            => _published.Publish(path, content);
+        /// <summary>
+        /// Publishes static content.
+        /// </summary>
+        /// <param name="address">The address of the content.</param>
+        /// <param name="content">The static content to be published.</param>
+        public static void Publish(string address, StaticContent content)
+            => _published.Publish(address, content);
 
+        /// <summary>
+        /// Unpublishes an address and its associated content.
+        /// </summary>
+        /// <param name="path">The path.</param>
         public static void UnPublish(string path)
             => _published.UnPublish(path);
 
@@ -51,18 +71,38 @@ namespace Integrative.Lara
 
         #region Launching server and browser
 
+        /// <summary>
+        /// Starts the web server. Use with 'await'.
+        /// </summary>
         public static async Task<IWebHost> StartServer()
             => await ServerLauncher.StartServer();
 
+        /// <summary>
+        /// Starts the web server. Use with 'await'.
+        /// </summary>
+        /// <param name="options">The server options.</param>
         public static async Task<IWebHost> StartServer(StartServerOptions options)
             => await ServerLauncher.StartServer(options);
 
+        /// <summary>
+        /// Launches the user's default web browser on the specified address.
+        /// </summary>
+        /// <param name="address">The address.</param>
         public static void LaunchBrowser(string address)
             => ServerLauncher.LaunchBrowser(address);
 
+        /// <summary>
+        /// Launches the user's default web browser on the first address of the host passed in parameters.
+        /// </summary>
+        /// <param name="host">The host.</param>
         public static void LaunchBrowser(IWebHost host)
-            => ServerLauncher.LaunchBrowser(host);
+                    => ServerLauncher.LaunchBrowser(host);
 
+        /// <summary>
+        /// Gets the first URL associated with the given host.
+        /// </summary>
+        /// <param name="host">The host.</param>
+        /// <returns></returns>
         public static string GetFirstURL(IWebHost host)
             => ServerLauncher.GetFirstUrl(host);
 

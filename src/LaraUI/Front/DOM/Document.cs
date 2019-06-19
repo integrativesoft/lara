@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// An HTML5 document.
+    /// </summary>
     public class Document
     {
         internal IPage Page { get; }
@@ -25,8 +28,28 @@ namespace Integrative.Lara
 
         int _serializer;
 
+        /// <summary>
+        /// Gets or sets the language. See 'lang' property for HTML5 documents.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
         public string Lang { get; set; }
+
+        /// <summary>
+        /// The document's Head element.
+        /// </summary>
+        /// <value>
+        /// The head.
+        /// </value>
         public Element Head { get; }
+
+        /// <summary>
+        /// The document's Body element.
+        /// </summary>
+        /// <value>
+        /// The body.
+        /// </value>
         public Element Body { get; }
 
         internal DateTime LastUTC { get; private set; }
@@ -52,10 +75,21 @@ namespace Integrative.Lara
             TemplateBuilder.Build(this);
         }
 
+        /// <summary>
+        /// Creates an HTML element.
+        /// </summary>
+        /// <param name="tagName">Name of the tag.</param>
+        /// <returns>Element created</returns>
         public Element CreateElement(string tagName) => Element.Create(tagName);
+
+        /// <summary>
+        /// Creates a text node.
+        /// </summary>
+        /// <param name="data">The node's data.</param>
+        /// <returns>Text node created</returns>
         public TextNode CreateTextNode(string data) => new TextNode(data);
 
-        public void UpdateTimestamp()
+        internal void UpdateTimestamp()
         {
             LastUTC = DateTime.UtcNow;
         }
@@ -71,13 +105,13 @@ namespace Integrative.Lara
             return "_e" + _serializer.ToString(CultureInfo.InvariantCulture);
         }
 
-        public void OnElementAdded(Element element)
+        internal void OnElementAdded(Element element)
             => _map.NotifyAdded(element);
 
-        public void OnElementRemoved(Element element)
+        internal void OnElementRemoved(Element element)
             => _map.NotifyRemoved(element);
 
-        public void NotifyChangeId(Element element, string before, string after)
+        internal void NotifyChangeId(Element element, string before, string after)
             => _map.NotifyChangeId(element, before, after);
 
         internal bool QueueOpen { get; private set; }
@@ -89,10 +123,16 @@ namespace Integrative.Lara
             _queue.Enqueue(delta);
         }
 
+        /// <summary>
+        /// Tries to get an element by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="element">The element.</param>
+        /// <returns>True when the element was found.</returns>
         public bool TryGetElementById(string id, out Element element)
             => _map.TryGetElementById(id, out element);
 
-        public string FlushQueue()
+        internal string FlushQueue()
         {
             var list = new List<BaseDelta>();
             while (_queue.Count > 0)

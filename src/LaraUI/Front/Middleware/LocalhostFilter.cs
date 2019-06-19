@@ -12,17 +12,29 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// A middleware class to allow requests from localhost only.
+    /// </summary>
     public sealed class LocalhostFilter
     {
         readonly RequestDelegate _next;
         readonly ILogger<LocalhostFilter> _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocalhostFilter"/> class.
+        /// </summary>
+        /// <param name="next">The next request delegate.</param>
+        /// <param name="logger">The logger instance.</param>
         public LocalhostFilter(RequestDelegate next, ILogger<LocalhostFilter> logger)
         {
             _next = next;
             _logger = logger;
         }
 
+        /// <summary>
+        /// Invokes this middleware
+        /// </summary>
+        /// <param name="context">The HttpContext.</param>
         public async Task Invoke(HttpContext context)
         {
             var remote = context.Connection.RemoteIpAddress;

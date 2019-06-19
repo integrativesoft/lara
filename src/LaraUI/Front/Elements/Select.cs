@@ -9,8 +9,15 @@ using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// The 'select' HTML5 element.
+    /// </summary>
+    /// <seealso cref="Integrative.Lara.Element" />
     public sealed class Select : Element
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Select"/> class.
+        /// </summary>
         public Select() : base("select")
         {
         }
@@ -21,6 +28,11 @@ namespace Integrative.Lara
             NotifyValue(entry.Value);
         }
 
+        /// <summary>
+        /// Adds an option.
+        /// </summary>
+        /// <param name="value">The option's value.</param>
+        /// <param name="text">The option's text.</param>
         public void AddOption(string value, string text)
         {
             var option = new Option
@@ -31,42 +43,63 @@ namespace Integrative.Lara
             AppendChild(option);
         }
 
+        /// <summary>
+        /// Gets or sets the 'autofocus' HTML5 attribute.
+        /// </summary>
         public bool Autofocus
         {
             get => HasAttributeLower("autofocus");
             set { SetFlagAttributeLower("autofocus", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'disabled' HTML5 attribute.
+        /// </summary>
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
             set { SetFlagAttributeLower("disabled", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'multiple' HTML5 attribute.
+        /// </summary>
         public bool Multiple
         {
             get => HasAttributeLower("multiple");
             set { SetFlagAttributeLower("multiple", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'name' HTML5 attribute.
+        /// </summary>
         public string Name
         {
             get => GetAttributeLower("name");
             set { SetAttributeLower("name", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'required' HTML5 attribute.
+        /// </summary>
         public bool Required
         {
             get => HasAttributeLower("required");
             set { SetFlagAttributeLower("required", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'size' HTML5 attribute.
+        /// </summary>
         public int? Size
         {
             get => GetIntAttribute("size");
             set { SetIntAttribute("size", value); }
         }
 
+        /// <summary>
+        /// Gets or sets the 'value' HTML5 attribute.
+        /// </summary>
         public string Value
         {
             get => GetAttributeLower("value");
@@ -125,6 +158,9 @@ namespace Integrative.Lara
             }
         }
 
+        /// <summary>
+        /// Gets the child options.
+        /// </summary>
         public IEnumerable<Option> Options => GetOptions();
 
         private IEnumerable<Option> GetOptions()
