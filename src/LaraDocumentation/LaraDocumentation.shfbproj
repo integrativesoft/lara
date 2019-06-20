@@ -42,7 +42,7 @@
     <MaximumGroupParts>2</MaximumGroupParts>
     <Preliminary>False</Preliminary>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <VisibleItems>InheritedMembers, InheritedFrameworkMembers, ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
+    <VisibleItems>ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.0\Integrative.Lara.xml" />
       <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.0\Integrative.Lara.dll" />
@@ -50,7 +50,8 @@
     <CopyrightText>Copyright %28c%29 2019 Integrative Software LLC</CopyrightText>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="True">Lara's namespace</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Integrative.Lara" isDocumented="True">Integrative.Lara namespace</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Integrative.Lara" isDocumented="True">Integrative.Lara namespace</NamespaceSummaryItem>
+    </NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
