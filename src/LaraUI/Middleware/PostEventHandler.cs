@@ -94,8 +94,20 @@ namespace Integrative.Lara.Middleware
         private static async Task ProcessRequest(PostEventContext context)
         {
             if (MiddlewareCommon.TryFindConnection(context.Http, out var connection)
-                && connection.TryGetDocument(context.Parameters.DocumentId, out var document)
-                && document.TryGetElementById(context.Parameters.ElementId, out var element))
+                && connection.TryGetDocument(context.Parameters.DocumentId, out var document))
+            {
+                await ProcessRequest(context, document);
+            }
+            else
+            {
+                await SendEvent(context, EventResultType.NoSession);
+            }
+        }
+
+        private static async Task ProcessRequest(PostEventContext context, Document document)
+        {
+            context.Document = document;
+            if (document.TryGetElementById(context.Parameters.ElementId, out var element))
             {
                 context.Element = element;
                 using (var access = await document.Semaphore.UseWaitAsync())
@@ -105,20 +117,19 @@ namespace Integrative.Lara.Middleware
             }
             else
             {
-                await SendReload(context);
+                await SendEvent(context, EventResultType.NoElement);
             }
         }
 
         internal static async Task RunEvent(PostEventContext post)
         {
-            var document = post.Element.Document;
-            var context = new PageContext(post.Http, document)
+            var context = new PageContext(post.Http, post.Document)
             {
                 Socket = post.Socket
             };
             ProcessMessageIfNeeded(context, post.Parameters);
             await post.Element.NotifyEvent(post.Parameters.EventName, context);
-            string queue = document.FlushQueue();
+            string queue = post.Document.FlushQueue();
             await SendReply(post, queue);
         }
 
@@ -138,6 +149,7 @@ namespace Integrative.Lara.Middleware
 
         private static void ProcessMessage(Document document, ClientEventMessage message)
         {
+            document = document ?? throw new ArgumentNullException(nameof(document));
             foreach (var row in message.Values)
             {
                 if (document.TryGetElementById(row.ElementId, out var element))
@@ -198,11 +210,11 @@ namespace Integrative.Lara.Middleware
             await MiddlewareCommon.WriteUtf8Buffer(http, json);
         }
 
-        private static async Task SendReload(PostEventContext post)
+        private static async Task SendEvent(PostEventContext post, EventResultType type)
         {
             var reply = new EventResult
             {
-                ResultType = EventResultType.NoSession
+                ResultType = type
             };
             string json = reply.ToJSON();
             await SendReply(post, json);

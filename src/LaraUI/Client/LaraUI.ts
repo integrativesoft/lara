@@ -165,7 +165,7 @@ namespace LaraUI {
             if (result.List) {
                 processResult(result.List);
             }
-        } else {
+        } else if (result.ResultType == EventResultType.NoSession) {
             location.reload();
         }
     }

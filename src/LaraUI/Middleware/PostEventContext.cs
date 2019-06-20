@@ -14,6 +14,7 @@ namespace Integrative.Lara.Middleware
         public HttpContext Http { get; set; }
         public WebSocket Socket { get; set; }
         public EventParameters Parameters { get; set; }
+        public Document Document { get; set; }
         public Element Element { get; set; }
     }
 }
