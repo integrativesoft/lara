@@ -10,7 +10,9 @@ The purpose of Lara is to give you full control of the HTML document tree from t
 
 Lara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
-The source code contains a [Sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
+The source code contains a sample project that is also available as a separate [repository](https://github.com/integrativesoft/larasample/tree/master).
+
+We welcome questions and feedback! Write to us [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
 
 ## Sample application
 
@@ -86,7 +88,7 @@ app.UseLara(options);
 
 Here you need to choose a tool to load your locally-hosted website inside a desktop window. Some options available:
 - Creating an electron app using [electron-cgi](https://github.com/ruidfigueiredo/electron-cgi) (recommended). This seems to be the most resilient way to run a web desktop app. It comes at the cost of having to distribute electron with nodejs.
-- Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Some platform-specific troubleshooting is required. Their Windows version based on CefSharp works very well.
+- Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Their Windows version based on CefSharp works very well.
 
 ## How does Lara work?
 
