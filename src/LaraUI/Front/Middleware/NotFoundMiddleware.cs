@@ -17,6 +17,10 @@ namespace Integrative.Lara
     public class NotFoundMiddleware
     {
 #pragma warning disable IDE0060 // Remove unused parameter: required by ASP.NET Core
+        /// <summary>
+        /// Creates an instance of NotFoundMiddleware
+        /// </summary>
+        /// <param name="next"></param>
         public NotFoundMiddleware(RequestDelegate next)
 #pragma warning restore IDE0060 // Remove unused parameter
         {

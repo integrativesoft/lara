@@ -1,0 +1,2152 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Integrative.Lara</name>
+    </assembly>
+    <members>
+        <member name="T:Integrative.Lara.BlockOptions">
+            <summary>
+            Defines options for blocking the UI while executing an event
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BlockOptions.BlockedElementId">
+            <summary>
+            Gets or sets the ID of element to block. Leave empty to block the whole page.
+            </summary>
+            <value>
+            The ID of the element to block. If left blank, block the entire page.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.BlockOptions.ShowElementId">
+            <summary>
+            Gets or sets the ID of the element to show. If set, the element specified will be shown instead of the default block dialog.
+            </summary>
+            <value>
+            The ID of the element to show instead of the default block dialog.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.BlockOptions.ShowHtmlMessage">
+            <summary>
+            Gets or sets an HTML message to show while blocking the user interface. If set, the specified HTML will be shown instead of the default block dialog.
+            </summary>
+            <value>
+            The HTML message to show instead of the default block dialog.
+            </value>
+        </member>
+        <member name="T:Integrative.Lara.Document">
+            <summary>
+            An HTML5 document.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Document.Lang">
+            <summary>
+            Gets or sets the language. See 'lang' property for HTML5 documents.
+            </summary>
+            <value>
+            The language.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Document.Head">
+            <summary>
+            The document's Head element.
+            </summary>
+            <value>
+            The head.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Document.Body">
+            <summary>
+            The document's Body element.
+            </summary>
+            <value>
+            The body.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Document.CreateElement(System.String)">
+            <summary>
+            Creates an HTML element.
+            </summary>
+            <param name="tagName">Name of the tag.</param>
+            <returns>Element created</returns>
+        </member>
+        <member name="M:Integrative.Lara.Document.CreateTextNode(System.String)">
+            <summary>
+            Creates a text node.
+            </summary>
+            <param name="data">The node's data.</param>
+            <returns>Text node created</returns>
+        </member>
+        <member name="M:Integrative.Lara.Document.TryGetElementById(System.String,Integrative.Lara.Element@)">
+            <summary>
+            Tries to get an element by identifier.
+            </summary>
+            <param name="id">The identifier.</param>
+            <param name="element">The element.</param>
+            <returns>True when the element was found.</returns>
+        </member>
+        <member name="T:Integrative.Lara.DuplicateElementId">
+            <summary>
+            Exception thrown when adding a duplicate element ID into a document
+            </summary>
+            <seealso cref="T:System.InvalidOperationException" />
+        </member>
+        <member name="M:Integrative.Lara.DuplicateElementId.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.DuplicateElementId"/> class.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.DuplicateElementId.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.DuplicateElementId"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Integrative.Lara.DuplicateElementId.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.DuplicateElementId"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="inner">The inner.</param>
+        </member>
+        <member name="M:Integrative.Lara.DuplicateElementId.Create(System.String)">
+            <summary>
+            Creates a DuplicateElementId exception
+            </summary>
+            <param name="id">The identifier that is duplicate.</param>
+            <returns>Exception created</returns>
+        </member>
+        <member name="T:Integrative.Lara.Element">
+            <summary>
+            An Element node inside an HTML5 document
+            </summary>
+            <seealso cref="T:Integrative.Lara.Node" />
+        </member>
+        <member name="P:Integrative.Lara.Element.TagName">
+            <summary>
+            Element's tag name
+            </summary>
+            <value>
+            The element's tag name
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Element.Create(System.String)">
+            <summary>
+            Creates an element
+            </summary>
+            <param name="tagName">Element's tag name.</param>
+            <returns>Element created</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.Create(System.String,System.String)">
+            <summary>
+            Creates an element
+            </summary>
+            <param name="tagName">Element's tag name.</param>
+            <param name="id">The identifier.</param>
+            <returns>Element created</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.CreateNS(System.String,System.String)">
+            <summary>
+            Creates a namespace-specific HTML5 element (e.g. SVG elements)
+            </summary>
+            <param name="ns">The namespace of the element</param>
+            <param name="tagName">Element's tag name.</param>
+            <returns>Element created</returns>
+        </member>
+        <member name="P:Integrative.Lara.Element.NodeType">
+            <summary>
+            Gets the type of the node.
+            </summary>
+            <value>
+            The type of the node.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Element.ToString">
+            <summary>
+            Converts to string.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="P:Integrative.Lara.Element.Id">
+            <summary>
+            Gets or sets the identifier.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Element.EnsureElementId">
+            <summary>
+            Returns the element's identifier, generating an ID if currently blank.
+            </summary>
+            <returns>Element's ID</returns>
+            <exception cref="T:System.InvalidOperationException">Cannot use EnsureElementId on orphan elements</exception>
+        </member>
+        <member name="M:Integrative.Lara.Element.SetAttribute(System.String,System.String)">
+            <summary>
+            Sets an attribute and its value.
+            </summary>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="attributeValue">The value of the attribute.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.HasAttribute(System.String)">
+            <summary>
+            Determines whether the element has the given attribute
+            </summary>
+            <param name="attributeName">The name of the attribute.</param>
+            <returns>
+              <c>true</c> if the element has the specified attribute; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.GetAttribute(System.String)">
+            <summary>
+            Gets the value of an attribute.
+            </summary>
+            <param name="attributeName">The name of the attribute</param>
+            <returns>Value of the attribute</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.SetFlagAttribute(System.String,System.Boolean)">
+            <summary>
+            Adds or removes a flag attribute
+            </summary>
+            <param name="attributeName">Attribute's name</param>
+            <param name="value">true to add, false to remove</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.RemoveAttribute(System.String)">
+            <summary>
+            Removes an attribute.
+            </summary>
+            <param name="attributeName">The name of the attribute.</param>
+        </member>
+        <member name="P:Integrative.Lara.Element.Attributes">
+            <summary>
+            Gets the attributes.
+            </summary>
+            <value>
+            The attributes.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Element.HasClass(System.String)">
+            <summary>
+            Determines whether the 'class' attribute contains the specified class.
+            </summary>
+            <param name="className">Name of the class.</param>
+            <returns>
+              <c>true</c> if the specified class is found; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.AddClass(System.String)">
+            <summary>
+            Adds the given class name to the 'class' attribute.
+            </summary>
+            <param name="className">Name of the class.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.RemoveClass(System.String)">
+            <summary>
+            Removes the given class name from the 'class' attribute.
+            </summary>
+            <param name="className">Name of the class.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.ToggleClass(System.String,System.Boolean)">
+            <summary>
+            Adds or removes the given class name from the 'class' attribute.
+            </summary>
+            <param name="className">Name of the class.</param>
+            <param name="value">true to add the class, false to remove.</param>
+        </member>
+        <member name="P:Integrative.Lara.Element.AccessKey">
+            <summary>
+            The 'accesskey' HTML5 attribute.
+            </summary>
+            <value>
+            The access key.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.AutoCapitalize">
+            <summary>
+            The 'autocapitalize' HTML5 attribute.
+            </summary>
+            <value>
+            The automatic capitalize.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Class">
+            <summary>
+            The 'class' HTML5 attribute.
+            </summary>
+            <value>
+            The class.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.ContentEditable">
+            <summary>
+            The 'contenteditable' HTML5 attribute.
+            </summary>
+            <value>
+            The content editable.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.ContextMenu">
+            <summary>
+            The 'contextmenu' HTML5 attribute.
+            </summary>
+            <value>
+            The context menu.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Dir">
+            <summary>
+            The 'dir' HTML5 attribute.
+            </summary>
+            <value>
+            The dir.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Draggable">
+            <summary>
+            The 'draggable' HTML5 attribute.
+            </summary>
+            <value>
+            The draggable.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.DropZone">
+            <summary>
+            The 'dropzone' HTML5 attribute.
+            </summary>
+            <value>
+            The drop zone.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Hidden">
+            <summary>
+            The 'hidden' HTML5 attribute.
+            </summary>
+            <value>
+              <c>true</c> if hidden; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.InputMode">
+            <summary>
+            The 'inputmode' HTML5 attribute.
+            </summary>
+            <value>
+              <c>true</c> if [input mode]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Lang">
+            <summary>
+            The 'lang' HTML5 attribute
+            </summary>
+            <value>
+            The language.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Spellcheck">
+            <summary>
+            The 'spellcheck' HTML5 attribute.
+            </summary>
+            <value>
+            The spellcheck.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Style">
+            <summary>
+            The 'style' HTML5 attribute.
+            </summary>
+            <value>
+            The style.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.TabIndex">
+            <summary>
+            The 'tabindex' HTML5 attribute.
+            </summary>
+            <value>
+            The index of the tab.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Title">
+            <summary>
+            The 'title' HTML5 attribute.
+            </summary>
+            <value>
+            The title.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Translate">
+            <summary>
+            The 'translate' HTML5 attribute.
+            </summary>
+            <value>
+            The translate.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.Children">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>
+            The children.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Element.ChildCount">
+            <summary>
+            Returns the number of child nodes.
+            </summary>
+            <value>
+            The child count.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.Element.GetChildAt(System.Int32)">
+            <summary>
+            Gets the child at the given index.
+            </summary>
+            <param name="index">The index of the child.</param>
+            <returns>Child node at the given index</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.GetChildNodePosition(Integrative.Lara.Node)">
+            <summary>
+            Searches for a direct child node and returns its index in the list of child nodes.
+            </summary>
+            <param name="node">The node to search for.</param>
+            <returns>The 0-based child index, or -1 if not found.</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.GetChildElementPosition(Integrative.Lara.Element)">
+            <summary>
+            Searches for a direct child element and returns its index in the list of child elements.
+            </summary>
+            <param name="element">The element to search for.</param>
+            <returns>The 0-based child index, or -1 if not found.</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.DescendsFrom(Integrative.Lara.Element)">
+            <summary>
+            Verifies whether an element descends from another.
+            </summary>
+            <param name="element">The element that may be a parent.</param>
+            <returns>True if the current element descends from the given element.</returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.ContainsChild(Integrative.Lara.Node)">
+            <summary>
+            Determines whether the node is a direct child.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if the specified node is a child; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Integrative.Lara.Element.AppendChild(Integrative.Lara.Node)">
+            <summary>
+            Appends a child node.
+            </summary>
+            <param name="node">The node to append.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.InsertChildBefore(Integrative.Lara.Node,Integrative.Lara.Node)">
+            <summary>
+            Inserts a child node, right before the specified node.
+            </summary>
+            <param name="before">The node that is before.</param>
+            <param name="node">The node to insert.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.InsertChildAfter(Integrative.Lara.Node,Integrative.Lara.Node)">
+            <summary>
+            Inserts a child node, right after the specified node.
+            </summary>
+            <param name="after">The node that is after.</param>
+            <param name="node">The node to insert.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.RemoveChild(Integrative.Lara.Node)">
+            <summary>
+            Removes a child.
+            </summary>
+            <param name="child">The child.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.ClearChildren">
+            <summary>
+            Removes all child nodes.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Element.Remove">
+            <summary>
+            Removes this node from its parent.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Cannot remove from parent, the node has no parent element already</exception>
+        </member>
+        <member name="M:Integrative.Lara.Element.On(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+            <summary>
+            Registers an event and associates code to execute.
+            </summary>
+            <param name="eventName">Name of the event.</param>
+            <param name="handler">The handler to execute.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.On(Integrative.Lara.EventSettings)">
+            <summary>
+            Registers an event and associates code to execute.
+            </summary>
+            <param name="settings">The event's settings.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.Focus">
+            <summary>
+            Focuses this element.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.EventSettings">
+            <summary>
+            Specifies settings to declare an event and associate execution code to it.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.EventSettings.EventName">
+            <summary>
+            Name of the HTML5 event (e.g. 'click')
+            </summary>
+            <value>
+            The name of the event.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.EventSettings.Block">
+            <summary>
+            Block the UI while the event is executing?
+            </summary>
+            <value>
+              <c>true</c> if block; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.EventSettings.BlockOptions">
+            <summary>
+            Gets or sets the options for blocking the UI.
+            </summary>
+            <value>
+            The block options.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.EventSettings.Handler">
+            <summary>
+            Gets or sets the code to execute for the event.
+            </summary>
+            <value>
+            The handler.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.EventSettings.LongRunning">
+            <summary>
+            Long-running events use websockets and can flush partial progress to the client.
+            </summary>
+            <value>
+              <c>true</c> if [long running]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Integrative.Lara.NodeType">
+            <summary>
+            Defines the types of document nodes
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.NodeType.Document">
+            <summary>
+            Document node
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.NodeType.Element">
+            <summary>
+            Element node
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.NodeType.Text">
+            <summary>
+            Text node
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Node">
+            <summary>
+            An abstract class that represents a node in an HTML5 document
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Node.#ctor">
+            <summary>
+            Creates a node
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Node.ParentElement">
+            <summary>
+            The node's parent element.
+            </summary>
+            <value>
+            The parent element.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Node.Document">
+            <summary>
+            The node's document. This property returns null when the node is not attached to a document.
+            </summary>
+            <value>
+            The document.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.Node.NodeType">
+            <summary>
+            Gets the type of the node.
+            </summary>
+            <value>
+            The type of the node.
+            </value>
+        </member>
+        <member name="T:Integrative.Lara.TextNode">
+            <summary>
+            A text node.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Node" />
+        </member>
+        <member name="P:Integrative.Lara.TextNode.NodeType">
+            <summary>
+            Gets the type of the node.
+            </summary>
+            <value>
+            The type of the node.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.TextNode.Data">
+            <summary>
+            Gets or sets the data of the node. This property gets and sets the raw (unencoded) HTML text for the node.
+            </summary>
+            <value>
+            The data.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TextNode"/> class.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TextNode"/> class.
+            </summary>
+            <param name="text">The text for the node.</param>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TextNode"/> class.
+            </summary>
+            <param name="data">The data.</param>
+            <param name="encode">if set to <c>true</c> encode.</param>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.SetEncodedText(System.String)">
+            <summary>
+            Sets text for the node.
+            </summary>
+            <param name="unencoded">The unencoded text to encode.</param>
+        </member>
+        <member name="T:Integrative.Lara.Anchor">
+            <summary>
+            The HTML5 'a' element
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Anchor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Anchor"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Download">
+            <summary>
+            The 'download' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.HRef">
+            <summary>
+            The 'href' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.HRefLang">
+            <summary>
+            The 'hreflang' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Media">
+            <summary>
+            The 'media' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Ping">
+            <summary>
+            The 'ping' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.ReferrerPolicy">
+            <summary>
+            The 'referrerpolicy' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Rel">
+            <summary>
+            The 'rel' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Target">
+            <summary>
+            The 'target' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Anchor.Type">
+            <summary>
+            The 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Button">
+            <summary>
+            The 'button' HTML5 element
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Button.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Button"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Button.AutoFocus">
+            <summary>
+            Gets or sets the 'autofocus' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Button.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Button.Name">
+            <summary>
+            Gets or sets the 'name' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Button.Type">
+            <summary>
+            Gets or sets the 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Button.Value">
+            <summary>
+            Gets or sets the 'value' property.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.ColGroup">
+            <summary>
+            The 'colgroup' HTML5 element
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.ColGroup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.ColGroup"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.ColGroup.Span">
+            <summary>
+            Gets or sets the 'span' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.GenericElement">
+            <summary>
+            A generic element class for all elements that are not handled by specialized classes.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="T:Integrative.Lara.Image">
+            <summary>
+            The 'img' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Image.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Image"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.Alt">
+            <summary>
+            Gets or sets the 'alt' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.CrossOrigin">
+            <summary>
+            Gets or sets the 'crossorigin' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.Height">
+            <summary>
+            Gets or sets the 'height' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.IsMap">
+            <summary>
+            Gets or sets the 'ismap' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.LongDesc">
+            <summary>
+            Gets or sets the 'longdesc' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.Src">
+            <summary>
+            Gets or sets the 'src' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.SrcSet">
+            <summary>
+            Gets or sets the 'srcset' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.UseMap">
+            <summary>
+            Gets or sets the 'usemap' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Image.Width">
+            <summary>
+            Gets or sets the 'width' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Input">
+            <summary>
+            The 'input' HTML5 element
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Input.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Input"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Accept">
+            <summary>
+            Gets or sets the 'accept' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Alt">
+            <summary>
+            Gets or sets the 'alt' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Autocomplete">
+            <summary>
+            Gets or sets the 'autocomplete' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Autofocus">
+            <summary>
+            Gets or sets the 'autofocus' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Checked">
+            <summary>
+            Gets or sets the 'checked' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Dirname">
+            <summary>
+            Gets or sets the 'dirname' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Height">
+            <summary>
+            Gets or sets the 'height' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.List">
+            <summary>
+            Gets or sets the 'list' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Max">
+            <summary>
+            Gets or sets the 'max' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.MaxLength">
+            <summary>
+            Gets or sets the 'maxlength' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Min">
+            <summary>
+            Gets or sets the 'min' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Multiple">
+            <summary>
+            Gets or sets the 'multiple' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Name">
+            <summary>
+            Gets or sets the 'name' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Pattern">
+            <summary>
+            Gets or sets the 'pattern' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Placeholder">
+            <summary>
+            Gets or sets the 'placeholder' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Readonly">
+            <summary>
+            Gets or sets the 'readonly' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Required">
+            <summary>
+            Gets or sets the 'required' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Size">
+            <summary>
+            Gets or sets the 'size' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Src">
+            <summary>
+            Gets or sets the 'src' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Step">
+            <summary>
+            Gets or sets the 'step' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Type">
+            <summary>
+            Gets or sets the 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Value">
+            <summary>
+            Gets or sets the 'value' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Input.Width">
+            <summary>
+            Gets or sets the 'width' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Label">
+            <summary>
+            The 'label' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Label.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Label"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Label.For">
+            <summary>
+            Gets or sets the 'for' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Link">
+            <summary>
+            The 'link' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Link.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Link"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.CrossOrigin">
+            <summary>
+            Gets or sets the 'crossorigin' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.HRef">
+            <summary>
+            Gets or sets the 'href' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.HRefLang">
+            <summary>
+            Gets or sets the 'hreflang' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.Media">
+            <summary>
+            Gets or sets the 'media' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.Rel">
+            <summary>
+            Gets or sets the 'rel' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.Sizes">
+            <summary>
+            Gets or sets the 'sizes' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Link.Type">
+            <summary>
+            Gets or sets the 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.ListItem">
+            <summary>
+            The 'li' HTML5 element
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.ListItem.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.ListItem"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.ListItem.Value">
+            <summary>
+            Gets or sets the 'value' property.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Meta">
+            <summary>
+            The 'meta' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Meta.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Meta"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meta.Content">
+            <summary>
+            Gets or sets the 'content' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meta.HttpEquiv">
+            <summary>
+            Gets or sets the 'httpequiv' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meta.Name">
+            <summary>
+            Gets or sets the 'name' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Meter">
+            <summary>
+            The 'meter' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Meter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Meter"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.High">
+            <summary>
+            Gets or sets the 'high' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.Low">
+            <summary>
+            Gets or sets the 'low' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.Max">
+            <summary>
+            Gets or sets the 'max' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.Min">
+            <summary>
+            Gets or sets the 'min' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.Optimum">
+            <summary>
+            Gets or sets the 'optimum' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Meter.Value">
+            <summary>
+            Gets or sets the 'value' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Option">
+            <summary>
+            The 'option' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Option.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Option"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Option.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Option.Label">
+            <summary>
+            Gets or sets the 'label' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Option.Selected">
+            <summary>
+            Gets or sets the 'selected' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Option.Value">
+            <summary>
+            Gets or sets the 'value' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.OptionGroup">
+            <summary>
+            The 'optgroup' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.OptionGroup.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.OptionGroup"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OptionGroup.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OptionGroup.Label">
+            <summary>
+            Gets or sets the 'label' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OptionGroup.Options">
+            <summary>
+            Gets the child options.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.OrderedList">
+            <summary>
+            The 'ol' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.OrderedList.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.OrderedList"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OrderedList.Reversed">
+            <summary>
+            Gets or sets the 'reversed' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OrderedList.Start">
+            <summary>
+            Gets or sets the 'start' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.OrderedList.Type">
+            <summary>
+            Gets or sets the 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Script">
+            <summary>
+            The 'script' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Script.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Script"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Script.Async">
+            <summary>
+            Gets or sets the 'async' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Script.Charset">
+            <summary>
+            Gets or sets the 'charset' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Script.Defer">
+            <summary>
+            Gets or sets the 'defer' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Script.Src">
+            <summary>
+            Gets or sets the 'src' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Script.Type">
+            <summary>
+            Gets or sets the 'type' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Select">
+            <summary>
+            The 'select' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Select.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Select"/> class.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Select.AddOption(System.String,System.String)">
+            <summary>
+            Adds an option.
+            </summary>
+            <param name="value">The option's value.</param>
+            <param name="text">The option's text.</param>
+        </member>
+        <member name="P:Integrative.Lara.Select.Autofocus">
+            <summary>
+            Gets or sets the 'autofocus' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Multiple">
+            <summary>
+            Gets or sets the 'multiple' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Name">
+            <summary>
+            Gets or sets the 'name' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Required">
+            <summary>
+            Gets or sets the 'required' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Size">
+            <summary>
+            Gets or sets the 'size' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Value">
+            <summary>
+            Gets or sets the 'value' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Select.Options">
+            <summary>
+            Gets the child options.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.Table">
+            <summary>
+            The 'table' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.Table.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.Table"/> class.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.TableCell">
+            <summary>
+            The 'td' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.TableCell.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TableCell"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableCell.ColSpan">
+            <summary>
+            Gets or sets the 'colspan' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableCell.Headers">
+            <summary>
+            Gets or sets the 'headers' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableCell.RowSpan">
+            <summary>
+            Gets or sets the 'rowspan' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.TableHeader">
+            <summary>
+            The 'th' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.TableHeader.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TableHeader"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.Abbr">
+            <summary>
+            Gets or sets the 'abbr' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.ColSpan">
+            <summary>
+            Gets or sets the 'colspan' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.Headers">
+            <summary>
+            Gets or sets the 'headers' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.RowSpan">
+            <summary>
+            Gets or sets the 'rowspan' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.Scope">
+            <summary>
+            Gets or sets the 'scope' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TableHeader.Sorted">
+            <summary>
+            Gets or sets the 'sorted' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.TextArea">
+            <summary>
+            The 'textarea' HTML5 element.
+            </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
+        </member>
+        <member name="M:Integrative.Lara.TextArea.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.TextArea"/> class.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Autofocus">
+            <summary>
+            Gets or sets the 'autofocus' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Cols">
+            <summary>
+            Gets or sets the 'cols' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Dirname">
+            <summary>
+            Gets or sets the 'dirname' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Disabled">
+            <summary>
+            Gets or sets the 'disabled' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.MaxLength">
+            <summary>
+            Gets or sets the 'maxlength' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Name">
+            <summary>
+            Gets or sets the 'name' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Placeholder">
+            <summary>
+            Gets or sets the 'placeholder' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Readonly">
+            <summary>
+            Gets or sets the 'readonly' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Required">
+            <summary>
+            Gets or sets the 'readonly' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Rows">
+            <summary>
+            Gets or sets the 'rows' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Value">
+            <summary>
+            Gets or sets the 'value' property.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.TextArea.Wrap">
+            <summary>
+            Gets or sets the 'wrap' HTML5 attribute.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.INavigation">
+            <summary>
+            Methods related to document navigation
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.INavigation.Replace(System.String)">
+            <summary>
+            Replaces the specified location.
+            </summary>
+            <param name="location">The new URL location.</param>
+        </member>
+        <member name="M:Integrative.Lara.INavigation.FlushPartialChanges">
+            <summary>
+            Flushes the partial changes on the document to the client. Useful to report progress. Use with 'await'.
+            </summary>
+            <returns>Task</returns>
+        </member>
+        <member name="T:Integrative.Lara.IPage">
+            <summary>
+            Interface for web pages
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.IPage.OnGet(Integrative.Lara.IPageContext)">
+            <summary>
+            Called when replying to the initial HTTP GET request.
+            </summary>
+            <param name="context">The execution context.</param>
+        </member>
+        <member name="T:Integrative.Lara.IPageContext">
+            <summary>
+            The execution context for events.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IPageContext.Http">
+            <summary>
+            Gets the .NET Core HttpContext instance
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IPageContext.Document">
+            <summary>
+            Gets the current document.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IPageContext.JSBridge">
+            <summary>
+            Bridge to execute JavaScript on the client
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IPageContext.Navigation">
+            <summary>
+            Methods related to navigation
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.IJSBridge">
+            <summary>
+            Bridge to execute JavaScript on the client
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.IJSBridge.Submit(System.String)">
+            <summary>
+            Submits the specified java script code to execute on the client. The code is executed after the current event finishes on the server and control returns to the client.
+            </summary>
+            <param name="javaScriptCode">The JavaScript code to execute.</param>
+        </member>
+        <member name="M:Integrative.Lara.IJSBridge.OnMessage(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+            <summary>
+            Register a custom event that can be called from JavaScript code
+            </summary>
+            <param name="key">The key for the event.</param>
+            <param name="handler">The handler for the event.</param>
+        </member>
+        <member name="P:Integrative.Lara.IJSBridge.EventData">
+            <summary>
+            Gets extra event data that can be passed by the client on custom events.
+            </summary>
+            <value>
+            The event data.
+            </value>
+        </member>
+        <member name="T:Integrative.Lara.LaraUI">
+            <summary>
+            The main Lara static class
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.ClearAll">
+            <summary>
+            Removes all published elements
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.Publish(System.String,System.Func{Integrative.Lara.IPage})">
+            <summary>
+            Publishes a page.
+            </summary>
+            <param name="address">The address of the page.</param>
+            <param name="pageFactory">The page factory.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.Publish(System.String,Integrative.Lara.StaticContent)">
+            <summary>
+            Publishes static content.
+            </summary>
+            <param name="address">The address of the content.</param>
+            <param name="content">The static content to be published.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.UnPublish(System.String)">
+            <summary>
+            Unpublishes an address and its associated content.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.StartServer">
+            <summary>
+            Starts the web server. Use with 'await'.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.StartServer(Integrative.Lara.StartServerOptions)">
+            <summary>
+            Starts the web server. Use with 'await'.
+            </summary>
+            <param name="options">The server options.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.LaunchBrowser(System.String)">
+            <summary>
+            Launches the user's default web browser on the specified address.
+            </summary>
+            <param name="address">The address.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.LaunchBrowser(Microsoft.AspNetCore.Hosting.IWebHost)">
+            <summary>
+            Launches the user's default web browser on the first address of the host passed in parameters.
+            </summary>
+            <param name="host">The host.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.GetFirstURL(Microsoft.AspNetCore.Hosting.IWebHost)">
+            <summary>
+            Gets the first URL associated with the given host.
+            </summary>
+            <param name="host">The host.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.StaticContent">
+            <summary>
+            Static content to publish on the web server
+            </summary>
+            <seealso cref="T:Integrative.Lara.Main.IPublishedItem" />
+        </member>
+        <member name="P:Integrative.Lara.StaticContent.Bytes">
+            <summary>
+            Gets the byte array of the content
+            </summary>
+            <value>
+            The byte array.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.StaticContent.ContentType">
+            <summary>
+            Gets the 'content-type' HTTP header for the static content
+            </summary>
+            <value>
+            The 'content-type' value for the content.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.StaticContent.ETag">
+            <summary>
+            Gets the e-Tag value for the content.
+            </summary>
+            <value>
+            The e-Tag value.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.StaticContent.Compressed">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Integrative.Lara.StaticContent"/> is compressed.
+            </summary>
+            <value>
+              <c>true</c> if compressed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.StaticContent.#ctor(System.Byte[],System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.StaticContent"/> class.
+            </summary>
+            <param name="bytes">The byte array.</param>
+            <param name="contentType">The 'content-type' HTTP header value.</param>
+            <exception cref="T:System.NullReferenceException">The parameter 'bytes' cannot be null.</exception>
+        </member>
+        <member name="M:Integrative.Lara.StaticContent.Run(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Public method used by the Lara framework
+            </summary>
+            <param name="http"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.ContentTypes">
+            <summary>
+            Constants for 'content-type' HTTP header
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXJavascript">
+            <summary>Used to denote the encoding necessary for files containing JavaScript source code. The alternative MIME type for this file type is text/javascript.</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioL24">
+            <summary>24bit Linear PCM audio at 8-48kHz, 1-N channels; Defined in RFC 3190</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXShockwaveFlash">
+            <summary>Adobe Flash files for example with the extension .swf</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationOctetStream">
+            <summary>Arbitrary binary data.[5] Generally speaking this type identifies files that are not associated with a specific application. Contrary to past assumptions by software packages such as Apache this is not a type that should be applied to unknown files. In such a case, a server or application should not indicate a content type, as it may be incorrect, but rather, should omit the type in order to allow the recipient to guess the type.[6]</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationAtomXml">
+            <summary>Atom feeds</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextCss">
+            <summary>Cascading Style Sheets; Defined in RFC 2318</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextCmd">
+            <summary>commands; subtype resident in Gecko browsers like Firefox 3.5</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextCsv">
+            <summary>Comma-separated values; Defined in RFC 4180</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXDeb">
+            <summary>deb (file format), a software package format used by the Debian project</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartEncrypted">
+            <summary>Defined in RFC 1847</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartSigned">
+            <summary>Defined in RFC 1847</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MessageHttp">
+            <summary>Defined in RFC 2616</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelExample">
+            <summary>Defined in RFC 4735</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXDvi">
+            <summary>device-independent document in DVI format</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXmlDtd">
+            <summary>DTD files; Defined by RFC 3023</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationJavascript">
+            <summary>ECMAScript/JavaScript; Defined in RFC 4329</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationEcmascript">
+            <summary>ECMAScript/JavaScript; Defined in RFC 4329 (equivalent to application/javascript but with stricter processing rules)</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationEdifact">
+            <summary>EDI EDIFACT data; Defined in RFC 1767</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationEdiX12">
+            <summary>EDI X12 data; Defined in RFC 1767</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MessagePartial">
+            <summary>Email; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MessageRfc822">
+            <summary>Email; EML files, MIME files, MHT files, MHTML files; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextXml">
+            <summary>Extensible Markup Language; Defined in RFC 3023</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXml">
+            <summary>Extensible Markup Language; Defined in RFC 3023</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoXFlv">
+            <summary>Flash video (FLV files)</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImageGif">
+            <summary>GIF image; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextXGwtRpc">
+            <summary>GoogleWebToolkit data</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXGzip">
+            <summary>Gzip</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextHtml">
+            <summary>HTML; Defined in RFC 2854</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextHtmlUtf8">
+            <summary>HTML; Defined in RFC 2854</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImageVndMicrosoftIcon">
+            <summary>ICO image; Registered[9]</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelIges">
+            <summary>IGS files, IGES files; Defined in RFC 2077</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MessageImdnXml">
+            <summary>IMDN Instant Message Disposition Notification; Defined in RFC 5438</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationJson">
+            <summary>JavaScript Object Notation JSON; Defined in RFC 4627</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationJsonPatch">
+            <summary>JavaScript Object Notation (JSON) Patch; Defined in RFC 6902</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImagePjpeg">
+            <summary>JPEG JFIF image; Associated with Internet Explorer; Listed in ms775147(v=vs.85) - Progressive JPEG, initiated before global browser support for progressive JPEGs (Microsoft and Firefox).</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImageJpeg">
+            <summary>JPEG JFIF image; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextXJqueryTmpl">
+            <summary>jQuery template data</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationVndGoogleEarthKmlXml">
+            <summary>KML files (e.g. for Google Earth)</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXLatex">
+            <summary>LaTeX files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoXMatroska">
+            <summary>Matroska open media format</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationVndMsExcel">
+            <summary>Microsoft Excel files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationVndMsPowerpoint">
+            <summary>Microsoft Powerpoint files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationMsword">
+            <summary>Microsoft Word files[15]</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartAlternative">
+            <summary>MIME Email; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartMixed">
+            <summary>MIME Email; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartRelated">
+            <summary>MIME Email; Defined in RFC 2387 and used by MHTML (HTML mail)</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.MultipartFormData">
+            <summary>MIME Webform; Defined in RFC 2388</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationWwwFormUrlEncoded">
+            <summary>Body contains a URL-encoded query string as per RFC 1867</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationVndMozillaXulXml">
+            <summary>Mozilla XUL files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioMpeg">
+            <summary>MP3 or other MPEG audio; Defined in RFC 3003</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioMp4">
+            <summary>MP4 audio</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoMp4">
+            <summary>MP4 video; Defined in RFC 4337</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoMpeg">
+            <summary>MPEG-1 video with multiplexed audio; Defined in RFC 2045 and RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelMesh">
+            <summary>MSH files, MESH files; Defined in RFC 2077, SILO files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioBasic">
+            <summary>mulaw audio at 8 kHz, 1 channel; Defined in RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoOgg">
+            <summary>Ogg Theora or other video (with audio); Defined in RFC 5334</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioOgg">
+            <summary>Ogg Vorbis, Speex, Flac and other audio; Defined in RFC 5334</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationOgg">
+            <summary>Ogg, a multimedia bitstream container format; Defined in RFC 5334</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXopXml">
+            <summary>OP</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXPkcs12">
+            <summary>p12 files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXPkcs7Certificates">
+            <summary>p7b and spc files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXPkcs7Mime">
+            <summary>p7c files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXPkcs7Certreqresp">
+            <summary>p7r files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXPkcs7Signature">
+            <summary>p7s files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationPdf">
+            <summary>Portable Document Format, PDF has been in use for document exchange on the Internet since 1993; Defined in RFC 3778</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImagePng">
+            <summary>Portable Network Graphics; Registered,[8] Defined in RFC 2083</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationPostscript">
+            <summary>PostScript; Defined in RFC 2046</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoQuicktime">
+            <summary>QuickTime video; Registered[10]</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXRarCompressed">
+            <summary>RAR archive files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioVndRnRealaudio">
+            <summary>RealAudio; Documented in RealPlayer Customer Support Answer 2559</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationRdfXml">
+            <summary>Resource Description Framework; Defined by RFC 3870</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationRssXml">
+            <summary>RSS feeds</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationSoapXml">
+            <summary>SOAP; Defined by RFC 3902</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXStuffit">
+            <summary>StuffIt archive files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImageSvgXml">
+            <summary>SVG vector image; Defined in SVG Tiny 1.2 Specification Appendix M</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ImageTiff">
+            <summary>Tag Image File Format (only for Baseline TIFF); Defined in RFC 3302</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXTar">
+            <summary>Tarball files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextPlain">
+            <summary>Textual data; Defined in RFC 2046 and RFC 3676</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXFontTtf">
+            <summary>TrueType Font No registered MIME type, but this is the most commonly used</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.TextVcard">
+            <summary>vCard (contact information); Defined in RFC 6350</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioVorbis">
+            <summary>Vorbis encoded audio; Defined in RFC 5215</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioVndWave">
+            <summary>WAV audio; Defined in RFC 2361</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationFontWoff">
+            <summary>Web Open Font Format; (candidate recommendation; use application/x-font-woff until standard is official)</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoWebm">
+            <summary>WebM Matroska-based open media format</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioWebm">
+            <summary>WebM open media format</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioXMsWax">
+            <summary>Windows Media Audio Redirector; Documented in Microsoft help page</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.AudioXMsWma">
+            <summary>Windows Media Audio; Documented in Microsoft KB 288102</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.VideoXMsWmv">
+            <summary>Windows Media Video; Documented in Microsoft KB 288102</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelVrml">
+            <summary>WRL files, VRML files; Defined in RFC 2077</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelX3DXml">
+            <summary>X3D ISO standard for representing 3D computer graphics, X3D XML files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelX3DBinary">
+            <summary>X3D ISO standard for representing 3D computer graphics, X3DB binary files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ModelX3DVrml">
+            <summary>X3D ISO standard for representing 3D computer graphics, X3DV VRML files</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationXhtmlXml">
+            <summary>XHTML; Defined by RFC 3236</summary>
+        </member>
+        <member name="F:Integrative.Lara.ContentTypes.ApplicationZip">
+            <summary>ZIP archive files; Registered[7]</summary>
+        </member>
+        <member name="T:Integrative.Lara.LaraMiddleware">
+            <summary>
+            Lara middleware class for the ASP.NET Core framework
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.LaraMiddleware"/> class.
+            </summary>
+            <param name="next">The next.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes this middleware.
+            </summary>
+            <param name="http">The HttpContext.</param>
+        </member>
+        <member name="T:Integrative.Lara.LocalhostFilter">
+            <summary>
+            A middleware class to allow requests from localhost only.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LocalhostFilter.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Logging.ILogger{Integrative.Lara.LocalhostFilter})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.LocalhostFilter"/> class.
+            </summary>
+            <param name="next">The next request delegate.</param>
+            <param name="logger">The logger instance.</param>
+        </member>
+        <member name="M:Integrative.Lara.LocalhostFilter.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes this middleware
+            </summary>
+            <param name="context">The HttpContext.</param>
+        </member>
+        <member name="T:Integrative.Lara.NotFoundMiddleware">
+            <summary>
+            A middleware to show a simple 'not found' page
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.NotFoundMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Creates an instance of NotFoundMiddleware
+            </summary>
+            <param name="next"></param>
+        </member>
+        <member name="M:Integrative.Lara.NotFoundMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes this middleware
+            </summary>
+            <param name="context">The HttpContext.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.ApplicationBuilderLaraExtensions">
+            <summary>
+            ASP.NET Core Extensions for using Lara
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.ApplicationBuilderLaraExtensions.UseLara(Microsoft.AspNetCore.Builder.IApplicationBuilder,Integrative.Lara.LaraOptions)">
+            <summary>
+            Use the Lara Web Engine.
+            </summary>
+            <param name="app">The application.</param>
+            <param name="options">The options.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Integrative.Lara.ApplicationBuilderLaraExtensions.UseLara(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use the Lara Web Engine.
+            </summary>
+            <param name="app">The application.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.LaraBuilder">
+            <summary>
+            Class to build pages more easily
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.#ctor(Integrative.Lara.Element)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.LaraBuilder"/> class.
+            </summary>
+            <param name="startingElement">The starting element to build on.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Push(System.String,System.String,System.String)">
+            <summary>
+            Adds a new element and positions the builder into it.
+            </summary>
+            <param name="tagName">Element's tag name.</param>
+            <param name="className">Element's class name</param>
+            <param name="id">element's identifier.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Push(System.String,System.String,System.String,Integrative.Lara.Element@)">
+            <summary>
+            Adds a new element and positions the builder into it.
+            </summary>
+            <param name="tagName">Element's tag name.</param>
+            <param name="className">Element's class name</param>
+            <param name="id">The identifier.</param>
+            <param name="added">The element added.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.PushNS(System.String,System.String)">
+            <summary>
+            Adds a new namespace-specific element (e.g. 'svg') and positions the builder into it.
+            </summary>
+            <param name="ns">The namespace of the element.</param>
+            <param name="tagName">The element's tag name</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Push(Integrative.Lara.Element)">
+            <summary>
+            Adds an element and positions the builder into it.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Push(Integrative.Lara.Element,System.String)">
+            <summary>
+            Adds an element and positions the builder into it.
+            </summary>
+            <param name="element">The element to add.</param>
+            <param name="className">Name of the class.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Pop">
+            <summary>
+            Positions the builder one position back on the element stack.
+            </summary>
+            <returns>This instance</returns>
+            <exception cref="T:System.InvalidOperationException">Too many Pop() calls.</exception>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddTextNode(System.String,System.Boolean)">
+            <summary>
+            Adds a text node.
+            </summary>
+            <param name="text">The text.</param>
+            <param name="encode">if set to <c>true</c> [encode].</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddTextNode(Integrative.Lara.TextNode)">
+            <summary>
+            Adds a text node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddNode(Integrative.Lara.Node)">
+            <summary>
+            Adds a node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddNodes(System.Collections.Generic.IEnumerable{Integrative.Lara.Node})">
+            <summary>
+            Adds a collection of nodes.
+            </summary>
+            <param name="nodes">The nodes.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddNodes(System.Collections.Generic.IEnumerable{Integrative.Lara.Element})">
+            <summary>
+            Adds a collection of elements.
+            </summary>
+            <param name="nodes">The nodes.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Add(System.Action{Integrative.Lara.LaraBuilder})">
+            <summary>
+            Adds the elements generated by the executing the specified handler.
+            </summary>
+            <param name="action">The action.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Attribute(System.String,System.String)">
+            <summary>
+            Sets an attribute on the current element.
+            </summary>
+            <param name="attribute">The attribute.</param>
+            <param name="value">The value.</param>
+            <returns>Thsi instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.FlagAttribute(System.String,System.Boolean)">
+            <summary>
+            Sets a flag attribute value.
+            </summary>
+            <param name="attribute">The attribute.</param>
+            <param name="value">if set to <c>true</c> [value].</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.On(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+            <summary>
+            Associates an event handler with the current element.
+            </summary>
+            <param name="eventName">Name of the event.</param>
+            <param name="handler">The handler.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.On(Integrative.Lara.EventSettings)">
+            <summary>
+            Associates an event handler with the current element.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="T:Integrative.Lara.LaraOptions">
+            <summary>
+            Lara Web Engine options
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.AllowLocalhostOnly">
+            <summary>
+            Gets or sets a value indicating whether to allow localhost requests only.
+            </summary>
+            <value>
+              <c>true</c> if [allow localhost only]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.ShowNotFoundPage">
+            <summary>
+            Gets or sets a value indicating whether Lara will show its default 'not found' page.
+            </summary>
+            <value>
+              <c>true</c> if [show not found page]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.Port">
+            <summary>
+            Gets or sets the port to use when Lara opens a new server. If zero, a dynamic port wil be assigned.
+            </summary>
+            <value>
+            The port number.
+            </value>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.AddWebSocketsMiddleware">
+            <summary>
+            Gets or sets a value indicating whether Lara will include ASP.NET Core WebSocket middleware. Always set to include unless you are manually including the middleware yourself.
+            </summary>
+            <value>
+              <c>true</c> if [add web sockets middleware]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Integrative.Lara.StartServerOptions">
+            <summary>
+            Lara options for starting a web server
+            </summary>
+            <seealso cref="T:Integrative.Lara.LaraOptions" />
+        </member>
+        <member name="P:Integrative.Lara.StartServerOptions.ShowExceptions">
+            <summary>
+            Gets or sets a value indicating whether to show execution exceptions.
+            </summary>
+            <value>
+              <c>true</c> if [show exceptions]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Integrative.Lara.StartServerOptions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.StartServerOptions"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

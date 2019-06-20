@@ -8,10 +8,24 @@ using Integrative.Lara.Delta;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Defines the types of document nodes
+    /// </summary>
     public enum NodeType
     {
+        /// <summary>
+        /// Document node
+        /// </summary>
         Document,
+
+        /// <summary>
+        /// Element node
+        /// </summary>
         Element,
+
+        /// <summary>
+        /// Text node
+        /// </summary>
         Text
     }
 
@@ -20,7 +34,10 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class Node
     {
-        protected Node()
+        /// <summary>
+        /// Creates a node
+        /// </summary>
+        internal protected Node()
         {
         }
 
@@ -33,7 +50,7 @@ namespace Integrative.Lara
         public Element ParentElement { get; internal set; }
 
         /// <summary>
-        /// The node's document. This proprety returns null when the node is not attached to a document.
+        /// The node's document. This property returns null when the node is not attached to a document.
         /// </summary>
         /// <value>
         /// The document.

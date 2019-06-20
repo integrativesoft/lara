@@ -92,6 +92,11 @@ namespace Integrative.Lara
             }
         }
 
+        /// <summary>
+        /// Public method used by the Lara framework
+        /// </summary>
+        /// <param name="http"></param>
+        /// <returns></returns>
         public async Task Run(HttpContext http)
         {
             if (IsMatchETag(http.Request.Headers))

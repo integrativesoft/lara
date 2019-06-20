@@ -8,6 +8,9 @@ using Integrative.Lara.Delta;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// The 'input' HTML5 element
+    /// </summary>
     public sealed class Input : Element
     {
         /// <summary>

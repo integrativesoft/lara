@@ -78,7 +78,7 @@ namespace Integrative.Lara
 
         internal bool NeedsId => GetNeedsId();
 
-        protected virtual bool GetNeedsId()
+        internal bool GetNeedsId()
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -171,7 +171,7 @@ namespace Integrative.Lara
             SetAttributeLower(attributeName.ToLower(), attributeValue);
         }
 
-        protected void SetAttributeLower(string nameLower, string value)
+        internal void SetAttributeLower(string nameLower, string value)
         {
             if (nameLower == "id")
             {
@@ -192,7 +192,7 @@ namespace Integrative.Lara
         /// </returns>
         public bool HasAttribute(string attributeName) => _attributes.HasAttribute(attributeName);
 
-        protected bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
+        internal bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
 
         /// <summary>
         /// Gets the value of an attribute.
@@ -201,13 +201,18 @@ namespace Integrative.Lara
         /// <returns>Value of the attribute</returns>
         public string GetAttribute(string attributeName) => _attributes.GetAttribute(attributeName);
 
-        protected string GetAttributeLower(string nameLower)
+        internal string GetAttributeLower(string nameLower)
             => _attributes.GetAttributeLower(nameLower);
 
-        public void SetFlagAttribute(string name, bool value)
-            => _attributes.SetFlagAttributeLower(name.ToLower(), value);
+        /// <summary>
+        /// Adds or removes a flag attribute
+        /// </summary>
+        /// <param name="attributeName">Attribute's name</param>
+        /// <param name="value">true to add, false to remove</param>
+        public void SetFlagAttribute(string attributeName, bool value)
+            => _attributes.SetFlagAttributeLower(attributeName.ToLower(), value);
 
-        protected void SetFlagAttributeLower(string nameLower, bool value)
+        internal void SetFlagAttributeLower(string nameLower, bool value)
             => _attributes.SetFlagAttributeLower(nameLower, value);
 
         /// <summary>
@@ -227,7 +232,7 @@ namespace Integrative.Lara
             }
         }
 
-        protected int? GetIntAttribute(string nameLower)
+        internal int? GetIntAttribute(string nameLower)
         {
             if (int.TryParse(GetAttributeLower(nameLower), out int value))
             {
@@ -239,7 +244,7 @@ namespace Integrative.Lara
             }
         }
 
-        protected void SetIntAttribute(string nameLower, int? value)
+        internal void SetIntAttribute(string nameLower, int? value)
         {
             if (value == null)
             {
@@ -282,17 +287,17 @@ namespace Integrative.Lara
         public void RemoveClass(string className) => Class = ClassEditor.RemoveClass(Class, className);
 
         /// <summary>
-        /// Adds or removes the fiven class name from the 'class' attribute.
+        /// Adds or removes the given class name from the 'class' attribute.
         /// </summary>
         /// <param name="className">Name of the class.</param>
         /// <param name="value">true to add the class, false to remove.</param>
         public void ToggleClass(string className, bool value) => Class = ClassEditor.ToggleClass(Class, className, value);
 
-        protected void NotifyValue(string value) => _attributes.NotifyValue(value);
+        internal void NotifyValue(string value) => _attributes.NotifyValue(value);
 
-        protected void NotifyChecked(bool value) => _attributes.NotifyChecked(value);
+        internal void NotifyChecked(bool value) => _attributes.NotifyChecked(value);
 
-        protected void NotifySelected(bool value) => _attributes.NotifySelected(value);
+        internal void NotifySelected(bool value) => _attributes.NotifySelected(value);
 
         #endregion
 
@@ -685,7 +690,7 @@ namespace Integrative.Lara
         {
         }
 
-        protected virtual void OnChildAdded(Node child)
+        internal virtual void OnChildAdded(Node child)
         {
         }
 

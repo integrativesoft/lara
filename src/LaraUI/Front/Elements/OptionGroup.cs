@@ -55,7 +55,7 @@ namespace Integrative.Lara
             }
         }
 
-        protected override void OnChildAdded(Node child)
+        internal override void OnChildAdded(Node child)
         {
             if (ParentElement is Select parent && child is Option option)
             {

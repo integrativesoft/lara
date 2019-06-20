@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Topics>
+  <Topic id="306fbdba-5d74-46ab-a362-aabe1e0a4051" visible="True" isDefault="true" isSelected="true" title="Welcome to Lara Web Engine">
+    <HelpKeywords>
+      <HelpKeyword index="K" term="Welcome" />
+    </HelpKeywords>
+  </Topic>
+</Topics>

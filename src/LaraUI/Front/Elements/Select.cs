@@ -141,7 +141,7 @@ namespace Integrative.Lara
             }
         }
 
-        protected override void OnChildAdded(Node child)
+        internal override void OnChildAdded(Node child)
         {
             string value = Value;
             if (string.IsNullOrEmpty(value))
