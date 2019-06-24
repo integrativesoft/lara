@@ -287,5 +287,33 @@ namespace Integrative.Lara.Tests.Middleware
             http.Setup(x => x.WebSockets).Returns(websockets.Object);
             Assert.False(await post.ProcessRequest(http.Object));
         }
+
+        [Fact]
+        public async void PostEventHandlerNoElement()
+        {
+            var http = new Mock<HttpContext>();
+            var page = new MyPage();
+            var document = new Document(page);
+            var context = new PostEventContext
+            {
+                Document = document,
+                Http = http.Object,
+                Parameters = new EventParameters
+                {
+                    ElementId = "aaa"
+                }
+            };
+            var sockets = new Mock<WebSocketManager>();
+            http.Setup(x => x.WebSockets).Returns(sockets.Object);
+            var response = new Mock<HttpResponse>();
+            http.Setup(x => x.Response).Returns(response.Object);
+            response.SetupProperty(x => x.StatusCode);
+            var headers = new Mock<IHeaderDictionary>();
+            response.Setup(x => x.Headers).Returns(headers.Object);
+            var body = new Mock<Stream>();
+            response.Setup(x => x.Body).Returns(body.Object);
+            await PostEventHandler.ProcessRequestDocument(context);
+            Assert.Equal(200, response.Object.StatusCode);
+        }
     }
 }

@@ -106,7 +106,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task ProcessRequestDocument(PostEventContext context)
+        internal static async Task ProcessRequestDocument(PostEventContext context)
         {
             var document = context.Document;
             if (document.TryGetElementById(context.Parameters.ElementId, out var element))

@@ -10,6 +10,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -182,6 +183,25 @@ namespace Integrative.Lara.Tests.DOM
             var child = root.Children.FirstOrDefault() as Element;
             Assert.NotNull(child);
             Assert.Equal("abc", child.GetAttribute("xlmns"));
+        }
+
+        [Fact]
+        public void PushElementClass()
+        {
+            var root = Element.Create("root");
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(root);
+            builder.Push(div, "red");
+            Assert.Equal("red", div.Class);
+        }
+
+        [Fact]
+        public void SessionIdAvailable()
+        {
+            var guid = Guid.Parse("{0F9EE9CD-F9A0-40E6-A91B-FE4E3E2282F0}");
+            var cnx = new Connection(guid, IPAddress.Loopback);
+            var x = new Session(cnx);
+            Assert.Equal(guid, x.SessionId);
         }
     }
 }
