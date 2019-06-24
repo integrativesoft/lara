@@ -120,5 +120,17 @@ namespace Integrative.Lara.Middleware
                 }
             }
         }
+
+        public static async Task<string> ReadBody(HttpContext http)
+        {
+            if (http.Request.Body == null)
+            {
+                return string.Empty;
+            }
+            using (var reader = new StreamReader(http.Request.Body, Encoding.UTF8))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
     }
 }

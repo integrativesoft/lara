@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using Integrative.Lara.Middleware;
 
 namespace Integrative.Lara.Main

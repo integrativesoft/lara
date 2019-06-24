@@ -38,9 +38,21 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [Fact]
-        public async void CounterButton()
+        public async void CounterButtonAjax()
         {
-            var page = new ButtonCounterPage();
+            var page = new ButtonCounterPage(false);
+            await RunCounterTest(page);
+        }
+
+        [Fact]
+        public async void CounterButtonWebsockets()
+        {
+            var page = new ButtonCounterPage(true);
+            await RunCounterTest(page);
+        }
+
+        private async Task RunCounterTest(ButtonCounterPage page)
+        {
             LaraUI.Publish("/", () => page);
             using (var host = await LaraUI.StartServer())
             {
@@ -52,7 +64,7 @@ namespace Integrative.Lara.Tests.Main
                 await WaitForEvent(() => button.Click());
                 string after1 = button.Text;
                 string path = page.LastPath;
-                
+
                 await WaitForEvent(() => button.Click());
                 string after2 = button.Text;
 
@@ -66,7 +78,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void SecondPageReusesConnection()
         {
-            LaraUI.Publish("/", () => new ButtonCounterPage());
+            LaraUI.Publish("/", () => new ButtonCounterPage(false));
             using (var host = await LaraUI.StartServer())
             {
                 string address = LaraUI.GetFirstURL(host);
@@ -288,6 +300,59 @@ namespace Integrative.Lara.Tests.Main
             public Task OnGet(IPageContext context)
             {
                 Counter++;
+                return Task.CompletedTask;
+            }
+        }
+
+        [Fact]
+        public async void WebServiceReadsSession()
+        {
+            var page = new MySessionPage();
+            var ws = new MyWS();
+            LaraUI.Publish("/", () => page);
+            LaraUI.Publish(new WebServiceContent
+            {
+                Address = "/myWS",
+                Factory = () => ws 
+            });
+            using (var host = await LaraUI.StartServer())
+            {
+                string address = LaraUI.GetFirstURL(host);
+                _driver.Navigate().GoToUrl(address);
+                var button = _driver.FindElement(By.TagName("button"));
+                button.Click();
+                await Task.Delay(300);
+                Assert.Equal("myvalue", ws.Value);
+                Assert.Equal("hello", ws.Body);
+            }
+        }
+
+        class MyWS : IWebService
+        {
+            public string Value { get; private set; }
+            public string Body { get; private set; }
+
+            public Task<string> Execute(IWebServiceContext context)
+            {
+                if (context.TryGetSession(out var session)
+                    && session.TryGetValue("mykey", out var value))
+                {
+                    Value = value;
+                }
+                Body = context.RequestBody;
+                return Task.FromResult("");
+            }
+        }
+
+        class MySessionPage : IPage
+        {
+            public Task OnGet(IPageContext context)
+            {
+                context.Session.SaveValue("mykey", "myvalue");
+                var button = new Button();
+                button.AppendChild(new TextNode("read session"));
+                button.SetAttribute("onclick", "navigator.sendBeacon('/myWS', 'hello');");
+                context.Document.Body.AppendChild(button);
                 return Task.CompletedTask;
             }
         }

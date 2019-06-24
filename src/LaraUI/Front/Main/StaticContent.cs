@@ -18,7 +18,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Static content to publish on the web server
     /// </summary>
-    /// <seealso cref="Integrative.Lara.Main.IPublishedItem" />
+    /// <seealso cref="IPublishedItem" />
     public class StaticContent : IPublishedItem
     {
         const float RequiredCompressionFactor = 0.9f;

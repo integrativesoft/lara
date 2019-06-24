@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -17,11 +16,14 @@ namespace Integrative.Lara.Main
         public IPAddress RemoteIP { get; }
         readonly Dictionary<Guid, Document> _documents;
 
+        internal SessionStorage Storage { get; }
+
         public Connection(Guid id, IPAddress remoteId)
         {
             Id = id;
             RemoteIP = remoteId;
             _documents = new Dictionary<Guid, Document>();
+            Storage = new SessionStorage();
         }
 
         public bool TryGetDocument(Guid virtualId, out Document document)

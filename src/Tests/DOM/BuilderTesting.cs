@@ -137,7 +137,7 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(http.Object, new Document(page.Object));
+            var context = new PageContext(http.Object, null, new Document(page.Object));
             await root.NotifyEvent("click", context);
             Assert.True(executed);
         }
@@ -155,9 +155,33 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(http.Object, new Document(page.Object));
+            var context = new PageContext(http.Object, null, new Document(page.Object));
             await root.NotifyEvent("click", context);
             Assert.True(executed);
+        }
+
+        [Fact]
+        public void PushClassName()
+        {
+            var root = Element.Create("div");
+            var builder = new LaraBuilder(root);
+            builder.Push("div", "red");
+            Assert.NotEmpty(root.Children);
+            var child = root.Children.FirstOrDefault() as Element;
+            Assert.NotNull(child);
+            Assert.Equal("red", child.Class);
+        }
+
+        [Fact]
+        public void PushNS()
+        {
+            var root = Element.Create("div");
+            var builder = new LaraBuilder(root);
+            builder.PushNS("abc", "svg");
+            Assert.NotEmpty(root.Children);
+            var child = root.Children.FirstOrDefault() as Element;
+            Assert.NotNull(child);
+            Assert.Equal("abc", child.GetAttribute("xlmns"));
         }
     }
 }

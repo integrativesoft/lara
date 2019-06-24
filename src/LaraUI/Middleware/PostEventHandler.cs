@@ -96,7 +96,9 @@ namespace Integrative.Lara.Middleware
             if (MiddlewareCommon.TryFindConnection(context.Http, out var connection)
                 && connection.TryGetDocument(context.Parameters.DocumentId, out var document))
             {
-                await ProcessRequest(context, document);
+                context.Connection = connection;
+                context.Document = document;
+                await ProcessRequestDocument(context);
             }
             else
             {
@@ -104,9 +106,9 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task ProcessRequest(PostEventContext context, Document document)
+        private static async Task ProcessRequestDocument(PostEventContext context)
         {
-            context.Document = document;
+            var document = context.Document;
             if (document.TryGetElementById(context.Parameters.ElementId, out var element))
             {
                 context.Element = element;
@@ -123,7 +125,7 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task RunEvent(PostEventContext post)
         {
-            var context = new PageContext(post.Http, post.Document)
+            var context = new PageContext(post.Http, post.Connection, post.Document)
             {
                 Socket = post.Socket
             };

@@ -13,16 +13,18 @@ namespace Integrative.Lara.Main
     {
         public HttpContext Http { get; }
         public Document Document { get; }
+        public Session Session { get; }
 
         readonly JSBridge _bridge;
         readonly Navigation _navigation;
 
-        public PageContext(HttpContext http, Document document)
+        public PageContext(HttpContext http, Connection connection, Document document)
         {
             Http = http;
             Document = document;
             _navigation = new Navigation(this);
             _bridge = new JSBridge(this);
+            Session = new Session(connection);
         }
 
         internal WebSocket Socket { get; set; }

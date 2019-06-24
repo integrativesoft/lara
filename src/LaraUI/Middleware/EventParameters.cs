@@ -56,20 +56,8 @@ namespace Integrative.Lara.Middleware
 
         public async Task ReadMessage(HttpContext http)
         {
-            string body = await ReadBody(http);
+            string body = await MiddlewareCommon.ReadBody(http);
             Message = LaraTools.Deserialize<ClientEventMessage>(body);
-        }
-
-        internal static async Task<string> ReadBody(HttpContext http)
-        {
-            if (http.Request.Body == null)
-            {
-                return string.Empty;
-            }
-            using (var reader = new StreamReader(http.Request.Body, Encoding.UTF8))
-            {
-                return await reader.ReadToEndAsync();
-            }
         }
     }
 }

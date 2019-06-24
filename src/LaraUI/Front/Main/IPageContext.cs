@@ -34,6 +34,11 @@ namespace Integrative.Lara
         /// Methods related to navigation
         /// </summary>
         INavigation Navigation { get; }
+
+        /// <summary>
+        /// Session tools
+        /// </summary>
+        Session Session { get; }
     }
 
     /// <summary>

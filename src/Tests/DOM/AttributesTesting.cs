@@ -98,5 +98,12 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(option.Selected);
         }
 
+        [Fact]
+        public void CreateNsSetsXlmns()
+        {
+            var x = Element.CreateNS("abc", "svg");
+            Assert.Equal("abc", x.GetAttribute("xlmns"));
+        }
+
     }
 }

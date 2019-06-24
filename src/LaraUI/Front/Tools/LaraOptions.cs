@@ -49,7 +49,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Lara options for starting a web server
     /// </summary>
-    /// <seealso cref="Integrative.Lara.LaraOptions" />
+    /// <seealso cref="LaraOptions" />
     public class StartServerOptions : LaraOptions
     {
         /// <summary>

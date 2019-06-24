@@ -24,7 +24,7 @@ namespace Integrative.Lara
         public LaraMiddleware(RequestDelegate next)
         {
             next = new ClientLibraryHandler(next).Invoke;
-            next = new GetRequestHandler(next).Invoke;
+            next = new PublishedItemHandler(next).Invoke;
             next = new DiscardHandler(next).Invoke;
             _next = new PostEventHandler(next).Invoke;
         }

@@ -65,7 +65,7 @@ namespace Integrative.Lara.Tests.Middleware
             var http = new Mock<HttpContext>();
             var request = new Mock<HttpRequest>();
             http.Setup(x => x.Request).Returns(request.Object);
-            var result = await EventParameters.ReadBody(http.Object);
+            var result = await MiddlewareCommon.ReadBody(http.Object);
             Assert.Equal(string.Empty, result);
         }
 
@@ -86,7 +86,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var context = new PageContext(http.Object, document);
+            var context = new PageContext(http.Object, null, document);
             var parameters = new EventParameters();
             PostEventHandler.ProcessMessageIfNeeded(context, parameters);
         }
@@ -175,7 +175,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var page = new PageContext(http.Object, document);
+            var page = new PageContext(http.Object, null, document);
             var socket = new Mock<WebSocket>();
             page.Socket = socket.Object;
             Assert.Same(socket.Object, page.Socket);
@@ -186,7 +186,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var page = new PageContext(http.Object, document);
+            var page = new PageContext(http.Object, null, document);
             await DomOperationsTesting.ThrowsAsync<InvalidOperationException>(async ()
                 => await page.Navigation.FlushPartialChanges());
         }
@@ -197,7 +197,7 @@ namespace Integrative.Lara.Tests.Middleware
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
             var socket = new Mock<WebSocket>();
-            var page = new PageContext(http.Object, document)
+            var page = new PageContext(http.Object, null, document)
             {
                 Socket = socket.Object
             };
@@ -214,6 +214,78 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var x = PostEventHandler.BuildArraySegment("");
             Assert.Empty(x.Array);
+        }
+
+        [Fact]
+        public void ValidateAddress()
+        {
+            Published.ValidateAddress("test");
+            Assert.ThrowsAny<ArgumentException>(() => Published.ValidateAddress(""));
+            Assert.ThrowsAny<ArgumentException>(() => Published.ValidateAddress(null));
+        }
+
+        [Fact]
+        public void ValidateMethod()
+        {
+            Published.ValidateMethod("test");
+            Assert.ThrowsAny<ArgumentException>(() => Published.ValidateMethod(""));
+            Assert.ThrowsAny<ArgumentException>(() => Published.ValidateMethod(null));
+        }
+
+        [Fact]
+        public void UnpublishMethod()
+        {
+            var x = new Published();
+            x.Publish(new WebServiceContent
+            {
+                Address = "/myws",
+                Method = "PUT"
+            });
+            var combined = Published.CombinePathMethod("/myws", "PUT");
+            Assert.True(x.TryGetNode(combined, out _));
+            x.UnPublish("/myws", "PUT");
+            Assert.False(x.TryGetNode(combined, out _));
+        }
+
+        [Fact]
+        public void WebServiceSessionNotFound()
+        {
+            var http = new Mock<HttpContext>();
+            var context = new WebServiceContext
+            {
+                Http = http.Object
+            };
+            var request = new Mock<HttpRequest>();
+            http.Setup(x => x.Request).Returns(request.Object);
+            var cookies = new Mock<IRequestCookieCollection>();
+            request.Setup(x => x.Cookies).Returns(cookies.Object);
+            string temp;
+            cookies.Setup(x => x.TryGetValue(GlobalConstants.CookieSessionId, out temp)).Returns(false);
+            Assert.False(context.TryGetSession(out _));
+        }
+
+        [Fact]
+        public void WebServiceCustomCode()
+        {
+            var x = new WebServiceContext
+            {
+                StatusCode = HttpStatusCode.BadRequest
+            };
+            Assert.Equal(HttpStatusCode.BadRequest, x.StatusCode);
+        }
+
+        [Fact]
+        public async void PostEventHandlerSkipsRequests()
+        {
+            var http = new Mock<HttpContext>();
+            var post = new PostEventHandler(null);
+            var request = new Mock<HttpRequest>();
+            http.Setup(x => x.Request).Returns(request.Object);
+            request.Setup(x => x.Path).Returns(PostEventHandler.EventPrefix);
+            request.Setup(x => x.Method).Returns("LALA");
+            var websockets = new Mock<WebSocketManager>();
+            http.Setup(x => x.WebSockets).Returns(websockets.Object);
+            Assert.False(await post.ProcessRequest(http.Object));
         }
     }
 }

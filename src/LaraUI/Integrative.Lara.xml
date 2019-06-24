@@ -1459,6 +1459,11 @@
             Methods related to navigation
             </summary>
         </member>
+        <member name="P:Integrative.Lara.IPageContext.Session">
+            <summary>
+            Session tools
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.IJSBridge">
             <summary>
             Bridge to execute JavaScript on the client
@@ -1485,6 +1490,45 @@
             The event data.
             </value>
         </member>
+        <member name="T:Integrative.Lara.IWebService">
+            <summary>
+            Web Service handler class
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.IWebService.Execute(Integrative.Lara.IWebServiceContext)">
+            <summary>
+            Executes the web service
+            </summary>
+            <param name="context">Execution context</param>
+            <returns>Response's body</returns>
+        </member>
+        <member name="T:Integrative.Lara.IWebServiceContext">
+            <summary>
+            Context for web service requests
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IWebServiceContext.Http">
+            <summary>
+            ASP.NET Core's HttpContext
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IWebServiceContext.RequestBody">
+            <summary>
+            Request's body sent by the client
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.IWebServiceContext.StatusCode">
+            <summary>
+            Status code to return
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.IWebServiceContext.TryGetSession(Integrative.Lara.Session@)">
+            <summary>
+            Gets a Session object when available
+            </summary>
+            <param name="session"></param>
+            <returns></returns>
+        </member>
         <member name="T:Integrative.Lara.LaraUI">
             <summary>
             The main Lara static class
@@ -1495,25 +1539,43 @@
             Removes all published elements
             </summary>
         </member>
+        <member name="P:Integrative.Lara.LaraUI.JSON">
+            <summary>
+            JSON tools
+            </summary>
+        </member>
         <member name="M:Integrative.Lara.LaraUI.Publish(System.String,System.Func{Integrative.Lara.IPage})">
             <summary>
             Publishes a page.
             </summary>
-            <param name="address">The address of the page.</param>
-            <param name="pageFactory">The page factory.</param>
+            <param name="address">The URL address of the page.</param>
+            <param name="pageFactory">Handler that creates instances of the page</param>
         </member>
         <member name="M:Integrative.Lara.LaraUI.Publish(System.String,Integrative.Lara.StaticContent)">
             <summary>
             Publishes static content.
             </summary>
-            <param name="address">The address of the content.</param>
+            <param name="address">The URL address of the content.</param>
             <param name="content">The static content to be published.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.Publish(Integrative.Lara.WebServiceContent)">
+            <summary>
+            Publishes a web service
+            </summary>
+            <param name="content">Web service settings</param>
         </member>
         <member name="M:Integrative.Lara.LaraUI.UnPublish(System.String)">
             <summary>
             Unpublishes an address and its associated content.
             </summary>
             <param name="path">The path.</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.UnPublish(System.String,System.String)">
+            <summary>
+            Unpublished a web service
+            </summary>
+            <param name="address">The URL address of the web service</param>
+            <param name="method">The HTTP method of the web service</param>
         </member>
         <member name="M:Integrative.Lara.LaraUI.StartServer">
             <summary>
@@ -1544,6 +1606,37 @@
             </summary>
             <param name="host">The host.</param>
             <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.Session">
+            <summary>
+            Session information
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Session.SessionId">
+            <summary>
+            Returns an ID that uniquely identifies the UI session
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Session.SaveValue(System.String,System.String)">
+            <summary>
+            Stores a key value pair
+            </summary>
+            <param name="key">Identifier of the value to store</param>
+            <param name="value">Value to store</param>
+        </member>
+        <member name="M:Integrative.Lara.Session.RemoveValue(System.String)">
+            <summary>
+            Removes a stored value
+            </summary>
+            <param name="key">Identifier of the value stored</param>
+        </member>
+        <member name="M:Integrative.Lara.Session.TryGetValue(System.String,System.String@)">
+            <summary>
+            Retrieves a value stored
+            </summary>
+            <param name="key">Identifier of the value stored</param>
+            <param name="value">Value stored</param>
+            <returns>true if found, false otherwise</returns>
         </member>
         <member name="T:Integrative.Lara.StaticContent">
             <summary>
@@ -1597,6 +1690,31 @@
             </summary>
             <param name="http"></param>
             <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.WebServiceContent">
+            <summary>
+            Web server content definitions
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebServiceContent.Address">
+            <summary>
+            The URL of the web service (e.g. '/MyService')
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebServiceContent.Method">
+            <summary>
+            The HTTP method (e.g. 'POST')
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebServiceContent.ContentType">
+            <summary>
+            The web service's reponse content-type (e.g. 'application/json')
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebServiceContent.Factory">
+            <summary>
+            The method for creating instances of the web service class
+            </summary>
         </member>
         <member name="T:Integrative.Lara.ContentTypes">
             <summary>
@@ -2091,6 +2209,28 @@
             </summary>
             <param name="settings">The settings.</param>
             <returns>This instance</returns>
+        </member>
+        <member name="T:Integrative.Lara.LaraJson">
+            <summary>
+            JSON operations
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraJson.TryParse``1(System.String,``0@)">
+            <summary>
+            Parses a JSON string into a class
+            </summary>
+            <typeparam name="T">Class type</typeparam>
+            <param name="json">Source JSON string</param>
+            <param name="result">Class instance created</param>
+            <returns>true when successful, false otherwise</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraJson.Stringify``1(``0)">
+            <summary>
+            Serializes a class decorated with DataContract to a JSON string
+            </summary>
+            <typeparam name="T">Type of class</typeparam>
+            <param name="instance">Instance to serialize</param>
+            <returns>JSON string with serialized class</returns>
         </member>
         <member name="T:Integrative.Lara.LaraOptions">
             <summary>

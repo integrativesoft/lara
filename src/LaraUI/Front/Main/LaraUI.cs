@@ -33,23 +33,35 @@ namespace Integrative.Lara
             _published.ClearAll();
         }
 
+        /// <summary>
+        /// JSON tools
+        /// </summary>
+        public static LaraJson JSON { get; } = new LaraJson();
+
         #region Publishing
 
         /// <summary>
         /// Publishes a page.
         /// </summary>
-        /// <param name="address">The address of the page.</param>
-        /// <param name="pageFactory">The page factory.</param>
+        /// <param name="address">The URL address of the page.</param>
+        /// <param name="pageFactory">Handler that creates instances of the page</param>
         public static void Publish(string address, Func<IPage> pageFactory)
             => _published.Publish(address, new PagePublished(pageFactory));
 
         /// <summary>
         /// Publishes static content.
         /// </summary>
-        /// <param name="address">The address of the content.</param>
+        /// <param name="address">The URL address of the content.</param>
         /// <param name="content">The static content to be published.</param>
         public static void Publish(string address, StaticContent content)
             => _published.Publish(address, content);
+
+        /// <summary>
+        /// Publishes a web service
+        /// </summary>
+        /// <param name="content">Web service settings</param>
+        public static void Publish(WebServiceContent content)
+            => _published.Publish(content);
 
         /// <summary>
         /// Unpublishes an address and its associated content.
@@ -57,6 +69,14 @@ namespace Integrative.Lara
         /// <param name="path">The path.</param>
         public static void UnPublish(string path)
             => _published.UnPublish(path);
+
+        /// <summary>
+        /// Unpublished a web service
+        /// </summary>
+        /// <param name="address">The URL address of the web service</param>
+        /// <param name="method">The HTTP method of the web service</param>
+        public static void UnPublish(string address, string method)
+            => _published.UnPublish(address, method);
 
         internal static bool TryGetNode(string path, out IPublishedItem item)
             => _published.TryGetNode(path, out item);

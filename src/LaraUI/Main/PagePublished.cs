@@ -32,7 +32,7 @@ namespace Integrative.Lara.Main
         {
             var connection = GetConnection(http);
             var document = connection.CreateDocument(page);
-            var execution = new PageContext(http, document);
+            var execution = new PageContext(http, connection, document);
             await page.OnGet(execution);
             await ProcessGetResult(http, document, execution);
         }
