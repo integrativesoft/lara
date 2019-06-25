@@ -2056,6 +2056,70 @@
             <param name="context">The HttpContext.</param>
             <returns></returns>
         </member>
+        <member name="T:Integrative.Lara.StatusCodeException">
+            <summary>
+            Exception that returns a specific error code on web services
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.StatusCodeException.StatusCode">
+            <summary>
+            Status code to respond to the client
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.StatusCodeException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.StatusCodeException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:Integrative.Lara.StatusCodeException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="inner">Inner exception</param>
+        </member>
+        <member name="M:Integrative.Lara.StatusCodeException.#ctor(System.Net.HttpStatusCode)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="status">Status code</param>
+        </member>
+        <member name="M:Integrative.Lara.StatusCodeException.#ctor(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="status">Status code </param>
+            <param name="message"></param>
+        </member>
+        <member name="T:Integrative.Lara.Front.Middleware.StatusForbiddenException">
+            <summary>
+            Exception that returns a status code of Forbidden in web services
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="inner">Inner exception</param>
+        </member>
         <member name="T:Integrative.Lara.ApplicationBuilderLaraExtensions">
             <summary>
             ASP.NET Core Extensions for using Lara
