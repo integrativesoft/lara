@@ -2097,23 +2097,23 @@
             <param name="status">Status code </param>
             <param name="message"></param>
         </member>
-        <member name="T:Integrative.Lara.Front.Middleware.StatusForbiddenException">
+        <member name="T:Integrative.Lara.StatusForbiddenException">
             <summary>
             Exception that returns an HTTP status code of Forbidden
             </summary>
         </member>
-        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor">
+        <member name="M:Integrative.Lara.StatusForbiddenException.#ctor">
             <summary>
             Constructor
             </summary>
         </member>
-        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor(System.String)">
+        <member name="M:Integrative.Lara.StatusForbiddenException.#ctor(System.String)">
             <summary>
             Constructor
             </summary>
             <param name="message">Exception message</param>
         </member>
-        <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor(System.String,System.Exception)">
+        <member name="M:Integrative.Lara.StatusForbiddenException.#ctor(System.String,System.Exception)">
             <summary>
             Constructor
             </summary>

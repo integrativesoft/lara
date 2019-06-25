@@ -7,7 +7,7 @@ Author: Pablo Carbonell
 using System;
 using System.Net;
 
-namespace Integrative.Lara.Front.Middleware
+namespace Integrative.Lara
 {
     /// <summary>
     /// Exception that returns an HTTP status code of Forbidden
