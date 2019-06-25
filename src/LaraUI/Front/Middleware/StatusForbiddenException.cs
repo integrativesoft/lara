@@ -10,7 +10,7 @@ using System.Net;
 namespace Integrative.Lara.Front.Middleware
 {
     /// <summary>
-    /// Exception that returns a status code of Forbidden in web services
+    /// Exception that returns an HTTP status code of Forbidden
     /// </summary>
     public class StatusForbiddenException : StatusCodeException
     {

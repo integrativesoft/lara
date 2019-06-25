@@ -132,5 +132,19 @@ namespace Integrative.Lara.Middleware
                 return await reader.ReadToEndAsync();
             }
         }
+
+        public static async Task<bool> RunHandler(HttpContext http, Func<Task> handler)
+        {
+            try
+            {
+                await handler();
+                return true; 
+            }
+            catch (StatusCodeException e)
+            {
+                await SendStatusReply(http, e.StatusCode, e.Message);
+                return false;
+            }
+        }
     }
 }

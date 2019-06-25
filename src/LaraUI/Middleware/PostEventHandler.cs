@@ -130,9 +130,12 @@ namespace Integrative.Lara.Middleware
                 Socket = post.Socket
             };
             ProcessMessageIfNeeded(context, post.Parameters);
-            await post.Element.NotifyEvent(post.Parameters.EventName, context);
-            string queue = post.Document.FlushQueue();
-            await SendReply(post, queue);
+            if (await MiddlewareCommon.RunHandler(post.Http,
+                async () => await post.Element.NotifyEvent(post.Parameters.EventName, context)))
+            {
+                string queue = post.Document.FlushQueue();
+                await SendReply(post, queue);
+            }
         }
 
         internal static void ProcessMessageIfNeeded(PageContext context, EventParameters parameters)

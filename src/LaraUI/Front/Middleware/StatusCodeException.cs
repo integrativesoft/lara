@@ -10,7 +10,7 @@ using System.Net;
 namespace Integrative.Lara
 {
     /// <summary>
-    /// Exception that returns a specific error code on web services
+    /// Exception that returns a specific HTTP status code
     /// </summary>
     public class StatusCodeException : Exception
     {

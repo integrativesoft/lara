@@ -33,17 +33,7 @@ namespace Integrative.Lara.Main
             var connection = GetConnection(http);
             var document = connection.CreateDocument(page);
             var execution = new PageContext(http, connection, document);
-            bool error = false;
-            try
-            {
-                await page.OnGet(execution);
-            }
-            catch (StatusCodeException e)
-            {
-                error = true;
-                await MiddlewareCommon.SendStatusReply(http, e.StatusCode, e.Message);
-            }
-            if (!error)
+            if (await MiddlewareCommon.RunHandler(http, async () => await page.OnGet(execution)))
             {
                 await ProcessGetResult(http, document, execution);
             }

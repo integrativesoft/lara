@@ -2058,7 +2058,7 @@
         </member>
         <member name="T:Integrative.Lara.StatusCodeException">
             <summary>
-            Exception that returns a specific error code on web services
+            Exception that returns a specific HTTP status code
             </summary>
         </member>
         <member name="P:Integrative.Lara.StatusCodeException.StatusCode">
@@ -2099,7 +2099,7 @@
         </member>
         <member name="T:Integrative.Lara.Front.Middleware.StatusForbiddenException">
             <summary>
-            Exception that returns a status code of Forbidden in web services
+            Exception that returns an HTTP status code of Forbidden
             </summary>
         </member>
         <member name="M:Integrative.Lara.Front.Middleware.StatusForbiddenException.#ctor">

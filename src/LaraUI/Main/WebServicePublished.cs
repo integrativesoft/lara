@@ -30,18 +30,11 @@ namespace Integrative.Lara.Main
                 RequestBody = await MiddlewareCommon.ReadBody(http)
             };
             var handler = Factory();
-            bool error = false;
             string data = string.Empty;
-            try
+            if (await MiddlewareCommon.RunHandler(http, async () =>
             {
                 data = await handler.Execute(context);
-            }
-            catch (StatusCodeException e)
-            {
-                error = true;
-                await MiddlewareCommon.SendStatusReply(http, e.StatusCode, e.Message);
-            }
-            if (!error)
+            }))
             {
                 await SendReply(context, data);
             }
