@@ -27,7 +27,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Status code to return
         /// </summary>
-        HttpStatusCode StatusCode { get; }
+        HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
         /// Gets a Session object when available
