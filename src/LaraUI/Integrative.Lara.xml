@@ -181,7 +181,6 @@
             Returns the element's identifier, generating an ID if currently blank.
             </summary>
             <returns>Element's ID</returns>
-            <exception cref="T:System.InvalidOperationException">Cannot use EnsureElementId on orphan elements</exception>
         </member>
         <member name="M:Integrative.Lara.Element.SetAttribute(System.String,System.String)">
             <summary>

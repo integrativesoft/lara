@@ -150,13 +150,18 @@ namespace Integrative.Lara
         /// Returns the element's identifier, generating an ID if currently blank.
         /// </summary>
         /// <returns>Element's ID</returns>
-        /// <exception cref="InvalidOperationException">Cannot use EnsureElementId on orphan elements</exception>
         public string EnsureElementId()
         {
             if (string.IsNullOrEmpty(_id))
             {
-                var document = Document ?? throw new InvalidOperationException("Cannot use EnsureElementId on orphan elements");
-                Id = document.GenerateElementId();
+                if (Document == null)
+                {
+                    Id = GlobalSerializer.GenerateElementId();
+                }
+                else
+                {
+                    Id = Document.GenerateElementId();
+                }
             }
             return Id;
         }
