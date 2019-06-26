@@ -20,7 +20,9 @@ namespace Integrative.Lara.Tests.Main
 
         public SampleTesting()
         {
-            _driver = new FirefoxDriver(Environment.CurrentDirectory);
+            var options = new FirefoxOptions();
+            options.AddArgument("--headless");
+            _driver = new FirefoxDriver(Environment.CurrentDirectory, options);
             PostEventHandler.EventComplete += PostEventHandler_EventComplete;
             LaraUI.ClearAll();
         }
