@@ -42,7 +42,17 @@ namespace LaraUI {
         Message: ClientEventMessage;
     }
 
-    export function plug(el: Element, plug: PlugOptions): void {
+    export function plug(el: Element, eventName: string): void {
+        let attribute = "data-lara-event-" + eventName;
+        let json = el.getAttribute(attribute);
+        if (json) {
+            let options = JSON.parse(json) as PlugOptions;
+            options.EventName = eventName;
+            plugOptions(el, options);
+        }
+    }
+
+    function plugOptions(el: Element, plug: PlugOptions): void {
         if (plug.LongRunning) {
             plugWebSocket(el, plug);
         } else {
@@ -134,7 +144,7 @@ namespace LaraUI {
             ExtraData: options.data,
             LongRunning: false
         };
-        plug(document.head, params);
+        plugOptions(document.head, params);
     }
 
     function processAjax(ajax: XMLHttpRequest): void {

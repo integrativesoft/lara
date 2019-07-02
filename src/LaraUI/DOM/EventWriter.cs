@@ -42,8 +42,7 @@ namespace Integrative.Lara.DOM
             _element.Events.Remove(eventName);
             if (_settings.Handler == null)
             {
-                string attribute = GetEventAttribute(eventName);
-                _element.RemoveAttribute(attribute);
+                RemoveEvent(eventName);
             }
             else
             {
@@ -52,23 +51,56 @@ namespace Integrative.Lara.DOM
             }
         }
 
+        private void RemoveEvent(string eventName)
+        {
+            var attribute = GetEventAttribute(eventName);
+            _element.RemoveAttribute(attribute);
+            attribute = GetDataAttribute(eventName);
+            _element.RemoveAttribute(attribute);
+        }
+
         private void WriteEvent(string eventName)
         {
-            string attribute = GetEventAttribute(eventName);
-            string value = BuildEventCode();
-            _element.SetAttribute(attribute, value);
+            WriteEventAttribute(eventName);
+            WriteDataAttribute(eventName);
+        }
+
+        private void WriteEventAttribute(string eventName)
+        {
+            var eventAttribute = GetEventAttribute(eventName);
+            var code = BuildEventCode();
+            _element.SetAttribute(eventAttribute, code);
+        }
+
+        private void WriteDataAttribute(string eventName)
+        {
+            var eventData = GetDataAttribute(eventName);
+            var data = BuildEventData();
+            _element.SetAttribute(eventData, data);
         }
 
         private string BuildEventCode()
         {
-            var plug = new PlugOptions(_settings);
-            var json = plug.ToJSON();
-            return $"LaraUI.plug(this, {json});";
+            return $"LaraUI.plug(this, '{_settings.EventName}');";
+        }
+
+        private string BuildEventData()
+        {
+            var plug = new PlugOptions(_settings)
+            {
+                EventName = null
+            };
+            return plug.ToJSON();
         }
 
         private static string GetEventAttribute(string eventName)
         {
             return "on" + eventName;
+        }
+
+        private static string GetDataAttribute(string eventName)
+        {
+            return "data-lara-event-" + eventName;
         }
     }
 }

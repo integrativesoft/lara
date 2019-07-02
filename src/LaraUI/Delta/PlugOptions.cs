@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     [DataContract]
     sealed class PlugOptions
     {
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string EventName { get; set; }
 
         [DataMember]
