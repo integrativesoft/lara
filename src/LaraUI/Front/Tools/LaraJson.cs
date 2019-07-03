@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Tools;
+using System;
 using System.Runtime.Serialization;
 
 namespace Integrative.Lara
@@ -32,6 +33,28 @@ namespace Integrative.Lara
             {
                 result = default;
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Parses a JSON string. If parsing fails, throws a StatusCodeException that returns a Bad Request (400).
+        /// </summary>
+        /// <typeparam name="T">Class type</typeparam>
+        /// <param name="json">JSON source text</param>
+        /// <returns>Instance of deserialized class</returns>
+        public T Parse<T>(string json) where T : class
+        {
+            try
+            {
+                return LaraTools.Deserialize<T>(json);
+            }
+            catch (Exception e)
+            {
+                var outer = new StatusCodeException("Bad request", e)
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                };
+                throw outer;
             }
         }
 
