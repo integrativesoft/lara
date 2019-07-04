@@ -15,7 +15,7 @@
     <Description>Lara is a lightweight, cross-platform C# server-side rendering library for Web UI development.
 
 In a nutshell, Lara:
-- Gives you full control over the client's document object model from the server in C#.
+- Gives you full control over the client's document object model -- from the server in C#.
 - Avoids page refreshes by exchanging differentials between server and client.
 - Has a pure C# approach that makes it easy to extend and feels natural to program with.
 

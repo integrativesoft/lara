@@ -71,6 +71,11 @@ namespace Integrative.Lara
             => _published.UnPublish(path);
 
         /// <summary>
+        /// Publishes all classes marked with the attributes [LaraPage] and [LaraWebService]
+        /// </summary>
+        public static void PublishAssemblies() => AssembliesReader.LoadAssemblies();
+
+        /// <summary>
         /// Unpublished a web service
         /// </summary>
         /// <param name="address">The URL address of the web service</param>

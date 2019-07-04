@@ -1528,6 +1528,16 @@
             <param name="session"></param>
             <returns></returns>
         </member>
+        <member name="T:Integrative.Lara.LaraPage">
+            <summary>
+            Declares a class as a web page that gets published with LaraUI.PublishAssemblies()
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraPage.Address">
+            <summary>
+            Page's address (e.g. '/myPage')
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.LaraUI">
             <summary>
             The main Lara static class
@@ -1569,6 +1579,11 @@
             </summary>
             <param name="path">The path.</param>
         </member>
+        <member name="M:Integrative.Lara.LaraUI.PublishAssemblies">
+            <summary>
+            Publishes all classes marked with the attributes [LaraPage] and [LaraWebService]
+            </summary>
+        </member>
         <member name="M:Integrative.Lara.LaraUI.UnPublish(System.String,System.String)">
             <summary>
             Unpublished a web service
@@ -1605,6 +1620,26 @@
             </summary>
             <param name="host">The host.</param>
             <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.LaraWebService">
+            <summary>
+            Declares a class as a web service that gets published with LaraUI.PublishAssemblies()
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraWebService.Address">
+            <summary>
+            Web Service's address (e.g. '/myWS')
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraWebService.Method">
+            <summary>
+            Web Service's method (e.g. 'POST')
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraWebService.ContentType">
+            <summary>
+            Web Service's response content-type HTTP header (e.g. 'application/json')
+            </summary>
         </member>
         <member name="T:Integrative.Lara.Session">
             <summary>
