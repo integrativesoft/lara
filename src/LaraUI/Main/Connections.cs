@@ -37,7 +37,11 @@ namespace Integrative.Lara.Main
 
         public void Discard(Guid key)
         {
-            _connections.Remove(key);
+            if (_connections.TryGetValue(key, out var connection))
+            {
+                connection.Close();
+                _connections.Remove(key);
+            }
         }
 
         public void ClearAll()

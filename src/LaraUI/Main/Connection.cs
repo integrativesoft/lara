@@ -16,7 +16,8 @@ namespace Integrative.Lara.Main
         public IPAddress RemoteIP { get; }
         readonly Dictionary<Guid, Document> _documents;
 
-        internal SessionStorage Storage { get; }
+        public SessionStorage Storage { get; }
+        public Session Session { get; }
 
         public Connection(Guid id, IPAddress remoteId)
         {
@@ -24,6 +25,7 @@ namespace Integrative.Lara.Main
             RemoteIP = remoteId;
             _documents = new Dictionary<Guid, Document>();
             Storage = new SessionStorage();
+            Session = new Session(this);
         }
 
         public bool TryGetDocument(Guid virtualId, out Document document)
@@ -62,5 +64,10 @@ namespace Integrative.Lara.Main
         public IEnumerable<KeyValuePair<Guid, Document>> GetDocuments() => _documents;
 
         public bool IsEmpty => _documents.Count == 0;
+
+        public void Close()
+        {
+            Session.Close();
+        }
     }
 }

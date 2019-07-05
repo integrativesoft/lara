@@ -24,7 +24,7 @@ namespace Integrative.Lara.Main
         {
             if (MiddlewareCommon.TryFindConnection(Http, out var connection))
             {
-                session = new Session(connection);
+                session = connection.Session;
                 return true;
             }
             else

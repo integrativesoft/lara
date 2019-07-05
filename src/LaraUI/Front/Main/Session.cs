@@ -14,17 +14,33 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class Session
     {
-        readonly Connection _connection;
+        readonly Connection _parent;
 
-        internal Session(Connection connection)
+        /// <summary>
+        /// Occurs when the user closes all browser tabs
+        /// </summary>
+        public event EventHandler Closing;
+
+        internal Session(Connection parent)
         {
-            _connection = connection;
+            _parent = parent;
+        }
+
+        internal void Close()
+        {
+            try
+            {
+                Closing?.Invoke(this, new EventArgs());
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
         /// Returns an ID that uniquely identifies the UI session
         /// </summary>
-        public Guid SessionId => _connection.Id;
+        public Guid SessionId => _parent.Id;
 
         /// <summary>
         /// Stores a key value pair
@@ -32,14 +48,14 @@ namespace Integrative.Lara
         /// <param name="key">Identifier of the value to store</param>
         /// <param name="value">Value to store</param>
         public void SaveValue(string key, string value)
-            => _connection.Storage.Save(key, value);
+            => _parent.Storage.Save(key, value);
 
         /// <summary>
         /// Removes a stored value
         /// </summary>
         /// <param name="key">Identifier of the value stored</param>
         public void RemoveValue(string key)
-            => _connection.Storage.Remove(key);
+            => _parent.Storage.Remove(key);
 
         /// <summary>
         /// Retrieves a value stored
@@ -48,6 +64,6 @@ namespace Integrative.Lara
         /// <param name="value">Value stored</param>
         /// <returns>true if found, false otherwise</returns>
         public bool TryGetValue(string key, out string value)
-            => _connection.Storage.TryGetValue(key, out value);
+            => _parent.Storage.TryGetValue(key, out value);
     }
 }
