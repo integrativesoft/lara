@@ -1718,6 +1718,12 @@
             <param name="contentType">The 'content-type' HTTP header value.</param>
             <exception cref="T:System.NullReferenceException">The parameter 'bytes' cannot be null.</exception>
         </member>
+        <member name="M:Integrative.Lara.StaticContent.#ctor(System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Integrative.Lara.StaticContent"/> class.
+            </summary>
+            <param name="bytes">The byte array.</param>
+        </member>
         <member name="M:Integrative.Lara.StaticContent.Run(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
             Public method used by the Lara framework

@@ -61,7 +61,17 @@ namespace Integrative.Lara
         /// <param name="bytes">The byte array.</param>
         /// <param name="contentType">The 'content-type' HTTP header value.</param>
         /// <exception cref="NullReferenceException">The parameter 'bytes' cannot be null.</exception>
-        public StaticContent(byte[] bytes, string contentType = ContentTypes.ApplicationOctetStream)
+        public StaticContent(byte[] bytes, string contentType)
+            : this(bytes)
+        {
+            ContentType = contentType;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StaticContent"/> class.
+        /// </summary>
+        /// <param name="bytes">The byte array.</param>
+        public StaticContent(byte[] bytes)
         {
             if (bytes == null)
             {
@@ -79,7 +89,6 @@ namespace Integrative.Lara
                 Bytes = compressed;
                 Compressed = true;
             }
-            ContentType = contentType;
             ETag = GetETag(bytes);
         }
 
