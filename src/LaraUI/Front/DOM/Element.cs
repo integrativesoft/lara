@@ -18,7 +18,7 @@ namespace Integrative.Lara
     /// <summary>
     /// An Element node inside an HTML5 document
     /// </summary>
-    /// <seealso cref="Integrative.Lara.Node" />
+    /// <seealso cref="Node" />
     public abstract class Element : Node
     {
         private readonly Attributes _attributes;
@@ -102,7 +102,7 @@ namespace Integrative.Lara
         /// Converts to string.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="string" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {

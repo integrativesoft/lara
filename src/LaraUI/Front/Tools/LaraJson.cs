@@ -66,6 +66,14 @@ namespace Integrative.Lara
         /// <returns>JSON string with serialized class</returns>
         public string Stringify<T>(T instance) => LaraTools.Serialize<T>(instance);
 
+        /// <summary>
+        /// Serializes a class decorated with DataContract to a JSON string
+        /// </summary>
+        /// <param name="instance">Instance to serialize</param>
+        /// <param name="type">Type of class</param>
+        /// <returns></returns>
+        public string Stringify(object instance, Type type) => LaraTools.Serialize(instance, type);
+
         internal LaraJson()
         {
         }

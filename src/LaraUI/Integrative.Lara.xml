@@ -1646,6 +1646,11 @@
             Session information
             </summary>
         </member>
+        <member name="E:Integrative.Lara.Session.Closing">
+            <summary>
+            Occurs when the user closes all browser tabs
+            </summary>
+        </member>
         <member name="P:Integrative.Lara.Session.SessionId">
             <summary>
             Returns an ID that uniquely identifies the UI session
@@ -2343,6 +2348,14 @@
             <typeparam name="T">Type of class</typeparam>
             <param name="instance">Instance to serialize</param>
             <returns>JSON string with serialized class</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraJson.Stringify(System.Object,System.Type)">
+            <summary>
+            Serializes a class decorated with DataContract to a JSON string
+            </summary>
+            <param name="instance">Instance to serialize</param>
+            <param name="type">Type of class</param>
+            <returns></returns>
         </member>
         <member name="T:Integrative.Lara.LaraOptions">
             <summary>

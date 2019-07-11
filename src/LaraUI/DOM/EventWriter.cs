@@ -38,7 +38,7 @@ namespace Integrative.Lara.DOM
 
         private void Write()
         {
-            string eventName = HttpUtility.HtmlEncode(_settings.EventName.ToLowerInvariant());
+            string eventName = HttpUtility.HtmlEncode(_settings.EventName/*.ToLowerInvariant()*/);
             _element.Events.Remove(eventName);
             if (_settings.Handler == null)
             {

@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -46,10 +47,15 @@ namespace Integrative.Lara.Tools
 
         public static string Serialize<T>(T instance)
         {
+            return Serialize(instance, typeof(T));
+        }
+
+        public static string Serialize(object instance, Type type)
+        {
             var stream = new MemoryStream();
             using (var reader = new StreamReader(stream))
             {
-                var serializer = new DataContractJsonSerializer(typeof(T), _jsonSettings);
+                var serializer = new DataContractJsonSerializer(type, _jsonSettings);
                 serializer.WriteObject(stream, instance);
                 stream.Position = 0;
                 return reader.ReadToEnd();
