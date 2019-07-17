@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
+    [LaraPage(Address = "/")]
     sealed class KitchenSinkForm : IPage
     {
         public KitchenSinkForm()
@@ -17,13 +18,19 @@ namespace SampleProject
 
         public Task OnGet(IPageContext context)
         {
+            // Load Bootstrap library.
             BootstrapLoader.AddBootstrap(context.Document.Head);
-            context.Document.Body.AppendChild(BuildLayout(context.Document));
+
+            // Load document body.
+            BuildLayout(context.Document);
+
+            // Done.
             return Task.CompletedTask;
         }
 
-        private Element BuildLayout(Document document)
+        private void BuildLayout(Document document)
         {
+            // Load custom controls in document body.
             var root = Element.Create("form");
             root.Class = "container p-4";
             root.AppendChild(new CounterSample().Build());
@@ -32,7 +39,7 @@ namespace SampleProject
             root.AppendChild(new MultiselectSample().Build());
             root.AppendChild(new LockingSample().Build());
             root.AppendChild(new LongRunningSample().Build(document));
-            return root;
+            document.Body.AppendChild(root);
         }
     }
 }

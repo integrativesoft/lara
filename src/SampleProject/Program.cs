@@ -15,22 +15,24 @@ namespace SampleProject
     {
         static async Task Main()
         {
-            Console.WriteLine("Starting...");
+            // Load classes decorated with Lara attributes
+            LaraUI.PublishAssemblies();
 
-            // create home page
-            LaraUI.Publish("/", () => new KitchenSinkForm());
+            // Start web server
+            var host = await LaraUI.StartServer(new StartServerOptions
+            {
+                Port = 8181,  // alternatively, leave as 0 to assign dynamic port
+                AllowLocalhostOnly = true  // accept connection from current machine only (default)
+            });
 
-            // start web server
-            var host = await LaraUI.StartServer();
-
-            // write address in console
+            // Write address in console.
             string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
 
-            // launch browser tab
+            // Launch browser tab. Alternatively, comment out and direct the user to localhost:8181.
             LaraUI.LaunchBrowser(address);
             
-            // wait for termination
+            // Wait for termination.
             Console.WriteLine("Press Ctrl+C to terminate");
             await host.WaitForShutdownAsync();
         }
