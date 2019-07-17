@@ -31,10 +31,10 @@ namespace SampleProject
     {
         static async Task Main()
         {
-            // Load classes decorated with Lara attributes
+            // Load classes decorated with Lara attributes.
             LaraUI.PublishAssemblies();
 
-            // Start web server
+            // Start web server.
             var host = await LaraUI.StartServer(new StartServerOptions
             {
                 Port = 8181,  // alternatively, leave as 0 to assign dynamic port
