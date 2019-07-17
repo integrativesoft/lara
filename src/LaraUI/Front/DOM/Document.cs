@@ -124,13 +124,24 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Tries to get an element by identifier.
+        /// Retrieves the element with the given ID.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="id">Element ID</param>
         /// <param name="element">The element.</param>
         /// <returns>True when the element was found.</returns>
         public bool TryGetElementById(string id, out Element element)
             => _map.TryGetElementById(id, out element);
+
+        /// <summary>
+        /// Retrieves the element with the given ID.
+        /// </summary>
+        /// <param name="id">Element ID</param>
+        /// <returns>The element</returns>
+        public Element GetElementById(string id)
+        {
+            _map.TryGetElementById(id, out var element);
+            return element;
+        }
 
         internal string FlushQueue()
         {

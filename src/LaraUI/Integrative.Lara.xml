@@ -78,11 +78,18 @@
         </member>
         <member name="M:Integrative.Lara.Document.TryGetElementById(System.String,Integrative.Lara.Element@)">
             <summary>
-            Tries to get an element by identifier.
+            Retrieves the element with the given ID.
             </summary>
-            <param name="id">The identifier.</param>
+            <param name="id">Element ID</param>
             <param name="element">The element.</param>
             <returns>True when the element was found.</returns>
+        </member>
+        <member name="M:Integrative.Lara.Document.GetElementById(System.String)">
+            <summary>
+            Retrieves the element with the given ID.
+            </summary>
+            <param name="id">Element ID</param>
+            <returns>The element</returns>
         </member>
         <member name="T:Integrative.Lara.DuplicateElementId">
             <summary>
