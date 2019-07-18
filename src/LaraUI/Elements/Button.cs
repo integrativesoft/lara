@@ -11,7 +11,7 @@ namespace Integrative.Lara
     /// <summary>
     /// The 'button' HTML5 element
     /// </summary>
-    /// <seealso cref="Integrative.Lara.Element" />
+    /// <seealso cref="Element" />
     public sealed class Button : Element
     {
         /// <summary>

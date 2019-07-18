@@ -9,7 +9,7 @@ namespace Integrative.Lara
     /// <summary>
     /// The 'td' HTML5 element.
     /// </summary>
-    /// <seealso cref="Integrative.Lara.Element" />
+    /// <seealso cref="Element" />
     public sealed class TableCell : Element
     {
         /// <summary>

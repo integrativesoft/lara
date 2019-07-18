@@ -9,6 +9,7 @@ namespace Integrative.Lara
     /// <summary>
     /// The HTML5 'a' element
     /// </summary>
+    /// <seealso cref="Element" />
     public sealed class Anchor : Element
     {
         /// <summary>

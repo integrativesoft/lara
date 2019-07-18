@@ -11,6 +11,7 @@ namespace Integrative.Lara
     /// <summary>
     /// The 'input' HTML5 element
     /// </summary>
+    /// <seealso cref="Element" />
     public sealed class Input : Element
     {
         /// <summary>
