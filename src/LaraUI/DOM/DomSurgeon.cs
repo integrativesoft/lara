@@ -54,7 +54,7 @@ namespace Integrative.Lara.DOM
 
         public void AppendInternal(Node child)
         {
-            bool needGenerateIds = NeedsGenerateIdsEvents(child);
+            bool needGenerateIds = NeedsId(child);
             PreventCycles(child);
             UpdateDocumentMappings(child);
             UpdateChildParentLinks(child);
@@ -70,7 +70,7 @@ namespace Integrative.Lara.DOM
             {
                 throw new InvalidOperationException(ReferenceNodeNotFound);
             }
-            bool needGenerateIds = NeedsGenerateIdsEvents(child);
+            bool needGenerateIds = NeedsId(child);
             PreventCycles(child);
             UpdateDocumentMappings(child);
             UpdateChildParentLinks(reference, offset, child);
@@ -250,14 +250,25 @@ namespace Integrative.Lara.DOM
 
         #region Generate IDs for elements with events
 
-        private bool NeedsGenerateIdsEvents(Node child)
+        private bool NeedsId(Node child)
         {
-            return child is Element
-                && child.Document == null
-                && _parent.Document != null;
+            if (child is Element)
+            {
+                if (child.Document == null
+                    && _parent.Document != null)
+                {
+                    return true;
+                }
+                else if (_parent.Document != null
+                    && _parent.Document.Body == _parent)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private void GenerateRequiredIds(Node node)
+        private static void GenerateRequiredIds(Node node)
         {
             if (node is Element element)
             {
