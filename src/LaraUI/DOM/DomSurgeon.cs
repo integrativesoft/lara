@@ -56,24 +56,33 @@ namespace Integrative.Lara.DOM
         {
             bool needGenerateIds = NeedsId(child);
             PreventCycles(child);
+            AddImmediateId(child);
             UpdateDocumentMappings(child);
             UpdateChildParentLinks(child);
-            if (needGenerateIds)
-            {
-                GenerateRequiredIds(child);
-            }
+            GenerateIdsIfNeeded(needGenerateIds, child);
         }
 
         private void InsertChild(Node reference, int offset, Node child)
+        {
+            VerifyParentContainsChild(reference);
+            bool needGenerateIds = NeedsId(child);
+            PreventCycles(child);
+            AddImmediateId(child);
+            UpdateDocumentMappings(child);
+            UpdateChildParentLinks(reference, offset, child);
+            GenerateIdsIfNeeded(needGenerateIds, child);
+        }
+
+        private void VerifyParentContainsChild(Node reference)
         {
             if (!_parent.ContainsChild(reference))
             {
                 throw new InvalidOperationException(ReferenceNodeNotFound);
             }
-            bool needGenerateIds = NeedsId(child);
-            PreventCycles(child);
-            UpdateDocumentMappings(child);
-            UpdateChildParentLinks(reference, offset, child);
+        }
+
+        private void GenerateIdsIfNeeded(bool needGenerateIds, Node child)
+        {
             if (needGenerateIds)
             {
                 GenerateRequiredIds(child);
@@ -252,20 +261,18 @@ namespace Integrative.Lara.DOM
 
         private bool NeedsId(Node child)
         {
-            if (child is Element)
+            return child is Element
+                && child.Document == null
+                && _parent.Document != null;
+        }
+
+        private void AddImmediateId(Node child)
+        {
+            if (child is Element element
+                && _parent.TagName == "body")
             {
-                if (child.Document == null
-                    && _parent.Document != null)
-                {
-                    return true;
-                }
-                else if (_parent.Document != null
-                    && _parent.Document.Body == _parent)
-                {
-                    return true;
-                }
+                element.EnsureElementId();
             }
-            return false;
         }
 
         private static void GenerateRequiredIds(Node node)

@@ -646,6 +646,7 @@
             <summary>
             The HTML5 'a' element
             </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
         </member>
         <member name="M:Integrative.Lara.Anchor.#ctor">
             <summary>
@@ -815,6 +816,7 @@
             <summary>
             The 'input' HTML5 element
             </summary>
+            <seealso cref="T:Integrative.Lara.Element" />
         </member>
         <member name="M:Integrative.Lara.Input.#ctor">
             <summary>

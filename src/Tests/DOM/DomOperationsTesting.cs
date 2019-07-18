@@ -298,17 +298,19 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetIdOnAttribute()
         {
-            var div = Element.Create("div");
+            var div1 = Element.Create("div");
+            var div2 = Element.Create("div");
             var doc = CreateDocument();
-            doc.Body.AppendChild(div);
+            doc.Body.AppendChild(div1);
+            div1.AppendChild(div2);
             doc.OpenEventQueue();
-            div.SetAttribute("data-test", "x");
+            div2.SetAttribute("data-test", "x");
             var queue = doc.GetQueue();
             Assert.NotEmpty(queue);
             var step = queue.Peek() as SetIdDelta;
             Assert.NotNull(step);
-            Assert.Equal(doc.Body.Id, step.Locator.StartingId);
-            Assert.Equal(div.Id, step.NewId);
+            Assert.Equal(div1.Id, step.Locator.StartingId);
+            Assert.Equal(div2.Id, step.NewId);
         }
 
         [Fact]
