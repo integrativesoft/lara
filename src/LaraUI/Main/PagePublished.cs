@@ -22,16 +22,16 @@ namespace Integrative.Lara.Main
             _factory = factory;
         }
 
-        public async Task Run(HttpContext http)
+        public async Task Run(HttpContext http, LaraOptions options)
         {
             var page =_factory();
-            await RunGetHandler(http, page);
+            await RunGetHandler(http, page, options);
         }
 
-        private static async Task RunGetHandler(HttpContext http, IPage page)
+        private static async Task RunGetHandler(HttpContext http, IPage page, LaraOptions options)
         {
             var connection = GetConnection(http);
-            var document = connection.CreateDocument(page);
+            var document = connection.CreateDocument(page, options);
             var execution = new PageContext(http, connection, document);
             if (await MiddlewareCommon.RunHandler(http, async () => await page.OnGet(execution)))
             {

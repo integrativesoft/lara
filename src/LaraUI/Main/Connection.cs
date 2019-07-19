@@ -41,10 +41,10 @@ namespace Integrative.Lara.Main
             }
         }
 
-        public Document CreateDocument(IPage page)
+        public Document CreateDocument(IPage page, LaraOptions options)
         {
             var virtualId = Connections.CreateCryptographicallySecureGuid();
-            var document = new Document(page, virtualId);
+            var document = new Document(page, virtualId, options);
             _documents.Add(virtualId, document);
             return document;
         }

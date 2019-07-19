@@ -21,10 +21,11 @@ namespace Integrative.Lara
         /// Initializes a new instance of the <see cref="LaraMiddleware"/> class.
         /// </summary>
         /// <param name="next">The next.</param>
-        public LaraMiddleware(RequestDelegate next)
+        /// <param name="options">Configuration options</param>
+        public LaraMiddleware(RequestDelegate next, LaraOptions options)
         {
             next = new ClientLibraryHandler(next).Invoke;
-            next = new PublishedItemHandler(next).Invoke;
+            next = new PublishedItemHandler(next, options).Invoke;
             next = new DiscardHandler(next).Invoke;
             _next = new PostEventHandler(next).Invoke;
         }

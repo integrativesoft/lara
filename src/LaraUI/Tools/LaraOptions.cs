@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Diagnostics;
 
 namespace Integrative.Lara
@@ -44,6 +45,62 @@ namespace Integrative.Lara
         ///   <c>true</c> if [add web sockets middleware]; otherwise, <c>false</c>.
         /// </value>
         public bool AddWebSocketsMiddleware { get; set; } = true;
+
+        /// <summary>
+        /// Default address for JQuery.js
+        /// </summary>
+        public const string DefaultJQuery = "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js";
+
+        /// <summary>
+        /// Default address for blockUI.js
+        /// </summary>
+        public const string DefaultBlockUI = "https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js";
+
+        private Uri _jquery;
+        private Uri _blockUI;
+
+        internal string AddressJQuery { get; private set; } = DefaultJQuery;
+        internal string AddressBlockUI { get; private set; } = DefaultBlockUI;
+
+        /// <summary>
+        /// Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
+        /// </summary>
+        public Uri CustomUrlJQuery
+        {
+            get => _jquery;
+            set
+            {
+                _jquery = value;
+                if (value == null)
+                {
+                    AddressJQuery = DefaultJQuery;
+                }
+                else
+                {
+                    AddressJQuery = value.ToString();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Specifies a custom URL for the blockUI.js library. If left blank, the default URL is used.
+        /// </summary>
+        public Uri CustomUrlBlockUI
+        {
+            get => _blockUI;
+            set
+            {
+                _blockUI = value;
+                if (value == null)
+                {
+                    AddressBlockUI = DefaultBlockUI;
+                }
+                else
+                {
+                    AddressBlockUI = value.ToString();
+                }
+            }
+        }
     }
 
     /// <summary>

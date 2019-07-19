@@ -29,7 +29,7 @@ namespace Integrative.Lara
             {
                 app.UseWebSockets();
             }
-            app.UseMiddleware<LaraMiddleware>();
+            app.UseMiddleware<LaraMiddleware>(options);
             if (options.ShowNotFoundPage)
             {
                 app.UseMiddleware<NotFoundMiddleware>();

@@ -1738,11 +1738,12 @@
             </summary>
             <param name="bytes">The byte array.</param>
         </member>
-        <member name="M:Integrative.Lara.StaticContent.Run(Microsoft.AspNetCore.Http.HttpContext)">
+        <member name="M:Integrative.Lara.StaticContent.Run(Microsoft.AspNetCore.Http.HttpContext,Integrative.Lara.LaraOptions)">
             <summary>
             Public method used by the Lara framework
             </summary>
-            <param name="http"></param>
+            <param name="http">Http context</param>
+            <param name="options">Lara options</param>
             <returns></returns>
         </member>
         <member name="T:Integrative.Lara.WebServiceContent">
@@ -2062,11 +2063,12 @@
             Lara middleware class for the ASP.NET Core framework
             </summary>
         </member>
-        <member name="M:Integrative.Lara.LaraMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+        <member name="M:Integrative.Lara.LaraMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Integrative.Lara.LaraOptions)">
             <summary>
             Initializes a new instance of the <see cref="T:Integrative.Lara.LaraMiddleware"/> class.
             </summary>
             <param name="next">The next.</param>
+            <param name="options">Configuration options</param>
         </member>
         <member name="M:Integrative.Lara.LaraMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
@@ -2402,6 +2404,26 @@
             <value>
               <c>true</c> if [add web sockets middleware]; otherwise, <c>false</c>.
             </value>
+        </member>
+        <member name="F:Integrative.Lara.LaraOptions.DefaultJQuery">
+            <summary>
+            Default address for JQuery.js
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.LaraOptions.DefaultBlockUI">
+            <summary>
+            Default address for blockUI.js
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.CustomUrlJQuery">
+            <summary>
+            Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraOptions.CustomUrlBlockUI">
+            <summary>
+            Specifies a custom URL for the blockUI.js library. If left blank, the default URL is used.
+            </summary>
         </member>
         <member name="T:Integrative.Lara.StartServerOptions">
             <summary>

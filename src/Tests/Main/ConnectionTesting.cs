@@ -27,7 +27,7 @@ namespace Integrative.Lara.Tests.Main
         {
             var connectionId = Connections.CreateCryptographicallySecureGuid();
             var connection = new Connection(connectionId, IPAddress.Loopback);
-            var document = connection.CreateDocument(new MyPage());
+            var document = connection.CreateDocument(new MyPage(), new LaraOptions());
             int count = 0;
             foreach (var pair in connection.GetDocuments())
             {
@@ -46,7 +46,7 @@ namespace Integrative.Lara.Tests.Main
             var connectionId = Connections.CreateCryptographicallySecureGuid();
             var connection = new Connection(connectionId, IPAddress.Loopback);
             var page = new MyPage();
-            var document = connection.CreateDocument(page);
+            var document = connection.CreateDocument(page, new LaraOptions());
             connection.Discard(document.VirtualId);
             Assert.False(connection.TryGetDocument(document.VirtualId, out _));
             Assert.True(page.Disposed);

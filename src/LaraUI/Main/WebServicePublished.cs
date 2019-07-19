@@ -22,7 +22,7 @@ namespace Integrative.Lara.Main
             ContentType = content.ContentType;
         }
 
-        public async Task Run(HttpContext http)
+        public async Task Run(HttpContext http, LaraOptions options)
         {
             var context = new WebServiceContext
             {

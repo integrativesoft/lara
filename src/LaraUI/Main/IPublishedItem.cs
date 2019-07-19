@@ -11,6 +11,6 @@ namespace Integrative.Lara.Main
 {
     interface IPublishedItem
     {
-        Task Run(HttpContext http);
+        Task Run(HttpContext http, LaraOptions options);
     }
 }

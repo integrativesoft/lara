@@ -29,7 +29,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var guid = Connections.CreateCryptographicallySecureGuid();
             var page = new MyPage();
-            var document = new Document(page, guid);
+            var document = new Document(page, guid, new LaraOptions());
             var element = Element.Create("button", "mybutton");
             document.Body.AppendChild(element);
             document.OpenEventQueue();

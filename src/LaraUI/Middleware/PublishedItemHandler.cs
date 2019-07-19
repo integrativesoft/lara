@@ -12,8 +12,11 @@ namespace Integrative.Lara.Middleware
 {
     sealed class PublishedItemHandler : BaseHandler
     {
-        public PublishedItemHandler(RequestDelegate next) : base(next)
+        readonly LaraOptions _options;
+
+        public PublishedItemHandler(RequestDelegate next, LaraOptions options) : base(next)
         {
+            _options = options;
         }
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
@@ -21,7 +24,7 @@ namespace Integrative.Lara.Middleware
             var combined = Published.CombinePathMethod(http.Request.Path, http.Request.Method);
             if (LaraUI.TryGetNode(combined, out var item))
             {
-                await item.Run(http);
+                await item.Run(http, _options);
                 return true;
             }
             else

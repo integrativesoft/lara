@@ -17,30 +17,17 @@ namespace Integrative.Lara.Main
             _libraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
-        readonly Document _document;
-
-        private TemplateBuilder(Document document)
+        public static void Build(Document document, LaraOptions options)
         {
-            _document = document;
-        }
-
-        public static void Build(Document document)
-        {
-            var builder = new TemplateBuilder(document);
-            builder.BuildInternal();
-        }
-
-        private void BuildInternal()
-        {
-            var head = _document.Head;
-            var body = _document.Body;
+            var head = document.Head;
+            var body = document.Body;
 
             // ensure ids
             head.EnsureElementId();
             body.EnsureElementId();
 
             // lang
-            _document.Lang = "en";
+            document.Lang = "en";
 
             // UTF-8
             var meta = Element.Create("meta");
@@ -50,7 +37,7 @@ namespace Integrative.Lara.Main
             // jQuery.js
             var script = new Script
             {
-                Src = "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js",
+                Src = options.AddressJQuery,
                 Defer = true
             };
             head.AppendChild(script);
@@ -58,7 +45,7 @@ namespace Integrative.Lara.Main
             // BlockUI.js
             script = new Script
             {
-                Src = "https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js",
+                Src = options.AddressBlockUI,
                 Defer = true
             };
             head.AppendChild(script);
@@ -73,7 +60,7 @@ namespace Integrative.Lara.Main
 
             // initialization script
             var tag = Element.Create("script");
-            string value = _document.VirtualId.ToString(GlobalConstants.GuidFormat);
+            string value = document.VirtualId.ToString(GlobalConstants.GuidFormat);
             string code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{value}'); }});";
             tag.AppendChild(new TextNode { Data = code });
             head.AppendChild(tag);
