@@ -32,7 +32,7 @@ namespace SampleProject
         static async Task Main()
         {
             // Load classes decorated with Lara attributes.
-            LaraUI.PublishAssemblies();
+            LaraUI.PublishAssemblies();  // alternatively, use LaraUI.Publish(..) to pick individual classes
 
             // Start web server.
             var host = await LaraUI.StartServer(new StartServerOptions
