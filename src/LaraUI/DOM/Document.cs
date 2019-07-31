@@ -161,6 +161,11 @@ namespace Integrative.Lara
             return result.ToJSON();
         }
 
+        /// <summary>
+        /// Returns true when there are UI changes pending to be flushed to the client
+        /// </summary>
+        public bool HasPendingChanges => _queue.Count > 0;
+
         internal void OnMessage(string key, Func<IPageContext, Task> handler)
         {
             Head.On("_" + key, handler);

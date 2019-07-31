@@ -24,6 +24,7 @@ namespace Integrative.Lara
         public LaraBuilder(Element startingElement)
         {
             _stack = new Stack<Element>();
+            startingElement.EnsureElementId();
             _stack.Push(startingElement);
         }
 
@@ -80,6 +81,8 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder Push(Element element)
         {
+            element = element ?? throw new ArgumentNullException(nameof(element));
+            element.EnsureElementId();
             var current = _stack.Peek();
             current.AppendChild(element);
             _stack.Push(element);

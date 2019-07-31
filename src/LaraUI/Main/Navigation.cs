@@ -51,7 +51,10 @@ namespace Integrative.Lara.Main
             {
                 throw new InvalidOperationException(FlushNotAvailable);
             }
-            await PostEventHandler.FlushPartialChanges(_context.Socket, _context.Document);
+            if (_context.Document.HasPendingChanges)
+            {
+                await PostEventHandler.FlushPartialChanges(_context.Socket, _context.Document);
+            }
         }
     }
 }

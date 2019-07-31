@@ -91,6 +91,11 @@
             <param name="id">Element ID</param>
             <returns>The element</returns>
         </member>
+        <member name="P:Integrative.Lara.Document.HasPendingChanges">
+            <summary>
+            Returns true when there are UI changes pending to be flushed to the client
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.DuplicateElementId">
             <summary>
             Exception thrown when adding a duplicate element ID into a document
@@ -447,6 +452,12 @@
             Appends a child node.
             </summary>
             <param name="node">The node to append.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.AppendText(System.String)">
+            <summary>
+            Appends a child text node
+            </summary>
+            <param name="text">Text of the node</param>
         </member>
         <member name="M:Integrative.Lara.Element.InsertChildBefore(Integrative.Lara.Node,Integrative.Lara.Node)">
             <summary>

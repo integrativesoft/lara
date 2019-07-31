@@ -636,6 +636,15 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Appends a child text node
+        /// </summary>
+        /// <param name="text">Text of the node</param>
+        public void AppendText(string text)
+        {
+            AppendChild(new TextNode(text));
+        }
+
+        /// <summary>
         /// Inserts a child node, right before the specified node.
         /// </summary>
         /// <param name="before">The node that is before.</param>
