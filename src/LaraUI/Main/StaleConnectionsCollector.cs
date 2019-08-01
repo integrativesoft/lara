@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.DOM;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Integrative.Lara.Main
@@ -26,7 +27,7 @@ namespace Integrative.Lara.Main
             {
                 Interval = TimerInterval
             };
-            _timer.Elapsed += CleanupExpiredHandler;
+            _timer.Elapsed += async (sender, args) => await CleanupExpiredHandler();
             _timer.Start();
         }
 
@@ -41,7 +42,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        internal void CleanupExpiredHandler(object sender, ElapsedEventArgs e)
+        internal async Task CleanupExpiredHandler()
         {
             if (_disposed)
             {
@@ -51,7 +52,7 @@ namespace Integrative.Lara.Main
             var list = new List<KeyValuePair<Guid, Connection>>();
             foreach (var pair in _connections.GetConnections())
             {
-                CleanupExpired(pair.Value, minRequired);
+                await CleanupExpired(pair.Value, minRequired);
                 if (pair.Value.IsEmpty)
                 {
                     list.Add(pair);
@@ -66,7 +67,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private void CleanupExpired(Connection connection, DateTime minRequired)
+        private async Task CleanupExpired(Connection connection, DateTime minRequired)
         {
             var list = new List<KeyValuePair<Guid, Document>>();
             foreach (var pair in connection.GetDocuments())
@@ -80,7 +81,7 @@ namespace Integrative.Lara.Main
             {
                 if (pair.Value.LastUTC < minRequired)
                 {
-                    connection.Discard(pair.Key);
+                    await connection.Discard(pair.Key);
                 }
             }
         }

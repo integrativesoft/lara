@@ -298,6 +298,12 @@ namespace Integrative.Lara
         /// <param name="value">true to add the class, false to remove.</param>
         public void ToggleClass(string className, bool value) => Class = ClassEditor.ToggleClass(Class, className, value);
 
+        /// <summary>
+        /// Toggles (adds or removes) the class passed in parameters
+        /// </summary>
+        /// <param name="className">Class name to toggle</param>
+        public void ToggleClass(string className) => Class = ClassEditor.ToggleClass(Class, className);
+
         internal void NotifyValue(string value) => _attributes.NotifyValue(value);
 
         internal void NotifyChecked(bool value) => _attributes.NotifyChecked(value);

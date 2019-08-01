@@ -170,5 +170,32 @@ namespace Integrative.Lara
         {
             Head.On("_" + key, handler);
         }
+
+        private Func<Task> _unloadHandler;
+
+        /// <summary>
+        /// Callback to execute after a user closes the document's browser tab
+        /// </summary>
+        /// <param name="handler">Callback handler to execute upon unloading</param>
+        public void OnUnload(Func<Task> handler)
+        {
+            _unloadHandler = handler;
+        }
+
+        internal Task NotifyUnload()
+        {
+            if (_unloadHandler == null)
+            {
+                return Task.CompletedTask;
+            }
+            try
+            {
+                return _unloadHandler();
+            }
+            catch
+            {
+                return Task.CompletedTask;
+            }
+        }
     }
 }

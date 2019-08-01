@@ -96,6 +96,12 @@
             Returns true when there are UI changes pending to be flushed to the client
             </summary>
         </member>
+        <member name="M:Integrative.Lara.Document.OnUnload(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Callback to execute after a user closes the document's browser tab
+            </summary>
+            <param name="handler">Callback handler to execute upon unloading</param>
+        </member>
         <member name="T:Integrative.Lara.DuplicateElementId">
             <summary>
             Exception thrown when adding a duplicate element ID into a document
@@ -265,6 +271,12 @@
             </summary>
             <param name="className">Name of the class.</param>
             <param name="value">true to add the class, false to remove.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.ToggleClass(System.String)">
+            <summary>
+            Toggles (adds or removes) the class passed in parameters
+            </summary>
+            <param name="className">Class name to toggle</param>
         </member>
         <member name="P:Integrative.Lara.Element.AccessKey">
             <summary>

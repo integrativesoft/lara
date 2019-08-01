@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Integrative.Lara.Main
 {
@@ -49,10 +50,11 @@ namespace Integrative.Lara.Main
             return document;
         }
 
-        public void Discard(Guid documentId)
+        public async Task Discard(Guid documentId)
         {
             if (_documents.TryGetValue(documentId, out var document))
             {
+                await document.NotifyUnload();
                 if (document.Page is IDisposable disposable)
                 {
                     disposable.Dispose();

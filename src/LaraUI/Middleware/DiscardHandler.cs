@@ -28,7 +28,7 @@ namespace Integrative.Lara.Middleware
                 && MiddlewareCommon.TryFindConnection(http, out var connection))
             {
                 await Task.Delay(DiscardDelay);
-                connection.Discard(parameters.DocumentId);
+                await connection.Discard(parameters.DocumentId);
                 return true;
             }
             return false;

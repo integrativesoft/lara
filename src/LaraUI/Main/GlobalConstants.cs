@@ -10,6 +10,7 @@ namespace Integrative.Lara.Main
     {
         public const string CookieSessionId = "_Lara_SessionId";
         public const string GuidFormat = "N";
+        public const string WindowUnload = "_window_unload";
 
 #if DEBUG
         public const string LibraryAddress = "/LaraUI-v{0}-debug.js";
