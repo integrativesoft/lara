@@ -793,7 +793,10 @@ namespace Integrative.Lara
         /// </summary>
         public void Focus()
         {
-            JSBridge.VerifyQueueOpen(Document);
+            if (Document == null)
+            {
+                throw new InvalidOperationException("To use the focus() method, first add the element to a document.");
+            }
             FocusDelta.Enqueue(this);
         }
 

@@ -66,5 +66,15 @@ namespace Integrative.Lara
         /// The event data.
         /// </value>
         string EventData { get; }
+
+        /// <summary>
+        /// Makes the client start listening for ServerEventFlush() notifications.
+        /// </summary>
+        void ServerEventsOn();
+
+        /// <summary>
+        /// Makes the client stop listening for ServerEventFlush() notifications.
+        /// </summary>
+        Task ServerEventsOff();
     }
 }

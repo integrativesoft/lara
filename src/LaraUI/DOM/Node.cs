@@ -68,6 +68,6 @@ namespace Integrative.Lara
         internal abstract ContentNode GetContentNode();
 
         internal bool QueueOpen =>
-            Document != null && Document.QueueOpen;
+            Document != null && Document.QueueingEvents;
     }
 }

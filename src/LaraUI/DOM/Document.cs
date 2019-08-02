@@ -7,14 +7,37 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Status options for server-side events
+    /// </summary>
+    public enum ServerEventsStatus
+    {
+        /// <summary>
+        /// Server-side events have not been enabled
+        /// </summary>
+        Disabled,
+
+        /// <summary>
+        /// The server is waiting for the client to listen to server-side events
+        /// </summary>
+        Connecting,
+
+        /// <summary>
+        /// Server-side events are enabled
+        /// </summary>
+        Enabled
+    }
+
     /// <summary>
     /// An HTML5 document.
     /// </summary>
@@ -25,6 +48,8 @@ namespace Integrative.Lara
         private readonly DocumentIdMap _map;
         private readonly Queue<BaseDelta> _queue;
         internal SemaphoreSlim Semaphore { get; }
+
+        readonly ServerEventsController _serverEvents;
 
         int _serializer;
 
@@ -79,6 +104,7 @@ namespace Integrative.Lara
             Body.Document = this;
             UpdateTimestamp();
             TemplateBuilder.Build(this, options);
+            _serverEvents = new ServerEventsController(this);
         }
 
         /// <summary>
@@ -120,9 +146,14 @@ namespace Integrative.Lara
         internal void NotifyChangeId(Element element, string before, string after)
             => _map.NotifyChangeId(element, before, after);
 
-        internal bool QueueOpen { get; private set; }
+        internal bool QueueingEvents { get; private set; }
 
-        internal void OpenEventQueue() => QueueOpen = true;
+        internal void OpenEventQueue()
+        {
+            var json = FlushQueue();
+            Head.SetAttribute("data-lara-initialdelta", json);
+            QueueingEvents = true;
+        }
 
         internal void Enqueue(BaseDelta delta)
         {
@@ -182,20 +213,48 @@ namespace Integrative.Lara
             _unloadHandler = handler;
         }
 
-        internal Task NotifyUnload()
+        internal async Task NotifyUnload()
         {
-            if (_unloadHandler == null)
+            await _serverEvents.NotifyUnload();
+            if (_unloadHandler != null)
             {
-                return Task.CompletedTask;
-            }
-            try
-            {
-                return _unloadHandler();
-            }
-            catch
-            {
-                return Task.CompletedTask;
+                try
+                {
+                    await _unloadHandler();
+                }
+                catch
+                {
+                }
             }
         }
+
+        /// <summary>
+        /// Returns the current status of server-side events
+        /// </summary>
+        public ServerEventsStatus ServerEventsStatus
+            => _serverEvents.ServerEventsStatus;
+
+        /// <summary>
+        /// Starts a server event. Call with 'using' and dispose the class returned.
+        /// </summary>
+        /// <returns>Disposable token</returns>
+        public ServerEvent StartServerEvent()
+            => _serverEvents.StartServerEvent();
+
+        internal void ServerEventsOn()
+            => _serverEvents.ServerEventsOn();
+
+        internal Task ServerEventsOff()
+            => _serverEvents.ServerEventsOff();
+
+        internal bool SocketRemainsOpen(string eventName)
+            => _serverEvents.SocketRemainsOpen(eventName);
+
+        internal Task GetSocketCompletion(WebSocket socket)
+            => _serverEvents.GetSocketCompletion(socket);
+
+        internal Task ServerEventFlush()
+            => _serverEvents.ServerEventFlush();
+
     }
 }

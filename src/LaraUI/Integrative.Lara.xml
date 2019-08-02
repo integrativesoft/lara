@@ -33,6 +33,26 @@
             The HTML message to show instead of the default block dialog.
             </value>
         </member>
+        <member name="T:Integrative.Lara.ServerEventsStatus">
+            <summary>
+            Status options for server-side events
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.ServerEventsStatus.Disabled">
+            <summary>
+            Server-side events have not been enabled
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.ServerEventsStatus.Connecting">
+            <summary>
+            The server is waiting for the client to listen to server-side events
+            </summary>
+        </member>
+        <member name="F:Integrative.Lara.ServerEventsStatus.Enabled">
+            <summary>
+            Server-side events are enabled
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.Document">
             <summary>
             An HTML5 document.
@@ -101,6 +121,17 @@
             Callback to execute after a user closes the document's browser tab
             </summary>
             <param name="handler">Callback handler to execute upon unloading</param>
+        </member>
+        <member name="P:Integrative.Lara.Document.ServerEventsStatus">
+            <summary>
+            Returns the current status of server-side events
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Document.StartServerEvent">
+            <summary>
+            Starts a server event. Call with 'using' and dispose the class returned.
+            </summary>
+            <returns>Disposable token</returns>
         </member>
         <member name="T:Integrative.Lara.DuplicateElementId">
             <summary>
@@ -1521,6 +1552,16 @@
             The event data.
             </value>
         </member>
+        <member name="M:Integrative.Lara.IJSBridge.ServerEventsOn">
+            <summary>
+            Makes the client start listening for ServerEventFlush() notifications.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.IJSBridge.ServerEventsOff">
+            <summary>
+            Makes the client stop listening for ServerEventFlush() notifications.
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.IWebService">
             <summary>
             Web Service handler class
@@ -2134,6 +2175,22 @@
             </summary>
             <param name="context">The HttpContext.</param>
             <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.ServerEvent">
+            <summary>
+            The ServerEvent disposable class represents the life cycle of a server-side event.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.ServerEvent.FlushPartialChanges">
+            <summary>
+            Flushes partial changes made to the document. 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Integrative.Lara.ServerEvent.Dispose">
+            <summary>
+            The dispose method flushes all pending changes in the document.
+            </summary>
         </member>
         <member name="T:Integrative.Lara.StatusCodeException">
             <summary>

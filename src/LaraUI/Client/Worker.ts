@@ -53,6 +53,9 @@ namespace LaraUI {
             case DeltaType.Replace:
                 replaceLocation(step as ReplaceDelta);
                 break;
+            case DeltaType.ServerEvents:
+                listenServerEvents();
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }

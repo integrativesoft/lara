@@ -41,13 +41,13 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [Fact]
-        public void DiscardRemovesDocument()
+        public async void DiscardRemovesDocument()
         {
             var connectionId = Connections.CreateCryptographicallySecureGuid();
             var connection = new Connection(connectionId, IPAddress.Loopback);
             var page = new MyPage();
             var document = connection.CreateDocument(page, new LaraOptions());
-            connection.Discard(document.VirtualId);
+            await connection.Discard(document.VirtualId);
             Assert.False(connection.TryGetDocument(document.VirtualId, out _));
             Assert.True(page.Disposed);
         }

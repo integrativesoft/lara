@@ -25,7 +25,8 @@ namespace LaraUI {
         SubmitJS = 10,
         SetChecked = 11,
         ClearChildren = 12,
-        Replace = 13
+        Replace = 13,
+        ServerEvents = 14
     }
 
     export interface BaseDelta {
@@ -105,5 +106,4 @@ namespace LaraUI {
     export interface ReplaceDelta extends BaseDelta {
         Location: string;
     }
-
 }

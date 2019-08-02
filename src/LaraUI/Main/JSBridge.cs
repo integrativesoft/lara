@@ -23,25 +23,19 @@ namespace Integrative.Lara.Main
 
         public void Submit(string javaScriptCode)
         {
-            var document = _parent.Document;
-            VerifyQueueOpen(document);
-            document.Enqueue(new SubmitJsDelta
+            _parent.Document.Enqueue(new SubmitJsDelta
             {
                 Code = javaScriptCode
             });
-        }
-
-        public static void VerifyQueueOpen(Document document)
-        {
-            if (document == null || !document.QueueOpen)
-            {
-                throw new InvalidOperationException("This operation is not supported during the page's GET, only in events.");
-            }
         }
 
         public void OnMessage(string key, Func<IPageContext, Task> handler)
         {
             _parent.Document.OnMessage(key, handler);
         }
+
+        public void ServerEventsOn() => _parent.Document.ServerEventsOn();
+
+        public Task ServerEventsOff() => _parent.Document.ServerEventsOff();
     }
 }

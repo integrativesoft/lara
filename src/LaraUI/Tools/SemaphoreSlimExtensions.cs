@@ -20,6 +20,13 @@ namespace Integrative.Lara.Tools
             return new ReleaseWrapper(semaphore);
         }
 
+        public static IDisposable UseWait(this SemaphoreSlim semaphore,
+            CancellationToken cancelToken = default)
+        {
+            semaphore.Wait(cancelToken);
+            return new ReleaseWrapper(semaphore);
+        }
+
         private class ReleaseWrapper : IDisposable
         {
             private readonly SemaphoreSlim _semaphore;

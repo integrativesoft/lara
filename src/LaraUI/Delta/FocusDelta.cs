@@ -20,7 +20,7 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element)
         {
-            if (element.QueueOpen)
+            if (element.Document != null)
             {
                 element.Document.Enqueue(new FocusDelta
                 {

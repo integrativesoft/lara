@@ -18,6 +18,11 @@ namespace LaraUI {
         documentId = id;
         window.addEventListener("unload", terminate, false);
         clean(document);
+        let json = document.head.getAttribute('data-lara-initialdelta');
+        if (json) {
+            let result = JSON.parse(json);
+            processEventResult(result);
+        }
     }
     
     function terminate(): void {
@@ -28,9 +33,9 @@ namespace LaraUI {
     export interface PlugOptions {
         EventName: string;
         Block: boolean;
-        BlockElementId: string;
-        BlockHTML: string;
-        BlockShownId: string;
+        BlockElementId?: string;
+        BlockHTML?: string;
+        BlockShownId?: string;
         ExtraData: string;
         LongRunning: boolean;
     }
@@ -62,32 +67,32 @@ namespace LaraUI {
 
     function plugWebSocket(el: Element, plug: PlugOptions): void {
         block(plug);
-        let url = getSocketUrl();
+        let url = getSocketUrl('/_event');
         let socket = new WebSocket(url);
-        socket.onopen = function (event) {
+        socket.onopen = function (_event) {
             socket.onmessage = function (e1) {
                 onSocketMessage(e1.data);
             };
-            socket.onclose = function (e2) {
+            socket.onclose = function (_e2) {
                 unblock(plug);
             }
             let json = buildEventParameters(el, plug);
             socket.send(json);
         };
-        socket.onerror = function (event) {
+        socket.onerror = function (_event) {
             console.log('Error on websocket communication. Reloading.');
             location.reload();
         }
     }
 
-    function getSocketUrl(): string {
+    function getSocketUrl(name: string): string {
         var url: string;
         if (location.protocol == "https:") {
             url = "wss://";
         } else {
             url = "ws://";
         }
-        return url + window.location.host + "/_event";
+        return url + window.location.host + name;
     }
 
     function buildEventParameters(el: Element, plug: PlugOptions): string {
@@ -186,5 +191,14 @@ namespace LaraUI {
         } else {
             console.log("Internal Server Error on AJAX call. Detailed exception information on the client is turned off.")
         }
+    }
+
+    export function listenServerEvents(): void {
+        plugWebSocket(document.head, {
+            EventName: '_server_event',
+            Block: false,
+            ExtraData: '',
+            LongRunning: true
+        });
     }
 }

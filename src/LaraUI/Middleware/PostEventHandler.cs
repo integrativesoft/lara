@@ -38,7 +38,7 @@ namespace Integrative.Lara.Middleware
             }
             else if (http.WebSockets.IsWebSocketRequest)
             {
-                await ProcessWebSocketRequest(http);
+                await ProcessWebSocketEvent(http);
                 return true;
             }
             else if (http.Request.Method == AjaxMethod)
@@ -52,7 +52,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task ProcessWebSocketRequest(HttpContext http)
+        private static async Task ProcessWebSocketEvent(HttpContext http)
         {
             var socket = await http.WebSockets.AcceptWebSocketAsync();
             var result = await MiddlewareCommon.ReadWebSocketMessage<EventParameters>(socket, MaxSizeBytes);
@@ -108,14 +108,16 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task ProcessRequestDocument(PostEventContext context)
         {
+            Task release;
             var document = context.Document;
             if (document.TryGetElementById(context.Parameters.ElementId, out var element))
             {
                 context.Element = element;
                 using (var access = await document.Semaphore.UseWaitAsync())
                 {
-                    await RunEvent(context);
+                    release = await RunEvent(context);
                 }
+                await release;
             }
             else
             {
@@ -123,7 +125,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        internal static async Task RunEvent(PostEventContext post)
+        internal static async Task<Task> RunEvent(PostEventContext post)
         {
             var context = new PageContext(post.Http, post.Connection, post.Document)
             {
@@ -134,7 +136,11 @@ namespace Integrative.Lara.Middleware
                 async () => await post.Element.NotifyEvent(post.Parameters.EventName, context)))
             {
                 string queue = post.Document.FlushQueue();
-                await SendReply(post, queue);
+                return await SendReply(post, queue);
+            }
+            else
+            {
+                return Task.CompletedTask;
             }
         }
 
@@ -164,26 +170,40 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task SendReply(PostEventContext post, string json)
+        private static async Task<Task> SendReply(PostEventContext post, string json)
         {
-            if (post.Http.WebSockets.IsWebSocketRequest)
+            Task result = Task.CompletedTask;
+            if (post.IsWebSocketRequest)
             {
-                await SendSocketReply(post.Socket, json);
+                if (post.SocketRemainsOpen())
+                {
+                    result = post.GetSocketCompletion();
+                }
+                else
+                {
+                    await SendSocketReply(post, json);
+                }
             }
             else
             {
                 await SendAjaxReply(post.Http, json);
             }
             EventComplete?.Invoke(post.Http, _eventArgs);
+            return result;
         }
 
-        private static async Task SendSocketReply(WebSocket socket, string json)
+        private static async Task SendSocketReply(PostEventContext post, string json)
         {
-            await FlushMessage(socket, json);
-            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+            await FlushMessage(post.Socket, json);
+            await CloseSocket(post.Socket);
         }
 
-        private static async Task FlushMessage(WebSocket socket, string json)
+        public static Task CloseSocket(WebSocket socket)
+        {
+            return socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+        }
+
+        public static async Task FlushMessage(WebSocket socket, string json)
         {
             var buffer = BuildArraySegment(json);
             await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
