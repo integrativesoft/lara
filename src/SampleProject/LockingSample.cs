@@ -34,18 +34,13 @@ namespace SampleProject
             {
                 EventName = "click",
                 Block = true,
-                Handler = ButtonHandler,
+                Handler = x => Task.Delay(1000),
                 BlockOptions = new BlockOptions
                 {
                     ShowHtmlMessage = GetSpinnerHtml(" Please wait...")
                 }
             });
             return div;
-        }
-
-        private async Task ButtonHandler(IPageContext arg)
-        {
-            await Task.Delay(1000);
         }
 
         public static string GetSpinnerHtml(string message)

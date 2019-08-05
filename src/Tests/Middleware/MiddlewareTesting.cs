@@ -235,16 +235,18 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void UnpublishMethod()
         {
-            var x = new Published();
-            x.Publish(new WebServiceContent
+            using (var x = new Published())
             {
-                Address = "/myws",
-                Method = "PUT"
-            });
-            var combined = Published.CombinePathMethod("/myws", "PUT");
-            Assert.True(x.TryGetNode(combined, out _));
-            x.UnPublish("/myws", "PUT");
-            Assert.False(x.TryGetNode(combined, out _));
+                x.Publish(new WebServiceContent
+                {
+                    Address = "/myws",
+                    Method = "PUT"
+                });
+                var combined = Published.CombinePathMethod("/myws", "PUT");
+                Assert.True(x.TryGetNode(combined, out _));
+                x.UnPublish("/myws", "PUT");
+                Assert.False(x.TryGetNode(combined, out _));
+            }
         }
 
         [Fact]

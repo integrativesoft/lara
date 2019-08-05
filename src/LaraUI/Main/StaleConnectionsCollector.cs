@@ -39,6 +39,7 @@ namespace Integrative.Lara.Main
             {
                 _disposed = true;
                 _timer.Stop();
+                _timer.Dispose();
             }
         }
 

@@ -86,12 +86,14 @@ namespace Integrative.Lara.Tests.Main
             {
                 string address = LaraUI.GetFirstURL(host);
                 LaraUI.Publish("/", content);
-                var response = await _client.GetAsync(address);
-                var downloaded = await response.Content.ReadAsByteArrayAsync();
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                Assert.Equal(content.ETag, values.FirstOrDefault());
-                Assert.Equal(bytes, downloaded);
+                using (var response = await _client.GetAsync(address))
+                {
+                    var downloaded = await response.Content.ReadAsByteArrayAsync();
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                    Assert.Equal(content.ETag, values.FirstOrDefault());
+                    Assert.Equal(bytes, downloaded);
+                }
             }
         }
 
@@ -113,12 +115,14 @@ namespace Integrative.Lara.Tests.Main
                 };
                 request.Headers.TryAddWithoutValidation("If-None-Match", "lalalalala");
 
-                var response = await _client.SendAsync(request);
-                var downloaded = await response.Content.ReadAsByteArrayAsync();
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                Assert.Equal(content.ETag, values.FirstOrDefault());
-                Assert.Equal(bytes, downloaded);
+                using (var response = await _client.SendAsync(request))
+                {
+                    var downloaded = await response.Content.ReadAsByteArrayAsync();
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                    Assert.Equal(content.ETag, values.FirstOrDefault());
+                    Assert.Equal(bytes, downloaded);
+                }
             }
         }
 
@@ -140,11 +144,13 @@ namespace Integrative.Lara.Tests.Main
                 };
                 request.Headers.TryAddWithoutValidation("If-None-Match", content.ETag);
 
-                var response = await _client.SendAsync(request);
-                var downloaded = await response.Content.ReadAsByteArrayAsync();
-                Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
-                Assert.False(response.Headers.Contains("ETag"));
-                Assert.Empty(downloaded);
+                using (var response = await _client.SendAsync(request))
+                {
+                    var downloaded = await response.Content.ReadAsByteArrayAsync();
+                    Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
+                    Assert.False(response.Headers.Contains("ETag"));
+                    Assert.Empty(downloaded);
+                }
             }
         }
 
@@ -158,12 +164,14 @@ namespace Integrative.Lara.Tests.Main
             {
                 string address = LaraUI.GetFirstURL(host);
                 LaraUI.Publish("/", content);
-                var response = await _client.GetAsync(address);
-                var downloaded = await response.Content.ReadAsByteArrayAsync();
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                Assert.Equal(content.ETag, values.FirstOrDefault());
-                Assert.Equal(bytes, downloaded);
+                using (var response = await _client.GetAsync(address))
+                {
+                    var downloaded = await response.Content.ReadAsByteArrayAsync();
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
+                    Assert.Equal(content.ETag, values.FirstOrDefault());
+                    Assert.Equal(bytes, downloaded);
+                }
             }
         }
 
