@@ -533,7 +533,7 @@
             </summary>
             <exception cref="T:System.InvalidOperationException">Cannot remove from parent, the node has no parent element already</exception>
         </member>
-        <member name="M:Integrative.Lara.Element.On(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+        <member name="M:Integrative.Lara.Element.On(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
             Registers an event and associates code to execute.
             </summary>
@@ -1490,11 +1490,10 @@
             Interface for web pages
             </summary>
         </member>
-        <member name="M:Integrative.Lara.IPage.OnGet(Integrative.Lara.IPageContext)">
+        <member name="M:Integrative.Lara.IPage.OnGet">
             <summary>
             Called when replying to the initial HTTP GET request.
             </summary>
-            <param name="context">The execution context.</param>
         </member>
         <member name="T:Integrative.Lara.ILaraContext">
             <summary>
@@ -1542,7 +1541,7 @@
             </summary>
             <param name="javaScriptCode">The JavaScript code to execute.</param>
         </member>
-        <member name="M:Integrative.Lara.IJSBridge.OnMessage(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+        <member name="M:Integrative.Lara.IJSBridge.OnMessage(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
             Register a custom event that can be called from JavaScript code
             </summary>
@@ -1572,11 +1571,10 @@
             Web Service handler class
             </summary>
         </member>
-        <member name="M:Integrative.Lara.IWebService.Execute(Integrative.Lara.IWebServiceContext)">
+        <member name="M:Integrative.Lara.IWebService.Execute">
             <summary>
             Executes the web service
             </summary>
-            <param name="context">Execution context</param>
             <returns>Response's body</returns>
         </member>
         <member name="T:Integrative.Lara.IWebServiceContext">
@@ -1628,15 +1626,15 @@
         </member>
         <member name="P:Integrative.Lara.LaraUI.Context">
             <summary>
-            Returns the context associated with the current task
+            Returns the context associated with the current task. See also 'Page' and 'Service'.
             </summary>
         </member>
-        <member name="P:Integrative.Lara.LaraUI.PageContext">
+        <member name="P:Integrative.Lara.LaraUI.Page">
             <summary>
             Returns the Page context associated the current task, when executing Page events
             </summary>
         </member>
-        <member name="P:Integrative.Lara.LaraUI.ServiceContext">
+        <member name="P:Integrative.Lara.LaraUI.Service">
             <summary>
             Returns the WebService context associated with the current task, when executing web services
             </summary>
@@ -2410,7 +2408,7 @@
             <param name="value">if set to <c>true</c> [value].</param>
             <returns>This instance</returns>
         </member>
-        <member name="M:Integrative.Lara.LaraBuilder.On(System.String,System.Func{Integrative.Lara.IPageContext,System.Threading.Tasks.Task})">
+        <member name="M:Integrative.Lara.LaraBuilder.On(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
             Associates an event handler with the current element.
             </summary>

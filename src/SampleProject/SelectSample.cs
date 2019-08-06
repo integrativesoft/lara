@@ -34,7 +34,7 @@ namespace SampleProject
             _select.AddOption("4", "Friday");
             _select.AddOption("5", "Saturday");
             _select.AddOption("6", "Sunday");
-            _advance.On("click", app =>
+            _advance.On("click", () =>
             {
                 int.TryParse(_select.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out int weekday);
                 weekday = (weekday + 1) % 7;

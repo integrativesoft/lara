@@ -223,7 +223,7 @@ namespace Integrative.Lara
         /// <param name="eventName">Name of the event.</param>
         /// <param name="handler">The handler.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder On(string eventName, Func<IPageContext, Task> handler)
+        public LaraBuilder On(string eventName, Func<Task> handler)
         {
             _stack.Peek().On(eventName, handler);
             return this;

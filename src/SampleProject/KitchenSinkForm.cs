@@ -16,13 +16,15 @@ namespace SampleProject
         {
         }
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
+            var document = LaraUI.Page.Document;
+
             // Load Bootstrap library.
-            BootstrapLoader.AddBootstrap(context.Document.Head);
+            BootstrapLoader.AddBootstrap(document.Head);
 
             // Load document body.
-            BuildLayout(context.Document);
+            BuildLayout(document);
 
             // Done.
             return Task.CompletedTask;

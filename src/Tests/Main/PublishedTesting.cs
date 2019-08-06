@@ -42,16 +42,16 @@ namespace Integrative.Lara.Tests.Main
             var page = new MyRedirectPage();
             var document = new Document(page);
             var context = new PageContext(http.Object, null, document);
-            await page.OnGet(context);
+            await page.OnGet();
             await PagePublished.ProcessGetResult(http.Object, document, context);
             response.Verify(x => x.Redirect("https://www.google.com"));
         }
 
         class MyRedirectPage : IPage
         {
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
-                context.Navigation.Replace("https://www.google.com");
+                LaraUI.Page.Navigation.Replace("https://www.google.com");
                 return Task.CompletedTask;
             }
         }

@@ -26,7 +26,7 @@ namespace SampleProject
             {
                 Class = "btn btn-primary",
             };
-            _toggle.On("click", app =>
+            _toggle.On("click", () =>
             {
                 _checkbox.Checked = !_checkbox.Checked;
                 return Task.CompletedTask;

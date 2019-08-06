@@ -118,18 +118,19 @@ namespace Integrative.Lara.Tests.Main
 
         class TwoButtonPage : IPage
         {
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
+                var document = LaraUI.Page.Document;
                 var b1 = Element.Create("button", "b1");
                 b1.AppendChild(new TextNode("one"));
                 var b2 = Element.Create("button", "b2");
                 b2.AppendChild(new TextNode("two"));
                 var b3 = Element.Create("button", "b3");
                 b3.AppendChild(new TextNode("three"));
-                context.Document.Body.AppendChild(b1);
-                context.Document.Body.AppendChild(b2);
-                context.Document.Body.AppendChild(b3);
-                b1.On("click", app =>
+                document.Body.AppendChild(b1);
+                document.Body.AppendChild(b2);
+                document.Body.AppendChild(b3);
+                b1.On("click", () =>
                 {
                     b3.Focus();
                     return Task.CompletedTask;
@@ -172,14 +173,15 @@ namespace Integrative.Lara.Tests.Main
         {
             public string Value { get; private set; }
 
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
+                var document = LaraUI.Page.Document;
                 var submit = Element.Create("button");
                 submit.AppendChild(new TextNode("submit"));
                 var input = Element.Create("input");
-                context.Document.Body.AppendChild(input);
-                context.Document.Body.AppendChild(submit);
-                submit.On("click", app =>
+                document.Body.AppendChild(input);
+                document.Body.AppendChild(submit);
+                submit.On("click", () =>
                 {
                     Value = input.GetAttribute("value");
                     return Task.CompletedTask;
@@ -208,17 +210,17 @@ namespace Integrative.Lara.Tests.Main
         {
             const string Code = "document.getElementById('mybutton').innerText = 'clicked!';";
 
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
                 var button = Element.Create("button", "mybutton");
                 var text = new TextNode("test JS");
                 button.AppendChild(text);
-                button.On("click", app =>
+                button.On("click", () =>
                 {
-                    app.JSBridge.Submit(Code);
+                    LaraUI.Page.JSBridge.Submit(Code);
                     return Task.CompletedTask;
                 });
-                context.Document.Body.AppendChild(button);
+                LaraUI.Page.Document.Body.AppendChild(button);
                 return Task.CompletedTask;
             }
         }
@@ -227,17 +229,17 @@ namespace Integrative.Lara.Tests.Main
         {
             public string Received { get; private set; }
 
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
                 var button = Element.Create("button", "mybutton");
                 var text = new TextNode("test message");
                 button.AppendChild(text);
                 button.SetAttribute("onclick",
                     "LaraUI.sendMessage( { key: 'hello', data: 'mydata' } );");
-                context.Document.Body.AppendChild(button);
-                context.JSBridge.OnMessage("hello", app =>
+                LaraUI.Page.Document.Body.AppendChild(button);
+                LaraUI.Page.JSBridge.OnMessage("hello", () =>
                 {
-                    Received = app.JSBridge.EventData;
+                    Received = LaraUI.Page.JSBridge.EventData;
                     return Task.CompletedTask;
                 });
                 return Task.CompletedTask;
@@ -280,17 +282,17 @@ namespace Integrative.Lara.Tests.Main
 
         class MyReplacePage : IPage
         {
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
                 var button = Element.Create("button", "mybutton");
                 var text = new TextNode("test replace post");
                 button.AppendChild(text);
-                button.On("click", app =>
+                button.On("click", () =>
                 {
-                    app.Navigation.Replace("landing");
+                    LaraUI.Page.Navigation.Replace("landing");
                     return Task.CompletedTask;
                 });
-                context.Document.Body.AppendChild(button);
+                LaraUI.Page.Document.Body.AppendChild(button);
                 return Task.CompletedTask;
             }
         }
@@ -299,7 +301,7 @@ namespace Integrative.Lara.Tests.Main
         {
             public int Counter { get; private set; } = 0;
 
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
                 Counter++;
                 return Task.CompletedTask;
@@ -334,8 +336,9 @@ namespace Integrative.Lara.Tests.Main
             public string Value { get; private set; }
             public string Body { get; private set; }
 
-            public Task<string> Execute(IWebServiceContext context)
+            public Task<string> Execute()
             {
+                var context = LaraUI.Service;
                 if (context.TryGetSession(out var session)
                     && session.TryGetValue("mykey", out var value))
                 {
@@ -348,13 +351,13 @@ namespace Integrative.Lara.Tests.Main
 
         class MySessionPage : IPage
         {
-            public Task OnGet(IPageContext context)
+            public Task OnGet()
             {
-                context.Session.SaveValue("mykey", "myvalue");
+                LaraUI.Page.Session.SaveValue("mykey", "myvalue");
                 var button = new Button();
                 button.AppendChild(new TextNode("read session"));
                 button.SetAttribute("onclick", "navigator.sendBeacon('/myWS', 'hello');");
-                context.Document.Body.AppendChild(button);
+                LaraUI.Page.Document.Body.AppendChild(button);
                 return Task.CompletedTask;
             }
         }

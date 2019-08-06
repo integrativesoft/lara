@@ -139,14 +139,15 @@ namespace Integrative.Lara.Tests.DOM
             div.On(new EventSettings
             {
                 EventName = "click",
-                Handler = app =>
+                Handler = () =>
                 {
                     executed = true;
                     return Task.CompletedTask;
                 }
             });
             var context = new Mock<IPageContext>();
-            await div.NotifyEvent("click", context.Object);
+            LaraUI.InternalContext.Value = context.Object;
+            await div.NotifyEvent("click");
             Assert.True(executed);
         }
 

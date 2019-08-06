@@ -23,23 +23,24 @@ namespace Integrative.Lara.Tests.Main
 
         public string LastPath { get; private set; }
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
+            var document = LaraUI.Page.Document;
             var span = Element.Create("span");
             var text = new TextNode("Click me");
             var button = Element.Create("button", ButtonId);
             button.AppendChild(text);
-            context.Document.Body.AppendChild(span);
-            context.Document.Body.AppendChild(button);
+            document.Body.AppendChild(span);
+            document.Body.AppendChild(button);
             button.On(new EventSettings
             {
                 EventName = "click",
                 LongRunning = _useSockets,
-                Handler = app =>
+                Handler = () =>
                 {
                     counter++;
                     text.Data = $"Clicked {counter} times";
-                    LastPath = app.Http.Request.Path;
+                    LastPath = LaraUI.Context.Http.Request.Path;
                     return Task.CompletedTask;
                 }
             });

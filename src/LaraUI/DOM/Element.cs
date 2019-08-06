@@ -24,7 +24,7 @@ namespace Integrative.Lara
         private readonly Attributes _attributes;
         private readonly List<Node> _children;
 
-        internal Dictionary<string, Func<IPageContext, Task>> Events { get; }
+        internal Dictionary<string, Func<Task>> Events { get; }
 
         private string _id;
 
@@ -64,7 +64,7 @@ namespace Integrative.Lara
         {
             _attributes = new Attributes(this);
             _children = new List<Node>();
-            Events = new Dictionary<string, Func<IPageContext, Task>>();
+            Events = new Dictionary<string, Func<Task>>();
             TagName = tagName.ToLowerInvariant();
         }
 
@@ -757,12 +757,13 @@ namespace Integrative.Lara
 
         #region Subscribe to events
 
-        internal async Task NotifyEvent(string eventName, IPageContext context)
+        internal Task NotifyEvent(string eventName)
         {
             if (Events.TryGetValue(eventName, out var handler))
             {
-                await handler(context);
+                return handler();
             }
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -770,7 +771,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="eventName">Name of the event.</param>
         /// <param name="handler">The handler to execute.</param>
-        public void On(string eventName, Func<IPageContext, Task> handler)
+        public void On(string eventName, Func<Task> handler)
         {
             EventWriter.On(this, eventName, handler);
         }

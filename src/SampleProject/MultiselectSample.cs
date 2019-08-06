@@ -31,7 +31,7 @@ namespace SampleProject
             _select.AddOption("E", "East");
             _select.AddOption("S", "South");
             _select.AddOption("W", "West");
-            _toggle.On("click", app =>
+            _toggle.On("click", () =>
             {
                 foreach (var child in _select.Children)
                 {

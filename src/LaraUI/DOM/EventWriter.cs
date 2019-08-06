@@ -16,7 +16,7 @@ namespace Integrative.Lara.DOM
         readonly Element _element;
         readonly EventSettings _settings;
 
-        public static void On(Element element, string eventName, Func<IPageContext, Task> handler)
+        public static void On(Element element, string eventName, Func<Task> handler)
         {
             On(element, new EventSettings
             {

@@ -133,7 +133,7 @@ namespace Integrative.Lara.Middleware
             };
             ProcessMessageIfNeeded(context, post.Parameters);
             if (await MiddlewareCommon.RunHandler(post.Http,
-                async () => await post.Element.NotifyEvent(post.Parameters.EventName, context)))
+                async () => await post.Element.NotifyEvent(post.Parameters.EventName)))
             {
                 string queue = post.Document.FlushQueue();
                 return await SendReply(post, queue);

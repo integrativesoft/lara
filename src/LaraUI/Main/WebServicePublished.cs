@@ -33,7 +33,7 @@ namespace Integrative.Lara.Main
             string data = string.Empty;
             if (await MiddlewareCommon.RunHandler(http, async () =>
             {
-                data = await handler.Execute(context);
+                data = await handler.Execute();
             }))
             {
                 await SendReply(context, data);

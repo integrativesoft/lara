@@ -63,7 +63,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="key">The key for the event.</param>
         /// <param name="handler">The handler for the event.</param>
-        void OnMessage(string key, Func<IPageContext, Task> handler);
+        void OnMessage(string key, Func<Task> handler);
 
         /// <summary>
         /// Gets extra event data that can be passed by the client on custom events.

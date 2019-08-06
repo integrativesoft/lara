@@ -17,11 +17,11 @@ namespace Integrative.Lara.Tests.DOM
 {
     public class DomOperationsTesting
     {
-        readonly Func<IPageContext, Task> _emptyHandler;
+        readonly Func<Task> _emptyHandler;
 
         public DomOperationsTesting()
         {
-            _emptyHandler = (app => Task.CompletedTask);
+            _emptyHandler = (() => Task.CompletedTask);
         }
         
         [Fact]

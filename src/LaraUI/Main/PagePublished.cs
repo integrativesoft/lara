@@ -33,7 +33,7 @@ namespace Integrative.Lara.Main
             var connection = GetConnection(http);
             var document = connection.CreateDocument(page, options);
             var execution = new PageContext(http, connection, document);
-            if (await MiddlewareCommon.RunHandler(http, async () => await page.OnGet(execution)))
+            if (await MiddlewareCommon.RunHandler(http, async () => await page.OnGet()))
             {
                 await ProcessGetResult(http, document, execution);
             }

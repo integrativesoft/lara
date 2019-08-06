@@ -44,19 +44,19 @@ namespace Integrative.Lara
         internal static AsyncLocal<ILaraContext> InternalContext { get; } = new AsyncLocal<ILaraContext>();
 
         /// <summary>
-        /// Returns the context associated with the current task
+        /// Returns the context associated with the current task. See also 'Page' and 'Service'.
         /// </summary>
         public static ILaraContext Context => InternalContext.Value;
 
         /// <summary>
         /// Returns the Page context associated the current task, when executing Page events
         /// </summary>
-        public static IPageContext PageContext => InternalContext.Value as IPageContext;
+        public static IPageContext Page => InternalContext.Value as IPageContext;
 
         /// <summary>
         /// Returns the WebService context associated with the current task, when executing web services
         /// </summary>
-        public static IWebServiceContext ServiceContext => InternalContext.Value as IWebServiceContext;
+        public static IWebServiceContext Service => InternalContext.Value as IWebServiceContext;
 
         #endregion
 

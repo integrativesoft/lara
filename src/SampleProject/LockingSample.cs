@@ -34,7 +34,7 @@ namespace SampleProject
             {
                 EventName = "click",
                 Block = true,
-                Handler = x => Task.Delay(1000),
+                Handler = () => Task.Delay(1000),
                 BlockOptions = new BlockOptions
                 {
                     ShowHtmlMessage = GetSpinnerHtml(" Please wait...")

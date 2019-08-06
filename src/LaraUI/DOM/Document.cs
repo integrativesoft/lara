@@ -197,7 +197,7 @@ namespace Integrative.Lara
         /// </summary>
         public bool HasPendingChanges => _queue.Count > 0;
 
-        internal void OnMessage(string key, Func<IPageContext, Task> handler)
+        internal void OnMessage(string key, Func<Task> handler)
         {
             Head.On("_" + key, handler);
         }

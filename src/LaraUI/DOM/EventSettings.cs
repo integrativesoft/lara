@@ -44,7 +44,7 @@ namespace Integrative.Lara
         /// <value>
         /// The handler.
         /// </value>
-        public Func<IPageContext, Task> Handler { get; set; }
+        public Func<Task> Handler { get; set; }
 
         /// <summary>
         /// Long-running events use websockets and can flush partial progress to the client.

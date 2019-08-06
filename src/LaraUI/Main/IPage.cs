@@ -16,7 +16,6 @@ namespace Integrative.Lara
         /// <summary>
         /// Called when replying to the initial HTTP GET request.
         /// </summary>
-        /// <param name="context">The execution context.</param>
-        Task OnGet(IPageContext context);
+        Task OnGet();
     }
 }

@@ -130,7 +130,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.On(new EventSettings
             {
                 EventName = "click",
-                Handler = app =>
+                Handler = () =>
                 {
                     executed = true;
                     return Task.CompletedTask;
@@ -139,7 +139,7 @@ namespace Integrative.Lara.Tests.DOM
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
             var context = new PageContext(http.Object, null, new Document(page.Object));
-            await root.NotifyEvent("click", context);
+            await root.NotifyEvent("click");
             Assert.True(executed);
         }
 
@@ -149,7 +149,7 @@ namespace Integrative.Lara.Tests.DOM
             bool executed = false;
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
-            builder.On("click", app =>
+            builder.On("click", () =>
             {
                 executed = true;
                 return Task.CompletedTask;
@@ -157,7 +157,7 @@ namespace Integrative.Lara.Tests.DOM
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
             var context = new PageContext(http.Object, null, new Document(page.Object));
-            await root.NotifyEvent("click", context);
+            await root.NotifyEvent("click");
             Assert.True(executed);
         }
 

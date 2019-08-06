@@ -24,10 +24,10 @@ namespace SampleProject
             System.Console.WriteLine("instance created");
         }
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
-            context.JSBridge.ServerEventsOn();
-            context.Document.Body.AppendChild(_button);
+            LaraUI.Page.JSBridge.ServerEventsOn();
+            LaraUI.Page.Document.Body.AppendChild(_button);
             Task.Run(DelayedTask);
             return Task.CompletedTask;
         }

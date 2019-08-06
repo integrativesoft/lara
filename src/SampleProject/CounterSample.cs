@@ -30,7 +30,7 @@ namespace SampleProject
             _increase.On("click", OnIncrease);
         }
 
-        private Task OnIncrease(IPageContext arg)
+        private Task OnIncrease()
         {
             int.TryParse(_number.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var number);
             number++;

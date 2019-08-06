@@ -46,13 +46,13 @@ namespace SampleProject
             return div;
         }
 
-        private async Task ButtonHandler(IPageContext arg)
+        private async Task ButtonHandler()
         {
             for (int index = 10; index > 0; index--)
             {
                 _message.ClearChildren();
                 _message.AppendChild(new TextNode($"Server says to wait {index}"));
-                await arg.Navigation.FlushPartialChanges();
+                await LaraUI.Page.Navigation.FlushPartialChanges();
                 await Task.Delay(1000);
             }
         }

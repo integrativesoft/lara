@@ -29,7 +29,7 @@ namespace Integrative.Lara.Main
             });
         }
 
-        public void OnMessage(string key, Func<IPageContext, Task> handler)
+        public void OnMessage(string key, Func<Task> handler)
         {
             _parent.Document.OnMessage(key, handler);
         }

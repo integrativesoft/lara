@@ -18,7 +18,7 @@ namespace Integrative.Lara.Tests.Main
             Disposed = true;
         }
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
             throw new NotImplementedException();
         }

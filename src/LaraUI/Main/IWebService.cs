@@ -16,8 +16,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Executes the web service
         /// </summary>
-        /// <param name="context">Execution context</param>
         /// <returns>Response's body</returns>
-        Task<string> Execute(IWebServiceContext context);
+        Task<string> Execute();
     }
 }
