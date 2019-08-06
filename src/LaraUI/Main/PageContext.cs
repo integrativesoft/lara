@@ -20,6 +20,7 @@ namespace Integrative.Lara.Main
 
         public PageContext(HttpContext http, Connection connection, Document document)
         {
+            LaraUI.InternalContext.Value = this;
             Http = http;
             Document = document;
             _navigation = new Navigation(this);

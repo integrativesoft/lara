@@ -15,7 +15,7 @@ namespace Integrative.Lara.DOM
         public static string GenerateElementId()
         {
             Interlocked.Increment(ref _counter);
-            return "_g" + _counter.ToString();
+            return "_g" + _counter.ToString("X");
         }
     }
 }

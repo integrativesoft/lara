@@ -9,6 +9,7 @@ using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -37,6 +38,27 @@ namespace Integrative.Lara
         /// JSON tools
         /// </summary>
         public static LaraJson JSON { get; } = new LaraJson();
+
+        #region Context variables
+
+        internal static AsyncLocal<ILaraContext> InternalContext { get; } = new AsyncLocal<ILaraContext>();
+
+        /// <summary>
+        /// Returns the context associated with the current task
+        /// </summary>
+        public static ILaraContext Context => InternalContext.Value;
+
+        /// <summary>
+        /// Returns the Page context associated the current task, when executing Page events
+        /// </summary>
+        public static IPageContext PageContext => InternalContext.Value as IPageContext;
+
+        /// <summary>
+        /// Returns the WebService context associated with the current task, when executing web services
+        /// </summary>
+        public static IWebServiceContext ServiceContext => InternalContext.Value as IWebServiceContext;
+
+        #endregion
 
         #region Publishing
 

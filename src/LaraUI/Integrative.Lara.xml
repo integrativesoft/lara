@@ -1496,14 +1496,19 @@
             </summary>
             <param name="context">The execution context.</param>
         </member>
+        <member name="T:Integrative.Lara.ILaraContext">
+            <summary>
+            Shared interface for both IPageContext and IWebServiceContext
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.ILaraContext.Http">
+            <summary>
+            Gets the .NET Core HttpContext instance
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.IPageContext">
             <summary>
             The execution context for events.
-            </summary>
-        </member>
-        <member name="P:Integrative.Lara.IPageContext.Http">
-            <summary>
-            Gets the .NET Core HttpContext instance
             </summary>
         </member>
         <member name="P:Integrative.Lara.IPageContext.Document">
@@ -1579,11 +1584,6 @@
             Context for web service requests
             </summary>
         </member>
-        <member name="P:Integrative.Lara.IWebServiceContext.Http">
-            <summary>
-            ASP.NET Core's HttpContext
-            </summary>
-        </member>
         <member name="P:Integrative.Lara.IWebServiceContext.RequestBody">
             <summary>
             Request's body sent by the client
@@ -1624,6 +1624,21 @@
         <member name="P:Integrative.Lara.LaraUI.JSON">
             <summary>
             JSON tools
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraUI.Context">
+            <summary>
+            Returns the context associated with the current task
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraUI.PageContext">
+            <summary>
+            Returns the Page context associated the current task, when executing Page events
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraUI.ServiceContext">
+            <summary>
+            Returns the WebService context associated with the current task, when executing web services
             </summary>
         </member>
         <member name="M:Integrative.Lara.LaraUI.Publish(System.String,System.Func{Integrative.Lara.IPage})">

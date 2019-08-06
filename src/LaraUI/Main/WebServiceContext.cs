@@ -18,6 +18,7 @@ namespace Integrative.Lara.Main
 
         public WebServiceContext()
         {
+            LaraUI.InternalContext.Value = this;
         }
 
         public bool TryGetSession(out Session session)

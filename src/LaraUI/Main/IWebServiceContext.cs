@@ -4,7 +4,6 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System.Net;
 
 namespace Integrative.Lara
@@ -12,13 +11,8 @@ namespace Integrative.Lara
     /// <summary>
     /// Context for web service requests
     /// </summary>
-    public interface IWebServiceContext
+    public interface IWebServiceContext : ILaraContext
     {
-        /// <summary>
-        /// ASP.NET Core's HttpContext
-        /// </summary>
-        HttpContext Http { get; }
-
         /// <summary>
         /// Request's body sent by the client
         /// </summary>

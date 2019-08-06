@@ -104,6 +104,5 @@ namespace Integrative.Lara.Tests.DOM
             var x = Element.CreateNS("abc", "svg");
             Assert.Equal("abc", x.GetAttribute("xlmns"));
         }
-
     }
 }

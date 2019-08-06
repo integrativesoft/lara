@@ -11,15 +11,21 @@ using System.Threading.Tasks;
 namespace Integrative.Lara
 {
     /// <summary>
-    /// The execution context for events.
+    /// Shared interface for both IPageContext and IWebServiceContext
     /// </summary>
-    public interface IPageContext
+    public interface ILaraContext
     {
         /// <summary>
         /// Gets the .NET Core HttpContext instance
         /// </summary>
         HttpContext Http { get; }
+    }
 
+    /// <summary>
+    /// The execution context for events.
+    /// </summary>
+    public interface IPageContext : ILaraContext
+    {
         /// <summary>
         /// Gets the current document.
         /// </summary>
