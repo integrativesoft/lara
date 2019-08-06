@@ -59,7 +59,7 @@ namespace SampleProject
     {
         int counter = 0;
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
             var button = Element.Create("button");
             var text = new TextNode { Data = "Click me" };
@@ -70,7 +70,7 @@ namespace SampleProject
                 text.Data = $"Clicked {counter} times";
                 return Task.CompletedTask;
             });
-            context.Document.Body.AppendChild(button);
+            LaraUI.Page.Document.Body.AppendChild(button);
             return Task.CompletedTask;
         }
     }
