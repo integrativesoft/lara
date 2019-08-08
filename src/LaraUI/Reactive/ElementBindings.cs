@@ -13,27 +13,28 @@ namespace Integrative.Lara.Reactive
     sealed class ElementBindings
     {
         private readonly Element _parent;
-        private readonly Dictionary<string, BindTextOptions> _attributeBindings;
+        private readonly Dictionary<string, BindPropertyOptions> _attributeBindings;
 
-        private BindTextOptions _innerTextBinding;
+        private BindPropertyOptions _innerTextBinding;
         private BindChildrenOptions _childrenBinding;
+        private BindPropertyOptions _genericHandler;
 
         public ElementBindings(Element parent)
         {
             _parent = parent;
-            _attributeBindings = new Dictionary<string, BindTextOptions>();
+            _attributeBindings = new Dictionary<string, BindPropertyOptions>();
         }
 
         #region Common
 
-        private void BindOptions(BindTextOptions options)
+        private void BindOptions(BindPropertyOptions options)
         {
             options.Apply(_parent);
             options.PropertyChanged += Options_PropertyChanged;
             options.Subscribe();
         }
 
-        private void UnbindOptions(BindTextOptions options)
+        private void UnbindOptions(BindPropertyOptions options)
         {
             options.Unsubscribe();
             options.PropertyChanged -= Options_PropertyChanged;
@@ -41,15 +42,37 @@ namespace Integrative.Lara.Reactive
 
         private void Options_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var options = (BindTextOptions)sender;
+            var options = (BindPropertyOptions)sender;
             options.Apply(_parent);
         }
 
         public void UnbindAll()
         {
+            UnbindHandler();
             UnbindAllAttributes();
             UnbindInnerText();
             UnbindChildren();
+        }
+
+        #endregion
+
+        #region Generic handler
+
+        public void BindHandler<T>(BindHandlerOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            UnbindHandler();
+            BindOptions(options);
+            _genericHandler = options;
+        }
+
+        public void UnbindHandler()
+        {
+            if (_genericHandler != null)
+            {
+                UnbindOptions(_genericHandler);
+                _genericHandler = null;
+            }
         }
 
         #endregion

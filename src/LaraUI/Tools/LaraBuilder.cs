@@ -262,6 +262,25 @@ namespace Integrative.Lara
         /// Adds bindings for an attribute
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source's property</param>
+        /// <returns></returns>
+        public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<string> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindAttribute<T>(new BindAttributeOptions<T>
+            {
+                Attribute = attribute,
+                Object = instance,
+                Property = x => property()
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for an attribute
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="options">Attribute bindign options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
@@ -297,6 +316,23 @@ namespace Integrative.Lara
         /// <param name="instance">Data source</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
+        public LaraBuilder BindInnerText<T>(T instance, Func<string> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindInnerText(new BindInnerTextOptions<T>
+            {
+                Object = instance,
+                Property = x => property()
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for inner text
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="instance">Data source</param>
+        /// <param name="property">Data source's property</param>
+        /// <returns>This instance</returns>
         public LaraBuilder BindInnerText<T>(T instance, Func<T, string> property)
             where T : INotifyPropertyChanged
         {
@@ -316,20 +352,101 @@ namespace Integrative.Lara
         public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
             where T : INotifyPropertyChanged
         {
-            _stack.Peek().BindInnerText<T>(options);
+            _stack.Peek().BindInnerText(options);
             return this;
         }
 
         /// <summary>
-        /// Adds bindings for the child element collection
+        /// Adds bindings for the children collection
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the ovservable collection</typeparam>
+        /// <param name="collection">Observable collection</param>
+        /// <param name="creator">Handler to create elements</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
+            where T : INotifyPropertyChanged
+        {
+            return BindChildren<T>(new BindChildrenOptions<T>
+            {
+                Collection = collection,
+                CreateCallback = x => creator()
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for the children collection
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the ovservable collection</typeparam>
+        /// <param name="collection">Observable collection</param>
+        /// <param name="creator">Handler to create elements</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
+            where T : INotifyPropertyChanged
+        {
+            return BindChildren(new BindChildrenOptions<T>
+            {
+                Collection = collection,
+                CreateCallback = creator
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for the children collection
         /// </summary>
         /// <typeparam name="T">Type of elements in observable collection</typeparam>
         /// <param name="options">Children bindings options</param>
-        /// <returns></returns>
+        /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(BindChildrenOptions<T> options)
             where T : INotifyPropertyChanged
         {
-            _stack.Peek().BindChildren<T>(options);
+            _stack.Peek().BindChildren(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Associates the current element with a data source and an action to update the element whenever the source is modified
+        /// </summary>
+        /// <typeparam name="T">Type of the data source</typeparam>
+        /// <param name="instance">Data source</param>
+        /// <param name="action">Action to update the element</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder Bind<T>(T instance, Action action)
+            where T : INotifyPropertyChanged
+        {
+            return Bind(new BindHandlerOptions<T>
+            {
+                ModifiedHandler = (x, y) => action(),
+                Object = instance
+            });
+        }
+
+        /// <summary>
+        /// Associates the current element with a data source and an action to update the element whenever the source is modified
+        /// </summary>
+        /// <typeparam name="T">Type of the data source</typeparam>
+        /// <param name="instance">Data source</param>
+        /// <param name="action">Action to update the element</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder Bind<T>(T instance, Action<T, Element> action)
+            where T : INotifyPropertyChanged
+        {
+            return Bind(new BindHandlerOptions<T>
+            {
+                ModifiedHandler = action,
+                Object = instance
+            });
+        }
+
+        /// <summary>
+        /// Associates the current element with a data source and an action to update the element whenever the source is modified
+        /// </summary>
+        /// <typeparam name="T">Type of the data source</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder Bind<T>(BindHandlerOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().Bind(options);
             return this;
         }
     }

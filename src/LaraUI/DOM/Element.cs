@@ -823,6 +823,35 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Binds an element to an action to be triggered whenever the source data changes
+        /// </summary>
+        /// <typeparam name="T">Type of the source data</typeparam>
+        /// <param name="instance">Source data instance</param>
+        /// <param name="handler">Action to execute when source data is modified</param>
+        public void Bind<T>(T instance, Action<T, Element> handler)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindHandler(new BindHandlerOptions<T>
+            {
+                Object = instance,
+                ModifiedHandler = handler
+            });
+        }
+
+        /// <summary>
+        /// Binds an element to an action to be triggered whenever the source data changes
+        /// </summary>
+        /// <typeparam name="T">Type of the source data</typeparam>
+        /// <param name="options">Binding options</param>
+        public void Bind<T>(BindHandlerOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindHandler(options);
+        }
+
+        /// <summary>
         /// Binds an attribute
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
@@ -884,7 +913,7 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Removes all bindings for the element (attributes, inner text, children)
+        /// Removes all bindings for the element
         /// </summary>
         public void UnbindAll()
         {

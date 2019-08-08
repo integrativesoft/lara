@@ -30,11 +30,7 @@ namespace SampleProject
             .Push("div", "p-2")
                 .Push("table")
                     .Push("tbody")
-                        .BindChildren(new BindChildrenOptions<MyDataRow>
-                        {
-                            Collection = _data.Rows,
-                            CreateCallback = CreateRowCallback,
-                        })
+                        .BindChildren(_data.Rows, CreateRowCallback)
                     .Pop()
                 .Pop()
             .Pop();

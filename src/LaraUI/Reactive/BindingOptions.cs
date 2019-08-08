@@ -23,18 +23,72 @@ namespace Integrative.Lara
     }
 
     /// <summary>
-    /// Base class for text binding options
+    /// Base class for property-changed based bindings
     /// </summary>
-    public abstract class BindTextOptions : BindOptions
+    public abstract class BindPropertyOptions : BindOptions
     {
         internal abstract event PropertyChangedEventHandler PropertyChanged;
+    }
+
+    /// <summary>
+    /// Binding options for generic modification handler
+    /// </summary>
+    /// <typeparam name="T">Type of data source</typeparam>
+    public sealed class BindHandlerOptions<T> : BindPropertyOptions
+        where T : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Instance to bind to
+        /// </summary>
+        public T Object { get; set; }
+
+        /// <summary>
+        /// Action to update the element whenever the data source is modified
+        /// </summary>
+        public Action<T, Element> ModifiedHandler { get; set; }
+
+        internal override event PropertyChangedEventHandler PropertyChanged;
+
+        private bool _applying;
+
+        internal override void Apply(Element element)
+        {
+            _applying = true;
+            ModifiedHandler?.Invoke(Object, element);
+            _applying = false;
+        }
+
+        internal override void Subscribe()
+        {
+            Object.PropertyChanged += Object_PropertyChanged;
+        }
+
+        internal override void Unsubscribe()
+        {
+            Object.PropertyChanged -= Object_PropertyChanged;
+        }
+
+        private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            VerifyApplying();
+            PropertyChanged?.Invoke(this, e);
+        }
+
+        private void VerifyApplying()
+        {
+            const string Template = "Cycle detected: modification handlers should not modify the source data.";
+            if (_applying)
+            {
+                throw new InvalidOperationException(Template);
+            }
+        }
     }
 
     /// <summary>
     /// Abstract class for text-property bindings
     /// </summary>
     /// <typeparam name="T">Type of data source</typeparam>
-    public abstract class BindTextOptions<T> : BindTextOptions
+    public abstract class BindTextOptions<T> : BindPropertyOptions
         where T : INotifyPropertyChanged
     {
         /// <summary>

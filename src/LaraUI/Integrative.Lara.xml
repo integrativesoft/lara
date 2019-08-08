@@ -559,6 +559,21 @@
             </summary>
             <param name="settings">The event's settings.</param>
         </member>
+        <member name="M:Integrative.Lara.Element.Bind``1(``0,System.Action{``0,Integrative.Lara.Element})">
+            <summary>
+            Binds an element to an action to be triggered whenever the source data changes
+            </summary>
+            <typeparam name="T">Type of the source data</typeparam>
+            <param name="instance">Source data instance</param>
+            <param name="handler">Action to execute when source data is modified</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.Bind``1(Integrative.Lara.BindHandlerOptions{``0})">
+            <summary>
+            Binds an element to an action to be triggered whenever the source data changes
+            </summary>
+            <typeparam name="T">Type of the source data</typeparam>
+            <param name="options">Binding options</param>
+        </member>
         <member name="M:Integrative.Lara.Element.BindAttribute``1(Integrative.Lara.BindAttributeOptions{``0})">
             <summary>
             Binds an attribute
@@ -598,7 +613,7 @@
         </member>
         <member name="M:Integrative.Lara.Element.UnbindAll">
             <summary>
-            Removes all bindings for the element (attributes, inner text, children)
+            Removes all bindings for the element
             </summary>
         </member>
         <member name="M:Integrative.Lara.Element.Focus">
@@ -2329,9 +2344,25 @@
             Base class for binding options
             </summary>
         </member>
-        <member name="T:Integrative.Lara.BindTextOptions">
+        <member name="T:Integrative.Lara.BindPropertyOptions">
             <summary>
-            Base class for text binding options
+            Base class for property-changed based bindings
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindHandlerOptions`1">
+            <summary>
+            Binding options for generic modification handler
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindHandlerOptions`1.Object">
+            <summary>
+            Instance to bind to
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindHandlerOptions`1.ModifiedHandler">
+            <summary>
+            Action to update the element whenever the data source is modified
             </summary>
         </member>
         <member name="T:Integrative.Lara.BindTextOptions`1">
@@ -2550,6 +2581,16 @@
             <param name="settings">The settings.</param>
             <returns>This instance</returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindAttribute``1(System.String,``0,System.Func{System.String})">
+            <summary>
+            Adds bindings for an attribute
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="attribute">Attribute</param>
+            <param name="instance">Data source instance</param>
+            <param name="property">Data source's property</param>
+            <returns></returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindAttribute``1(Integrative.Lara.BindAttributeOptions{``0})">
             <summary>
             Adds bindings for an attribute
@@ -2568,6 +2609,15 @@
             <param name="property">Data source's property</param>
             <returns></returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(``0,System.Func{System.String})">
+            <summary>
+            Adds bindings for inner text
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="instance">Data source</param>
+            <param name="property">Data source's property</param>
+            <returns>This instance</returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(``0,System.Func{``0,System.String})">
             <summary>
             Adds bindings for inner text
@@ -2585,13 +2635,57 @@
             <param name="options">Inner tetx binding options</param>
             <returns>This instance</returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{Integrative.Lara.Element})">
+            <summary>
+            Adds bindings for the children collection
+            </summary>
+            <typeparam name="T">Type of elements in the ovservable collection</typeparam>
+            <param name="collection">Observable collection</param>
+            <param name="creator">Handler to create elements</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{``0,Integrative.Lara.Element})">
+            <summary>
+            Adds bindings for the children collection
+            </summary>
+            <typeparam name="T">Type of elements in the ovservable collection</typeparam>
+            <param name="collection">Observable collection</param>
+            <param name="creator">Handler to create elements</param>
+            <returns>This instance</returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(Integrative.Lara.BindChildrenOptions{``0})">
             <summary>
-            Adds bindings for the child element collection
+            Adds bindings for the children collection
             </summary>
             <typeparam name="T">Type of elements in observable collection</typeparam>
             <param name="options">Children bindings options</param>
-            <returns></returns>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Bind``1(``0,System.Action)">
+            <summary>
+            Associates the current element with a data source and an action to update the element whenever the source is modified
+            </summary>
+            <typeparam name="T">Type of the data source</typeparam>
+            <param name="instance">Data source</param>
+            <param name="action">Action to update the element</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Bind``1(``0,System.Action{``0,Integrative.Lara.Element})">
+            <summary>
+            Associates the current element with a data source and an action to update the element whenever the source is modified
+            </summary>
+            <typeparam name="T">Type of the data source</typeparam>
+            <param name="instance">Data source</param>
+            <param name="action">Action to update the element</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.Bind``1(Integrative.Lara.BindHandlerOptions{``0})">
+            <summary>
+            Associates the current element with a data source and an action to update the element whenever the source is modified
+            </summary>
+            <typeparam name="T">Type of the data source</typeparam>
+            <param name="options">Binding options</param>
+            <returns>This instance</returns>
         </member>
         <member name="T:Integrative.Lara.LaraJson">
             <summary>
