@@ -128,11 +128,6 @@ namespace Integrative.Lara
         /// </summary>
         public Func<T, Element> CreateCallback { get; set; }
 
-        /// <summary>
-        /// Method to call when removing elements
-        /// </summary>
-        public Action<Element> DisposeCallback { get; set; }
-
         internal override event NotifyCollectionChangedEventHandler CollectionChanged;
 
         internal override void Apply(Element element, NotifyCollectionChangedEventArgs args)

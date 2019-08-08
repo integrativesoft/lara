@@ -596,6 +596,11 @@
             Removes all bindings for the list of children
             </summary>
         </member>
+        <member name="M:Integrative.Lara.Element.UnbindAll">
+            <summary>
+            Removes all bindings for the element (attributes, inner text, children)
+            </summary>
+        </member>
         <member name="M:Integrative.Lara.Element.Focus">
             <summary>
             Focuses this element.
@@ -2383,11 +2388,6 @@
             Method for creating elements
             </summary>
         </member>
-        <member name="P:Integrative.Lara.BindChildrenOptions`1.DisposeCallback">
-            <summary>
-            Method to call when removing elements
-            </summary>
-        </member>
         <member name="T:Integrative.Lara.ApplicationBuilderLaraExtensions">
             <summary>
             ASP.NET Core Extensions for using Lara
@@ -2568,14 +2568,6 @@
             <param name="property">Data source's property</param>
             <returns></returns>
         </member>
-        <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(Integrative.Lara.BindInnerTextOptions{``0})">
-            <summary>
-            Adds bindings for inner text
-            </summary>
-            <typeparam name="T">Type of data source</typeparam>
-            <param name="options">Inner tetx binding options</param>
-            <returns>This instance</returns>
-        </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(``0,System.Func{``0,System.String})">
             <summary>
             Adds bindings for inner text
@@ -2583,6 +2575,14 @@
             <typeparam name="T">Type of data source</typeparam>
             <param name="instance">Data source</param>
             <param name="property">Data source's property</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(Integrative.Lara.BindInnerTextOptions{``0})">
+            <summary>
+            Adds bindings for inner text
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Inner tetx binding options</param>
             <returns>This instance</returns>
         </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(Integrative.Lara.BindChildrenOptions{``0})">

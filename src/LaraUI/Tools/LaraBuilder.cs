@@ -294,19 +294,6 @@ namespace Integrative.Lara
         /// Adds bindings for inner text
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
-        /// <param name="options">Inner tetx binding options</param>
-        /// <returns>This instance</returns>
-        public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
-            where T : INotifyPropertyChanged
-        {
-            _stack.Peek().BindInnerText<T>(options);
-            return this;
-        }
-
-        /// <summary>
-        /// Adds bindings for inner text
-        /// </summary>
-        /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="instance">Data source</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
@@ -318,6 +305,19 @@ namespace Integrative.Lara
                 Object = instance,
                 Property = property
             });
+        }
+
+        /// <summary>
+        /// Adds bindings for inner text
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Inner tetx binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindInnerText<T>(options);
+            return this;
         }
 
         /// <summary>

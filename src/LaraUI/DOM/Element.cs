@@ -840,8 +840,7 @@ namespace Integrative.Lara
         /// <param name="attribute">Attribute to remove bindings of</param>
         public void UnbindAttribute(string attribute)
         {
-            EnsureBindings();
-            _bindings.UnbindAttribute(attribute);
+            _bindings?.UnbindAttribute(attribute);
         }
 
         /// <summary>
@@ -861,8 +860,7 @@ namespace Integrative.Lara
         /// </summary>
         public void UnbindInnerText()
         {
-            EnsureBindings();
-            _bindings.UnbindInnerText();
+            _bindings?.UnbindInnerText();
         }
 
         /// <summary>
@@ -882,8 +880,15 @@ namespace Integrative.Lara
         /// </summary>
         public void UnbindChildren()
         {
-            EnsureBindings();
-            _bindings.UnbindChildren();
+            _bindings?.UnbindChildren();
+        }
+
+        /// <summary>
+        /// Removes all bindings for the element (attributes, inner text, children)
+        /// </summary>
+        public void UnbindAll()
+        {
+            _bindings?.UnbindAll();
         }
 
         #endregion

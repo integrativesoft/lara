@@ -44,7 +44,7 @@ namespace Integrative.Lara.Reactive
                     break;
                 case NotifyCollectionChangedAction.Reset:
                 default:
-                    CollectionReset(_options, _element);
+                    CollectionReset(_element);
                     break;
             }
         }
@@ -86,7 +86,7 @@ namespace Integrative.Lara.Reactive
             var child = _element.GetChildAt(index);
             if (child is Element element)
             {
-                _options.DisposeCallback(element);
+                element.UnbindAll();
             }
             _element.RemoveAt(index);
         }
@@ -96,32 +96,26 @@ namespace Integrative.Lara.Reactive
             _element.InsertChildAt(index, child);
         }
 
-        private static void CollectionReset(BindChildrenOptions<T> options, Element element)
+        private static void CollectionReset(Element element)
         {
-            NotifyDeleted(options, element);
+            UnbindChildren(element);
             element.ClearChildren();
         }
 
-        private static void NotifyDeleted(BindChildrenOptions<T> options, Element element)
+        private static void UnbindChildren(Element element)
         {
-            if (options.DisposeCallback == null)
-            {
-                return;
-            }
-            var list = new List<Node>();
-            list.AddRange(element.Children);
-            foreach (var node in list)
+            foreach (var node in element.Children)
             {
                 if (node is Element childElement)
                 {
-                    options.DisposeCallback(childElement);
+                    childElement.UnbindAll();
                 }
             }
         }
 
         public static void CollectionLoad(BindChildrenOptions<T> options, Element element)
         {
-            CollectionReset(options, element);
+            CollectionReset(element);
             foreach (var item in options.Collection)
             {
                 var child = options.CreateCallback(item);

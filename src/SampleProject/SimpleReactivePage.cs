@@ -17,14 +17,16 @@ namespace SampleProject
 
         public Task OnGet()
         {
-            var builder = new LaraBuilder(LaraUI.Page.Document.Body);
-            builder.Push("div")
+            var document = LaraUI.Page.Document;
+            BootstrapLoader.AddBootstrap(document.Head);
+            var builder = new LaraBuilder(document.Body);
+            builder.Push("div", "p-2")
                 .Push("span")
                     .BindInnerText(_data, x => x.Counter.ToString())
                 .Pop()
             .Pop()
-            .Push("div")
-                .Push("button")
+            .Push("div", "p-2")
+                .Push("button", "btn btn-primary")
                     .On("click", () => _data.IncreaseCounter())
                     .AddTextNode("increase")
                 .Pop()
