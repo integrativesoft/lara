@@ -29,8 +29,8 @@ namespace Integrative.Lara.Reactive
         private void BindOptions(BindTextOptions options)
         {
             options.Apply(_parent);
-            options.Subscribe();
             options.PropertyChanged += Options_PropertyChanged;
+            options.Subscribe();
         }
 
         private void UnbindOptions(BindTextOptions options)
@@ -96,8 +96,8 @@ namespace Integrative.Lara.Reactive
         {
             UnbindChildren();
             options.Apply(_parent);
-            options.Subscribe();
             options.CollectionChanged += Options_CollectionChanged;
+            options.Subscribe();
         }
 
         public void UnbindChildren()

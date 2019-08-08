@@ -22,16 +22,11 @@ namespace SampleProject
                 .Push("span")
                     .BindInnerText(_data, x => x.Counter.ToString())
                 .Pop()
+            .Pop()
+            .Push("div")
                 .Push("button")
-                    .On(new EventSettings
-                    {
-                        Block = true,
-                        Handler = () =>
-                        {
-                            _data.IncreaseCounter();
-                            return Task.CompletedTask;
-                        }
-                    })
+                    .On("click", () => _data.IncreaseCounter())
+                    .AddTextNode("increase")
                 .Pop()
             .Pop();
             return Task.CompletedTask;

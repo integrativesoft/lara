@@ -53,5 +53,13 @@ namespace Integrative.Lara
         ///   <c>true</c> if [long running]; otherwise, <c>false</c>.
         /// </value>
         public bool LongRunning { get; set; }
+
+        internal void Verify()
+        {
+            if (string.IsNullOrEmpty(EventName))
+            {
+                throw new ArgumentNullException(nameof(EventName));
+            }
+        }
     }
 }

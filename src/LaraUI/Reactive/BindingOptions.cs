@@ -51,12 +51,17 @@ namespace Integrative.Lara
 
         internal override void Subscribe()
         {
-            Object.PropertyChanged += PropertyChanged;
+            Object.PropertyChanged += ObjectChangedHandler;
         }
 
         internal override void Unsubscribe()
         {
-            Object.PropertyChanged -= PropertyChanged;
+            Object.PropertyChanged -= ObjectChangedHandler;
+        }
+
+        private void ObjectChangedHandler(object sender, PropertyChangedEventArgs args)
+        {
+            PropertyChanged?.Invoke(this, args);
         }
 
         internal string GetCurrentValue()
@@ -138,12 +143,17 @@ namespace Integrative.Lara
 
         internal override void Subscribe()
         {
-            Collection.CollectionChanged += CollectionChanged;
+            Collection.CollectionChanged += CollectionChangedHandler;
         }
 
         internal override void Unsubscribe()
         {
-            Collection.CollectionChanged -= CollectionChanged;
+            Collection.CollectionChanged -= CollectionChangedHandler;
+        }
+
+        private void CollectionChangedHandler(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            CollectionChanged?.Invoke(this, args);
         }
 
         internal override void Apply(Element element)

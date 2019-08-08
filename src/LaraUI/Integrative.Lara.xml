@@ -559,6 +559,43 @@
             </summary>
             <param name="settings">The event's settings.</param>
         </member>
+        <member name="M:Integrative.Lara.Element.BindAttribute``1(Integrative.Lara.BindAttributeOptions{``0})">
+            <summary>
+            Binds an attribute
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Attribute binding options</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.UnbindAttribute(System.String)">
+            <summary>
+            Removes bindings for an attribute
+            </summary>
+            <param name="attribute">Attribute to remove bindings of</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.BindInnerText``1(Integrative.Lara.BindTextOptions{``0})">
+            <summary>
+            Binds an element's inner text
+            </summary>
+            <typeparam name="T">Type of source data</typeparam>
+            <param name="options">Inner text binding options</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.UnbindInnerText">
+            <summary>
+            Removes inner text bindings
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Element.BindChildren``1(Integrative.Lara.BindChildrenOptions{``0})">
+            <summary>
+            Binds the list of children to an observable collection
+            </summary>
+            <typeparam name="T">Type for items in the collection</typeparam>
+            <param name="options">Children binding options</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.UnbindChildren">
+            <summary>
+            Removes all bindings for the list of children
+            </summary>
+        </member>
         <member name="M:Integrative.Lara.Element.Focus">
             <summary>
             Focuses this element.
@@ -2282,6 +2319,75 @@
             <param name="message">Exception message</param>
             <param name="inner">Inner exception</param>
         </member>
+        <member name="T:Integrative.Lara.BindOptions">
+            <summary>
+            Base class for binding options
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindTextOptions">
+            <summary>
+            Base class for text binding options
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindTextOptions`1">
+            <summary>
+            Abstract class for text-property bindings
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindTextOptions`1.Object">
+            <summary>
+            Instance to track changes
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindTextOptions`1.Property">
+            <summary>
+            Function to retrieve the target value from instance that's tracked
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindInnerTextOptions`1">
+            <summary>
+            Binding options for inner text
+            </summary>
+            <typeparam name="T">Type of data source object</typeparam>
+        </member>
+        <member name="T:Integrative.Lara.BindAttributeOptions`1">
+            <summary>
+            Binding options for attributes
+            </summary>
+            <typeparam name="T">Type of data source object</typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindAttributeOptions`1.Attribute">
+            <summary>
+            Attribute to bind
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindChildrenOptions">
+            <summary>
+            Binding options for child element collections
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindChildrenOptions`1">
+            <summary>
+            Binding options for child element collections
+            </summary>
+            <typeparam name="T">Type of items in observable collection</typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindChildrenOptions`1.Collection">
+            <summary>
+            Collection that is tracked
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindChildrenOptions`1.CreateCallback">
+            <summary>
+            Method for creating elements
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindChildrenOptions`1.DisposeCallback">
+            <summary>
+            Method to call when removing elements
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.ApplicationBuilderLaraExtensions">
             <summary>
             ASP.NET Core Extensions for using Lara
@@ -2429,12 +2535,63 @@
             <param name="handler">The handler.</param>
             <returns>This instance</returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.On(System.String,System.Action)">
+            <summary>
+            Associates an event handler with the current element.
+            </summary>
+            <param name="eventName">Name of the event</param>
+            <param name="handler">Action to execute</param>
+            <returns>This instance</returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.On(Integrative.Lara.EventSettings)">
             <summary>
             Associates an event handler with the current element.
             </summary>
             <param name="settings">The settings.</param>
             <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindAttribute``1(Integrative.Lara.BindAttributeOptions{``0})">
+            <summary>
+            Adds bindings for an attribute
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Attribute bindign options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindAttribute``1(System.String,``0,System.Func{``0,System.String})">
+            <summary>
+            Adds bindings for an attribute
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="attribute">Attribute</param>
+            <param name="instance">Data source instance</param>
+            <param name="property">Data source's property</param>
+            <returns></returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(Integrative.Lara.BindInnerTextOptions{``0})">
+            <summary>
+            Adds bindings for inner text
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Inner tetx binding options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(``0,System.Func{``0,System.String})">
+            <summary>
+            Adds bindings for inner text
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="instance">Data source</param>
+            <param name="property">Data source's property</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(Integrative.Lara.BindChildrenOptions{``0})">
+            <summary>
+            Adds bindings for the child element collection
+            </summary>
+            <typeparam name="T">Type of elements in observable collection</typeparam>
+            <param name="options">Children bindings options</param>
+            <returns></returns>
         </member>
         <member name="T:Integrative.Lara.LaraJson">
             <summary>

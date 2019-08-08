@@ -27,6 +27,7 @@ namespace Integrative.Lara.DOM
 
         public static void On(Element element, EventSettings settings)
         {
+            settings.Verify();
             new EventWriter(element, settings).Write();
         }
 
