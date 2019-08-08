@@ -40,9 +40,19 @@ namespace Integrative.Lara.DOM
             InsertChild(reference, 1, child);
         }
 
+        public void InsertChildAt(int index, Node child)
+        {
+            InsertChild(index, child);
+        }
+
         public void Remove(Node child)
         {
             RemoveInternal(child);
+        }
+
+        public void RemoveAt(int index)
+        {
+            RemoveInternal(index);
         }
 
         public void ClearChildren()
@@ -73,6 +83,16 @@ namespace Integrative.Lara.DOM
             GenerateIdsIfNeeded(needGenerateIds, child);
         }
 
+        private void InsertChild(int index, Node child)
+        {
+            bool needGenerateIds = NeedsId(child);
+            PreventCycles(child);
+            AddImmediateId(child);
+            UpdateDocumentMappings(child);
+            UpdateChildParentLinks(index, child);
+            GenerateIdsIfNeeded(needGenerateIds, child);
+        }
+
         private void VerifyParentContainsChild(Node reference)
         {
             if (!_parent.ContainsChild(reference))
@@ -96,6 +116,13 @@ namespace Integrative.Lara.DOM
                 throw new InvalidOperationException(NodeNotFoundInsideParent);
             }
             int index = _parent.GetChildNodePosition(child);
+            RemoveInternalCommon(child);
+            NodeRemovedDelta.Enqueue(_parent, index);
+        }
+
+        private void RemoveInternal(int index)
+        {
+            var child = _parent.GetChildAt(index);
             RemoveInternalCommon(child);
             NodeRemovedDelta.Enqueue(_parent, index);
         }
@@ -248,8 +275,13 @@ namespace Integrative.Lara.DOM
 
         private void UpdateChildParentLinks(Node reference, int offset, Node child)
         {
-            child.ParentElement?.OnChildRemoved(child);
             int index = _parent.GetChildNodePosition(reference) + offset;
+            UpdateChildParentLinks(index, child);
+        }
+
+        private void UpdateChildParentLinks(int index, Node child)
+        {
+            child.ParentElement?.OnChildRemoved(child);
             _parent.OnChildInsert(index, child);
             child.ParentElement = _parent;
             NodeInsertedDelta.Enqueue(child, index);

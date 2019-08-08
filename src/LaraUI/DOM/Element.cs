@@ -7,9 +7,10 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Front.Tools;
-using Integrative.Lara.Main;
+using Integrative.Lara.Reactive;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -675,6 +676,18 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Inserts a node at a given index position
+        /// </summary>
+        /// <param name="index">0-based index position</param>
+        /// <param name="node">Node to insert</param>
+        public void InsertChildAt(int index, Node node)
+        {
+            var append = new DomSurgeon(this);
+            append.InsertChildAt(index, node);
+            OnChildAdded(node);
+        }
+
+        /// <summary>
         /// Removes a child.
         /// </summary>
         /// <param name="child">The child.</param>
@@ -682,6 +695,16 @@ namespace Integrative.Lara
         {
             var remover = new DomSurgeon(this);
             remover.Remove(child);
+        }
+
+        /// <summary>
+        /// Removes the child at the given index position
+        /// </summary>
+        /// <param name="index">Index position</param>
+        public void RemoveAt(int index)
+        {
+            var remover = new DomSurgeon(this);
+            remover.RemoveAt(index);
         }
 
         /// <summary>
@@ -783,6 +806,84 @@ namespace Integrative.Lara
         public void On(EventSettings settings)
         {
             EventWriter.On(this, settings);
+        }
+
+        #endregion
+
+        #region Binding
+
+        private ElementBindings _bindings;
+
+        private void EnsureBindings()
+        {
+            if (_bindings == null)
+            {
+                _bindings = new ElementBindings(this);
+            }
+        }
+
+        /// <summary>
+        /// Binds an attribute
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Attribute binding options</param>
+        public void BindAttribute<T>(BindAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindAttribute<T>(options);
+        }
+
+        /// <summary>
+        /// Removes bindings for an attribute
+        /// </summary>
+        /// <param name="attribute">Attribute to remove bindings of</param>
+        public void UnbindAttribute(string attribute)
+        {
+            EnsureBindings();
+            _bindings.UnbindAttribute(attribute);
+        }
+
+        /// <summary>
+        /// Binds an element's inner text
+        /// </summary>
+        /// <typeparam name="T">Type of source data</typeparam>
+        /// <param name="options">Inner text binding options</param>
+        public void BindInnerText<T>(BindTextOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindInnerText(options);
+        }
+
+        /// <summary>
+        /// Removes inner text bindings
+        /// </summary>
+        public void UnbindInnerText()
+        {
+            EnsureBindings();
+            _bindings.UnbindInnerText();
+        }
+
+        /// <summary>
+        /// Binds the list of children to an observable collection
+        /// </summary>
+        /// <typeparam name="T">Type for items in the collection</typeparam>
+        /// <param name="options">Children binding options</param>
+        public void BindChildren<T>(BindChildrenOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindChildren(options);
+        }
+
+        /// <summary>
+        /// Removes all bindings for the list of children
+        /// </summary>
+        public void UnbindChildren()
+        {
+            EnsureBindings();
+            _bindings.UnbindChildren();
         }
 
         #endregion

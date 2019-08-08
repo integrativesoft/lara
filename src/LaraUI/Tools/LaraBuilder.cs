@@ -6,6 +6,8 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -237,6 +239,81 @@ namespace Integrative.Lara
         public LaraBuilder On(EventSettings settings)
         {
             _stack.Peek().On(settings);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds bindings for an attribute
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Attribute bindign options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindAttribute<T>(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds bindings for an attribute
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source's property</param>
+        /// <returns></returns>
+        public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<T, string> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindAttribute<T>(new BindAttributeOptions<T>
+            {
+                Attribute = attribute,
+                Object = instance,
+                Property = property
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for inner text
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Inner tetx binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindInnerText<T>(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds bindings for inner text
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="instance">Data source</param>
+        /// <param name="property">Data source's property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindInnerText<T>(T instance, Func<T, string> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindInnerText(new BindInnerTextOptions<T>
+            {
+                Object = instance,
+                Property = property
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for the child element collection
+        /// </summary>
+        /// <typeparam name="T">Type of elements in observable collection</typeparam>
+        /// <param name="options">Children bindings options</param>
+        /// <returns></returns>
+        public LaraBuilder BindChildren<T>(BindChildrenOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindChildren<T>(options);
             return this;
         }
     }

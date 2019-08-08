@@ -516,11 +516,24 @@
             <param name="after">The node that is after.</param>
             <param name="node">The node to insert.</param>
         </member>
+        <member name="M:Integrative.Lara.Element.InsertChildAt(System.Int32,Integrative.Lara.Node)">
+            <summary>
+            Inserts a node at a given index position
+            </summary>
+            <param name="index">0-based index position</param>
+            <param name="node">Node to insert</param>
+        </member>
         <member name="M:Integrative.Lara.Element.RemoveChild(Integrative.Lara.Node)">
             <summary>
             Removes a child.
             </summary>
             <param name="child">The child.</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.RemoveAt(System.Int32)">
+            <summary>
+            Removes the child at the given index position
+            </summary>
+            <param name="index">Index position</param>
         </member>
         <member name="M:Integrative.Lara.Element.ClearChildren">
             <summary>
