@@ -13,8 +13,8 @@ namespace Integrative.Lara.Reactive
     sealed class ElementBindings
     {
         private readonly Element _parent;
-        private readonly Dictionary<string, BindPropertyOptions> _attributeBindings;
 
+        private readonly Dictionary<string, BindPropertyOptions> _attributeBindings;
         private BindPropertyOptions _innerTextBinding;
         private BindChildrenOptions _childrenBinding;
         private BindPropertyOptions _genericHandler;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace SampleProject
 {
     [LaraPage(Address = "/reactor1")]
-    class SimpleReactivePage : IPage
+    class ReactiveSimplePage : IPage
     {
         readonly SimpleData _data = new SimpleData();
 
