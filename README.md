@@ -10,7 +10,7 @@ The purpose of Lara is to give you full control of the HTML document tree from t
 
 Lara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
-The source code contains a sample project that is also available as a separate [repository](https://github.com/integrativesoft/larasample/tree/master).
+The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
 We welcome questions and feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
 
@@ -59,7 +59,7 @@ namespace SampleProject
     {
         int counter = 0;
 
-        public Task OnGet(IPageContext context)
+        public Task OnGet()
         {
             var button = Element.Create("button");
             var text = new TextNode { Data = "Click me" };
@@ -70,7 +70,7 @@ namespace SampleProject
                 text.Data = $"Clicked {counter} times";
                 return Task.CompletedTask;
             });
-            context.Document.Body.AppendChild(button);
+            LaraUI.Page.Document.Body.AppendChild(button);
             return Task.CompletedTask;
         }
     }
