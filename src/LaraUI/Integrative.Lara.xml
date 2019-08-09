@@ -616,6 +616,12 @@
             Removes all bindings for the element
             </summary>
         </member>
+        <member name="M:Integrative.Lara.Element.SetInnerText(System.String)">
+            <summary>
+            Clears all child nodes and replaces them with a single text node
+            </summary>
+            <param name="value">Text for the node</param>
+        </member>
         <member name="M:Integrative.Lara.Element.Focus">
             <summary>
             Focuses this element.

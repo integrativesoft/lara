@@ -920,6 +920,23 @@ namespace Integrative.Lara
             _bindings?.UnbindAll();
         }
 
+        /// <summary>
+        /// Clears all child nodes and replaces them with a single text node
+        /// </summary>
+        /// <param name="value">Text for the node</param>
+        public void SetInnerText(string value)
+        {
+            if (_children.Count == 1 && _children[0] is TextNode text)
+            {
+                text.SetEncodedText(value);
+            }
+            else
+            {
+                ClearChildren();
+                AppendText(value);
+            }
+        }
+
         #endregion
 
         #region Other methods

@@ -132,8 +132,7 @@ namespace Integrative.Lara
         internal override void Apply(Element element)
         {
             var value = GetCurrentValue();
-            element.ClearChildren();
-            element.AppendText(value);
+            element.SetInnerText(value);
         }
     }
 
