@@ -25,6 +25,7 @@ namespace Integrative.Lara
         /// <param name="startingElement">The starting element to build on.</param>
         public LaraBuilder(Element startingElement)
         {
+            startingElement = startingElement ?? throw new ArgumentNullException(nameof(startingElement));
             _stack = new Stack<Element>();
             startingElement.EnsureElementId();
             _stack.Push(startingElement);
@@ -99,6 +100,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder Push(Element element, string className)
         {
+            element = element ?? throw new ArgumentNullException(nameof(element));
             Push(element);
             element.Class = className;
             return this;
@@ -137,6 +139,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder AddTextNode(TextNode node)
         {
+            node = node ?? throw new ArgumentNullException(nameof(node));
             return AddNode(node);
         }
 
@@ -147,6 +150,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder AddNode(Node node)
         {
+            node = node ?? throw new ArgumentNullException(nameof(node));
             var current = _stack.Peek();
             current.AppendChild(node);
             return this;
@@ -447,6 +451,17 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             _stack.Peek().Bind(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Returns the current element in the out variable
+        /// </summary>
+        /// <param name="element">Current element</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder GetCurrent(out Element element)
+        {
+            element = _stack.Peek();
             return this;
         }
     }

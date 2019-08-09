@@ -20,28 +20,40 @@ namespace SampleProject
         {
             var document = LaraUI.Page.Document;
 
-            // Load Bootstrap library.
+            // Load styles library 'bootstrap'
             BootstrapLoader.AddBootstrap(document.Head);
 
-            // Load document body.
-            BuildLayout(document);
-
-            // Done.
-            return Task.CompletedTask;
-        }
-
-        private void BuildLayout(Document document)
-        {
             // Load custom controls in document body.
-            var root = Element.Create("form");
-            root.Class = "container p-4";
-            root.AppendChild(new CounterSample().Build());
-            root.AppendChild(new CheckboxSample().Build());
-            root.AppendChild(new SelectSample().Build());
-            root.AppendChild(new MultiselectSample().Build());
-            root.AppendChild(new LockingSample().Build());
-            root.AppendChild(new LongRunningSample().Build(document));
-            document.Body.AppendChild(root);
+            var builder = new LaraBuilder(document.Body);
+            builder.Push("div", "container p-4")
+                .AddNode(new CounterSample().Root)
+                .AddNode(new CheckboxSample().Root)
+                .AddNode(new SelectSample().Root)
+                .AddNode(new MultiselectSample().Root)
+                .AddNode(new LockingSample().Root)
+                .AddNode(new LongRunningSample().Root)
+                .Push("div", "mt-3")
+                    .Push("div")
+                        .Push("a")
+                            .Attribute("href", "/reactor1")
+                            .AddTextNode("Ractive programming example 1")
+                        .Pop()
+                    .Pop()
+                    .Push("div")
+                        .Push("a")
+                            .Attribute("href", "/reactor2")
+                            .AddTextNode("Ractive programming example 2")
+                        .Pop()
+                    .Pop()
+                    .Push("div")
+                        .Push("a")
+                            .Attribute("href", "/reactor3")
+                            .AddTextNode("Ractive programming example 3")
+                        .Pop()
+                    .Pop()
+                .Pop();
+
+            return Task.CompletedTask;
         }
     }
 }

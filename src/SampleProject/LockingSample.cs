@@ -16,19 +16,17 @@ namespace SampleProject
 
         readonly Button _button;
 
+        public Element Root { get; }
+
         public LockingSample()
         {
             _button = new Button
             {
                 Class = "btn btn-primary my-2"
             };
-        }
-
-        public Element Build()
-        {
-            var div = Element.Create("div");
-            div.Class = "form-row";
-            div.AppendChild(_button);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            Root.AppendChild(_button);
             _button.AppendChild(new TextNode("Action that locks UI"));
             _button.On(new EventSettings
             {
@@ -40,7 +38,6 @@ namespace SampleProject
                     ShowHtmlMessage = GetSpinnerHtml(" Please wait...")
                 }
             });
-            return div;
         }
 
         public static string GetSpinnerHtml(string message)

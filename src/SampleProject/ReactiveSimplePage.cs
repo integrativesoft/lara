@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace SampleProject
@@ -35,16 +34,19 @@ namespace SampleProject
         }
     }
 
-    class SimpleData : INotifyPropertyChanged
+    class SimpleData : BindableBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        int _counter;
 
-        public int Counter { get; private set; }
+        public int Counter
+        {
+            get => _counter;
+            set => SetProperty(ref _counter, value);
+        }
 
         public void IncreaseCounter()
         {
             Counter++;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Counter)));
         }
     }
 }

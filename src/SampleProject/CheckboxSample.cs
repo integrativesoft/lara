@@ -14,6 +14,8 @@ namespace SampleProject
         readonly Input _checkbox;
         readonly Button _toggle;
 
+        public Element Root { get; }
+
         public CheckboxSample()
         {
             _checkbox = new Input
@@ -31,14 +33,9 @@ namespace SampleProject
                 _checkbox.Checked = !_checkbox.Checked;
                 return Task.CompletedTask;
             });
-        }
-
-        public Element Build()
-        {
-            var row = Element.Create("div");
-            row.Class = "form-row";
-
-            var builder = new LaraBuilder(row);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            var builder = new LaraBuilder(Root);
             builder.Push("div", "form-group col-md-2 my-1")
                 .Push("div", "form-check")
                     .Push(_checkbox)
@@ -54,8 +51,6 @@ namespace SampleProject
                     .AddTextNode("Toggle")
                 .Pop()
             .Pop();
-
-            return row;
         }
     }
 }

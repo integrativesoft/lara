@@ -14,6 +14,8 @@ namespace SampleProject
         readonly Button _button;
         readonly Element _message;
 
+        public Element Root { get; }
+
         public LongRunningSample()
         {
             _button = new Button
@@ -21,15 +23,11 @@ namespace SampleProject
                 Class = "btn btn-primary my-2"
             };
             _message = Element.Create("div");
-            _message.Id = "mymessage";
             _message.Style = "display: none";
-        }
-
-        public Element Build(Document document)
-        {
-            var div = Element.Create("div");
-            div.Class = "form-row";
-            div.AppendChild(_button);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            Root.AppendChild(_button);
+            Root.AppendChild(_message);
             _button.AppendChild(new TextNode("Long-running event"));
             _button.On(new EventSettings
             {
@@ -39,21 +37,20 @@ namespace SampleProject
                 Block = true,
                 BlockOptions = new BlockOptions
                 {
-                    ShowElementId = "mymessage",
+                    ShowElementId = _message.EnsureElementId(),
                 }
             });
-            document.Body.AppendChild(_message);
-            return div;
         }
 
         private async Task ButtonHandler()
         {
-            for (int index = 10; index > 0; index--)
+            string[] numbers = { "five", "four", "three", "two", "one" };
+            for (int index = 0; index < numbers.Length; index++)
             {
                 _message.ClearChildren();
-                _message.AppendChild(new TextNode($"Server says to wait {index}"));
+                _message.AppendText(numbers[index]);
                 await LaraUI.Page.Navigation.FlushPartialChanges();
-                await Task.Delay(1000);
+                await Task.Delay(700);
             }
         }
     }

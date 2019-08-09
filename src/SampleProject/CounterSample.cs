@@ -14,12 +14,16 @@ namespace SampleProject
     {
         readonly Input _number;
         readonly Button _increase;
+        
+        public Element Root { get; }
 
         public CounterSample()
         {
-            _increase = new Button();
-            _increase.AppendChild(new TextNode("Increase"));
-            _increase.Class = "btn btn-primary";
+            _increase = new Button
+            {
+                Class = "btn btn-primary"
+            };
+            _increase.AppendText("Increase");
             _number = new Input
             {
                 Id = "number",
@@ -27,7 +31,18 @@ namespace SampleProject
                 Class = "form-control",
                 Value = "5"
             };
-            _increase.On("click", OnIncrease);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            var builder = new LaraBuilder(Root);
+            builder.Push("div", "form-group col-md-2")
+                .Push(_number)
+                .Pop()
+            .Pop()
+            .Push("div", "form-group col-md-1")
+                .Push(_increase)
+                    .On("click", OnIncrease)
+                .Pop()
+            .Pop();
         }
 
         private Task OnIncrease()
@@ -36,25 +51,6 @@ namespace SampleProject
             number++;
             _number.Value = number.ToString(CultureInfo.InvariantCulture);
             return Task.CompletedTask;
-        }
-
-        public Element Build()
-        {
-            var row = Element.Create("div");
-            row.Class = "form-row";
-
-            var builder = new LaraBuilder(row);
-            builder
-            .Push("div", "form-group col-md-2")
-                .Push(_number)
-                .Pop()
-            .Pop()
-            .Push("div", "form-group col-md-1")
-                .Push(_increase)
-                .Pop()
-            .Pop();
-
-            return row;
         }
     }
 }

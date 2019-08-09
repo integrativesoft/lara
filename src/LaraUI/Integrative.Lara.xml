@@ -2339,6 +2339,44 @@
             <param name="message">Exception message</param>
             <param name="inner">Inner exception</param>
         </member>
+        <member name="T:Integrative.Lara.BindableBase">
+            <summary>
+                Implementation of <see cref="T:System.ComponentModel.INotifyPropertyChanged" /> to simplify models.
+            </summary>
+        </member>
+        <member name="E:Integrative.Lara.BindableBase.PropertyChanged">
+            <summary>
+                Multicast event for property change notifications.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.BindableBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+                Checks if a property already matches a desired value.  Sets the property and
+                notifies listeners only when necessary.
+            </summary>
+            <typeparam name="T">Type of the property.</typeparam>
+            <param name="storage">Reference to a property with both getter and setter.</param>
+            <param name="value">Desired value for the property.</param>
+            <param name="propertyName">
+                Name of the property used to notify listeners.  This
+                value is optional and can be provided automatically when invoked from compilers that
+                support CallerMemberName.
+            </param>
+            <returns>
+                True if the value was changed, false if the existing value matched the
+                desired value.
+            </returns>
+        </member>
+        <member name="M:Integrative.Lara.BindableBase.OnPropertyChanged(System.String)">
+            <summary>
+                Notifies listeners that a property value has changed.
+            </summary>
+            <param name="propertyName">
+                Name of the property used to notify listeners.  This
+                value is optional and can be provided automatically when invoked from compilers
+                that support <see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute" />.
+            </param>
+        </member>
         <member name="T:Integrative.Lara.BindOptions">
             <summary>
             Base class for binding options
@@ -2685,6 +2723,13 @@
             </summary>
             <typeparam name="T">Type of the data source</typeparam>
             <param name="options">Binding options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.GetCurrent(Integrative.Lara.Element@)">
+            <summary>
+            Returns the current element in the out variable
+            </summary>
+            <param name="element">Current element</param>
             <returns>This instance</returns>
         </member>
         <member name="T:Integrative.Lara.LaraJson">

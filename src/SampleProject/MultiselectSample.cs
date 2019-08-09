@@ -14,6 +14,8 @@ namespace SampleProject
         readonly Select _select;
         readonly Button _toggle;
 
+        public Element Root { get; }
+
         public MultiselectSample()
         {
             _select = new Select
@@ -42,14 +44,9 @@ namespace SampleProject
                 }
                 return Task.CompletedTask;
             });
-        }
-
-        public Element Build()
-        {
-            var row = Element.Create("div");
-            row.Class = "form-row";
-
-            var builder = new LaraBuilder(row);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            var builder = new LaraBuilder(Root);
             builder
             .Push("div", "form-group col-md-2")
                 .Push(_select)
@@ -59,8 +56,6 @@ namespace SampleProject
                 .Push(_toggle)
                 .Pop()
             .Pop();
-
-            return row;
         }
     }
 }

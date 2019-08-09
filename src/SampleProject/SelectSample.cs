@@ -15,6 +15,8 @@ namespace SampleProject
         readonly Select _select;
         readonly Button _advance;
 
+        public Element Root { get; }
+
         public SelectSample()
         {
             _select = new Select
@@ -41,14 +43,9 @@ namespace SampleProject
                 _select.Value = weekday.ToString(CultureInfo.InvariantCulture);
                 return Task.CompletedTask;
             });
-        }
-
-        public Element Build()
-        {
-            var row = Element.Create("div");
-            row.Class = "form-row";
-
-            var builder = new LaraBuilder(row);
+            Root = Element.Create("div");
+            Root.Class = "form-row";
+            var builder = new LaraBuilder(Root);
             builder
             .Push("div", "form-group col-md-2")
                 .Push(_select)
@@ -58,8 +55,6 @@ namespace SampleProject
                 .Push(_advance)
                 .Pop()
             .Pop();
-
-            return row;
         }
 
     }

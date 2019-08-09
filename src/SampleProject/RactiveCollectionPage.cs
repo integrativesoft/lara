@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace SampleProject
@@ -62,48 +61,34 @@ namespace SampleProject
         }
     }
 
-    class MyDataTable : INotifyPropertyChanged
+    class MyDataTable : BindableBase
     {
-        public int Counter { get; private set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ObservableCollection<MyDataRow> Rows { get; } = new ObservableCollection<MyDataRow>();
 
         public void AddRow()
         {
-            IncreaseCounter();
-            Rows.Add(new MyDataRow(Counter));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Rows)));
+            Rows.Add(new MyDataRow());
         }
 
         public void Remove(MyDataRow row)
         {
             Rows.Remove(row);
         }
-
-        private void IncreaseCounter()
-        {
-            Counter++;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Counter)));
-        }
     }
 
-    class MyDataRow : INotifyPropertyChanged
+    class MyDataRow : BindableBase
     {
-        public int Counter { get; private set; }
+        int _counter;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public MyDataRow(int startValue)
+        public int Counter
         {
-            Counter = startValue;
+            get => _counter;
+            set => SetProperty(ref _counter, value);
         }
 
         public void Increase()
         {
             Counter++;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Counter)));
         }
     }
 }
