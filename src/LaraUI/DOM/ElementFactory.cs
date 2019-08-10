@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Components;
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +53,7 @@ namespace Integrative.Lara.DOM
             {
                 tagName = tagName.ToLowerInvariant();
             }
-            if (_map.TryGetValue(tagName, out var type))
+            if (FindTagName(tagName, out Type type))
             {
                 return (Element)Activator.CreateInstance(type);
             }
@@ -60,6 +61,11 @@ namespace Integrative.Lara.DOM
             {
                 return new GenericElement(tagName);
             }
+        }
+
+        private static bool FindTagName(string tagName, out Type type)
+        {
+            return _map.TryGetValue(tagName, out type) || ComponentRegistry.TryGetComponent(tagName, out type);
         }
 
         public static Element CreateElement(string tagName, string id)

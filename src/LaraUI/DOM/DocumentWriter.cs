@@ -53,7 +53,7 @@ namespace Integrative.Lara.DOM
         private bool IsInlineElement(Element element)
         {
             bool hasChildren = false;
-            foreach (var child in element.Children)
+            foreach (var child in element.GetLightChildren())
             {
                 hasChildren = true;
                 if (child is TextNode)
@@ -109,7 +109,7 @@ namespace Integrative.Lara.DOM
 
         private void PrintInlineChildNodes(Element element)
         {
-            foreach (var child in element.Children)
+            foreach (var child in element.GetLightChildren())
             {
                 PrintInlineNode(child);
             }
@@ -142,7 +142,7 @@ namespace Integrative.Lara.DOM
 
         private void PrintChildNodes(Element element, int indent)
         {
-            foreach (var child in element.Children)
+            foreach (var child in element.GetLightChildren())
             {
                 PrintElement((Element)child, indent);
             }

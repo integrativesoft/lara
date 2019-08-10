@@ -939,6 +939,33 @@ namespace Integrative.Lara
 
         #endregion
 
+        #region Component-related
+
+        internal virtual IEnumerable<Node> GetLightSlotted()
+        {
+            yield return this;
+        }
+
+        internal IEnumerable<Node> GetLightChildren()
+        {
+            foreach (var node in Children)
+            {
+                if (node is Element childElement)
+                {
+                    foreach (var light in childElement.GetLightSlotted())
+                    {
+                        yield return light;
+                    }
+                }
+                else
+                {
+                    yield return node;
+                }
+            }
+        }
+
+        #endregion
+
         #region Other methods
 
         /// <summary>
