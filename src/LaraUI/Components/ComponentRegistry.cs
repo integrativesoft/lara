@@ -6,20 +6,19 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Integrative.Lara.Components
 {
-    static class ComponentRegistry
+    sealed class ComponentRegistry
     {
-        private readonly static Dictionary<string, Type> _components;
+        private readonly Dictionary<string, Type> _components;
 
-        static ComponentRegistry()
+        public ComponentRegistry()
         {
             _components = new Dictionary<string, Type>();
         }
 
-        public static void Register(string name, Type type)
+        public void Register(string name, Type type)
         {
             if (!IsValidTagName(name))
             {
@@ -29,7 +28,7 @@ namespace Integrative.Lara.Components
             {
                 throw new ArgumentNullException(nameof(type));
             }
-            else if (!type.IsSubclassOf(typeof(Component)))
+            else if (!type.IsSubclassOf(typeof(WebComponent)))
             {
                 throw new InvalidOperationException("Component types must inherit from the Component class");
             }
@@ -38,19 +37,32 @@ namespace Integrative.Lara.Components
                 var message = $"Duplicate entries for tag '{name}'. The class '{previous.FullName}' already registers the tag name.";
                 throw new InvalidOperationException(message);
             }
-
+            else
+            {
+                _components.Add(name, type);
+            }
         }
 
-        private static bool IsValidTagName(string tagName)
+        public void Unregister(string tagName)
+        {
+            _components.Remove(tagName);
+        }
+
+        private bool IsValidTagName(string tagName)
         {
             return !string.IsNullOrEmpty(tagName)
                 && !tagName.Contains(" ")
                 && tagName.Contains("-");
         }
 
-        public static bool TryGetComponent(string name, out Type type)
+        public bool TryGetComponent(string name, out Type type)
         {
             return _components.TryGetValue(name, out type);
+        }
+
+        public void Clear()
+        {
+            _components.Clear();
         }
     }
 }

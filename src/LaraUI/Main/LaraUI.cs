@@ -116,6 +116,27 @@ namespace Integrative.Lara
 
         #endregion
 
+        #region Web Components
+
+        /// <summary>
+        /// Registers a specific web component
+        /// </summary>
+        /// <param name="options"></param>
+        public static void Publish(WebComponentOptions options)
+            => _published.Publish(options);
+
+        /// <summary>
+        /// Unregisters a specific web component
+        /// </summary>
+        /// <param name="tagName"></param>
+        public static void UnPublishWebComponent(string tagName)
+            => _published.UnPublishWebComponent(tagName);
+
+        internal static bool TryGetComponent(string tagName, out Type type)
+            => _published.TryGetComponent(tagName, out type);
+
+        #endregion
+
         #region Launching server and browser
 
         /// <summary>

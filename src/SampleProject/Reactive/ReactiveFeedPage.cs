@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = "/reactor3")]
+    [LaraPage(Address = PageAddress)]
     class ReactiveFeedPage : IPage
     {
+        public const string PageAddress = "/reactor3";
+
         readonly ReactiveFeedModel _data = new ReactiveFeedModel();
 
         public Task OnGet()
         {
             var document = LaraUI.Page.Document;
-            BootstrapLoader.AddBootstrap(document.Head);
+            SampleAppBootstrap.AppendTo(document.Head);
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "container")
                 .Push("div", "form-group form-check")

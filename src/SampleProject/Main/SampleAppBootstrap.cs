@@ -10,9 +10,9 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Tests")]
 namespace SampleProject
 {
-    static class BootstrapLoader
+    static class SampleAppBootstrap
     {
-        public static void AddBootstrap(Element head)
+        public static void AppendTo(Element head)
         {
             head.AppendChild(new Link
             {

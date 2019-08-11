@@ -21,7 +21,7 @@ namespace SampleProject
             var document = LaraUI.Page.Document;
 
             // Load styles library 'bootstrap'
-            BootstrapLoader.AddBootstrap(document.Head);
+            SampleAppBootstrap.AppendTo(document.Head);
 
             // Load custom controls in document body.
             var builder = new LaraBuilder(document.Body);
@@ -35,23 +35,36 @@ namespace SampleProject
                 .Push("div", "mt-3")
                     .Push("div")
                         .Push("a")
-                            .Attribute("href", "/reactor1")
+                            .Attribute("href", ReactiveSimplePage.PageAddress)
                             .AddTextNode("Ractive programming example 1")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
-                            .Attribute("href", "/reactor2")
+                            .Attribute("href", RactiveCollectionPage.PageAddress)
                             .AddTextNode("Ractive programming example 2")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
-                            .Attribute("href", "/reactor3")
+                            .Attribute("href", ReactiveFeedPage.PageAddress)
                             .AddTextNode("Ractive programming example 3")
                         .Pop()
                     .Pop()
-                .Pop();
+                    .Push("div", "mt-2")
+                        .Push("a")
+                            .Attribute("href", CheckboxPage.PageAddress)
+                            .AddTextNode("Component example 1")
+                        .Pop()
+                    .Pop()
+                    .Push("div")
+                        .Push("a")
+                            .Attribute("href", CardPage.PageAddress)
+                            .AddTextNode("Component example 2")
+                        .Pop()
+                    .Pop()
+                .Pop()
+            .Pop();
 
             return Task.CompletedTask;
         }

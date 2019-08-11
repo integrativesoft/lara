@@ -18,5 +18,21 @@ namespace Integrative.Lara
         /// Page's address (e.g. '/myPage')
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public LaraPage()
+        {
+        }
+
+        /// <summary>
+        /// Constuctor with address
+        /// </summary>
+        /// <param name="address">Page's address</param>
+        public LaraPage(string address)
+        {
+            Address = address;
+        }
     }
 }

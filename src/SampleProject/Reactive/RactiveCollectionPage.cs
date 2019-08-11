@@ -10,15 +10,17 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = "/reactor2")]
+    [LaraPage(Address = PageAddress)]
     class RactiveCollectionPage : IPage
     {
+        public const string PageAddress = "/reactor2";
+
         readonly MyDataTable _data = new MyDataTable();
 
         public Task OnGet()
         {
             var document = LaraUI.Page.Document;
-            BootstrapLoader.AddBootstrap(document.Head);
+            SampleAppBootstrap.AppendTo(document.Head);
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "p-2")
                 .Push("button", "btn btn-primary")

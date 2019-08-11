@@ -464,5 +464,50 @@ namespace Integrative.Lara
             element = _stack.Peek();
             return this;
         }
+
+        /// <summary>
+        /// Adds a class to the current element
+        /// </summary>
+        /// <param name="className">class to add</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder AddClass(string className)
+        {
+            _stack.Peek().AddClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to remove</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder RemoveClass(string className)
+        {
+            _stack.Peek().RemoveClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds or removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to toggle</param>
+        /// <returns>This instamce</returns>
+        public LaraBuilder ToggleClass(string className)
+        {
+            _stack.Peek().ToggleClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds or removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to toggle</param>
+        /// <param name="value">true to add, false to remove</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder ToggleClass(string className, bool value)
+        {
+            _stack.Peek().ToggleClass(className, value);
+            return this;
+        }
     }
 }

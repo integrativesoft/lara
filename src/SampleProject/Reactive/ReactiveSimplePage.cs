@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = "/reactor1")]
+    [LaraPage(Address = PageAddress)]
     class ReactiveSimplePage : IPage
     {
+        public const string PageAddress = "/reactor1";
+
         readonly SimpleData _data = new SimpleData();
 
         public Task OnGet()
         {
             var document = LaraUI.Page.Document;
-            BootstrapLoader.AddBootstrap(document.Head);
+            SampleAppBootstrap.AppendTo(document.Head);
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "p-2")
                 .Push("span")

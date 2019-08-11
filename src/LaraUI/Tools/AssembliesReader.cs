@@ -46,6 +46,7 @@ namespace Integrative.Lara.Tools
             {
                 LoadWebServices(type);
                 LoadPages(type);
+                LoadComponents(type);
             }
         }
 
@@ -80,6 +81,24 @@ namespace Integrative.Lara.Tools
                     throw new InvalidOperationException(message);
                 }
                 LaraUI.Publish(entry.Address, () => (IPage)Activator.CreateInstance(type));
+            }
+        }
+
+        private static void LoadComponents(Type type)
+        {
+            var components = type.GetCustomAttributes(typeof(LaraWebComponent), true);
+            foreach (LaraWebComponent entry in components)
+            {
+                if (!typeof(WebComponent).IsAssignableFrom(type))
+                {
+                    var message = $"The class {type.FullName} marked as [LaraWebComponent] needs to inherit from WebComponent.";
+                    throw new InvalidOperationException(message);
+                }
+                LaraUI.Publish(new WebComponentOptions
+                {
+                    ComponentTagName = entry.ComponentTagName,
+                    ComponentType = type
+                });
             }
         }
     }

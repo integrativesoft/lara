@@ -182,7 +182,7 @@ namespace Integrative.Lara.DOM
                 {
                     PreventDuplicateIds(list);
                     AddToDocument(list);
-                }                
+                }
             }
         }
 

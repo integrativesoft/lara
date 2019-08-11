@@ -4,6 +4,90 @@
         <name>Integrative.Lara</name>
     </assembly>
     <members>
+        <member name="T:Integrative.Lara.LaraWebComponent">
+            <summary>
+            Classes marked as LaraWebComponent will registered when executing LaraUI.PublishAssemblies()
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.LaraWebComponent.ComponentTagName">
+            <summary>
+            Custom tag name for the component. Must contain the '-' character.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraWebComponent.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraWebComponent.#ctor(System.String)">
+            <summary>
+            Constructor with custom tag name
+            </summary>
+            <param name="customTagName"></param>
+        </member>
+        <member name="T:Integrative.Lara.Slot">
+            <summary>
+            A slot element is a placeholder inside a web component that you can fill with your own element
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Slot.Name">
+            <summary>
+            The slot's name
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Slot.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.WebComponent">
+            <summary>
+            Base class for web components
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebComponent.ShadowRoot">
+            <summary>
+            The 'shadow root' is the element that contains the shadow DOM tree
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.WebComponent.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="tagName">Component's custom tag name</param>
+        </member>
+        <member name="M:Integrative.Lara.WebComponent.AttachShadow">
+            <summary>
+            Creates a shadow DOM tree for this element
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.WebComponent.GetObservedAttributes">
+            <summary>
+            Override to declare a list of attributes that will trigger the OnAttributeChanged event
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Integrative.Lara.WebComponent.OnAttributeChanged(System.String)">
+            <summary>
+            Invoked each time an attribute defined in GetObservedAttributes is modified.
+            </summary>
+            <param name="attribute"></param>
+        </member>
+        <member name="T:Integrative.Lara.WebComponentOptions">
+            <summary>
+            Options for publishing web components
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebComponentOptions.ComponentTagName">
+            <summary>
+            Custom tag name for the component. Needs to include the '-' character.
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.WebComponentOptions.ComponentType">
+            <summary>
+            Type of the component. Needs to inherit from WebComponent.
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.BlockOptions">
             <summary>
             Defines options for blocking the UI while executing an event
@@ -1685,6 +1769,17 @@
             Page's address (e.g. '/myPage')
             </summary>
         </member>
+        <member name="M:Integrative.Lara.LaraPage.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.LaraPage.#ctor(System.String)">
+            <summary>
+            Constuctor with address
+            </summary>
+            <param name="address">Page's address</param>
+        </member>
         <member name="T:Integrative.Lara.LaraUI">
             <summary>
             The main Lara static class
@@ -1752,6 +1847,18 @@
             </summary>
             <param name="address">The URL address of the web service</param>
             <param name="method">The HTTP method of the web service</param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.Publish(Integrative.Lara.WebComponentOptions)">
+            <summary>
+            Registers a specific web component
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:Integrative.Lara.LaraUI.UnPublishWebComponent(System.String)">
+            <summary>
+            Unregisters a specific web component
+            </summary>
+            <param name="tagName"></param>
         </member>
         <member name="M:Integrative.Lara.LaraUI.StartServer">
             <summary>
@@ -2736,6 +2843,35 @@
             Returns the current element in the out variable
             </summary>
             <param name="element">Current element</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AddClass(System.String)">
+            <summary>
+            Adds a class to the current element
+            </summary>
+            <param name="className">class to add</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.RemoveClass(System.String)">
+            <summary>
+            Removes a class from the current element
+            </summary>
+            <param name="className">Class to remove</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.ToggleClass(System.String)">
+            <summary>
+            Adds or removes a class from the current element
+            </summary>
+            <param name="className">Class to toggle</param>
+            <returns>This instamce</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.ToggleClass(System.String,System.Boolean)">
+            <summary>
+            Adds or removes a class from the current element
+            </summary>
+            <param name="className">Class to toggle</param>
+            <param name="value">true to add, false to remove</param>
             <returns>This instance</returns>
         </member>
         <member name="T:Integrative.Lara.LaraJson">

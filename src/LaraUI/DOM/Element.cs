@@ -946,7 +946,7 @@ namespace Integrative.Lara
             yield return this;
         }
 
-        internal IEnumerable<Node> GetLightChildren()
+        internal IEnumerable<Node> GetFlattenedChildren()
         {
             foreach (var node in Children)
             {
@@ -962,6 +962,10 @@ namespace Integrative.Lara
                     yield return node;
                 }
             }
+        }
+
+        internal virtual void AttributeChanged(string attribute)
+        {
         }
 
         #endregion

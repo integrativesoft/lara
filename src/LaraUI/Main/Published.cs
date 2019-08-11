@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Components;
 using System;
 using System.Collections.Generic;
 
@@ -12,13 +13,34 @@ namespace Integrative.Lara.Main
     sealed class Published : IDisposable
     {
         readonly Dictionary<string, IPublishedItem> _published;
+        readonly ComponentRegistry _components;
         
         public Connections Connections { get; }
 
         public Published()
         {
             _published = new Dictionary<string, IPublishedItem>();
+            _components = new ComponentRegistry();
             Connections = new Connections();
+        }
+
+        public void ClearAll()
+        {
+            _published.Clear();
+            _components.Clear();
+            Connections.Clear();
+        }
+
+        bool _disposed;
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _disposed = true;
+                _published.Clear();
+                Connections.Dispose();
+            }
         }
 
         public void Publish(string path, IPublishedItem item)
@@ -80,22 +102,19 @@ namespace Integrative.Lara.Main
             return _published.TryGetValue(path, out item);
         }
 
-        public void ClearAll()
+        public void Publish(WebComponentOptions options)
         {
-            _published.Clear();
-            Connections.ClearAll();
+            _components.Register(options.ComponentTagName, options.ComponentType);
         }
 
-        bool _disposed;
-
-        public void Dispose()
+        public void UnPublishWebComponent(string componentTagName)
         {
-            if (!_disposed)
-            {
-                _disposed = true;
-                _published.Clear();
-                Connections.Dispose();
-            }
+            _components.Unregister(componentTagName);
+        }
+
+        public bool TryGetComponent(string tagName, out Type type)
+        {
+            return _components.TryGetComponent(tagName, out type);
         }
     }
 }

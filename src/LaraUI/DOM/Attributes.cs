@@ -54,10 +54,15 @@ namespace Integrative.Lara.DOM
             {
                 AttributeEditedDelta.Enqueue(_element, nameLower, value);
             }
+            _element.AttributeChanged(nameLower);
         }
 
         internal void RemoveAttributeLower(string nameLower)
         {
+            if (!_values.ContainsKey(nameLower))
+            {
+                return;
+            }
             _values.Remove(nameLower);
             if (nameLower == "checked")
             {
@@ -67,6 +72,7 @@ namespace Integrative.Lara.DOM
             {
                 AttributeRemovedDelta.Enqueue(_element, nameLower);
             }
+            _element.AttributeChanged(nameLower);
         }
 
         internal void SetFlagAttributeLower(string nameLower, bool value)
@@ -87,8 +93,17 @@ namespace Integrative.Lara.DOM
 
         internal void NotifyValue(string value)
         {
-            _values.Remove("value");
-            _values.Add("value", value);
+            const string ValueAttribute = "value";
+            if (_values.TryGetValue(ValueAttribute, out var previous))
+            {
+                if (previous == value)
+                {
+                    return;
+                }
+                _values.Remove(ValueAttribute);
+            }
+            _values.Add(ValueAttribute, value);
+            _element.AttributeChanged(ValueAttribute);
         }
 
         internal void NotifyChecked(bool isChecked)
@@ -104,17 +119,19 @@ namespace Integrative.Lara.DOM
         private void NotifyFlag(string nameLower, bool value)
         {
             bool current = _values.ContainsKey(nameLower);
-            if (current != value)
+            if (current == value)
             {
-                if (value)
-                {
-                    _values.Add(nameLower, null);
-                }
-                else
-                {
-                    _values.Remove(nameLower);
-                }
+                return;
             }
+            if (value)
+            {
+                _values.Add(nameLower, null);
+            }
+            else
+            {
+                _values.Remove(nameLower);
+            }
+            _element.AttributeChanged(nameLower);
         }
 
         internal string GetAttributeLower(string nameLower)

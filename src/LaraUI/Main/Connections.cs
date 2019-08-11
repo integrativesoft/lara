@@ -44,7 +44,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        public void ClearAll()
+        public void Clear()
         {
             _connections.Clear();
         }

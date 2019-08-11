@@ -36,6 +36,7 @@ namespace Integrative.Lara.DOM
             Register<TableCell>("td");
             Register<TableHeader>("th");
             Register<TextArea>("textarea");
+            Register<Slot>("slot");
         }
 
         private static void Register<T>(string lowerTagName) where T : Element
@@ -65,7 +66,8 @@ namespace Integrative.Lara.DOM
 
         private static bool FindTagName(string tagName, out Type type)
         {
-            return _map.TryGetValue(tagName, out type) || ComponentRegistry.TryGetComponent(tagName, out type);
+            return _map.TryGetValue(tagName, out type)
+                || LaraUI.TryGetComponent(tagName, out type);
         }
 
         public static Element CreateElement(string tagName, string id)
