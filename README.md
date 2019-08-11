@@ -62,8 +62,7 @@ namespace SampleProject
         public Task OnGet()
         {
             var button = Element.Create("button");
-            var text = new TextNode { Data = "Click me" };
-            button.AppendChild(text);
+            button.AppendText("Click me");
             button.On("click", app =>
             {
                 counter++;
