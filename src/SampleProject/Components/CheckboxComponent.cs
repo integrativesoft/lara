@@ -26,11 +26,18 @@ namespace SampleProject
             builder.Push("div", "form-group form-check")
                 .Push(_checkbox, "form-check-input")
                     .Attribute("type", "checkbox")
+                    .On("click", () => UpdateLabel())
                 .Pop()
                 .Push(_label)
                     .Attribute("for", _checkbox.EnsureElementId())
                 .Pop()
             .Pop();
+        }
+
+        private void UpdateLabel()
+        {
+            var text = _checkbox.Checked ? "checked" : "unchecked";
+            _label.SetInnerText(text);
         }
 
         public bool Checked
