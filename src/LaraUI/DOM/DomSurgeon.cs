@@ -210,7 +210,7 @@ namespace Integrative.Lara.DOM
             list.Add(node);
             if (node is Element element)
             {
-                foreach (var child in element.Children)
+                foreach (var child in element.GetAllDescendants())
                 {
                     CollectElements(list, child);
                 }

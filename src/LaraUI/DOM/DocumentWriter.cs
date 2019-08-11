@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Text;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace Integrative.Lara.DOM
 {
     sealed class DocumentWriter
     {
+        public const int MaxLevelDeep = 500;
+
         readonly Document _document;
         readonly StringBuilder _builder;
 
@@ -38,6 +41,10 @@ namespace Integrative.Lara.DOM
 
         private void PrintElement(Element element, int indent)
         {
+            if (indent > MaxLevelDeep)
+            {
+                throw new InvalidOperationException($"Document exceeded maximum nesting level of {MaxLevelDeep.ToString()}.");
+            }
             if (IsInlineElement(element))
             {
                 Indent(indent);

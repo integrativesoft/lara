@@ -107,13 +107,22 @@ namespace Integrative.Lara
         /// </returns>
         public override string ToString()
         {
+            var suffix = Class;
+            if (string.IsNullOrEmpty(suffix))
+            {
+                suffix = string.Empty;
+            }
+            else
+            {
+                suffix = " " + suffix;
+            }
             if (string.IsNullOrEmpty(_id))
             {
                 return TagName;
             }
             else
             {
-                return TagName + $" id='{_id}'";
+                return $"{TagName} #{_id}{suffix}";
             }
         }
 
@@ -962,6 +971,11 @@ namespace Integrative.Lara
                     yield return node;
                 }
             }
+        }
+
+        internal virtual IEnumerable<Node> GetAllDescendants()
+        {
+            return Children;
         }
 
         internal virtual void AttributeChanged(string attribute)

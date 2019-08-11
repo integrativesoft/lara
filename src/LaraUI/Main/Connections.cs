@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
@@ -13,12 +14,12 @@ namespace Integrative.Lara.Main
 {
     sealed class Connections
     {
-        readonly Dictionary<Guid, Connection> _connections;
+        readonly ConcurrentDictionary<Guid, Connection> _connections;
         readonly StaleConnectionsCollector _collector;
 
         public Connections()
         {
-            _connections = new Dictionary<Guid, Connection>();
+            _connections = new ConcurrentDictionary<Guid, Connection>();
             _collector = new StaleConnectionsCollector(this);
         }
 
@@ -26,7 +27,7 @@ namespace Integrative.Lara.Main
         {
             var id = CreateCryptographicallySecureGuid();
             var connection = new Connection(id, remoteIp);
-            _connections.Add(id, connection);
+            _connections.TryAdd(id, connection);
             return connection;
         }
 
@@ -40,7 +41,7 @@ namespace Integrative.Lara.Main
             if (_connections.TryGetValue(key, out var connection))
             {
                 connection.Close();
-                _connections.Remove(key);
+                _connections.TryRemove(key, out _);
             }
         }
 

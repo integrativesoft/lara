@@ -74,6 +74,18 @@ namespace Integrative.Lara
             }
         }
 
+        internal override IEnumerable<Node> GetAllDescendants()
+        {
+            if (ShadowRoot != null)
+            {
+                yield return ShadowRoot;
+            }
+            foreach (var child in Children)
+            {
+                yield return child;
+            }
+        }
+
         internal IEnumerable<Node> GetSlotElements(string slotName)
         {
             foreach (var node in Children)

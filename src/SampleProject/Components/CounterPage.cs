@@ -9,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = PageAddress)]
-    class CheckboxPage : IPage
+    [LaraPage(PageAddress)]
+    class CounterPage : IPage
     {
-        public const string PageAddress = "/checkbox";
+        public const string PageAddress = "/contercomponentpage";
 
         public Task OnGet()
         {
             var document = LaraUI.Page.Document;
             SampleAppBootstrap.AppendTo(document.Head);
-            var builder = new LaraBuilder(document.Body);
-            builder.Push("my-checkbox", "m-3")
-                .Attribute("label", "check me out")
-            .Pop();
+            var counter = Element.Create("my-counter");
+            document.Body.AppendChild(counter);
+            counter.Class = "m-3";
             return Task.CompletedTask;
         }
     }
