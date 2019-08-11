@@ -69,7 +69,7 @@ namespace Integrative.Lara.Tests.DOM
             var x = new Button();
             Assert.Equal("button", x.ToString());
             x.Id = "hi";
-            Assert.Equal("button id='hi'", x.ToString());
+            Assert.Equal("button #hi", x.ToString());
         }
 
         [Fact]
