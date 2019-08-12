@@ -132,6 +132,11 @@ namespace Integrative.Lara.Middleware
                 Socket = post.Socket
             };
             ProcessMessageIfNeeded(context, post.Parameters);
+            return await RunEventHandler(post);
+        }
+
+        internal static async Task<Task> RunEventHandler(PostEventContext post)
+        {
             if (await MiddlewareCommon.RunHandler(post.Http,
                 async () => await post.Element.NotifyEvent(post.Parameters.EventName)))
             {
@@ -170,7 +175,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task<Task> SendReply(PostEventContext post, string json)
+        internal static async Task<Task> SendReply(PostEventContext post, string json)
         {
             Task result = Task.CompletedTask;
             if (post.IsWebSocketRequest)

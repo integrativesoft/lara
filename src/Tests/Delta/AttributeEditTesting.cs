@@ -172,5 +172,14 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Equal("b", x.BlockShownId);
             Assert.Equal("c", x.BlockHTML);
         }
+
+        [Fact]
+        public void ServerEventsDeltaCorrectType()
+        {
+            var delta = new ServerEventsDelta();
+            Assert.Equal(DeltaType.ServerEvents, delta.Type);
+        }
+
+
     }
 }

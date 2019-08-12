@@ -6,8 +6,10 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
+using Integrative.Lara.Front.Tools;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using System;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -27,9 +29,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ValueAttributeEnqueued()
         {
-            var guid = Connections.CreateCryptographicallySecureGuid();
-            var page = new MyPage();
-            var document = new Document(page, guid, new LaraOptions());
+            var document = CreateDocument();
             var element = Element.Create("button", "mybutton");
             document.Body.AppendChild(element);
             document.OpenEventQueue();
@@ -38,6 +38,13 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var peek = queue.Peek();
             Assert.True(peek is SetValueDelta);
+        }
+
+        private Document CreateDocument()
+        {
+            var guid = Guid.Parse("{0857AE93-8591-4CB6-887E-C449ABFCAA7A}");
+            var page = new MyPage();
+            return new Document(page, guid, new LaraOptions());
         }
 
         [Fact]
@@ -103,6 +110,48 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = Element.CreateNS("abc", "svg");
             Assert.Equal("abc", x.GetAttribute("xlmns"));
+        }
+
+        [Fact]
+        public void RemoveAttributeMissingSucceeds()
+        {
+            var document = CreateDocument();
+            var x = Element.Create("div");
+            document.Body.AppendChild(x);
+            document.OpenEventQueue();
+            x.RemoveAttribute("lala");
+            Assert.Empty(document.GetQueue());            
+        }
+
+        [Fact]
+        public void AttributesNotifyValueRemovesPrevious()
+        {
+            var x = Element.Create("div");
+            x.SetAttributeLower("value", "one");
+            x.NotifyValue("two");
+            Assert.Equal("two", x.GetAttribute("value"));
+        }
+
+        [Fact]
+        public void MaxLevelDeep()
+        {
+            bool found = false;
+            try
+            {
+                DocumentWriter.VerifyNestedLevel(DocumentWriter.MaxLevelDeep + 1);
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
+        [Fact]
+        public void ToggleClassFlipsClass()
+        {
+            Assert.Equal("lala", ClassEditor.ToggleClass("lala lolo", "lolo"));
+            Assert.Equal("lala lolo", ClassEditor.ToggleClass("lala", "lolo"));
         }
     }
 }

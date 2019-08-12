@@ -41,10 +41,7 @@ namespace Integrative.Lara.DOM
 
         private void PrintElement(Element element, int indent)
         {
-            if (indent > MaxLevelDeep)
-            {
-                throw new InvalidOperationException($"Document exceeded maximum nesting level of {MaxLevelDeep.ToString()}.");
-            }
+            VerifyNestedLevel(indent);
             if (IsInlineElement(element))
             {
                 Indent(indent);
@@ -54,6 +51,14 @@ namespace Integrative.Lara.DOM
             else
             {
                 PrintRegularElement(element, indent);
+            }
+        }
+
+        internal static void VerifyNestedLevel(int indent)
+        {
+            if (indent > MaxLevelDeep)
+            {
+                throw new InvalidOperationException($"Document exceeded maximum nesting level of {MaxLevelDeep.ToString()}.");
             }
         }
 

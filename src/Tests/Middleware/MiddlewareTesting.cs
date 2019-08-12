@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
@@ -336,6 +337,55 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.NotNull(head2);
             Assert.Equal(JQuery, head1.Src);
             Assert.Equal(BlockUI, head2.Src);
+        }
+
+        [Fact]
+        public async void SendReplyLeavesSocketOpen()
+        {
+            var page = new MyPage();
+            var document = new Document(page);
+            document.ServerEventsOn();
+            var post = new Mock<PostEventContext>();
+            post.Object.Document = document;
+            var parameters = new EventParameters
+            {
+                EventName = GlobalConstants.ServerSideEvent,
+            };
+            post.Object.Parameters = parameters;
+            var http = new Mock<HttpContext>();
+            var ws = new Mock<WebSocketManager>();
+            http.Setup(x => x.WebSockets).Returns(ws.Object);
+            ws.Setup(x => x.IsWebSocketRequest).Returns(true);
+            post.Object.Http = http.Object;
+            post.Setup(x => x.GetSocketCompletion()).Returns(Task.CompletedTask);
+            await PostEventHandler.SendReply(post.Object, "lala");
+            post.Verify(x => x.GetSocketCompletion());
+        }
+
+        [Fact]
+        public async void StatusCodeExceptionProcessed()
+        {
+            var element = Element.Create("div");
+            element.On("click", () => throw new StatusCodeException(HttpStatusCode.Forbidden));
+            var post = new PostEventContext
+            {
+                Element = element,
+                Parameters = new EventParameters
+                {
+                    EventName = "click"
+                }
+            };
+            var http = new Mock<HttpContext>();
+            var response = new Mock<HttpResponse>();
+            response.SetupProperty(x => x.StatusCode);
+            http.Setup(x => x.Response).Returns(response.Object);
+            post.Http = http.Object;
+            var headers = new Mock<IHeaderDictionary>();
+            response.Setup(x => x.Headers).Returns(headers.Object);
+            var body = new Mock<Stream>();
+            response.Setup(x => x.Body).Returns(body.Object);
+            await PostEventHandler.RunEventHandler(post);
+            Assert.Equal((int)HttpStatusCode.Forbidden, response.Object.StatusCode);
         }
     }
 }

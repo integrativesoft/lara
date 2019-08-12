@@ -356,5 +356,32 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Empty(div.Children);
             Assert.Equal(0, div.ChildCount);
         }
+
+        [Fact]
+        public void InsertAtSucceeds()
+        {
+            var x = Element.Create("div");
+            var a = Element.Create("div");
+            var b = Element.Create("div");
+            var c = Element.Create("div");
+            x.AppendChild(a);
+            x.AppendChild(c);
+            x.InsertChildAt(1, b);
+            Assert.Equal(3, x.ChildCount);
+            Assert.Same(b, x.GetChildAt(1));
+        }
+
+        [Fact]
+        public void RemoveAtSucceeds()
+        {
+            var x = Element.Create("div");
+            var a = Element.Create("div");
+            var b = Element.Create("div");
+            x.AppendChild(a);
+            x.AppendChild(b);
+            x.RemoveAt(1);
+            Assert.Equal(1, x.ChildCount);
+            Assert.Same(a, x.GetChildAt(0));
+        }
     }
 }
