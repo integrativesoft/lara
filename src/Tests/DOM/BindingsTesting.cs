@@ -236,6 +236,34 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(div.Children);
         }
 
+        [Fact]
+        public void GenericBindingDetectsCycles()
+        {
+            var div = Element.Create("div");
+            var data = new MyData();
+            div.BindAttribute(new BindAttributeOptions<MyData>
+            {
+                Attribute = "data-counter",
+                Object = data,
+                Property = x => x.Counter.ToString()
+            });
+            div.Bind(new BindHandlerOptions<MyData>
+            {
+                Object = data,
+                ModifiedHandler = (x, y) => data.Counter++
+            });
+            bool found = false;
+            try
+            {
+                data.Counter = 3;
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
         private Element MyCreateCallback(MyData arg)
         {
             return Element.Create("span");
