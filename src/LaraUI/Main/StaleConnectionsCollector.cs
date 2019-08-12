@@ -14,15 +14,15 @@ namespace Integrative.Lara.Main
     sealed class StaleConnectionsCollector : IDisposable
     {
         public const double TimerInterval = 5 * 60000;
-        public const int ExpireInterval = 4 * 60;
+        public const double ExpireInterval = 4 * 3600 * 1000;
 
         private static double _timerInterval = TimerInterval;
-        private static int _timerExpires = ExpireInterval;
+        private static double _expireInterval = ExpireInterval;
 
-        public static void SetTimers(double timerInterval, int timerExpires)
+        public static void SetTimers(double timerInterval, double expireInterval)
         {
             _timerInterval = timerInterval;
-            _timerExpires = timerExpires;
+            _expireInterval = expireInterval;
         }
 
         readonly Connections _connections;
@@ -55,13 +55,15 @@ namespace Integrative.Lara.Main
         {
             if (!_disposed)
             {
+                _timer.Enabled = false;
                 await CleanupNonDisposed();
+                _timer.Enabled = true;
             }
         }
 
         private async Task CleanupNonDisposed()
         {
-            var minRequired = DateTime.UtcNow.AddMinutes(-_timerExpires);
+            var minRequired = DateTime.UtcNow.AddMilliseconds(-_expireInterval);
             var list = new List<KeyValuePair<Guid, Connection>>();
             foreach (var pair in _connections.GetConnections())
             {
@@ -80,7 +82,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private async Task CleanupExpired(Connection connection, DateTime minRequired)
+        internal static async Task CleanupExpired(Connection connection, DateTime minRequired)
         {
             var list = new List<KeyValuePair<Guid, Document>>();
             foreach (var pair in connection.GetDocuments())

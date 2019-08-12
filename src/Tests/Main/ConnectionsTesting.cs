@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -47,14 +48,26 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [Fact]
+        public async void TimerCleansUpDocuments()
+        {
+            var connections = new Connections();
+            var connection = connections.CreateConnection(IPAddress.Loopback);
+            connection.CreateDocument(new MyPage(), new LaraOptions());
+            var required = DateTime.UtcNow.AddSeconds(10);
+            Assert.NotEmpty(connection.GetDocuments());
+            await StaleConnectionsCollector.CleanupExpired(connection, required);
+            Assert.Empty(connection.GetDocuments());
+        }
+
+        [Fact]
         public async void TimerCleansUp()
         {
-            StaleConnectionsCollector.SetTimers(100, 10);
+            StaleConnectionsCollector.SetTimers(200, 0.5);
             var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             cnx.CreateDocument(new MyPage(), new LaraOptions());
             Assert.NotEmpty(connections.GetConnections());
-            await Task.Delay(150);
+            await Task.Delay(1000);
             Assert.Empty(connections.GetConnections());
         }
     }
