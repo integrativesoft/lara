@@ -475,5 +475,32 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(50, x.Optimum);
             Assert.Equal(55, x.Value);
         }
+
+        [Fact]
+        public void SomeTagsAlwaysNeedId()
+        {
+            var input = new Input();
+            Assert.True(input.NeedsId);
+        }
+
+        [Fact]
+        public void ElementToStringSuffix()
+        {
+            var div = Element.Create("div");
+            div.Id = "lolo";
+            div.Class = "red";
+            Assert.Equal("div #lolo red", div.ToString());
+        }
+
+        [Fact]
+        public void IgnoreNotificationsNotFound()
+        {
+            var x = Element.Create("div");
+            var task = x.NotifyEvent("lala");
+            Assert.Same(Task.CompletedTask, task);
+        }
+
+
+
     }
 }

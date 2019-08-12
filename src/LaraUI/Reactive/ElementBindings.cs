@@ -96,7 +96,7 @@ namespace Integrative.Lara.Reactive
             }
         }
 
-        private void UnbindAllAttributes()
+        public void UnbindAllAttributes()
         {
             var list = new List<string>(_attributeBindings.Keys);
             foreach (var attribute in list)
@@ -137,6 +137,7 @@ namespace Integrative.Lara.Reactive
             options.Apply(_parent);
             options.CollectionChanged += Options_CollectionChanged;
             options.Subscribe();
+            _childrenBinding = options;
         }
 
         public void UnbindChildren()

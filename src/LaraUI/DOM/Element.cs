@@ -886,7 +886,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Type of source data</typeparam>
         /// <param name="options">Inner text binding options</param>
-        public void BindInnerText<T>(BindTextOptions<T> options)
+        public void BindInnerText<T>(BindInnerTextOptions<T> options)
             where T : INotifyPropertyChanged
         {
             EnsureBindings();
@@ -899,6 +899,22 @@ namespace Integrative.Lara
         public void UnbindInnerText()
         {
             _bindings?.UnbindInnerText();
+        }
+
+        /// <summary>
+        /// Removes bindings for the generic handler
+        /// </summary>
+        public void UnbindHandler()
+        {
+            _bindings?.UnbindHandler();
+        }
+
+        /// <summary>
+        /// Removes bindings for any attributes
+        /// </summary>
+        public void UnbindAttributes()
+        {
+            _bindings?.UnbindAllAttributes();
         }
 
         /// <summary>

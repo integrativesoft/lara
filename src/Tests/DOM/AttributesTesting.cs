@@ -153,5 +153,14 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal("lala", ClassEditor.ToggleClass("lala lolo", "lolo"));
             Assert.Equal("lala lolo", ClassEditor.ToggleClass("lala", "lolo"));
         }
+
+        [Fact]
+        public void ElementToggleClass()
+        {
+            var x = Element.Create("div");
+            x.Class = "lala lolo";
+            x.ToggleClass("lolo");
+            Assert.Equal("lala", x.Class);
+        }
     }
 }

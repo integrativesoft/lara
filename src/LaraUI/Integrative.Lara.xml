@@ -671,7 +671,7 @@
             </summary>
             <param name="attribute">Attribute to remove bindings of</param>
         </member>
-        <member name="M:Integrative.Lara.Element.BindInnerText``1(Integrative.Lara.BindTextOptions{``0})">
+        <member name="M:Integrative.Lara.Element.BindInnerText``1(Integrative.Lara.BindInnerTextOptions{``0})">
             <summary>
             Binds an element's inner text
             </summary>
@@ -681,6 +681,16 @@
         <member name="M:Integrative.Lara.Element.UnbindInnerText">
             <summary>
             Removes inner text bindings
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Element.UnbindHandler">
+            <summary>
+            Removes bindings for the generic handler
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.Element.UnbindAttributes">
+            <summary>
+            Removes bindings for any attributes
             </summary>
         </member>
         <member name="M:Integrative.Lara.Element.BindChildren``1(Integrative.Lara.BindChildrenOptions{``0})">
