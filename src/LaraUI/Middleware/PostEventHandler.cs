@@ -56,24 +56,30 @@ namespace Integrative.Lara.Middleware
         {
             var socket = await http.WebSockets.AcceptWebSocketAsync();
             var result = await MiddlewareCommon.ReadWebSocketMessage<EventParameters>(socket, MaxSizeBytes);
-            if (result.Item1)
+            var context = new PostEventContext
             {
-                var context = new PostEventContext
-                {
-                    Http = http,
-                    Socket = socket,
-                    Parameters = result.Item2
-                };
-                await ProcessRequest(context);
+                Http = http,
+                Socket = socket,
+                Parameters = result.Item2
+            };
+            bool ok = result.Item1;
+            await ProcessWebSocketMessage(ok, context);
+        }
+
+        internal static Task ProcessWebSocketMessage(bool ok, PostEventContext context)
+        {
+            if (ok)
+            {
+                return ProcessRequest(context);
             }
             else
             {
-                await socket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
+                return context.Socket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
                     "Bad request", CancellationToken.None);
             }
         }
 
-        private static async Task ProcessAjaxRequest(HttpContext http)
+        internal static async Task ProcessAjaxRequest(HttpContext http)
         {
             if (EventParameters.TryParse(http.Request.Query, out var parameters))
             {
@@ -182,7 +188,8 @@ namespace Integrative.Lara.Middleware
             {
                 if (post.SocketRemainsOpen())
                 {
-                    result = post.GetSocketCompletion();
+                    var completion = await post.GetSocketCompletion();
+                    return completion.Task;
                 }
                 else
                 {

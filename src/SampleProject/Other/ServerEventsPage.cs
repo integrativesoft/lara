@@ -21,7 +21,6 @@ namespace SampleProject
                 Disabled = true
             };
             _button.AppendText("before");
-            System.Console.WriteLine("instance created");
         }
 
         public Task OnGet()

@@ -26,7 +26,7 @@ namespace Integrative.Lara.Middleware
         public bool IsWebSocketRequest =>
             Http.WebSockets.IsWebSocketRequest;
 
-        public virtual Task GetSocketCompletion()
+        public virtual Task<TaskCompletionSource<bool>> GetSocketCompletion()
             => Document.GetSocketCompletion(Socket);
     }
 }

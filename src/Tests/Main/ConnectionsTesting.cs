@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Main
@@ -43,6 +44,18 @@ namespace Integrative.Lara.Tests.Main
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             connections.Dispose();
             Assert.False(connections.TryGetConnection(cnx.Id, out _));
+        }
+
+        [Fact]
+        public async void TimerCleansUp()
+        {
+            StaleConnectionsCollector.SetTimers(100, 10);
+            var connections = new Connections();
+            var cnx = connections.CreateConnection(IPAddress.Loopback);
+            cnx.CreateDocument(new MyPage(), new LaraOptions());
+            Assert.NotEmpty(connections.GetConnections());
+            await Task.Delay(150);
+            Assert.Empty(connections.GetConnections());
         }
     }
 }

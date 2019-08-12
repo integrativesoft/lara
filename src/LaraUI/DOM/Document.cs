@@ -250,11 +250,14 @@ namespace Integrative.Lara
         internal bool SocketRemainsOpen(string eventName)
             => _serverEvents.SocketRemainsOpen(eventName);
 
-        internal Task GetSocketCompletion(WebSocket socket)
+        internal virtual Task<TaskCompletionSource<bool>> GetSocketCompletion(WebSocket socket)
             => _serverEvents.GetSocketCompletion(socket);
 
         internal Task ServerEventFlush()
             => _serverEvents.ServerEventFlush();
+
+        internal ServerEventsController GetServerEventsController()
+            => _serverEvents;
 
     }
 }

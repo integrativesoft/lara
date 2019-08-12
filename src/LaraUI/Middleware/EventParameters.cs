@@ -8,13 +8,11 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace Integrative.Lara.Middleware
 {
     [DataContract]

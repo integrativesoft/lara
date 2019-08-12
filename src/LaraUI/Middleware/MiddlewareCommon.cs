@@ -100,24 +100,30 @@ namespace Integrative.Lara.Middleware
                     ms.Write(buffer.Array, buffer.Offset, result.Count);
                 }
                 while (!result.EndOfMessage && result.Count <= maxSize);
-                ms.Seek(0, SeekOrigin.Begin);
-                if (result.MessageType != WebSocketMessageType.Text)
-                {
-                    return (false, default);
-                }
-                else if (result.Count > maxSize)
-                {
-                    return (false, default);
-                }
-                try
-                {
-                    var parameters = LaraTools.Deserialize<T>(ms);
-                    return (true, parameters);
-                }
-                catch
-                {
-                    return (false, default);
-                }
+                return ProcessWebSocketMessage<T>(maxSize, ms, result);
+            }
+        }
+
+        internal static (bool, T) ProcessWebSocketMessage<T>(int maxSize,
+            MemoryStream ms, WebSocketReceiveResult result) where T : class
+        {
+            ms.Seek(0, SeekOrigin.Begin);
+            if (result.MessageType != WebSocketMessageType.Text)
+            {
+                return (false, default);
+            }
+            else if (result.Count > maxSize)
+            {
+                return (false, default);
+            }
+            try
+            {
+                var parameters = LaraTools.Deserialize<T>(ms);
+                return (true, parameters);
+            }
+            catch
+            {
+                return (false, default);
             }
         }
 

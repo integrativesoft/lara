@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,8 +13,17 @@ namespace Integrative.Lara.Main
 {
     sealed class StaleConnectionsCollector : IDisposable
     {
-        const double TimerInterval = 5 * 60000;
-        const int MinutesExpires = 4 * 60;
+        public const double TimerInterval = 5 * 60000;
+        public const int ExpireInterval = 4 * 60;
+
+        private static double _timerInterval = TimerInterval;
+        private static int _timerExpires = ExpireInterval;
+
+        public static void SetTimers(double timerInterval, int timerExpires)
+        {
+            _timerInterval = timerInterval;
+            _timerExpires = timerExpires;
+        }
 
         readonly Connections _connections;
         readonly Timer _timer;
@@ -25,7 +33,7 @@ namespace Integrative.Lara.Main
             _connections = connections;
             _timer = new Timer
             {
-                Interval = TimerInterval
+                Interval = _timerInterval
             };
             _timer.Elapsed += async (sender, args) => await CleanupExpiredHandler();
             _timer.Start();
@@ -45,11 +53,15 @@ namespace Integrative.Lara.Main
 
         internal async Task CleanupExpiredHandler()
         {
-            if (_disposed)
+            if (!_disposed)
             {
-                return;
+                await CleanupNonDisposed();
             }
-            var minRequired = DateTime.UtcNow.AddMinutes(-MinutesExpires);
+        }
+
+        private async Task CleanupNonDisposed()
+        {
+            var minRequired = DateTime.UtcNow.AddMinutes(-_timerExpires);
             var list = new List<KeyValuePair<Guid, Connection>>();
             foreach (var pair in _connections.GetConnections())
             {

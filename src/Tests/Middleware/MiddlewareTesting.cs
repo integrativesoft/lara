@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -357,9 +359,15 @@ namespace Integrative.Lara.Tests.Middleware
             http.Setup(x => x.WebSockets).Returns(ws.Object);
             ws.Setup(x => x.IsWebSocketRequest).Returns(true);
             post.Object.Http = http.Object;
-            post.Setup(x => x.GetSocketCompletion()).Returns(Task.CompletedTask);
+            post.Setup(x => x.GetSocketCompletion()).Returns(CompletionResult);
             await PostEventHandler.SendReply(post.Object, "lala");
             post.Verify(x => x.GetSocketCompletion());
+        }
+
+        private Task<TaskCompletionSource<bool>> CompletionResult()
+        {
+            var mock = new Mock<TaskCompletionSource<bool>>();
+            return Task.FromResult(mock.Object);
         }
 
         [Fact]
@@ -386,6 +394,100 @@ namespace Integrative.Lara.Tests.Middleware
             response.Setup(x => x.Body).Returns(body.Object);
             await PostEventHandler.RunEventHandler(post);
             Assert.Equal((int)HttpStatusCode.Forbidden, response.Object.StatusCode);
+        }
+
+        [Fact]
+        public void ProcessSocketMessageWrongType()
+        {
+            var ms = new Mock<MemoryStream>();
+            var sr = new WebSocketReceiveResult(1, WebSocketMessageType.Close, true);
+            var result = MiddlewareCommon.ProcessWebSocketMessage<Element>(100, ms.Object, sr);
+            Assert.False(result.Item1);
+        }
+
+        [Fact]
+        public void ProcessSocketMessageWrongCount()
+        {
+            var ms = new Mock<MemoryStream>();
+            var sr = new WebSocketReceiveResult(101, WebSocketMessageType.Text, true);
+            var result = MiddlewareCommon.ProcessWebSocketMessage<Element>(100, ms.Object, sr);
+            Assert.False(result.Item1);
+        }
+
+        [Fact]
+        public void ProcessSocketMessageFailDeserialize()
+        {
+            var bytes = Encoding.UTF8.GetBytes("hello");
+            using (var ms = new MemoryStream(bytes))
+            {
+                var sr = new WebSocketReceiveResult(1, WebSocketMessageType.Text, true);
+                var result = MiddlewareCommon.ProcessWebSocketMessage<Element>(100, ms, sr);
+                Assert.False(result.Item1);
+            }
+        }
+
+        [Fact]
+        public async void HandlesBadSocketRequest()
+        {
+            var socket = new Mock<WebSocket>();
+            var post = new PostEventContext
+            {
+                Socket = socket.Object
+            };
+            socket.Setup(x
+                => x.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
+                "Bad request", CancellationToken.None)).Returns(Task.CompletedTask);
+            await PostEventHandler.ProcessWebSocketMessage(false, post);
+            socket.Verify(x => x.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
+                "Bad request", CancellationToken.None));
+        }
+
+        [Fact]
+        public async void ProcessAjaxBadParameters()
+        {
+            var http = new Mock<HttpContext>();
+            var request = new Mock<HttpRequest>();
+            var response = new Mock<HttpResponse>();
+            var query = new Mock<IQueryCollection>();
+            var headers = new Mock<IHeaderDictionary>();
+            http.Setup(x => x.Request).Returns(request.Object);
+            request.Setup(x => x.Query).Returns(query.Object);
+            StringValues values;
+            query.Setup(x => x.TryGetValue("doc", out values)).Returns(false);
+            response.SetupProperty(x => x.StatusCode);
+            http.Setup(x => x.Response).Returns(response.Object);
+            response.Setup(x => x.Headers).Returns(headers.Object);
+            var body = new Mock<Stream>();
+            response.Setup(x => x.Body).Returns(body.Object);
+            await PostEventHandler.ProcessAjaxRequest(http.Object);
+        }
+
+        [Fact]
+        public void PostGetCompletionRuns()
+        {
+            var page = new MyPage();
+            var document = new Mock<Document>(page);
+            var socket = new Mock<WebSocket>();
+            var post = new PostEventContext
+            {
+                Document = document.Object,
+                Socket = socket.Object
+            };
+            var task = post.GetSocketCompletion();
+            Assert.NotNull(task);
+            document.Verify(x => x.GetSocketCompletion(socket.Object));
+        }
+
+        [Fact]
+        public void ServerEventCases()
+        {
+            var socket = new Mock<WebSocket>();
+            var status = ServerEventsController.CalculateServerEventsStatus(false, socket.Object);
+            Assert.Equal(ServerEventsStatus.Disabled, status);
+            status = ServerEventsController.CalculateServerEventsStatus(true, null);
+            Assert.Equal(ServerEventsStatus.Connecting, status);
+            status = ServerEventsController.CalculateServerEventsStatus(true, socket.Object);
+            Assert.Equal(ServerEventsStatus.Enabled, status);
         }
     }
 }

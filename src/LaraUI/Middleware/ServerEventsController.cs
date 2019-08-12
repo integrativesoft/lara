@@ -27,21 +27,21 @@ namespace Integrative.Lara.Middleware
         private bool _flushPending;
 
         public ServerEventsStatus ServerEventsStatus
+            => CalculateServerEventsStatus(_serverEventsEnabled, _serverEventsSocket);
+
+        internal static ServerEventsStatus CalculateServerEventsStatus(bool enabled, WebSocket socket)
         {
-            get
+            if (!enabled)
             {
-                if (!_serverEventsEnabled)
-                {
-                    return ServerEventsStatus.Disabled;
-                }
-                else if (_serverEventsSocket == null)
-                {
-                    return ServerEventsStatus.Connecting;
-                }
-                else
-                {
-                    return ServerEventsStatus.Enabled;
-                }
+                return ServerEventsStatus.Disabled;
+            }
+            else if (socket == null)
+            {
+                return ServerEventsStatus.Connecting;
+            }
+            else
+            {
+                return ServerEventsStatus.Enabled;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Integrative.Lara.Middleware
 
         public Task NotifyUnload() => DiscardSocket();
 
-        private async Task DiscardSocket()
+        internal async Task DiscardSocket()
         {
             if (_serverEventsSocket != null)
             {
@@ -108,13 +108,13 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        public async Task GetSocketCompletion(WebSocket socket)
+        public async Task<TaskCompletionSource<bool>> GetSocketCompletion(WebSocket socket)
         {
             await DiscardSocket();
             _serverEventsSocket = socket;
             _completion = new TaskCompletionSource<bool>();
             await FlushIfPending();
-            await _completion.Task;
+            return _completion;
         }
 
         private async Task FlushIfPending()
