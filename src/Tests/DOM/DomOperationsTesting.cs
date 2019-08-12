@@ -383,5 +383,22 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, x.ChildCount);
             Assert.Same(a, x.GetChildAt(0));
         }
+
+        [Fact]
+        public void MissingEventNameThrows()
+        {
+            var settings = new EventSettings();
+            bool found = false;
+            try
+            {
+                settings.Verify();
+            }
+            catch (ArgumentNullException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
     }
 }
