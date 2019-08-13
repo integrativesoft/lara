@@ -68,5 +68,145 @@ namespace Integrative.Lara.Tests.Components
             return new PageContext(http.Object, connection, document);
         }
 
+        [Fact]
+        public void WebComponentListsAllDescendents()
+        {
+            var x = new XCOM();
+            var div = Element.Create("div");
+            div.Id = "lala";
+            x.AppendChild(div);
+            var set = new HashSet<string>();
+            foreach (var node in GetAllDescendents(x))
+            {
+                if (node is Element child && !string.IsNullOrEmpty(child.Id))
+                {
+                    set.Add(child.Id);
+                }
+            }
+            Assert.Contains("div1", set);
+            Assert.Contains("div2", set);
+            Assert.Contains("div1a", set);
+            Assert.Contains("lala", set);
+        }
+
+        [Fact]
+        public void FlattenedChildrenIncludesPrintedOnes()
+        {
+            var container = Element.Create("div");
+            var x = new XCOM();
+            var div = Element.Create("div");
+            div.Id = "lala";
+            x.AppendChild(div);
+            container.AppendChild(x);
+            var set = new HashSet<string>();
+            foreach (var node in GetFlattened(container))
+            {
+                if (node is Element child && !string.IsNullOrEmpty(child.Id))
+                {
+                    set.Add(child.Id);
+                }
+            }
+            Assert.Contains("div1", set);
+            Assert.Contains("div2", set);
+            Assert.Contains("div1a", set);
+            Assert.DoesNotContain("lala", set);
+        }
+
+        private IEnumerable<Node> GetAllDescendents(Element element)
+        {
+            return RecursiveExtension(element, x => x.GetAllDescendants());
+        }
+
+        private IEnumerable<Node> GetFlattened(Element element)
+        {
+            return RecursiveExtension(element, x => x.GetFlattenedChildren());
+        }
+
+        private IEnumerable<Node> RecursiveExtension(Element root, Func<Element, IEnumerable<Node>> method)
+        {
+            foreach (var node in method(root))
+            {
+                yield return node;
+                if (node is Element child)
+                {
+                    foreach (var grandchild in RecursiveExtension(child, method))
+                    {
+                        yield return grandchild;
+                    }
+                }
+            }
+        }
+
+        class XCOM : WebComponent
+        {
+            public XCOM() : base("x-com")
+            {
+                AttachShadow();
+                var builder = new LaraBuilder(ShadowRoot);
+                builder.Push("div", "", "div1")
+                    .Push("div", "", "div1a")
+                    .Pop()
+                .Pop()
+                .Push("div", "", "div2")
+                .Pop()
+                .AddTextNode("lalas");
+            }
+        }
+
+        class LightCom : WebComponent
+        {
+            public LightCom() : base("x-light")
+            {
+            }
+        }
+
+        [Fact]
+        public void ElementWithoutShadowYieldsItself()
+        {
+            var x = new LightCom();
+            var list = new List<Node>(x.GetLightSlotted());
+            Assert.Single(list);
+            Assert.Same(x, list[0]);
+        }
+
+        [Fact]
+        public void GetSlotElementFinds()
+        {
+            var x = new MySlotter();
+            var builder = new LaraBuilder(x);
+            builder.Push("div", "", "slot1")
+            .Pop()
+            .Push("div", "", "slot2")
+                .Push("div", "", "slot2a")
+                .Pop()
+            .Pop()
+            .Push("div", "", "slot3")
+                .Attribute("slot", "a")
+            .Pop();
+            var set = new HashSet<string>();
+            foreach (var item in x.GetSlottedElements(""))
+            {
+                if (item is Element element)
+                {
+                    set.Add(element.Id);
+                }
+            }
+            Assert.Contains("slot1", set);
+            Assert.Contains("slot2", set);
+            Assert.DoesNotContain("slot2a", set);
+            Assert.DoesNotContain("slot3", set);
+            var list = new List<Node>(x.GetSlottedElements("a"));
+            Assert.Single(list);
+            var child = list[0] as Element;
+            Assert.Equal("slot3", child.Id);            
+        }
+
+        class MySlotter : WebComponent
+        {
+            public MySlotter() : base("x-slotter")
+            {
+                AttachShadow();
+            }
+        }
     }
 }

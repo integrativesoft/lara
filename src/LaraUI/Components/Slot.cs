@@ -31,7 +31,7 @@ namespace Integrative.Lara
         {
             if (TryFindParentComponent(this, out var component))
             {
-                return component.GetSlotElements(Name);
+                return component.GetSlottedElements(Name);
             }
             else
             {

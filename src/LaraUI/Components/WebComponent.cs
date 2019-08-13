@@ -86,7 +86,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal IEnumerable<Node> GetSlotElements(string slotName)
+        internal IEnumerable<Node> GetSlottedElements(string slotName)
         {
             foreach (var node in Children)
             {
