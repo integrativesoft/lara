@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -269,12 +270,28 @@ namespace Integrative.Lara.Tests.DOM
 
         private Element MyCreateCallback(MyData arg)
         {
-            return Element.Create("span");
+            var span = Element.Create("span");
+            span.BindAttribute(new BindAttributeOptions<MyData>
+            {
+                Object = arg,
+                Attribute = "data-counter",
+                Property = x => arg.Counter.ToString()
+            });
+            return span;
         }
 
         class MyData : BindableBase
         {
             int _counter;
+
+            public MyData()
+            {
+            }
+
+            public MyData(int counter)
+            {
+                Counter = counter;
+            }
 
             public int Counter
             {
@@ -291,6 +308,49 @@ namespace Integrative.Lara.Tests.DOM
             data.PropertyChanged += (sender, args) => raised = true;
             data.Counter = 0;
             Assert.False(raised);
+        }
+
+        [Fact]
+        public void CollectionUpdaterMove()
+        {
+            var collection = new ObservableCollection<MyData>();
+            var div = Element.Create("div");
+            div.BindChildren(new BindChildrenOptions<MyData>
+            {
+                Collection = collection,
+                CreateCallback = MyCreateCallback
+            });
+            collection.Add(new MyData(10));
+            collection.Add(new MyData(20));
+            collection.Add(new MyData(30));
+            collection.Add(new MyData(40));
+            collection.Add(new MyData(50));
+            VerifyPositions(collection, div);
+            collection.Move(1, 2);
+            VerifyPositions(collection, div);
+            collection.RemoveAt(3);
+            VerifyPositions(collection, div);
+            collection[2] = new MyData(77);
+            VerifyPositions(collection, div);
+            collection.Clear();
+            VerifyPositions(collection, div);
+        }
+
+        private void VerifyPositions(ObservableCollection<MyData> collection, Element div)
+        {
+            Assert.Equal(collection.Count, div.ChildCount);
+            for (int index = 0; index < collection.Count; index++)
+            {
+                var data = collection[index];
+                VerifyPosition(div, index, data.Counter.ToString());
+            }
+        }
+
+        private void VerifyPosition(Element div, int position, string value)
+        {
+            var child = (Element)div.GetChildAt(position);
+            var current = child.GetAttribute("data-counter");
+            Assert.Equal(value, current);
         }
     }
 }

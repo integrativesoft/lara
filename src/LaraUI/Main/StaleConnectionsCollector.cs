@@ -25,6 +25,12 @@ namespace Integrative.Lara.Main
             _expireInterval = expireInterval;
         }
 
+        public static void SetDefaultTimers()
+        {
+            _timerInterval = TimerInterval;
+            _expireInterval = ExpireInterval;
+        }
+
         readonly Connections _connections;
         readonly Timer _timer;
 

@@ -435,5 +435,33 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, counter);
         }
 
+        [Fact]
+        public void SwapChildrenSwaps()
+        {
+            var document = new Document(new MyPage());
+            var div = Element.Create("div");
+            var n1 = new TextNode("n1");
+            var n2 = new TextNode("n2");
+            var n3 = new TextNode("n3");
+            div.AppendChild(n1);
+            div.AppendChild(n2);
+            div.AppendChild(n3);
+            document.Body.AppendChild(div);
+            document.OpenEventQueue();
+            div.SwapChildren(1, 1);
+            div.SwapChildren(0, 2);
+            Assert.Equal(3, div.ChildCount);
+            Assert.Same(n3, div.GetChildAt(0));
+            Assert.Same(n1, div.GetChildAt(2));
+            var queue = document.GetQueue();
+            Assert.NotEmpty(queue);
+            var first = queue.Peek() as SwapChildrenDelta;
+            Assert.NotNull(first);
+            Assert.Equal(div.Id, first.ParentId);
+            Assert.NotNull(div.Id);
+            Assert.Equal(0, first.Index1);
+            Assert.Equal(2, first.Index2);
+        }
+
     }
 }

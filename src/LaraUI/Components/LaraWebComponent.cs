@@ -17,14 +17,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Custom tag name for the component. Must contain the '-' character.
         /// </summary>
-        public string ComponentTagName { get; set; }
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public LaraWebComponent()
-        {
-        }
+        public string ComponentTagName { get; }
 
         /// <summary>
         /// Constructor with custom tag name

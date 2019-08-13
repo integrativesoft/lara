@@ -153,6 +153,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesService()
         {
+            LaraUI.ClearAll();
             LaraUI.PublishAssemblies();
 
             var combined = Published.CombinePathMethod("/myWS", "POST");
@@ -166,6 +167,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesPage()
         {
+            LaraUI.ClearAll();
             LaraUI.PublishAssemblies();
 
             bool found = LaraUI.TryGetNode("/myPage", out var item);
@@ -177,6 +179,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void UnpublishWebservice()
         {
+            LaraUI.ClearAll();
             LaraUI.PublishAssemblies();
             LaraUI.UnPublish("/myWS", "POST");
             var combined = Published.CombinePathMethod("/myWS", "POST");

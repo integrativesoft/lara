@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Main
@@ -16,11 +17,13 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void CleanupLeavesUnexpiredDocument()
         {
+            StaleConnectionsCollector.SetDefaultTimers();
             var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             var doc1 = cnx.CreateDocument(new MyPage(), new LaraOptions());
             var doc2 = cnx.CreateDocument(new MyPage(), new LaraOptions());
             doc2.ModifyLastUtcForTesting(DateTime.UtcNow.AddHours(-10));
+            await Task.Delay(200);
             using (var collector = new StaleConnectionsCollector(connections))
             {
                 await collector.CleanupExpiredHandler();

@@ -18,7 +18,11 @@ namespace Integrative.Lara
         /// <summary>
         /// The slot's name
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => GetAttribute("name");
+            set { SetAttributeLower("name", value); }
+        }
 
         /// <summary>
         /// Constructor

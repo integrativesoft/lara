@@ -4,13 +4,14 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Components;
+using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +19,11 @@ namespace Integrative.Lara.Tests.Components
 {
     public class ComponentTesting
     {
+        public ComponentTesting()
+        {
+            LaraUI.ClearAll();
+        }
+
         [Fact]
         public void RegisterComponentSucceeds()
         {
@@ -71,6 +77,11 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void WebComponentListsAllDescendents()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-com",
+                ComponentType = typeof(XCOM)
+            });
             var x = new XCOM();
             var div = Element.Create("div");
             div.Id = "lala";
@@ -92,6 +103,11 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void FlattenedChildrenIncludesPrintedOnes()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-com",
+                ComponentType = typeof(XCOM)
+            });
             var container = Element.Create("div");
             var x = new XCOM();
             var div = Element.Create("div");
@@ -164,6 +180,11 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ElementWithoutShadowYieldsItself()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-light",
+                ComponentType = typeof(LightCom)
+            });
             var x = new LightCom();
             var list = new List<Node>(x.GetLightSlotted());
             Assert.Single(list);
@@ -173,6 +194,11 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void GetSlotElementFinds()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-slotter",
+                ComponentType = typeof(MySlotter)
+            });
             var x = new MySlotter();
             var builder = new LaraBuilder(x);
             builder.Push("div", "", "slot1")
@@ -199,7 +225,7 @@ namespace Integrative.Lara.Tests.Components
             var list = new List<Node>(x.GetSlottedElements("a"));
             Assert.Single(list);
             var child = list[0] as Element;
-            Assert.Equal("slot3", child.Id);            
+            Assert.Equal("slot3", child.Id);
         }
 
         class MySlotter : WebComponent
@@ -207,12 +233,21 @@ namespace Integrative.Lara.Tests.Components
             public MySlotter() : base("x-slotter")
             {
                 AttachShadow();
+                var div = Create("div");
+                var slot = Create("slot");
+                ShadowRoot.AppendChild(div);
+                div.AppendChild(slot);
             }
         }
 
         [Fact]
         public void ComponentNotifiedAttributeChanged()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-att",
+                ComponentType = typeof(MyAttributeSubscriptor)
+            });
             var x = new MyAttributeSubscriptor();
             x.SetAttribute("data-lala", "lolo");
             Assert.Equal("lolo", x.MyData);
@@ -243,6 +278,11 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ObservedOnlyAttributeDoesNothing()
         {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-dummy",
+                ComponentType = typeof(MyDummyComponent)
+            });
             var x = new MyDummyComponent
             {
                 Class = "lala"
@@ -269,6 +309,151 @@ namespace Integrative.Lara.Tests.Components
 
             Assert.True(LaraUI.TryGetComponent("x-com", out var type));
             Assert.Same(typeof(XCOM), type);
+        }
+
+        [Fact]
+        public void SlotsPrintHostElements()
+        {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-slotter",
+                ComponentType = typeof(MySlotter)
+            });
+            var document = new Document(new MyPage());
+            var builder = new LaraBuilder(document.Body);
+            builder.Push("x-slotter")
+                .Push("div", "lalala")
+                    .AddTextNode("hello")
+                .Pop()
+            .Pop();
+            var writer = new DocumentWriter(document);
+            writer.Print();
+            var html = writer.ToString();
+            Assert.Contains("lalala", html);
+            Assert.Contains("hello", html);
+            Assert.DoesNotContain("x-slotter", html);
+        }
+
+        [Fact]
+        public void OrphanSlotPrintsItself()
+        {
+            var document = new Document(new MyPage());
+            var builder = new LaraBuilder(document.Body);
+            builder.Push("slot", "lalala").Pop();
+            var writer = new DocumentWriter(document);
+            writer.Print();
+            var html = writer.ToString();
+            Assert.Contains("lalala", html);
+        }
+
+        [Fact]
+        public void SlotNameSetsAttribute()
+        {
+            var x = new Slot
+            {
+                Name = "lala"
+            };
+            Assert.Equal("lala", x.Name);
+            Assert.Equal("lala", x.GetAttribute("name"));
+        }
+
+        [Fact]
+        public void WebComponentsRequireDash()
+        {
+            var registry = new ComponentRegistry();
+            bool found = false;
+            try
+            {
+                registry.Register("baba", typeof(MyComponent));
+            }
+            catch (ArgumentException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
+        [Fact]
+        public void WebComponentTypeRequired()
+        {
+            var registry = new ComponentRegistry();
+            bool found = false;
+            try
+            {
+                registry.Register("x-lala", null);
+            }
+            catch (ArgumentNullException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
+        [Fact]
+        public void WebComponentsMustInherit()
+        {
+            var registry = new ComponentRegistry();
+            bool found = false;
+            try
+            {
+                registry.Register("x-lolo", typeof(Input));
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
+        [Fact]
+        public void CannotRegisterSameTagTwice()
+        {
+            var registry = new ComponentRegistry();
+            registry.Register("x-baba", typeof(MyComponent));
+            bool found = false;
+            try
+            {
+                registry.Register("x-baba", typeof(MyComponent));
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
+
+        [Fact]
+        public void ShadowLightEmpty()
+        {
+            var shadow = new Shadow();
+            shadow.AppendText("bah");
+            Assert.Empty(shadow.GetLightSlotted());
+        }
+
+        [Fact]
+        public void VerifyComponentRegistered()
+        {
+            bool blown = false;
+            try
+            {
+                new XCOM();
+            }
+            catch (InvalidOperationException)
+            {
+                blown = true;
+            }
+            Assert.True(blown);
+        }
+
+        [Fact]
+        public void VerifyComponentSameType()
+        {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-com",
+                ComponentType = typeof(XCOM)
+            });
+            Assert.False(WebComponent.VerifyType("x-com", typeof(MyComponent), out _));
         }
     }
 }

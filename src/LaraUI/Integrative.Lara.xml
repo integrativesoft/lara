@@ -14,11 +14,6 @@
             Custom tag name for the component. Must contain the '-' character.
             </summary>
         </member>
-        <member name="M:Integrative.Lara.LaraWebComponent.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
         <member name="M:Integrative.Lara.LaraWebComponent.#ctor(System.String)">
             <summary>
             Constructor with custom tag name
@@ -629,6 +624,13 @@
             Removes this node from its parent.
             </summary>
             <exception cref="T:System.InvalidOperationException">Cannot remove from parent, the node has no parent element already</exception>
+        </member>
+        <member name="M:Integrative.Lara.Element.SwapChildren(System.Int32,System.Int32)">
+            <summary>
+            Swaps two child nodes within the element
+            </summary>
+            <param name="index1">Index of 1st node</param>
+            <param name="index2">Index of 2nd node</param>
         </member>
         <member name="M:Integrative.Lara.Element.On(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
