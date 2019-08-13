@@ -518,7 +518,5 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Null(options.CustomUrlBlockUI);
             Assert.Null(options.CustomUrlJQuery);
         }
-
-
     }
 }
