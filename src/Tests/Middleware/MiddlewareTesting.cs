@@ -518,5 +518,12 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Null(options.CustomUrlBlockUI);
             Assert.Null(options.CustomUrlJQuery);
         }
+
+        [Fact]
+        public void LaraPageDefaultConstructor()
+        {
+            var page = new LaraPage();
+            Assert.True(string.IsNullOrEmpty(page.Address));
+        }
     }
 }

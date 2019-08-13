@@ -131,5 +131,40 @@ namespace Integrative.Lara.Tests.Middleware
             }
             Assert.Empty(_document.GetQueue());
         }
+
+        [Fact]
+        public async void ServerEventsFlushesPartialChanges()
+        {
+            _document.OpenEventQueue();
+            _controller.ServerEventsOn();
+            await _controller.GetSocketCompletion(_socket.Object);
+            using (var access = _document.StartServerEvent())
+            {
+                _document.Body.AppendText("hello");
+                Assert.NotEmpty(_document.GetQueue());
+                await access.FlushPartialChanges();
+                Assert.Empty(_document.GetQueue());
+            }
+        }
+
+        [Fact]
+        public async void ServerEventFailDisposed()
+        {
+            _document.OpenEventQueue();
+            _controller.ServerEventsOn();
+            await _controller.GetSocketCompletion(_socket.Object);
+            var access = _document.StartServerEvent();
+            access.Dispose();
+            bool found = false;
+            try
+            {
+                await access.FlushPartialChanges();
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
     }
 }

@@ -31,6 +31,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="address">Page's address</param>
         public LaraPage(string address)
+            : this()
         {
             Address = address;
         }

@@ -7,7 +7,6 @@ Author: Pablo Carbonell
 using Integrative.Lara;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Tests")]
 namespace SampleProject
 {
     static class SampleAppBootstrap
