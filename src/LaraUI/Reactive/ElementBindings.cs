@@ -153,7 +153,7 @@ namespace Integrative.Lara.Reactive
         private void Options_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var options = (BindChildrenOptions)sender;
-            options.Apply(_parent);
+            options.Apply(_parent, e);
         }
 
         #endregion

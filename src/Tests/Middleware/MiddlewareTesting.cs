@@ -489,5 +489,36 @@ namespace Integrative.Lara.Tests.Middleware
             status = ServerEventsController.CalculateServerEventsStatus(true, socket.Object);
             Assert.Equal(ServerEventsStatus.Enabled, status);
         }
+
+        [Fact]
+        public void SessionCloseIgnoresErrors()
+        {
+            var connections = new Connections();
+            var connection = connections.CreateConnection(IPAddress.Loopback);
+            var session = new Session(connection);
+            session.Closing += Session_Closing;
+            session.Close();
+        }
+
+        private void Session_Closing(object sender, EventArgs e)
+        {
+            throw new InvalidOperationException();
+        }
+
+        [Fact]
+        public void EmptyCdnsUseDefault()
+        {
+            var options = new LaraOptions
+            {
+                CustomUrlBlockUI = null,
+                CustomUrlJQuery = null
+            };
+            Assert.Equal(LaraOptions.DefaultBlockUI, options.AddressBlockUI);
+            Assert.Equal(LaraOptions.DefaultJQuery, options.AddressJQuery);
+            Assert.Null(options.CustomUrlBlockUI);
+            Assert.Null(options.CustomUrlJQuery);
+        }
+
+
     }
 }

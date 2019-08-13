@@ -4,7 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -58,12 +57,11 @@ namespace Integrative.Lara.Reactive
 
         private void CollectionMove()
         {
-            var value = (T)_args.NewItems[0];
             var removeIndex = _args.OldStartingIndex;
             var addIndex = _args.NewStartingIndex;
-            var child = _options.CreateCallback(value);
-            RemoveAt(removeIndex);
-            InsertAt(addIndex, child);
+            var node = _element.GetChildAt(removeIndex);
+            _element.RemoveAt(removeIndex);
+            _element.InsertChildAt(addIndex, node);
         }
 
         private void CollectionRemove()

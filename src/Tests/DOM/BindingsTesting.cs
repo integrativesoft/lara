@@ -93,7 +93,10 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void BindChildrenUpdates()
         {
-            var collection = new ObservableCollection<MyData>();
+            var collection = new ObservableCollection<MyData>
+            {
+                new MyData()
+            };
             var span = Element.Create("span");
             span.BindChildren(new BindChildrenOptions<MyData>
             {
@@ -101,7 +104,7 @@ namespace Integrative.Lara.Tests.DOM
                 CreateCallback = MyCreateCallback
             });
             collection.Add(new MyData());
-            Assert.Equal(1, span.ChildCount);
+            Assert.Equal(2, span.ChildCount);
         }
 
         [Fact]
@@ -278,6 +281,16 @@ namespace Integrative.Lara.Tests.DOM
                 get => _counter;
                 set => SetProperty(ref _counter, value);
             }
+        }
+
+        [Fact]
+        public void BindableBaseSkipsUnncesaryEvents()
+        {
+            bool raised = false;
+            var data = new MyData();
+            data.PropertyChanged += (sender, args) => raised = true;
+            data.Counter = 0;
+            Assert.False(raised);
         }
     }
 }
