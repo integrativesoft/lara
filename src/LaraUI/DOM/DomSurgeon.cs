@@ -60,6 +60,11 @@ namespace Integrative.Lara.DOM
             ClearChildrenInternal();
         }
 
+        public void SwapChildren(int index1, int index2)
+        {
+            SwapChildrenInternal(index1, index2);
+        }
+
         #region Operations
 
         public void AppendInternal(Node child)

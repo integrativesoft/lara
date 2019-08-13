@@ -5,6 +5,10 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Tools;
+using Microsoft.AspNetCore.Http;
+using Moq;
+using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -147,7 +151,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
-        public void PublishAssembliesPublishes()
+        public void PublishAssembliesService()
         {
             LaraUI.PublishAssemblies();
 
@@ -156,11 +160,18 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.True(found);
             var service = item as WebServicePublished;
             Assert.NotNull(service);
+            Assert.NotNull(service.Factory());
+        }
 
-            found = LaraUI.TryGetNode("/myPage", out item);
+        [Fact]
+        public void PublishAssembliesPage()
+        {
+            LaraUI.PublishAssemblies();
+
+            bool found = LaraUI.TryGetNode("/myPage", out var item);
             Assert.True(found);
             var page = item as PagePublished;
-            Assert.NotNull(page);
+            Assert.NotNull(page.CreateInstance());
         }
 
         [Fact]
@@ -170,6 +181,21 @@ namespace Integrative.Lara.Tests.Middleware
             LaraUI.UnPublish("/myWS", "POST");
             var combined = Published.CombinePathMethod("/myWS", "POST");
             Assert.False(LaraUI.TryGetNode(combined, out _));
+        }
+
+        [Fact]
+        public void VerifyTypeException()
+        {
+            bool found = false;
+            try
+            {
+                AssembliesReader.VerifyType(typeof(MyPage), typeof(Element));
+            }
+            catch (InvalidOperationException)
+            {
+                found = true;
+            }
+            Assert.True(found);
         }
     }
 }

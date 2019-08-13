@@ -137,6 +137,7 @@ namespace Integrative.Lara.Tests.Components
             }
         }
 
+        [LaraWebComponent("x-com")]
         class XCOM : WebComponent
         {
             public XCOM() : base("x-com")
@@ -207,6 +208,67 @@ namespace Integrative.Lara.Tests.Components
             {
                 AttachShadow();
             }
+        }
+
+        [Fact]
+        public void ComponentNotifiedAttributeChanged()
+        {
+            var x = new MyAttributeSubscriptor();
+            x.SetAttribute("data-lala", "lolo");
+            Assert.Equal("lolo", x.MyData);
+        }
+
+        class MyAttributeSubscriptor : WebComponent
+        {
+            public MyAttributeSubscriptor() : base("x-att")
+            {
+            }
+
+            public string MyData { get; set; }
+
+            protected override IEnumerable<string> GetObservedAttributes()
+            {
+                return new string[] { "data-lala" };
+            }
+
+            protected override void OnAttributeChanged(string attribute)
+            {
+                if (attribute == "data-lala")
+                {
+                    MyData = GetAttribute("data-lala");
+                }
+            }
+        }
+
+        [Fact]
+        public void ObservedOnlyAttributeDoesNothing()
+        {
+            var x = new MyDummyComponent
+            {
+                Class = "lala"
+            };
+            Assert.Equal("lala", x.Class);
+        }
+
+        class MyDummyComponent : WebComponent
+        {
+            public MyDummyComponent() : base("x-dummy")
+            {
+            }
+
+            protected override IEnumerable<string> GetObservedAttributes()
+            {
+                return new string[] { "class" };
+            }
+        }
+
+        [Fact]
+        public void PublishAssembliesComponent()
+        {
+            LaraUI.PublishAssemblies();
+
+            Assert.True(LaraUI.TryGetComponent("x-com", out var type));
+            Assert.Same(typeof(XCOM), type);
         }
     }
 }

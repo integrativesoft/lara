@@ -56,6 +56,9 @@ namespace LaraUI {
             case DeltaType.ServerEvents:
                 listenServerEvents();
                 break;
+            case DeltaType.SwapChildren:
+                swapChildren(step as SwapChildrenDelta);
+                break;
             default:
                 console.log("Error processing event response. Unknown step type: " + step.Type);
         }
@@ -193,4 +196,21 @@ namespace LaraUI {
     function replaceLocation(delta: ReplaceDelta): void {
         location.replace(delta.Location);
     }
+
+
+    function swapChildren(step: SwapChildrenDelta): void {
+        let el = document.getElementById(step.ParentId);
+        let node1 = el.childNodes[step.Index1];
+        let node2 = el.childNodes[step.Index2];
+        swapDom(node1, node2);
+    }
+
+    function swapDom(obj1: Node, obj2: Node): void {
+        let temp = document.createElement("div");
+        obj1.parentNode.insertBefore(temp, obj1);
+        obj2.parentNode.insertBefore(obj1, obj2);
+        temp.parentNode.insertBefore(obj2, temp);
+        temp.parentNode.removeChild(temp);
+    }
+
 }

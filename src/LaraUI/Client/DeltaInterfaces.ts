@@ -26,7 +26,8 @@ namespace LaraUI {
         SetChecked = 11,
         ClearChildren = 12,
         Replace = 13,
-        ServerEvents = 14
+        ServerEvents = 14,
+        SwapChildren = 15
     }
 
     export interface BaseDelta {
@@ -105,5 +106,11 @@ namespace LaraUI {
 
     export interface ReplaceDelta extends BaseDelta {
         Location: string;
+    }
+
+    export interface SwapChildrenDelta extends BaseDelta {
+        ParentId: string;
+        Index1: number;
+        Index2: number;
     }
 }

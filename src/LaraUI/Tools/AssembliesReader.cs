@@ -55,11 +55,7 @@ namespace Integrative.Lara.Tools
             var services = type.GetCustomAttributes(typeof(LaraWebService), true);
             foreach (LaraWebService entry in services)
             {
-                if (!typeof(IWebService).IsAssignableFrom(type))
-                {
-                    var message = $"The class {type.FullName} marked as [LaraWebService] needs to implement the interface IWebService.";
-                    throw new InvalidOperationException(message);
-                }
+                VerifyType(type, typeof(IWebService));
                 LaraUI.Publish(new WebServiceContent
                 {
                     Address = entry.Address,
@@ -70,16 +66,21 @@ namespace Integrative.Lara.Tools
             }
         }
 
+        internal static void VerifyType(Type assemblyType, Type requiredType)
+        {
+            if (!requiredType.IsAssignableFrom(assemblyType))
+            {
+                var message = $"The class {assemblyType.FullName} marked as [LaraWebService] needs to implement/inherit [{requiredType.Name}].";
+                throw new InvalidOperationException(message);
+            }
+        }
+
         private static void LoadPages(Type type)
         {
             var pages = type.GetCustomAttributes(typeof(LaraPage), true);
             foreach (LaraPage entry in pages)
             {
-                if (!typeof(IPage).IsAssignableFrom(type))
-                {
-                    var message = $"The class {type.FullName} marked as [LaraPge] needs to implement the interface IPage.";
-                    throw new InvalidOperationException(message);
-                }
+                VerifyType(type, typeof(IPage));
                 LaraUI.Publish(entry.Address, () => (IPage)Activator.CreateInstance(type));
             }
         }
@@ -89,11 +90,7 @@ namespace Integrative.Lara.Tools
             var components = type.GetCustomAttributes(typeof(LaraWebComponent), true);
             foreach (LaraWebComponent entry in components)
             {
-                if (!typeof(WebComponent).IsAssignableFrom(type))
-                {
-                    var message = $"The class {type.FullName} marked as [LaraWebComponent] needs to inherit from WebComponent.";
-                    throw new InvalidOperationException(message);
-                }
+                VerifyType(type, typeof(WebComponent));
                 LaraUI.Publish(new WebComponentOptions
                 {
                     ComponentTagName = entry.ComponentTagName,

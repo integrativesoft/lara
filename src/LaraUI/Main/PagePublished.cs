@@ -24,9 +24,11 @@ namespace Integrative.Lara.Main
 
         public async Task Run(HttpContext http, LaraOptions options)
         {
-            var page =_factory();
+            var page = CreateInstance();
             await RunGetHandler(http, page, options);
         }
+
+        internal IPage CreateInstance() => _factory();
 
         private static async Task RunGetHandler(HttpContext http, IPage page, LaraOptions options)
         {

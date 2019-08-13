@@ -162,5 +162,20 @@ namespace Integrative.Lara.Tests.DOM
             x.ToggleClass("lolo");
             Assert.Equal("lala", x.Class);
         }
+
+        [Fact]
+        public void TagNameCannotHaveSpaces()
+        {
+            bool found = false;
+            try
+            {
+                var x = Element.Create(" a");
+            }
+            catch (ArgumentException)
+            {
+                found = true;
+            }
+            Assert.True(found);
+        }
     }
 }

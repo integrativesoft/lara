@@ -50,6 +50,10 @@ namespace Integrative.Lara.DOM
             {
                 throw new ArgumentNullException(nameof(tagName));
             }
+            else if (tagName.IndexOf(' ') >= 0)
+            {
+                throw new ArgumentException("Element tag names cannot contain spaces.");
+            }
             else
             {
                 tagName = tagName.ToLowerInvariant();

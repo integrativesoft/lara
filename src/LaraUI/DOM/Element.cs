@@ -738,6 +738,23 @@ namespace Integrative.Lara
             ParentElement.RemoveChild(this);
         }
 
+        /// <summary>
+        /// Swaps two child nodes within the element
+        /// </summary>
+        /// <param name="index1">Index of 1st node</param>
+        /// <param name="index2">Index of 2nd node</param>
+        public void SwapChildren(int index1, int index2)
+        {
+            if (index1 == index2)
+            {
+                return;
+            }
+            var temp = _children[index1];
+            _children[index1] = _children[index2];
+            _children[index2] = temp;
+            SwapChildrenDelta.Enqueue(this, index1, index2);
+        }
+
         internal virtual void NotifyValue(ElementEventValue entry)
         {
         }
