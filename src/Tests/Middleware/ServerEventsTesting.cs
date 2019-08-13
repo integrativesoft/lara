@@ -114,7 +114,7 @@ namespace Integrative.Lara.Tests.Middleware
             _controller.ServerEventsOn();
             await _controller.ServerEventFlush();
             Assert.NotEmpty(_document.GetQueue());
-            await _controller.GetSocketCompletion(_socket.Object);
+            await _document.GetSocketCompletion(_socket.Object);
             Assert.Empty(_document.GetQueue());
         }
 
@@ -124,7 +124,7 @@ namespace Integrative.Lara.Tests.Middleware
             _document.OpenEventQueue();
             _controller.ServerEventsOn();
             await _controller.GetSocketCompletion(_socket.Object);
-            using (var access = _controller.StartServerEvent())
+            using (var access = _document.StartServerEvent())
             {
                 _document.Body.AppendText("hello");
                 Assert.NotEmpty(_document.GetQueue());

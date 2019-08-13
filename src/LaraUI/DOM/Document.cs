@@ -216,15 +216,15 @@ namespace Integrative.Lara
         internal async Task NotifyUnload()
         {
             await _serverEvents.NotifyUnload();
-            if (_unloadHandler != null)
+            await IgnoreErrorHandler(_unloadHandler);
+        }
+
+        internal static async Task IgnoreErrorHandler(Func<Task> handler)
+        {
+            if (handler != null)
             {
-                try
-                {
-                    await _unloadHandler();
-                }
-                catch
-                {
-                }
+                try { await handler(); }
+                catch {}
             }
         }
 

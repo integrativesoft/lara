@@ -400,5 +400,40 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(found);
         }
 
+        [Fact]
+        public async void NotifyUnloadExceptionsIgnored()
+        {
+            Task handler1() => throw new InvalidOperationException();
+            Task handler2() => Task.CompletedTask;
+            await Document.IgnoreErrorHandler(handler1);
+            await Document.IgnoreErrorHandler(handler2);
+        }
+
+        [Fact]
+        public void DocumentGetElementById()
+        {
+            var document = new Document(new MyPage());
+            var div = Element.Create("div");
+            div.Id = "lala";
+            document.Body.AppendChild(div);
+            var found = document.GetElementById("lala");
+            Assert.Same(div, found);
+        }
+
+        [Fact]
+        public async void DocumentOnUnloadExecutes()
+        {
+            int counter = 0;
+            Task handler()
+            {
+                counter++;
+                return Task.CompletedTask;
+            }
+            var document = new Document(new MyPage());
+            document.OnUnload(handler);
+            await document.NotifyUnload();
+            Assert.Equal(1, counter);
+        }
+
     }
 }
