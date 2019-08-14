@@ -6,8 +6,6 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Http;
-using Moq;
 using System;
 using System.Net;
 using System.Runtime.Serialization;
@@ -18,6 +16,26 @@ namespace Integrative.Lara.Tests.Middleware
 {
     public class WebServicesTesting
     {
+        static WebServicesTesting()
+        {
+            PublishIfNeeded();
+        }
+
+        readonly static object _mylock = new object();
+        static bool _published;
+
+        internal static void PublishIfNeeded()
+        {
+            lock (_mylock)
+            {
+                if (!_published)
+                {
+                    _published = true;
+                    LaraUI.PublishAssemblies();
+                }
+            }
+        }
+
         [Fact]
         public void LaraJsonSerializeType()
         {
@@ -153,10 +171,14 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesService()
         {
-            LaraUI.ClearAll();
-            LaraUI.PublishAssemblies();
-
-            var combined = Published.CombinePathMethod("/myWS", "POST");
+            const string Address = "/mydummy1";
+            LaraUI.Publish(new WebServiceContent
+            {
+                Address = Address,
+                Method = "POST",
+                Factory = () => new DummyWS()
+            });
+            var combined = Published.CombinePathMethod(Address, "POST");
             var found = LaraUI.TryGetNode(combined, out var item);
             Assert.True(found);
             var service = item as WebServicePublished;
@@ -164,13 +186,17 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.NotNull(service.Factory());
         }
 
+        class DummyWS : IWebService
+        {
+            public Task<string> Execute() => Task.FromResult(string.Empty);
+        }
+
         [Fact]
         public void PublishAssembliesPage()
         {
-            LaraUI.ClearAll();
-            LaraUI.PublishAssemblies();
-
-            bool found = LaraUI.TryGetNode("/myPage", out var item);
+            const string Address = "/mypapapapa";
+            LaraUI.Publish(Address, () => new MyPage());
+            bool found = LaraUI.TryGetNode(Address, out var item);
             Assert.True(found);
             var page = item as PagePublished;
             Assert.NotNull(page.CreateInstance());
@@ -179,10 +205,14 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void UnpublishWebservice()
         {
-            LaraUI.ClearAll();
-            LaraUI.PublishAssemblies();
-            LaraUI.UnPublish("/myWS", "POST");
-            var combined = Published.CombinePathMethod("/myWS", "POST");
+            const string Address = "/mylalala";
+            LaraUI.Publish(new WebServiceContent
+            {
+                Address = Address,
+                Factory = () => new MyWebService()
+            });
+            LaraUI.UnPublish("/mylalala", "POST");
+            var combined = Published.CombinePathMethod(Address, "POST");
             Assert.False(LaraUI.TryGetNode(combined, out _));
         }
 

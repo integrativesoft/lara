@@ -16,30 +16,22 @@ namespace Integrative.Lara.Main
         public const double TimerInterval = 5 * 60000;
         public const double ExpireInterval = 4 * 3600 * 1000;
 
-        private static double _timerInterval = TimerInterval;
-        private static double _expireInterval = ExpireInterval;
-
-        public static void SetTimers(double timerInterval, double expireInterval)
-        {
-            _timerInterval = timerInterval;
-            _expireInterval = expireInterval;
-        }
-
-        public static void SetDefaultTimers()
-        {
-            _timerInterval = TimerInterval;
-            _expireInterval = ExpireInterval;
-        }
-
         readonly Connections _connections;
         readonly Timer _timer;
+        readonly double _expireInterval;
 
         public StaleConnectionsCollector(Connections connections)
+            : this(connections, TimerInterval, ExpireInterval)
+        {
+        }
+
+        public StaleConnectionsCollector(Connections connections, double timerInterval, double expireInternal)
         {
             _connections = connections;
+            _expireInterval = expireInternal;
             _timer = new Timer
             {
-                Interval = _timerInterval
+                Interval = timerInterval
             };
             _timer.Elapsed += async (sender, args) => await CleanupExpiredHandler();
             _timer.Start();

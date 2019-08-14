@@ -23,6 +23,12 @@ namespace Integrative.Lara.Main
             _collector = new StaleConnectionsCollector(this);
         }
 
+        public Connections(double cleanupInterval, double expireInterval)
+        {
+            _connections = new ConcurrentDictionary<Guid, Connection>();
+            _collector = new StaleConnectionsCollector(this, cleanupInterval, expireInterval);
+        }
+
         public Connection CreateConnection(IPAddress remoteIp)
         {
             var id = CreateCryptographicallySecureGuid();

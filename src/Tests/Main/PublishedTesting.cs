@@ -22,11 +22,11 @@ namespace Integrative.Lara.Tests.Main
         {
             using (var published = LaraUI.GetPublished())
             {
-                published.Publish("/", new StaticContent(new byte[0]));
+                published.Publish("/coco", new StaticContent(new byte[0]));
                 published.Publish("/lala", new StaticContent(new byte[0]));
-                LaraUI.UnPublish("/");
+                LaraUI.UnPublish("/coco");
                 Assert.True(published.TryGetNode("/lala", out _));
-                Assert.False(published.TryGetNode("/", out _));
+                Assert.False(published.TryGetNode("/coco", out _));
             }
         }
 

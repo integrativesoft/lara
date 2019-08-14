@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Components;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -21,7 +22,7 @@ namespace Integrative.Lara.Tests.Components
     {
         public ComponentTesting()
         {
-            LaraUI.ClearAll();
+            WebServicesTesting.PublishIfNeeded();
         }
 
         [Fact]
@@ -29,18 +30,18 @@ namespace Integrative.Lara.Tests.Components
         {
             LaraUI.Publish(new WebComponentOptions
             {
-                ComponentTagName = "x-com",
+                ComponentTagName = "x-caca",
                 ComponentType = typeof(MyComponent)
             });
-            Assert.True(LaraUI.TryGetComponent("x-com", out var type));
-            LaraUI.UnPublishWebComponent("x-com");
+            Assert.True(LaraUI.TryGetComponent("x-caca", out var type));
+            LaraUI.UnPublishWebComponent("x-caca");
             Assert.Equal(typeof(MyComponent), type);
-            Assert.False(LaraUI.TryGetComponent("x-com", out _));
+            Assert.False(LaraUI.TryGetComponent("x-caca", out _));
         }
 
         class MyComponent : WebComponent
         {
-            public MyComponent() : base("x-com")
+            public MyComponent() : base("x-caca")
             {
             }
         }
@@ -77,11 +78,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void WebComponentListsAllDescendents()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-com",
-                ComponentType = typeof(XCOM)
-            });
             var x = new XCOM();
             var div = Element.Create("div");
             div.Id = "lala";
@@ -103,11 +99,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void FlattenedChildrenIncludesPrintedOnes()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-com",
-                ComponentType = typeof(XCOM)
-            });
             var container = Element.Create("div");
             var x = new XCOM();
             var div = Element.Create("div");
@@ -170,6 +161,7 @@ namespace Integrative.Lara.Tests.Components
             }
         }
 
+        [LaraWebComponent("x-light")]
         class LightCom : WebComponent
         {
             public LightCom() : base("x-light")
@@ -180,11 +172,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ElementWithoutShadowYieldsItself()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-light",
-                ComponentType = typeof(LightCom)
-            });
             var x = new LightCom();
             var list = new List<Node>(x.GetLightSlotted());
             Assert.Single(list);
@@ -194,11 +181,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void GetSlotElementFinds()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-slotter",
-                ComponentType = typeof(MySlotter)
-            });
             var x = new MySlotter();
             var builder = new LaraBuilder(x);
             builder.Push("div", "", "slot1")
@@ -305,8 +287,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void PublishAssembliesComponent()
         {
-            LaraUI.PublishAssemblies();
-
             Assert.True(LaraUI.TryGetComponent("x-com", out var type));
             Assert.Same(typeof(XCOM), type);
         }
@@ -436,7 +416,7 @@ namespace Integrative.Lara.Tests.Components
             bool blown = false;
             try
             {
-                new XCOM();
+                new MyUnregisteredComponent();
             }
             catch (InvalidOperationException)
             {
@@ -445,14 +425,16 @@ namespace Integrative.Lara.Tests.Components
             Assert.True(blown);
         }
 
+        class MyUnregisteredComponent : WebComponent
+        {
+            public MyUnregisteredComponent() : base("x-cocos")
+            {
+            }
+        }
+
         [Fact]
         public void VerifyComponentSameType()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-com",
-                ComponentType = typeof(XCOM)
-            });
             Assert.False(WebComponent.VerifyType("x-com", typeof(MyComponent), out _));
         }
     }

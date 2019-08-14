@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Moq;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -62,12 +63,12 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void TimerCleansUp()
         {
-            StaleConnectionsCollector.SetTimers(200, 0.5);
-            var connections = new Connections();
+            var connections = new Connections(200, 100);
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            cnx.CreateDocument(new MyPage(), new LaraOptions());
+            var document = cnx.CreateDocument(new MyPage(), new LaraOptions());
             Assert.NotEmpty(connections.GetConnections());
-            await Task.Delay(1000);
+            document.ModifyLastUtcForTesting(DateTime.UtcNow.AddDays(-1));
+            await Task.Delay(400);
             Assert.Empty(connections.GetConnections());
         }
     }

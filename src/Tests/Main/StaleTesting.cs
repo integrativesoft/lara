@@ -17,7 +17,6 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void CleanupLeavesUnexpiredDocument()
         {
-            StaleConnectionsCollector.SetDefaultTimers();
             var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             var doc1 = cnx.CreateDocument(new MyPage(), new LaraOptions());

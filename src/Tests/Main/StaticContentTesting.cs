@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace Integrative.Lara.Tests.Main
 
         public StaticContentTesting()
         {
-            LaraUI.ClearAll();
+            WebServicesTesting.PublishIfNeeded();
         }
 
         [Fact]
