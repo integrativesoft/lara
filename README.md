@@ -41,6 +41,10 @@ namespace SampleProject
                 AllowLocalhostOnly = true  // accept connection from current machine only (default)
             });
 
+            // Write address in console.
+            string address = LaraUI.GetFirstURL(host);
+            Console.WriteLine($"Server listening in {address}.");
+            
             // Launch browser tab. Alternatively, comment out and direct the user to localhost:8181.
             LaraUI.LaunchBrowser(address);
             
