@@ -8,8 +8,8 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.5.2</Version>
-    <Authors>Integrative Software LLC</Authors>
+    <Version>0.5.3</Version>
+    <Authors>Pablo Carbonell; Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
     <Description>Lara is a lightweight, cross-platform C# server-side rendering library for Web UI development.
