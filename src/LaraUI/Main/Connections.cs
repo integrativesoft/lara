@@ -66,6 +66,14 @@ namespace Integrative.Lara.Main
             }
         }
 
+        public void ClearEmptyConnection(Connection connection)
+        {
+            if (connection.IsEmpty)
+            {
+                Discard(connection.Id);
+            }
+        }
+
         public IEnumerable<KeyValuePair<Guid, Connection>> GetConnections() => _connections;
 
         bool _disposed;

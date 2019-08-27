@@ -13,9 +13,6 @@ namespace Integrative.Lara.Middleware
     {
         private const int DiscardDelay = 3000;
 
-        //static readonly Task<bool> Success = Task.FromResult(true);
-        //static readonly Task<bool> Failure = Task.FromResult(false);
-
         public DiscardHandler(RequestDelegate next) : base(next)
         {
         }
@@ -29,6 +26,7 @@ namespace Integrative.Lara.Middleware
             {
                 await Task.Delay(DiscardDelay);
                 await connection.Discard(parameters.DocumentId);
+                LaraUI.ClearEmptyConnection(connection);
                 return true;
             }
             return false;

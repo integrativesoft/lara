@@ -114,6 +114,9 @@ namespace Integrative.Lara
         internal static Connection CreateConnection(IPAddress remoteIp)
             => _published.Connections.CreateConnection(remoteIp);
 
+        internal static void ClearEmptyConnection(Connection connection)
+            => _published.Connections.ClearEmptyConnection(connection);
+
         #endregion
 
         #region Web Components
