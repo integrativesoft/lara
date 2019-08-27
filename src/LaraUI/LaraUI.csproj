@@ -2,14 +2,12 @@
  
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>x64;AnyCPU</Platforms>
-    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <RootNamespace>Integrative.Lara</RootNamespace>
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
     <Version>0.5.3</Version>
-    <Authors>Pablo Carbonell; Integrative Software LLC</Authors>
+    <Authors>Pablo Carbonell, Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
     <Description>Lara is a lightweight, cross-platform C# server-side rendering library for Web UI development.

@@ -47,7 +47,8 @@ namespace LaraUI {
         Message: ClientEventMessage;
     }
 
-    export function plug(el: Element, eventName: string): void {
+    export function plug(el: Element, eventName: string, event: Event): void {
+        event.stopPropagation();
         let attribute = "data-lara-event-" + eventName;
         let json = el.getAttribute(attribute);
         if (json) {
