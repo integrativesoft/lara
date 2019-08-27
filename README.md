@@ -44,10 +44,10 @@ namespace SampleProject
             // Write address in console.
             string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
-            
+
             // Launch browser tab. Alternatively, comment out and direct the user to localhost:8181.
             LaraUI.LaunchBrowser(address);
-            
+
             // Wait for termination.
             Console.WriteLine("Press Ctrl+C to terminate");
             await host.WaitForShutdownAsync();
@@ -63,10 +63,10 @@ namespace SampleProject
         {
             var button = Element.Create("button");
             button.AppendText("Click me");
-            button.On("click", app =>
+            button.On("click", () =>
             {
                 counter++;
-                text.Data = $"Clicked {counter} times";
+                button.SetInnerText($"Clicked {counter} times");
                 return Task.CompletedTask;
             });
             LaraUI.Page.Document.Body.AppendChild(button);
