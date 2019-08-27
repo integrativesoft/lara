@@ -31,7 +31,7 @@ For more information see our Github page available from laraui.com</Description>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
   
   <ItemGroup>
@@ -51,7 +51,9 @@ For more information see our Github page available from laraui.com</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="LaraUI.js" />
+    <EmbeddedResource Include="LaraUI.js">
+      <Pack>false</Pack>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
