@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "outFile": "./build/LaraClient.js",
+    "outDir": "./build"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

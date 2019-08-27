@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaraUI", "LaraUI\LaraUI.csproj", "{1CF006B1-8B28-45BC-B9C8-1E548ACD115D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F} = {6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleProject", "SampleProject\SampleProject.csproj", "{C40FC41C-4FED-4502-A912-33BCE42954AD}"
 EndProject
@@ -16,6 +19,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E93241E3-DCE0-47AF-BA01-2F1C02864F67}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "LaraDocumentation", "LaraDocumentation\LaraDocumentation.shfbproj", "{0019560B-ED95-4921-9050-8AD37BF9D7EF}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "LaraClient", "LaraClient\LaraClient.njsproj", "{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +61,14 @@ Global
 		{0019560B-ED95-4921-9050-8AD37BF9D7EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0019560B-ED95-4921-9050-8AD37BF9D7EF}.Release|x64.ActiveCfg = Release|Any CPU
 		{0019560B-ED95-4921-9050-8AD37BF9D7EF}.Release|x64.Build.0 = Release|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Debug|x64.Build.0 = Debug|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

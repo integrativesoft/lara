@@ -226,3 +226,6 @@ project.lock.json
 /src/LaraUI/LaraUI.js
 /src/.axoCover/runs/run_2019-05-14_19-16-46/coverageReport.xml
 /src/LaraDocumentation/Help
+/src/LaraClient/build
+*.map
+*.js

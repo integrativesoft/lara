@@ -50,7 +50,7 @@ namespace Integrative.Lara.Main
             };
             head.AppendChild(script);
 
-            // LaraUI.js
+            // LaraClient.js
             script = new Script
             {
                 Src = _libraryUrl,
