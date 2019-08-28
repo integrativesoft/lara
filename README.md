@@ -12,8 +12,6 @@ Lara can be used to develop either websites or desktop apps with an HTML5 fronte
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
-We welcome questions and feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
-
 ## Sample application
 
 To create a web page:
@@ -98,4 +96,4 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## Feedback
 
-We'd love to hear your feedback. Write to us [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
+We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
