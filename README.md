@@ -94,6 +94,11 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
+## How to contribute
+
+Submit issues, ask questions, send feedback.
+**If you like Lara, please give it a star - it helps!**
+
 ## Feedback
 
 We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
