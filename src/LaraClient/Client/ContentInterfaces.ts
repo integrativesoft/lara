@@ -8,7 +8,8 @@ namespace LaraUI {
 
     export enum ContentNodeType {
         Element = 1,
-        Text = 2
+        Text = 2,
+        Array = 3
     }
 
     export interface ContentNode {
@@ -29,5 +30,9 @@ namespace LaraUI {
         NS: string;
         Attributes: ContentAttribute[];
         Children: ContentNode[];
+    }
+
+    export interface ContentArrayNode extends ContentNode {
+        Nodes: ContentNode[];
     }
 }

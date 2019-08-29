@@ -12,11 +12,13 @@ namespace Integrative.Lara.Delta
     {
         Element = 1,
         Text = 2,
+        Array = 3
     }
 
     [DataContract]
     [KnownType(typeof(ContentTextNode))]
     [KnownType(typeof(ContentElementNode))]
+    [KnownType(typeof(ContentArrayNode))]
     abstract class ContentNode
     {
         [DataMember]

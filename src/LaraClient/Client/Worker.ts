@@ -66,29 +66,57 @@ namespace LaraUI {
 
     function append(delta: NodeAddedDelta): void {
         let el = document.getElementById(delta.ParentId);
-        let child = createNode(delta.Node);
-        el.appendChild(child);
+        let children = createNodes(delta.Node);
+        appendChildren(el, children);
     }
 
-    function insert(delta: NodeInsertedDelta): void {
-        let el = document.getElementById(delta.ParentElementId);
-        let child = createNode(delta.ContentNode);
-        if (delta.Index < el.childNodes.length) {
-            let before = el.childNodes[delta.Index];
-            el.insertBefore(child, before);
-        } else {
+    function appendChildren(el: Element, children: Node[]): void {
+        for (let child of children) {
             el.appendChild(child);
         }
     }
 
-    function createNode(node: ContentNode): Node {
+    function insert(delta: NodeInsertedDelta): void {
+        let el = document.getElementById(delta.ParentElementId);
+        let children = createNodes(delta.ContentNode);
+        if (delta.Index < el.childNodes.length) {
+            let before = el.childNodes[delta.Index];
+            insertBeforeChildren(el, before, children);
+        } else {
+            appendChildren(el, children);
+        }
+    }
+
+    function insertBeforeChildren(el: Element, before: ChildNode, children: Node[]): void {
+        for (let child of children) {
+            el.insertBefore(child, before);
+            before = child.nextSibling;
+        }
+    }
+
+    function createNodes(node: ContentNode): Node[] {
+        let list: Node[] = [];
+        pushNodes(node, list);
+        return list;
+    }
+
+    function pushNodes(node: ContentNode, list: Node[]): void {
         if (node.Type == ContentNodeType.Text) {
-            return createTextNode(node as ContentTextNode);
+            list.push(createTextNode(node as ContentTextNode));
         } else if (node.Type == ContentNodeType.Element) {
-            return createElementNode(node as ContentElementNode);
+            list.push(createElementNode(node as ContentElementNode));
+        } else if (node.Type == ContentNodeType.Array) {
+            pushArrayNodes(node as ContentArrayNode, list);
         } else {
             console.log("Error processing event response. Unknown content type: " + node.Type);
             document.createTextNode("");
+        }
+    }
+
+    function pushArrayNodes(node: ContentArrayNode, list: Node[]): void {
+        for (let index = 0; index < node.Nodes.length; index++) {
+            let item = node.Nodes[index];
+            pushNodes(item, list);
         }
     }
 
@@ -104,7 +132,10 @@ namespace LaraUI {
             child.setAttribute(attribute.Attribute, attribute.Value);
         }
         for (var branch of node.Children) {
-            child.appendChild(createNode(branch));
+            let nodes = createNodes(branch);
+            for (let node of nodes) {
+                child.appendChild(node);
+            }
         }
         return child;
     }
