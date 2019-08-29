@@ -12,8 +12,6 @@ Lara can be used to develop either websites or desktop apps with an HTML5 fronte
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
-We welcome questions and feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
-
 ## Sample application
 
 To create a web page:
@@ -44,10 +42,10 @@ namespace SampleProject
             // Write address in console.
             string address = LaraUI.GetFirstURL(host);
             Console.WriteLine($"Server listening in {address}.");
-            
+
             // Launch browser tab. Alternatively, comment out and direct the user to localhost:8181.
             LaraUI.LaunchBrowser(address);
-            
+
             // Wait for termination.
             Console.WriteLine("Press Ctrl+C to terminate");
             await host.WaitForShutdownAsync();
@@ -63,10 +61,10 @@ namespace SampleProject
         {
             var button = Element.Create("button");
             button.AppendText("Click me");
-            button.On("click", app =>
+            button.On("click", () =>
             {
                 counter++;
-                text.Data = $"Clicked {counter} times";
+                button.SetInnerText($"Clicked {counter} times");
                 return Task.CompletedTask;
             });
             LaraUI.Page.Document.Body.AppendChild(button);
@@ -96,6 +94,11 @@ Here you need to choose a tool to load your locally-hosted website inside a desk
 
 Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
+## How to contribute
+
+Submit issues, ask questions, send feedback.
+**If you like Lara, please give it a star - it helps!**
+
 ## Feedback
 
-We'd love to hear your feedback. Write to us [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
+We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
