@@ -17,6 +17,8 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class LaraBuilder
     {
+        #region Constructor
+
         readonly Stack<Element> _stack;
 
         /// <summary>
@@ -30,6 +32,10 @@ namespace Integrative.Lara
             startingElement.EnsureElementId();
             _stack.Push(startingElement);
         }
+
+        #endregion
+
+        #region Pushing and popping elements
 
         /// <summary>
         /// Adds a new element and positions the builder into it.
@@ -122,6 +128,21 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Returns the current element in the out variable
+        /// </summary>
+        /// <param name="element">Current element</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder GetCurrent(out Element element)
+        {
+            element = _stack.Peek();
+            return this;
+        }
+
+        #endregion
+
+        #region Adding nodes
+
+        /// <summary>
         /// Adds a text node.
         /// </summary>
         /// <param name="text">The text.</param>
@@ -197,6 +218,10 @@ namespace Integrative.Lara
             return this;
         }
 
+        #endregion
+
+        #region Current element attributes
+
         /// <summary>
         /// Sets an attribute on the current element.
         /// </summary>
@@ -222,6 +247,55 @@ namespace Integrative.Lara
             current.SetFlagAttribute(attribute, value);
             return this;
         }
+
+        /// <summary>
+        /// Adds a class to the current element
+        /// </summary>
+        /// <param name="className">class to add</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder AddClass(string className)
+        {
+            _stack.Peek().AddClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to remove</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder RemoveClass(string className)
+        {
+            _stack.Peek().RemoveClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds or removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to toggle</param>
+        /// <returns>This instamce</returns>
+        public LaraBuilder ToggleClass(string className)
+        {
+            _stack.Peek().ToggleClass(className);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds or removes a class from the current element
+        /// </summary>
+        /// <param name="className">Class to toggle</param>
+        /// <param name="value">true to add, false to remove</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder ToggleClass(string className, bool value)
+        {
+            _stack.Peek().ToggleClass(className, value);
+            return this;
+        }
+
+        #endregion
+
+        #region Current element events
 
         /// <summary>
         /// Associates an event handler with the current element.
@@ -262,14 +336,18 @@ namespace Integrative.Lara
             return this;
         }
 
+        #endregion
+
+        #region Current element bindings
+
         /// <summary>
         /// Adds bindings for an attribute
         /// </summary>
-        /// <typeparam name="T">Type of data source</typeparam>
+        /// <typeparam name="T">Data type for data source</typeparam>
         /// <param name="attribute">Attribute</param>
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source's property</param>
-        /// <returns></returns>
+        /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<string> property)
             where T : INotifyPropertyChanged
         {
@@ -282,10 +360,29 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
+            {
+                Attribute = attribute,
+                Object = instance,
+                Property = x => property()
+            });
+        }
+
+        /// <summary>
         /// Adds bindings for an attribute
         /// </summary>
-        /// <typeparam name="T">Type of data source</typeparam>
-        /// <param name="options">Attribute bindign options</param>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
             where T : INotifyPropertyChanged
@@ -295,17 +392,49 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindFlagAttribute<T>(options);
+            return this;
+        }
+
+        /// <summary>
         /// Adds bindings for an attribute
         /// </summary>
-        /// <typeparam name="T">Type of data source</typeparam>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="attribute">Attribute</param>
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source's property</param>
-        /// <returns></returns>
+        /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<T, string> property)
             where T : INotifyPropertyChanged
         {
             return BindAttribute<T>(new BindAttributeOptions<T>
+            {
+                Attribute = attribute,
+                Object = instance,
+                Property = property
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<T, bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
                 Object = instance,
@@ -454,60 +583,6 @@ namespace Integrative.Lara
             return this;
         }
 
-        /// <summary>
-        /// Returns the current element in the out variable
-        /// </summary>
-        /// <param name="element">Current element</param>
-        /// <returns>This instance</returns>
-        public LaraBuilder GetCurrent(out Element element)
-        {
-            element = _stack.Peek();
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a class to the current element
-        /// </summary>
-        /// <param name="className">class to add</param>
-        /// <returns>This instance</returns>
-        public LaraBuilder AddClass(string className)
-        {
-            _stack.Peek().AddClass(className);
-            return this;
-        }
-
-        /// <summary>
-        /// Removes a class from the current element
-        /// </summary>
-        /// <param name="className">Class to remove</param>
-        /// <returns>This instance</returns>
-        public LaraBuilder RemoveClass(string className)
-        {
-            _stack.Peek().RemoveClass(className);
-            return this;
-        }
-
-        /// <summary>
-        /// Adds or removes a class from the current element
-        /// </summary>
-        /// <param name="className">Class to toggle</param>
-        /// <returns>This instamce</returns>
-        public LaraBuilder ToggleClass(string className)
-        {
-            _stack.Peek().ToggleClass(className);
-            return this;
-        }
-
-        /// <summary>
-        /// Adds or removes a class from the current element
-        /// </summary>
-        /// <param name="className">Class to toggle</param>
-        /// <param name="value">true to add, false to remove</param>
-        /// <returns>This instance</returns>
-        public LaraBuilder ToggleClass(string className, bool value)
-        {
-            _stack.Peek().ToggleClass(className, value);
-            return this;
-        }
+        #endregion
     }
 }

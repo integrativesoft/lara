@@ -880,13 +880,25 @@ namespace Integrative.Lara
         /// <summary>
         /// Binds an attribute
         /// </summary>
-        /// <typeparam name="T">Type of data source</typeparam>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Attribute binding options</param>
         public void BindAttribute<T>(BindAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
             EnsureBindings();
             _bindings.BindAttribute<T>(options);
+        }
+
+        /// <summary>
+        /// Binds a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindFlagAttribute<T>(options);
         }
 
         /// <summary>

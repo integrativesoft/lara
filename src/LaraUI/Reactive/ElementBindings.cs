@@ -87,6 +87,14 @@ namespace Integrative.Lara.Reactive
             _attributeBindings.Add(options.Attribute, options);
         }
 
+        public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            UnbindAttribute(options.Attribute);
+            BindOptions(options);
+            _attributeBindings.Add(options.Attribute, options);
+        }
+
         public void UnbindAttribute(string attribute)
         {
             if (_attributeBindings.TryGetValue(attribute, out var options))
@@ -109,7 +117,7 @@ namespace Integrative.Lara.Reactive
 
         #region Inner text
 
-        public void BindInnerText<T>(BindTextOptions<T> options)
+        public void BindInnerText<T>(BindPropertyOptions<T, string> options)
             where T : INotifyPropertyChanged
         {
             UnbindInnerText();

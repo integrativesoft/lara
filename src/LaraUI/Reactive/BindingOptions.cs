@@ -87,19 +87,20 @@ namespace Integrative.Lara
     /// <summary>
     /// Abstract class for text-property bindings
     /// </summary>
-    /// <typeparam name="T">Type of data source</typeparam>
-    public abstract class BindTextOptions<T> : BindPropertyOptions
-        where T : INotifyPropertyChanged
+    /// <typeparam name="TData">Data type for data source instance</typeparam>
+    /// <typeparam name="TValue">Data type for data source property</typeparam>
+    public abstract class BindPropertyOptions<TData, TValue> : BindPropertyOptions
+        where TData : INotifyPropertyChanged
     {
         /// <summary>
         /// Instance to track changes
         /// </summary>
-        public T Object { get; set; }
+        public TData Object { get; set; }
 
         /// <summary>
         /// Function to retrieve the target value from instance that's tracked
         /// </summary>
-        public Func<T, string> Property { get; set; }
+        public Func<TData, TValue> Property { get; set; }
 
         internal override event PropertyChangedEventHandler PropertyChanged;
 
@@ -118,7 +119,7 @@ namespace Integrative.Lara
             PropertyChanged?.Invoke(this, args);
         }
 
-        internal string GetCurrentValue()
+        internal TValue GetCurrentValue()
             => Property(Object);
     }
 
@@ -126,7 +127,7 @@ namespace Integrative.Lara
     /// Binding options for inner text
     /// </summary>
     /// <typeparam name="T">Type of data source object</typeparam>
-    public sealed class BindInnerTextOptions<T> : BindTextOptions<T>
+    public sealed class BindInnerTextOptions<T> : BindPropertyOptions<T, string>
         where T : INotifyPropertyChanged
     {
         internal override void Apply(Element element)
@@ -140,7 +141,7 @@ namespace Integrative.Lara
     /// Binding options for attributes
     /// </summary>
     /// <typeparam name="T">Type of data source object</typeparam>
-    public sealed class BindAttributeOptions<T> : BindTextOptions<T>
+    public sealed class BindAttributeOptions<T> : BindPropertyOptions<T, string>
         where T : INotifyPropertyChanged
     {
         /// <summary>
@@ -152,6 +153,25 @@ namespace Integrative.Lara
         {
             var value = GetCurrentValue();
             element.SetAttribute(Attribute, value);
+        }
+    }
+
+    /// <summary>
+    /// Binding options for flag attributes
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public sealed class BindFlagAttributeOptions<T> : BindPropertyOptions<T, bool>
+        where T : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Attribute to bind
+        /// </summary>
+        public string Attribute { get; set; }
+
+        internal override void Apply(Element element)
+        {
+            var value = GetCurrentValue();
+            element.SetFlagAttribute(Attribute, value);
         }
     }
 
