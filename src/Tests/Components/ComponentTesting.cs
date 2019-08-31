@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Components;
+using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Middleware;
@@ -260,11 +261,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ObservedOnlyAttributeDoesNothing()
         {
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-dummy",
-                ComponentType = typeof(MyDummyComponent)
-            });
+            //MyDummyComponent.Publish();
             var x = new MyDummyComponent
             {
                 Class = "lala"
@@ -272,8 +269,20 @@ namespace Integrative.Lara.Tests.Components
             Assert.Equal("lala", x.Class);
         }
 
+        [LaraWebComponent("x-dummy")]
         class MyDummyComponent : WebComponent
         {
+            /*public static void Publish()
+            {
+                LaraUI.Publish(new WebComponentOptions
+                {
+                    ComponentTagName = "x-dummy",
+                    ComponentType = typeof(MyDummyComponent)
+                });
+            }*/
+
+            public int Moved { get; private set; }
+
             public MyDummyComponent() : base("x-dummy")
             {
             }
@@ -281,6 +290,12 @@ namespace Integrative.Lara.Tests.Components
             protected override IEnumerable<string> GetObservedAttributes()
             {
                 return new string[] { "class" };
+            }
+
+            protected override void OnMove()
+            {
+                base.OnMove();
+                Moved++;
             }
         }
 
@@ -436,6 +451,68 @@ namespace Integrative.Lara.Tests.Components
         public void VerifyComponentSameType()
         {
             Assert.False(WebComponent.VerifyType("x-com", typeof(MyComponent), out _));
+        }
+
+        [Fact]
+        public void NotifyMovedCalledDirectly()
+        {
+            //MyDummyComponent.Publish();
+            var document = new Document(new MyPage());
+            var x = new MyDummyComponent();
+            var div1 = Element.Create("div");
+            var div2 = Element.Create("div");
+            document.Body.AppendChild(div1);
+            document.Body.AppendChild(div2);
+            div1.AppendChild(x);
+            Assert.Equal(0, x.Moved);
+            div2.AppendChild(x);
+            Assert.Equal(1, x.Moved);
+        }
+
+        [Fact]
+        public void GetContentNodeReturnsShadowChildren()
+        {
+            //MyTwoDivComponent.Register();
+            var component = new MyTwoDivComponent(true);
+            var content = component.GetContentNode();
+            Assert.Equal(ContentNodeType.Array, content.Type);
+            var array = content as ContentArrayNode;
+            Assert.NotNull(array);
+            Assert.Equal(2, array.Nodes.Count);
+            Assert.Equal(ContentNodeType.Element, array.Nodes[0].Type);
+            Assert.Equal(ContentNodeType.Text, array.Nodes[1].Type);
+        }
+
+        [Fact]
+        public void GetContentNodeReturnsSelf()
+        {
+            //MyTwoDivComponent.Register();
+            var component = new MyTwoDivComponent(false);
+            var content = component.GetContentNode();
+            Assert.Equal(ContentNodeType.Element, content.Type);
+        }
+
+        [LaraWebComponent("x-twodiv")]
+        class MyTwoDivComponent : WebComponent
+        {
+            /*public static void Register()
+            {
+                LaraUI.Publish(new WebComponentOptions
+                {
+                    ComponentTagName = "x-twodiv",
+                    ComponentType = typeof(MyTwoDivComponent)
+                });
+            }*/
+
+            public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
+            {
+                if (useShadow)
+                {
+                    AttachShadow();
+                    ShadowRoot.AppendChild(Create("div"));
+                    ShadowRoot.AppendText("hello");
+                }
+            }
         }
     }
 }

@@ -763,6 +763,39 @@ namespace Integrative.Lara
         {
         }
 
+        /// <summary>
+        /// Occurs when the element is connected to the document's DOM.
+        /// </summary>
+        protected virtual void OnConnect()
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the element is disconnected from the document's DOM.
+        /// </summary>
+        protected virtual void OnDisconnect()
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the element is moved from one document to another.
+        /// </summary>
+        protected virtual void OnAdopted()
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the element or one of its containing elements is moved within the same document's DOM.
+        /// </summary>
+        protected virtual void OnMove()
+        {
+        }
+
+        internal void NotifyConnect() => OnConnect();
+        internal void NotifyDisconnect() => OnDisconnect();
+        internal void NotifyAdopted() => OnAdopted();
+        internal void NotifyMove() => OnMove();
+
         #endregion
 
         #region Generate Delta content

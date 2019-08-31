@@ -27,38 +27,153 @@ namespace Integrative.Lara.DOM
 
         public void Append(Node child)
         {
+            var previous = BeforeOperation(child);
             AppendInternal(child);
+            AfterOperation(child, previous);
         }
 
         public void InsertChildBefore(Node reference, Node child)
         {
+            var previous = BeforeOperation(child);
             InsertChild(reference, 0, child);
+            AfterOperation(child, previous);
         }
 
         public void InsertChildAfter(Node reference, Node child)
         {
+            var previous = BeforeOperation(child);
             InsertChild(reference, 1, child);
+            AfterOperation(child, previous);
         }
 
         public void InsertChildAt(int index, Node child)
         {
+            var previous = BeforeOperation(child);
             InsertChild(index, child);
+            AfterOperation(child, previous);
         }
 
         public void Remove(Node child)
         {
             RemoveInternal(child);
+            AfterOperation(child, _parent);
         }
 
         public void RemoveAt(int index)
         {
+            var child = _parent.GetChildAt(index);
             RemoveInternal(index);
+            AfterOperation(child, _parent);
         }
 
         public void ClearChildren()
         {
+            var list = new List<Node>(_parent.Children);
             ClearChildrenInternal();
+            foreach (var node in list)
+            {
+                AfterOperation(node, _parent);
+            }
         }
+
+        #endregion
+
+        #region Connect and disconnect
+
+        private Element BeforeOperation(Node child)
+        {
+            return child.ParentElement;
+        }
+
+        private void AfterOperation(Node node, Element previousParent)
+        {
+            if (node is Element child)
+            {
+                AfterOperation(child, previousParent);
+            }
+        }
+
+        private void AfterOperation(Element child, Element previousParent)
+        {
+            var previousDocument = GetPreviousDocument(previousParent);
+            if (previousDocument == child.Document)
+            {
+                if (previousDocument != null)
+                {
+                    NotifyMove(child);
+                }
+            }
+            else if (child.Document == null)
+            {
+                NotifyDisconnected(child);
+            }
+            else if (previousDocument == null)
+            {
+                NotifyConnected(child);
+            }
+            else
+            {
+                NotifyAdopted(child);
+            }            
+        }
+
+        private Document GetPreviousDocument(Element previousParent)
+        {
+            if (previousParent == null)
+            {
+                return null;
+            }
+            else
+            {
+                return previousParent.Document;
+            }
+        }
+
+        private void NotifyConnected(Element child)
+        {
+            foreach (var item in GetBranchElements(child))
+            {
+                item.NotifyConnect();
+            }
+        }
+
+        private void NotifyDisconnected(Element child)
+        {
+            foreach (var item in GetBranchElements(child))
+            {
+                item.NotifyDisconnect();
+            }
+        }
+
+        private void NotifyMove(Element child)
+        {
+            foreach (var item in GetBranchElements(child))
+            {
+                item.NotifyMove();
+            }
+        }
+
+        private void NotifyAdopted(Element child)
+        {
+            foreach (var item in GetBranchElements(child))
+            {
+                item.NotifyAdopted();
+            }
+        }
+
+        private IEnumerable<Element> GetBranchElements(Element child)
+        {
+            yield return child;
+            foreach (var item in child.GetAllDescendants())
+            {
+                if (item is Element element)
+                {
+                    yield return element;
+                }
+            }
+        }
+
+        #endregion
 
         #region Operations
 
@@ -147,8 +262,6 @@ namespace Integrative.Lara.DOM
             _parent.OnChildRemoved(child);
             child.ParentElement = null;
         }
-
-        #endregion
 
         #endregion
 

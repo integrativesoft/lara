@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -298,6 +297,8 @@ namespace Integrative.Lara.Tests.DOM
                 get => _counter;
                 set => SetProperty(ref _counter, value);
             }
+
+            public bool IsEven => (_counter % 2) == 0;
         }
 
         [Fact]
@@ -351,6 +352,34 @@ namespace Integrative.Lara.Tests.DOM
             var child = (Element)div.GetChildAt(position);
             var current = child.GetAttribute("data-counter");
             Assert.Equal(value, current);
+        }
+
+        [Fact]
+        public void BindFlagAttributeBinds()
+        {
+            var div = Element.Create("div");
+            var data = new MyData();
+            div.BindFlagAttribute(new BindFlagAttributeOptions<MyData>
+            {
+                Attribute = "data-even",
+                Object = data,
+                Property = x => x.IsEven
+            });
+            Assert.True(div.HasAttribute("data-even"));
+            data.Counter++;
+            Assert.False(div.HasAttribute("data-even"));
+        }
+
+        [Fact]
+        public void LaraFlagBinding()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            var data = new MyData();
+            builder.BindFlagAttribute("data-even1", data, () => data.IsEven);
+            builder.BindFlagAttribute("data-even2", data, x => x.IsEven);
+            Assert.True(div.HasAttribute("data-even1"));
+            Assert.True(div.HasAttribute("data-even2"));
         }
     }
 }

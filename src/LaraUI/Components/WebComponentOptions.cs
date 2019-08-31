@@ -19,7 +19,7 @@ namespace Integrative.Lara
         public string ComponentTagName { get; set; }
 
         /// <summary>
-        /// Type of the component. Needs to inherit from WebComponent.
+        /// Type of the component. Needs to inherit from WebComponent. Example: 'typeof(MyComponent)'
         /// </summary>
         public Type ComponentType { get; set; }
     }
