@@ -300,11 +300,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void SlotsPrintHostElements()
         {
-            /*LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = "x-slotter",
-                ComponentType = typeof(MySlotter)
-            });*/
             var document = new Document(new MyPage());
             var builder = new LaraBuilder(document.Body);
             builder.Push("x-slotter")
