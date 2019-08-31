@@ -18,22 +18,7 @@ namespace Integrative.Lara.Tests.Middleware
     {
         static WebServicesTesting()
         {
-            PublishIfNeeded();
-        }
-
-        readonly static object _mylock = new object();
-        static bool _published;
-
-        internal static void PublishIfNeeded()
-        {
-            lock (_mylock)
-            {
-                if (!_published)
-                {
-                    _published = true;
-                    LaraUI.PublishAssemblies();
-                }
-            }
+            PublishHelper.PublishIfNeeded();
         }
 
         [Fact]
@@ -229,6 +214,62 @@ namespace Integrative.Lara.Tests.Middleware
                 found = true;
             }
             Assert.True(found);
+        }
+
+        [Fact]
+        public void ClearAllRemovesPublished()
+        {
+            PublishHelper.RunInsideLock(ClearAllAction);
+        }
+
+        const string ServiceName = "/removableService";
+        const string ComponentName = "x-removable";
+        const string PageName = "/removablePage";
+        const string FileName = "/removableFile";
+
+        private void ClearAllAction()
+        {
+            LaraUI.Publish(PageName, () => new RemovablePage());
+            LaraUI.Publish(new WebServiceContent
+            {
+                Address = ServiceName,
+                Factory = () => new RemovableService(),
+                Method = "GET"
+            });
+            LaraUI.Publish(FileName, new StaticContent(new byte[0]));
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = ComponentName,
+                ComponentType = typeof(RemovableComponent)
+            });
+            VerifyFound(true);
+            LaraUI.ClearAll();
+            VerifyFound(false);            
+        }
+
+        private void VerifyFound(bool found)
+        {
+            Assert.Equal(found, LaraUI.TryGetNode(PageName, out _));
+            Assert.Equal(found, LaraUI.TryGetNode(FileName, out _));
+            Assert.Equal(found, LaraUI.TryGetNode(ServiceName, out _));
+            Assert.Equal(found, LaraUI.TryGetComponent(ComponentName, out _));
+        }
+
+        class RemovablePage : IPage
+        {
+            public Task OnGet() => Task.CompletedTask;
+        }
+
+        class RemovableComponent : WebComponent
+        {
+            public RemovableComponent() : base("x-removable")
+            {
+            }
+        }
+
+        class RemovableService : IWebService
+        {
+            public Task<string> Execute() => Task.FromResult(string.Empty);
         }
     }
 }

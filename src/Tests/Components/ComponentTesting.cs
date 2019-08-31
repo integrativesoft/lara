@@ -23,7 +23,7 @@ namespace Integrative.Lara.Tests.Components
     {
         public ComponentTesting()
         {
-            WebServicesTesting.PublishIfNeeded();
+            PublishHelper.PublishIfNeeded();
         }
 
         [Fact]

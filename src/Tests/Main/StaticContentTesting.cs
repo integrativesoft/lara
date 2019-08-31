@@ -30,7 +30,7 @@ namespace Integrative.Lara.Tests.Main
 
         public StaticContentTesting()
         {
-            WebServicesTesting.PublishIfNeeded();
+            PublishHelper.PublishIfNeeded();
         }
 
         [Fact]
