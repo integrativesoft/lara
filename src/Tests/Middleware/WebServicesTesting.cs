@@ -244,7 +244,8 @@ namespace Integrative.Lara.Tests.Middleware
             });
             VerifyFound(true);
             LaraUI.ClearAll();
-            VerifyFound(false);            
+            VerifyFound(false);
+            LaraUI.PublishAssemblies();
         }
 
         private void VerifyFound(bool found)
