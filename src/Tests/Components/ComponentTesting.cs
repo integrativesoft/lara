@@ -261,7 +261,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ObservedOnlyAttributeDoesNothing()
         {
-            //MyDummyComponent.Publish();
             var x = new MyDummyComponent
             {
                 Class = "lala"
@@ -272,15 +271,6 @@ namespace Integrative.Lara.Tests.Components
         [LaraWebComponent("x-dummy")]
         class MyDummyComponent : WebComponent
         {
-            /*public static void Publish()
-            {
-                LaraUI.Publish(new WebComponentOptions
-                {
-                    ComponentTagName = "x-dummy",
-                    ComponentType = typeof(MyDummyComponent)
-                });
-            }*/
-
             public int Moved { get; private set; }
 
             public MyDummyComponent() : base("x-dummy")
@@ -456,7 +446,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void NotifyMovedCalledDirectly()
         {
-            //MyDummyComponent.Publish();
             var document = new Document(new MyPage());
             var x = new MyDummyComponent();
             var div1 = Element.Create("div");
@@ -472,7 +461,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void GetContentNodeReturnsShadowChildren()
         {
-            //MyTwoDivComponent.Register();
             var component = new MyTwoDivComponent(true);
             var content = component.GetContentNode();
             Assert.Equal(ContentNodeType.Array, content.Type);
@@ -486,7 +474,6 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void GetContentNodeReturnsSelf()
         {
-            //MyTwoDivComponent.Register();
             var component = new MyTwoDivComponent(false);
             var content = component.GetContentNode();
             Assert.Equal(ContentNodeType.Element, content.Type);
@@ -495,15 +482,6 @@ namespace Integrative.Lara.Tests.Components
         [LaraWebComponent("x-twodiv")]
         class MyTwoDivComponent : WebComponent
         {
-            /*public static void Register()
-            {
-                LaraUI.Publish(new WebComponentOptions
-                {
-                    ComponentTagName = "x-twodiv",
-                    ComponentType = typeof(MyTwoDivComponent)
-                });
-            }*/
-
             public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
             {
                 if (useShadow)
