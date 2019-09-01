@@ -8,7 +8,20 @@ namespace LaraUI {
 
     export function processResult(steps: BaseDelta[]): void {
         for (var step of steps) {
+            if (!processStepCatch(step)) {
+                return;
+            }
+        }
+    }
+
+    function processStepCatch(step: BaseDelta): boolean {
+        try {
             processStep(step);
+            return true;
+        } catch (Error) {
+            console.log("Error processing step:")
+            console.log(step);
+            return false;
         }
     }
 

@@ -154,14 +154,10 @@ namespace LaraUI {
     }
 
     function processAjax(ajax: XMLHttpRequest): void {
-        try {
-            if (ajax.status == 200) {
-                processAjaxResult(ajax);
-            } else {
-                processAjaxError(ajax);
-            }
-        } catch (error) {
-            console.log(error.message);
+        if (ajax.status == 200) {
+            processAjaxResult(ajax);
+        } else {
+            processAjaxError(ajax);
         }
     }
 

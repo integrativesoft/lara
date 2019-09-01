@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Components;
-using Integrative.Lara.Delta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,31 +160,6 @@ namespace Integrative.Lara
         /// <param name="attribute"></param>
         protected virtual void OnAttributeChanged(string attribute)
         {
-        }
-
-        internal override ContentNode GetContentNode()
-        {
-            if (ShadowRoot == null)
-            {
-                return base.GetContentNode();
-            }
-            else
-            {
-                return GetShadowContent();
-            }
-        }
-
-        private ContentNode GetShadowContent()
-        {
-            var content = new ContentArrayNode
-            {
-                Nodes = new List<ContentNode>()
-            };
-            foreach (var item in GetLightSlotted())
-            {
-                content.Nodes.Add(item.GetContentNode());
-            }
-            return content;
         }
     }
 }

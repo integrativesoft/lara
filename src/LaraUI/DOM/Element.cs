@@ -802,13 +802,29 @@ namespace Integrative.Lara
 
         internal override ContentNode GetContentNode()
         {
-            return new ContentElementNode
+            var list = new List<Node>(GetLightSlotted());
+            if (list.Count == 1)
             {
-                TagName = TagName,
-                NS = GetAttributeLower("xlmns"),
-                Attributes = CopyAttributes(),
-                Children = CopyChildren()
-            };
+                return new ContentElementNode
+                {
+                    TagName = TagName,
+                    NS = GetAttributeLower("xlmns"),
+                    Attributes = CopyAttributes(),
+                    Children = CopyLightChildren()
+                };
+            }
+            else
+            {
+                var array = new ContentArrayNode
+                {
+                    Nodes = new List<ContentNode>()
+                };
+                foreach (var node in list)
+                {
+                    array.Nodes.Add(node.GetContentNode());
+                }
+                return array;
+            }
         }
 
         private List<ContentAttribute> CopyAttributes()
@@ -825,10 +841,10 @@ namespace Integrative.Lara
             return list;
         }
 
-        private List<ContentNode> CopyChildren()
+        private List<ContentNode> CopyLightChildren()
         {
             var list = new List<ContentNode>();
-            foreach (var child in _children)
+            foreach (var child in GetLightChildren())
             {
                 list.Add(child.GetContentNode());
             }
@@ -1033,7 +1049,7 @@ namespace Integrative.Lara
             yield return this;
         }
 
-        internal IEnumerable<Node> GetFlattenedChildren()
+        internal IEnumerable<Node> GetLightChildren()
         {
             foreach (var node in Children)
             {
