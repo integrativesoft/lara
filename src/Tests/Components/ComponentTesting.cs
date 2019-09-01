@@ -127,7 +127,7 @@ namespace Integrative.Lara.Tests.Components
 
         private IEnumerable<Node> GetFlattened(Element element)
         {
-            return RecursiveExtension(element, x => x.GetFlattenedChildren());
+            return RecursiveExtension(element, x => x.GetLightChildren());
         }
 
         private IEnumerable<Node> RecursiveExtension(Element root, Func<Element, IEnumerable<Node>> method)
