@@ -49,7 +49,7 @@ For more information see our Github page available from laraui.com</Description>
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.5.4 fixes issues related to web components created during events</PackageReleaseNotes>
+    <PackageReleaseNotes>0.5.5 adds fixes and improvements related to web component development</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
