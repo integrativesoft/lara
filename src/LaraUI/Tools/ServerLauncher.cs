@@ -4,12 +4,9 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -44,6 +41,13 @@ namespace Integrative.Lara.Tools
 
         internal static void ConfigureApp(IApplicationBuilder app, StartServerOptions options)
         {
+            ConfigureExceptions(app, options);
+            LaraUI.ErrorPages.PublishErrorImage();
+            app.UseLara(options);
+        }
+
+        internal static void ConfigureExceptions(IApplicationBuilder app, StartServerOptions options)
+        {
             if (options.ShowExceptions)
             {
                 app.UseDeveloperExceptionPage();
@@ -53,28 +57,6 @@ namespace Integrative.Lara.Tools
                 app.UseExceptionHandler(ErrorAddress);
                 LaraUI.ErrorPages.PublishErrorPage();
             }
-            LaraUI.ErrorPages.PublishErrorImage();
-            app.UseLara(options);
         }
-
-        public static void LaunchBrowser(string address)
-        {
-            LaraTools.LaunchBrowser(address);
-        }
-
-        public static void LaunchBrowser(IWebHost host)
-        {
-            string address = GetFirstUrl(host);
-            LaunchBrowser(address);
-        }
-
-        public static string GetFirstUrl(IWebHost webHost)
-        {
-            return webHost.ServerFeatures
-                .Get<IServerAddressesFeature>()
-                .Addresses
-                .First();
-        }
-
     }
 }

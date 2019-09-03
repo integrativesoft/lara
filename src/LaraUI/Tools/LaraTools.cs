@@ -4,10 +4,13 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -27,6 +30,20 @@ namespace Integrative.Lara.Tools
             {
                 EmitTypeInformation = EmitTypeInformation.Never
             };
+        }
+
+        public static void LaunchBrowser(IWebHost host)
+        {
+            string address = GetFirstUrl(host);
+            LaunchBrowser(address);
+        }
+
+        public static string GetFirstUrl(IWebHost webHost)
+        {
+            return webHost.ServerFeatures
+                .Get<IServerAddressesFeature>()
+                .Addresses
+                .First();
         }
 
         public static void LaunchBrowser(string url)

@@ -167,14 +167,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="address">The address.</param>
         public static void LaunchBrowser(string address)
-            => ServerLauncher.LaunchBrowser(address);
+            => LaraTools.LaunchBrowser(address);
 
         /// <summary>
         /// Launches the user's default web browser on the first address of the host passed in parameters.
         /// </summary>
         /// <param name="host">The host.</param>
         public static void LaunchBrowser(IWebHost host)
-                    => ServerLauncher.LaunchBrowser(host);
+                    => LaraTools.LaunchBrowser(host);
 
         /// <summary>
         /// Gets the first URL associated with the given host.
@@ -182,7 +182,7 @@ namespace Integrative.Lara
         /// <param name="host">The host.</param>
         /// <returns></returns>
         public static string GetFirstURL(IWebHost host)
-            => ServerLauncher.GetFirstUrl(host);
+            => LaraTools.GetFirstUrl(host);
 
         #endregion
 

@@ -8,8 +8,10 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
+using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -524,6 +526,17 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var page = new LaraPage();
             Assert.True(string.IsNullOrEmpty(page.Address));
+        }
+
+        [Fact]
+        public void ServerLauncherUseDeveloperPage()
+        {
+            var app = new Mock<IApplicationBuilder>();
+            ServerLauncher.ConfigureExceptions(app.Object, new StartServerOptions
+            {
+                ShowExceptions = true
+            });
+            app.Verify(x => x.ApplicationServices, Times.Once);
         }
     }
 }
