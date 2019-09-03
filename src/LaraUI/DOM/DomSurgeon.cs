@@ -100,20 +100,20 @@ namespace Integrative.Lara.DOM
             {
                 if (previousDocument != null)
                 {
-                    NotifyMove(child);
+                    child.NotifyMove();
                 }
             }
             else if (child.Document == null)
             {
-                NotifyDisconnected(child);
+                child.NotifyDisconnect();
             }
             else if (previousDocument == null)
             {
-                NotifyConnected(child);
+                child.NotifyConnect();
             }
             else
             {
-                NotifyAdopted(child);
+                child.NotifyAdopted();
             }            
         }
 
@@ -126,50 +126,6 @@ namespace Integrative.Lara.DOM
             else
             {
                 return previousParent.Document;
-            }
-        }
-
-        private void NotifyConnected(Element child)
-        {
-            foreach (var item in GetBranchElements(child))
-            {
-                item.NotifyConnect();
-            }
-        }
-
-        private void NotifyDisconnected(Element child)
-        {
-            foreach (var item in GetBranchElements(child))
-            {
-                item.NotifyDisconnect();
-            }
-        }
-
-        private void NotifyMove(Element child)
-        {
-            foreach (var item in GetBranchElements(child))
-            {
-                item.NotifyMove();
-            }
-        }
-
-        private void NotifyAdopted(Element child)
-        {
-            foreach (var item in GetBranchElements(child))
-            {
-                item.NotifyAdopted();
-            }
-        }
-
-        private IEnumerable<Element> GetBranchElements(Element child)
-        {
-            yield return child;
-            foreach (var item in child.GetAllDescendants())
-            {
-                if (item is Element element)
-                {
-                    yield return element;
-                }
             }
         }
 

@@ -161,5 +161,17 @@ namespace Integrative.Lara
         protected virtual void OnAttributeChanged(string attribute)
         {
         }
+
+        internal override IEnumerable<Element> GetNotifyList()
+        {
+            foreach (var child in base.GetNotifyList())
+            {
+                yield return child;
+            }
+            if (ShadowRoot != null)
+            {
+                yield return ShadowRoot;
+            }
+        }
     }
 }

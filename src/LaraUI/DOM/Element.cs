@@ -791,10 +791,52 @@ namespace Integrative.Lara
         {
         }
 
-        internal void NotifyConnect() => OnConnect();
-        internal void NotifyDisconnect() => OnDisconnect();
-        internal void NotifyAdopted() => OnAdopted();
-        internal void NotifyMove() => OnMove();
+        internal void NotifyConnect()
+        {
+            OnConnect();
+            foreach (var child in GetNotifyList())
+            {
+                child.NotifyConnect();
+            }
+        }
+
+        internal void NotifyDisconnect()
+        {
+            OnDisconnect();
+            foreach (var child in GetNotifyList())
+            {
+                child.NotifyDisconnect();
+            }
+        }
+
+        internal void NotifyAdopted()
+        {
+            OnAdopted();
+            foreach (var child in GetNotifyList())
+            {
+                child.NotifyAdopted();
+            }
+        }
+
+        internal void NotifyMove()
+        {
+            OnMove();
+            foreach (var child in GetNotifyList())
+            {
+                child.NotifyMove();
+            }
+        }
+
+        internal virtual IEnumerable<Element> GetNotifyList()
+        {
+            foreach (var node in _children)
+            {
+                if (node is Element child)
+                {
+                    yield return child;
+                }
+            }
+        }
 
         #endregion
 
