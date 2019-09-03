@@ -107,4 +107,4 @@ We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/
 
 Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the license of Resharper Ultimate.
 
-![DotCover](support/DotCover.svg)
+![JetBrains](support/jetbrains.svg)
