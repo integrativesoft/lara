@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -16,6 +17,8 @@ namespace Integrative.Lara.Tools
 {
     static class ServerLauncher
     {
+        public const string ErrorAddress = "/Error";
+
         public static async Task<IWebHost> StartServer()
         {
             return await StartServer(new StartServerOptions());
@@ -47,8 +50,10 @@ namespace Integrative.Lara.Tools
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler(ErrorAddress);
+                LaraUI.ErrorPages.PublishErrorPage();
             }
+            LaraUI.ErrorPages.PublishErrorImage();
             app.UseLara(options);
         }
 

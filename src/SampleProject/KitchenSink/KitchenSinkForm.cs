@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
+using System;
 using System.Threading.Tasks;
 
 namespace SampleProject
@@ -75,6 +76,10 @@ namespace SampleProject
                             .AddTextNode("Component example 3")
                         .Pop()
                     .Pop()
+                .Pop()
+                .Push("button", "btn btn-danger mt-2")
+                    .AddTextNode("Throw unhandled error")
+                    .On("click", () => throw new InvalidOperationException("Sample exception thrown"))
                 .Pop()
             .Pop();
 

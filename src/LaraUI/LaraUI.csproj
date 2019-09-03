@@ -33,6 +33,10 @@ For more information see our Github page available from laraui.com</Description>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Error.svg" />
+  </ItemGroup>
   
   <ItemGroup>
     <None Include="..\..\LICENSE">
@@ -40,6 +44,7 @@ For more information see our Github page available from laraui.com</Description>
       <PackagePath></PackagePath>
     </None>
     <EmbeddedResource Include="..\LaraClient\build\LaraClient.js" Link="LaraClient.js" />
+    <EmbeddedResource Include="Assets\Error.svg" />
   </ItemGroup>
 
   <ItemGroup>

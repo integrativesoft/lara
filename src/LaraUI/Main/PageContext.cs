@@ -12,20 +12,25 @@ namespace Integrative.Lara.Main
     sealed class PageContext : IPageContext
     {
         public HttpContext Http { get; }
-        public Document Document { get; }
+        public Document Document { get; internal set; }
 
         readonly JSBridge _bridge;
         readonly Navigation _navigation;
         readonly Connection _connection;
 
-        public PageContext(HttpContext http, Connection connection, Document document)
+        public PageContext(HttpContext http, Connection connection)
         {
             LaraUI.InternalContext.Value = this;
             Http = http;
-            Document = document;
             _navigation = new Navigation(this);
             _bridge = new JSBridge(this);
             _connection = connection;
+        }
+
+        public PageContext(HttpContext http, Connection connection, Document document)
+            : this(http, connection)
+        {
+            Document = document;
         }
 
         public Session Session => _connection.Session;

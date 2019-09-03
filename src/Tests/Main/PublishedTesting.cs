@@ -43,7 +43,7 @@ namespace Integrative.Lara.Tests.Main
             var document = new Document(page);
             var context = new PageContext(http.Object, null, document);
             await page.OnGet();
-            await PagePublished.ProcessGetResult(http.Object, document, context);
+            await PagePublished.ProcessGetResult(http.Object, document, context, HttpStatusCode.OK);
             response.Verify(x => x.Redirect("https://www.google.com"));
         }
 

@@ -32,7 +32,7 @@ namespace Integrative.Lara
             app.UseMiddleware<LaraMiddleware>(options);
             if (options.ShowNotFoundPage)
             {
-                app.UseMiddleware<NotFoundMiddleware>();
+                app.UseMiddleware<NotFoundMiddleware>(options);
             }
             return app;
         }

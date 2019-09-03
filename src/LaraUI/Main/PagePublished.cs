@@ -17,31 +17,61 @@ namespace Integrative.Lara.Main
     {
         readonly Func<IPage> _factory;
 
+        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+
         public PagePublished(Func<IPage> factory)
         {
             _factory = factory;
         }
 
+        public PagePublished(Func<IPage> factory, HttpStatusCode status)
+            : this(factory)
+        {
+            StatusCode = status;
+        }
+
         public async Task Run(HttpContext http, LaraOptions options)
         {
+            var connection = GetConnection(http);
+            var execution = new PageContext(http, connection);
             var page = CreateInstance();
-            await RunGetHandler(http, page, options);
+            var document = connection.CreateDocument(page, options);
+            execution.Document = document;
+            if (await RunPage(http, page, options))
+            {
+                await ProcessGetResult(http, document, execution, StatusCode);
+            }
+        }
+
+        private async Task<bool> RunPage(HttpContext http, IPage page, LaraOptions options)
+        {
+            try
+            {
+                await page.OnGet();
+                return true;
+            }
+            catch (StatusCodeException status)
+            {
+                await ReplyStatusCodeError(http, status, options);
+                return false;
+            }
+        }
+
+        private async Task ReplyStatusCodeError(HttpContext http, StatusCodeException status, LaraOptions options)
+        {
+            if (LaraUI.ErrorPages.TryGetPage(status.StatusCode, out var page))
+            {
+                await page.Run(http, options);
+            }
+            else
+            {
+                await MiddlewareCommon.SendStatusReply(http, status.StatusCode, status.Message);
+            }
         }
 
         internal IPage CreateInstance() => _factory();
 
-        private static async Task RunGetHandler(HttpContext http, IPage page, LaraOptions options)
-        {
-            var connection = GetConnection(http);
-            var document = connection.CreateDocument(page, options);
-            var execution = new PageContext(http, connection, document);
-            if (await MiddlewareCommon.RunHandler(http, async () => await page.OnGet()))
-            {
-                await ProcessGetResult(http, document, execution);
-            }
-        }
-
-        internal static async Task ProcessGetResult(HttpContext http, Document document, PageContext execution)
+        internal static async Task ProcessGetResult(HttpContext http, Document document, PageContext execution, HttpStatusCode code)
         {
             if (!string.IsNullOrEmpty(execution.RedirectLocation))
             {
@@ -51,7 +81,7 @@ namespace Integrative.Lara.Main
             {
                 document.OpenEventQueue();
                 string html = WriteDocument(execution.Document);
-                await ReplyDocument(http, html);
+                await ReplyDocument(http, html, code);
             }
         }
 
@@ -82,9 +112,9 @@ namespace Integrative.Lara.Main
             return writer.ToString();
         }
 
-        private static async Task ReplyDocument(HttpContext http, string html)
+        private static async Task ReplyDocument(HttpContext http, string html, HttpStatusCode code)
         {
-            MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
+            MiddlewareCommon.SetStatusCode(http, code);
             MiddlewareCommon.AddHeaderTextHtml(http);
             MiddlewareCommon.AddHeaderPreventCaching(http);
             await MiddlewareCommon.WriteUtf8Buffer(http, html);

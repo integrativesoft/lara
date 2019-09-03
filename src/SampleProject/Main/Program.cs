@@ -21,6 +21,7 @@ namespace SampleProject
             // Start web server
             var host = await LaraUI.StartServer(new StartServerOptions
             {
+                //ShowExceptions = false,
                 Port = 8181,  // alternatively, leave as 0 to assign dynamic port
                 AllowLocalhostOnly = true  // accept connection from current machine only (default)
             });

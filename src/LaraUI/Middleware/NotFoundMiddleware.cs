@@ -16,16 +16,19 @@ namespace Integrative.Lara
     /// </summary>
     public class NotFoundMiddleware
     {
+        readonly LaraOptions _options;
+
 #pragma warning disable IDE0060 // Remove unused parameter: required by ASP.NET Core
         /// <summary>
         /// Creates an instance of NotFoundMiddleware
         /// </summary>
         /// <param name="next"></param>
-        public NotFoundMiddleware(RequestDelegate next)
+        /// <param name="options">Lara configuration options</param>
+        public NotFoundMiddleware(RequestDelegate next, LaraOptions options)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
+            _options = options;
         }
-
 
         /// <summary>
         /// Invokes this middleware
@@ -34,7 +37,8 @@ namespace Integrative.Lara
         /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
-            await MiddlewareCommon.SendStatusReply(context, HttpStatusCode.NotFound, "HTTP 404: Not found.");
+            var page = LaraUI.ErrorPages.GetPage(HttpStatusCode.NotFound);
+            await page.Run(context, _options);
         }
     }
 }

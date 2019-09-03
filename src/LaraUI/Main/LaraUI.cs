@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -21,9 +22,15 @@ namespace Integrative.Lara
     {
         static readonly Published _published;
 
+        /// <summary>
+        /// Defines default error pages
+        /// </summary>
+        public static ErrorPages ErrorPages { get; }
+
         static LaraUI()
         {
             _published = new Published();
+            ErrorPages = new ErrorPages();
         }
 
         /// <summary>
