@@ -5,9 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Middleware;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
