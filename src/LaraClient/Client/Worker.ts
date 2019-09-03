@@ -142,7 +142,11 @@ namespace LaraUI {
     function createElementNode(node: ContentElementNode): Element {
         let child = createRootNode(node);
         for (var attribute of node.Attributes) {
-            child.setAttribute(attribute.Attribute, attribute.Value);
+            let value = attribute.Value;
+            if (!value) {
+                value = "";
+            }
+            child.setAttribute(attribute.Attribute, value);
         }
         for (var branch of node.Children) {
             let nodes = createNodes(branch);
