@@ -10,7 +10,7 @@ The purpose of Lara is to give you full control of the HTML document tree from t
 
 Lara can be used to develop either websites or desktop apps with an HTML5 frontend.
 
-The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
+The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
 ## Sample application
 
