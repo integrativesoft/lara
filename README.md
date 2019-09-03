@@ -102,3 +102,9 @@ Submit issues, ask questions, send feedback.
 ## Feedback
 
 We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/laraui) and we also have a general feedback form  [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
+
+## Credits
+
+Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the license of Resharper Ultimate.
+
+![DotCover](support/DotCover.svg)
