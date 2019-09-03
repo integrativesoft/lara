@@ -105,6 +105,6 @@ We'd love to hear your feedback! Our Gitter channel is [here](https://gitter.im/
 
 ## Credits
 
-Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the license of Resharper Ultimate.
+Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the license of ReSharper Ultimate. DotCover has helped us a great deal in verifying unit test coverage and we definitely recommend it.
 
 ![JetBrains](support/jetbrains.svg)
