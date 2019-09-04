@@ -14,14 +14,6 @@ The source code contains a [sample project](https://github.com/integrativesoft/l
 
 ## Sample application
 
-To create a web page:
-- Create a class that implements the interface 'IPage'
-- Call LaraUI.Publish(...) to make your page available
-
-Lara uses async/await to allow for high server throughput. If you're new to these, simply follow the examples that return 'Task.CompletedTask' at the end.
-
-Example:
-
 ```csharp
 namespace SampleProject
 {
