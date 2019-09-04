@@ -115,7 +115,12 @@ namespace Integrative.Lara
             }
         }
 
-        internal IEnumerable<Node> GetSlottedElements(string slotName)
+        /// <summary>
+        /// Returns the elements that are slotted with the given slot name
+        /// </summary>
+        /// <param name="slotName">Slot name</param>
+        /// <returns>IEnumerable of nodes</returns>
+        public IEnumerable<Node> GetSlottedElements(string slotName)
         {
             foreach (var node in Children)
             {

@@ -59,9 +59,7 @@ namespace Integrative.Lara.Reactive
         {
             var removeIndex = _args.OldStartingIndex;
             var addIndex = _args.NewStartingIndex;
-            var node = _element.GetChildAt(removeIndex);
-            _element.RemoveAt(removeIndex);
-            _element.InsertChildAt(addIndex, node);
+            _element.SwapChildren(addIndex, removeIndex);
         }
 
         private void CollectionRemove()

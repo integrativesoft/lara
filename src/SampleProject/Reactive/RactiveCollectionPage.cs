@@ -54,9 +54,23 @@ namespace SampleProject
                 .Pop()
             .Pop()
             .Push("td")
-                .Push("button", "btn btn-secondary")
+                .Push("button", "btn btn-secondary mr-2")
                     .AddTextNode("remove")
                     .On("click", () => _data.Remove(dataRow))
+                .Pop()
+            .Pop()
+            .Push("td")
+                .Push("button", "btn btn-secondary")
+                    .AddTextNode("Move up")
+                    .BindFlagAttribute("disabled", _data.Rows, () => !dataRow.CanMoveUp())
+                    .On("click", () => _data.MoveUp(dataRow))
+                .Pop()
+            .Pop()
+            .Push("td")
+                .Push("button", "btn btn-secondary")
+                    .AddTextNode("Move down")
+                    .BindFlagAttribute("disabled", _data.Rows, () => !dataRow.CanMoveDown())
+                    .On("click", () => _data.MoveDown(dataRow))
                 .Pop()
             .Pop();
             return row;
@@ -69,19 +83,35 @@ namespace SampleProject
 
         public void AddRow()
         {
-            Rows.Add(new MyDataRow());
+            Rows.Add(new MyDataRow(this));
         }
 
         public void Remove(MyDataRow row)
         {
             Rows.Remove(row);
         }
+
+        public void MoveUp(MyDataRow row) => Move(row, -1);
+
+        public void MoveDown(MyDataRow row) => Move(row, 1);
+
+        private void Move(MyDataRow row, int offset)
+        {
+            var index = row.GetIndex();
+            Rows.Move(index, index + offset);
+        }
     }
 
     class MyDataRow : BindableBase
     {
-        int _counter;
+        readonly MyDataTable _parent;
 
+        public MyDataRow(MyDataTable parent)
+        {
+            _parent = parent;
+        }
+
+        int _counter;
         public int Counter
         {
             get => _counter;
@@ -91,6 +121,21 @@ namespace SampleProject
         public void Increase()
         {
             Counter++;
+        }
+
+        public int GetIndex()
+        {
+            return _parent.Rows.IndexOf(this);
+        }
+
+        public bool CanMoveUp()
+        {
+            return GetIndex() > 0;
+        }
+
+        public bool CanMoveDown()
+        {
+            return GetIndex() < _parent.Rows.Count - 1;
         }
     }
 }

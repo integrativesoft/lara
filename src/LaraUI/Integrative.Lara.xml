@@ -62,6 +62,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Integrative.Lara.WebComponent.GetSlottedElements(System.String)">
+            <summary>
+            Returns the elements that are slotted with the given slot name
+            </summary>
+            <param name="slotName">Slot name</param>
+            <returns>IEnumerable of nodes</returns>
+        </member>
         <member name="M:Integrative.Lara.WebComponent.OnAttributeChanged(System.String)">
             <summary>
             Invoked each time an attribute defined in GetObservedAttributes is modified.

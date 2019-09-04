@@ -245,7 +245,6 @@ namespace LaraUI {
         location.replace(delta.Location);
     }
 
-
     function swapChildren(step: SwapChildrenDelta): void {
         let el = document.getElementById(step.ParentId);
         let node1 = el.childNodes[step.Index1];
