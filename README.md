@@ -91,7 +91,7 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 Submit issues, ask questions, send feedback.
 **If you like Lara, please give it a star - it helps!**
 
-We'd love to hear your feedback! We have a general feedback form [here](https://integrative.b-cdn.net/feedback_lara_briskforms.html).
+We'd love to hear your [feedback](https://integrative.b-cdn.net/feedback_lara_briskforms.html)!
 
 ## Credits
 
