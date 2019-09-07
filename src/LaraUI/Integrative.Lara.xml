@@ -2672,6 +2672,22 @@
             <param name="app">The application.</param>
             <returns></returns>
         </member>
+        <member name="T:Integrative.Lara.DocumentLocal`1">
+            <summary>
+            Represents ambient data that is local to the current document.
+            </summary>
+            <typeparam name="T">Value</typeparam>
+        </member>
+        <member name="M:Integrative.Lara.DocumentLocal`1.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.DocumentLocal`1.Value">
+            <summary>
+            Value
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.LaraBuilder">
             <summary>
             Class to build pages more easily
@@ -3096,6 +3112,22 @@
         <member name="M:Integrative.Lara.StartServerOptions.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Integrative.Lara.StartServerOptions"/> class.
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.SessionLocal`1">
+            <summary>
+            Represents ambient data that is local to a given session
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Integrative.Lara.SessionLocal`1.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.SessionLocal`1.Value">
+            <summary>
+            Value
             </summary>
         </member>
     </members>

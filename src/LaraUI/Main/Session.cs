@@ -21,6 +21,8 @@ namespace Integrative.Lara
         /// </summary>
         public event EventHandler Closing;
 
+        internal event EventHandler AfterClose;
+
         internal Session(Connection parent)
         {
             _parent = parent;
@@ -28,13 +30,15 @@ namespace Integrative.Lara
 
         internal void Close()
         {
+            var args = new EventArgs();
             try
             {
-                Closing?.Invoke(this, new EventArgs());
+                Closing?.Invoke(this, args);
             }
             catch
             {
             }
+            AfterClose?.Invoke(this, args);
         }
 
         /// <summary>

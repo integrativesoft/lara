@@ -53,6 +53,8 @@ namespace Integrative.Lara
 
         int _serializer;
 
+        internal event EventHandler AfterUnload;
+
         /// <summary>
         /// Gets or sets the language. See 'lang' property for HTML5 documents.
         /// </summary>
@@ -217,6 +219,7 @@ namespace Integrative.Lara
         {
             await _serverEvents.NotifyUnload();
             await IgnoreErrorHandler(_unloadHandler);
+            AfterUnload?.Invoke(this, new EventArgs());
         }
 
         internal static async Task IgnoreErrorHandler(Func<Task> handler)
