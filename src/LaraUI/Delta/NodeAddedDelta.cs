@@ -25,10 +25,12 @@ namespace Integrative.Lara.Delta
         {
             if (node.QueueOpen)
             {
+                var parentId = node.ParentElement.EnsureElementId();
+                var content = node.GetContentNode();
                 node.Document.Enqueue(new NodeAddedDelta
                 {
-                    ParentId = node.ParentElement.EnsureElementId(),
-                    Node = node.GetContentNode(),
+                    ParentId = parentId,
+                    Node = content,
                 });
             }
         }

@@ -845,7 +845,7 @@ namespace Integrative.Lara
         internal override ContentNode GetContentNode()
         {
             var list = new List<Node>(GetLightSlotted());
-            if (list.Count == 1)
+            if (list.Count == 1 && list[0] == this)
             {
                 return new ContentElementNode
                 {

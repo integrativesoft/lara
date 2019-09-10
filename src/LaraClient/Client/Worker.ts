@@ -19,7 +19,8 @@ namespace LaraUI {
             processStep(step);
             return true;
         } catch (Error) {
-            console.log("Error processing step:")
+            console.log("Error processing step:");
+            console.log(Error);
             console.log(step);
             return false;
         }
