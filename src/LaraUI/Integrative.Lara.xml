@@ -144,6 +144,16 @@
             An HTML5 document.
             </summary>
         </member>
+        <member name="E:Integrative.Lara.Document.OnUnload">
+            <summary>
+            Occurs when the document is unloaded
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Document.OnUnloadAsync">
+            <summary>
+            Asynchronous unload event
+            </summary>
+        </member>
         <member name="P:Integrative.Lara.Document.Lang">
             <summary>
             Gets or sets the language. See 'lang' property for HTML5 documents.
@@ -201,12 +211,6 @@
             <summary>
             Returns true when there are UI changes pending to be flushed to the client
             </summary>
-        </member>
-        <member name="M:Integrative.Lara.Document.OnUnload(System.Func{System.Threading.Tasks.Task})">
-            <summary>
-            Callback to execute after a user closes the document's browser tab
-            </summary>
-            <param name="handler">Callback handler to execute upon unloading</param>
         </member>
         <member name="P:Integrative.Lara.Document.ServerEventsStatus">
             <summary>
@@ -2671,6 +2675,80 @@
             </summary>
             <param name="app">The application.</param>
             <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.AsyncEventHandler`1">
+            <summary>
+            Delegate for asynchronous events
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="sender"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Integrative.Lara.AsyncEvent">
+            <summary>
+            Asynchronous event source
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.AsyncEvent`1">
+            <summary>
+            Generic asynchronous event source
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(Integrative.Lara.AsyncEventHandler{`0})">
+            <summary>
+            Adds a method to execute when the event is fired
+            </summary>
+            <param name="handler">delegate</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(Integrative.Lara.AsyncEvent{`0})">
+            <summary>
+            Adds an event to trigger when this event is fired
+            </summary>
+            <param name="other">event to trigger</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Adds an action to execute when this event is fired
+            </summary>
+            <param name="action">action to execute</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(Integrative.Lara.AsyncEventHandler{`0})">
+            <summary>
+            Unsubscribes a previously subscribed handler
+            </summary>
+            <param name="handler">handler</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(Integrative.Lara.AsyncEvent{`0})">
+            <summary>
+            Unsubscribes a previously subscribed handler
+            </summary>
+            <param name="handler">handler</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Unsubscribes a previously subscribed action
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.InvokeAsync(System.Object,`0)">
+            <summary>
+            Invokes an event
+            </summary>
+            <param name="sender">Event's source</param>
+            <param name="args">Event's arguments</param>
+            <returns>Task</returns>
         </member>
         <member name="T:Integrative.Lara.DocumentLocal`1">
             <summary>

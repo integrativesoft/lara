@@ -53,6 +53,16 @@ namespace Integrative.Lara
 
         int _serializer;
 
+        /// <summary>
+        /// Occurs when the document is unloaded
+        /// </summary>
+        public event EventHandler OnUnload;
+
+        /// <summary>
+        /// Asynchronous unload event
+        /// </summary>
+        public AsyncEvent OnUnloadAsync { get; } = new AsyncEvent();
+
         internal event EventHandler AfterUnload;
 
         /// <summary>
@@ -204,21 +214,12 @@ namespace Integrative.Lara
             Head.On("_" + key, handler);
         }
 
-        private Func<Task> _unloadHandler;
-
-        /// <summary>
-        /// Callback to execute after a user closes the document's browser tab
-        /// </summary>
-        /// <param name="handler">Callback handler to execute upon unloading</param>
-        public void OnUnload(Func<Task> handler)
-        {
-            _unloadHandler = handler;
-        }
-
         internal async Task NotifyUnload()
         {
             await _serverEvents.NotifyUnload();
-            await IgnoreErrorHandler(_unloadHandler);
+            var args = new EventArgs();
+            OnUnload?.Invoke(this, args);
+            await OnUnloadAsync.InvokeAsync(this, args);
             AfterUnload?.Invoke(this, new EventArgs());
         }
 

@@ -424,13 +424,8 @@ namespace Integrative.Lara.Tests.DOM
         public async void DocumentOnUnloadExecutes()
         {
             int counter = 0;
-            Task handler()
-            {
-                counter++;
-                return Task.CompletedTask;
-            }
             var document = new Document(new MyPage());
-            document.OnUnload(handler);
+            document.OnUnload += (sender, args) => counter++;
             await document.NotifyUnload();
             Assert.Equal(1, counter);
         }
