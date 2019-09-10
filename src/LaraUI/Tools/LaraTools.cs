@@ -106,5 +106,17 @@ namespace Integrative.Lara.Tools
             }
             return output.ToArray();
         }
+
+        public static bool SameValue<T>(T previous, T value)
+        {
+            if (previous == null)
+            {
+                return value == null;
+            }
+            else
+            {
+                return previous.Equals(value);
+            }
+        }
     }
 }

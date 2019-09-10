@@ -4,6 +4,7 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +53,7 @@ namespace Integrative.Lara
             var document = GetDocument();
             if (_storage.TryGetValue(document, out var previous))
             {
-                if (previous.Equals(value))
+                if (LaraTools.SameValue(previous, value))
                 {
                     return;
                 }

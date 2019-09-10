@@ -41,7 +41,6 @@ namespace Integrative.Lara
             {
                 return false;
             }
-
             storage = value;
             OnPropertyChanged(propertyName);
             return true;

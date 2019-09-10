@@ -4,6 +4,7 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +53,7 @@ namespace Integrative.Lara
             var session = GetSession();
             if (_storage.TryGetValue(session, out var previous))
             {
-                if (previous.Equals(value))
+                if (LaraTools.SameValue(previous, value))
                 {
                     return;
                 }
