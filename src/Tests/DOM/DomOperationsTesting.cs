@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
 using System;
