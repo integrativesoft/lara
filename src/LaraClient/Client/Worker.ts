@@ -260,5 +260,4 @@ namespace LaraUI {
         temp.parentNode.insertBefore(obj2, temp);
         temp.parentNode.removeChild(temp);
     }
-
 }

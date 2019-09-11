@@ -150,7 +150,6 @@ namespace Integrative.Lara.Tests.Components
         {
             public XCOM() : base("x-com")
             {
-                AttachShadow();
                 var builder = new LaraBuilder(ShadowRoot);
                 builder.Push("div", "", "div1")
                     .Push("div", "", "div1a")
@@ -168,15 +167,6 @@ namespace Integrative.Lara.Tests.Components
             public LightCom() : base("x-light")
             {
             }
-        }
-
-        [Fact]
-        public void ElementWithoutShadowYieldsItself()
-        {
-            var x = new LightCom();
-            var list = new List<Node>(x.GetLightSlotted());
-            Assert.Single(list);
-            Assert.Same(x, list[0]);
         }
 
         [Fact]
@@ -216,7 +206,6 @@ namespace Integrative.Lara.Tests.Components
         {
             public MySlotter() : base("x-slotter")
             {
-                AttachShadow();
                 var div = Create("div");
                 var slot = Create("slot");
                 ShadowRoot.AppendChild(div);
@@ -467,14 +456,6 @@ namespace Integrative.Lara.Tests.Components
             Assert.Equal(ContentNodeType.Text, array.Nodes[1].Type);
         }
 
-        [Fact]
-        public void GetContentNodeReturnsSelf()
-        {
-            var component = new MyTwoDivComponent(false);
-            var content = component.GetContentNode();
-            Assert.Equal(ContentNodeType.Element, content.Type);
-        }
-
         [LaraWebComponent("x-twodiv")]
         class MyTwoDivComponent : WebComponent
         {
@@ -482,7 +463,6 @@ namespace Integrative.Lara.Tests.Components
             {
                 if (useShadow)
                 {
-                    AttachShadow();
                     ShadowRoot.AppendChild(Create("div"));
                     ShadowRoot.AppendText("hello");
                 }

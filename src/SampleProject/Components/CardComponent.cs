@@ -18,7 +18,6 @@ namespace SampleProject
 
         public CardComponent() : base(MyCard)
         {
-            AttachShadow();
             _div = Create("div");
             _spanTitle = Create("span");
             _spanSubtitle = Create("span");

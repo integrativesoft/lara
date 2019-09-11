@@ -26,7 +26,7 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Node node, int index)
         {
-            if (node.QueueOpen)
+            if (node.ParentElement.QueueOpen)
             {
                 node.Document.Enqueue(new NodeInsertedDelta
                 {

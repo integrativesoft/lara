@@ -31,6 +31,10 @@ namespace Integrative.Lara
         {
             _observedAttributes = new HashSet<string>(GetObservedAttributes());
             VerifyTypeThrow(tagName, GetType());
+            ShadowRoot = new Shadow
+            {
+                ParentComponent = this
+            };
         }
 
         internal static void VerifyTypeThrow(string tagName, Type componentType)
@@ -61,14 +65,11 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Creates a shadow DOM tree for this element
+        /// Obsolete
         /// </summary>
+        [Obsolete("Not needed anymore, Shadow root is automatically created")]
         protected void AttachShadow()
         {
-            ShadowRoot = new Shadow
-            {
-                ParentComponent = this
-            };
         }
 
         /// <summary>
@@ -82,11 +83,6 @@ namespace Integrative.Lara
 
         internal override IEnumerable<Node> GetLightSlotted()
         {
-            if (ShadowRoot == null)
-            {
-                yield return this;
-                yield break;
-            }
             foreach (var child in ShadowRoot.Children)
             {
                 if (child is Element childElement)
@@ -105,10 +101,7 @@ namespace Integrative.Lara
 
         internal override IEnumerable<Node> GetAllDescendants()
         {
-            if (ShadowRoot != null)
-            {
-                yield return ShadowRoot;
-            }
+            yield return ShadowRoot;
             foreach (var child in Children)
             {
                 yield return child;
@@ -173,10 +166,36 @@ namespace Integrative.Lara
             {
                 yield return child;
             }
-            if (ShadowRoot != null)
+            yield return ShadowRoot;
+        }
+
+        internal override bool SlottingAllChildren() => false;
+
+        internal override bool SlottingChild(Node child)
+        {
+            return child is Element element
+                && SlotNamePresent(element.GetAttributeLower("slot"));
+        }
+
+        private bool SlotNamePresent(string slotName)
+        {
+            foreach (var child in Children)
             {
-                yield return ShadowRoot;
+                if (NodeMatchesSlot(child, slotName))
+                {
+                    return true;
+                }
             }
+            return false;
+        }
+
+        internal override void NotifySlotted()
+        {
+            foreach (var child in Children)
+            {
+                child.NotifySlotted();
+            }
+            ShadowRoot.NotifySlotted();
         }
     }
 }

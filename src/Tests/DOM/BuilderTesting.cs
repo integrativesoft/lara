@@ -23,7 +23,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
-            builder.Push("button", "red", "mybutton");
+            builder.Push("button", "red", "mybutton").Pop();
             Assert.NotEmpty(root.Children);
             var first = root.Children.FirstOrDefault() as Button;
             Assert.NotNull(first);
@@ -166,7 +166,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
-            builder.Push("div", "red");
+            builder.Push("div", "red").Pop();
             Assert.NotEmpty(root.Children);
             var child = root.Children.FirstOrDefault() as Element;
             Assert.NotNull(child);
@@ -178,7 +178,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
-            builder.PushNS("abc", "svg");
+            builder.PushNS("abc", "svg").Pop();
             Assert.NotEmpty(root.Children);
             var child = root.Children.FirstOrDefault() as Element;
             Assert.NotNull(child);

@@ -67,7 +67,21 @@ namespace Integrative.Lara
 
         internal abstract ContentNode GetContentNode();
 
-        internal bool QueueOpen =>
-            Document != null && Document.QueueingEvents;
+        /// <summary>
+        /// True when the node is currently rendered in a parent document.
+        /// </summary>
+        public bool IsSlotted { get; internal set; }
+
+        internal virtual void NotifySlotted()
+        {
+            if (ParentElement == null)
+            {
+                IsSlotted = false;
+            }
+            else
+            {
+                IsSlotted = ParentElement.SlottingChild(this);
+            }
+        }
     }
 }

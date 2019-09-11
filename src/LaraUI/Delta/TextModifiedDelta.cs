@@ -27,7 +27,8 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(TextNode node)
         {
-            if (node.QueueOpen)
+            var parent = node.ParentElement;
+            if (parent != null && parent.QueueOpen)
             {
                 int index = node.ParentElement.GetChildNodePosition(node);
                 node.Document.Enqueue(new TextModifiedDelta

@@ -91,9 +91,6 @@ namespace Integrative.Lara
         public LaraBuilder Push(Element element)
         {
             element = element ?? throw new ArgumentNullException(nameof(element));
-            element.EnsureElementId();
-            var current = _stack.Peek();
-            current.AppendChild(element);
             _stack.Push(element);
             return this;
         }
@@ -123,7 +120,12 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException("Too many Pop() calls.");
             }
-            _stack.Pop();
+            var pop = _stack.Pop();
+            if (_stack.Count > 0)
+            {
+                var current = _stack.Peek();
+                current.AppendChild(pop);
+            }
             return this;
         }
 

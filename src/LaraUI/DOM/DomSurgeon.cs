@@ -27,6 +27,7 @@ namespace Integrative.Lara.DOM
 
         public void Append(Node child)
         {
+            _parent.EnsureElementId();
             var previous = BeforeOperation(child);
             AppendInternal(child);
             AfterOperation(child, previous);
@@ -34,6 +35,7 @@ namespace Integrative.Lara.DOM
 
         public void InsertChildBefore(Node reference, Node child)
         {
+            _parent.EnsureElementId();
             var previous = BeforeOperation(child);
             InsertChild(reference, 0, child);
             AfterOperation(child, previous);
@@ -41,6 +43,7 @@ namespace Integrative.Lara.DOM
 
         public void InsertChildAfter(Node reference, Node child)
         {
+            _parent.EnsureElementId();
             var previous = BeforeOperation(child);
             InsertChild(reference, 1, child);
             AfterOperation(child, previous);
@@ -48,6 +51,7 @@ namespace Integrative.Lara.DOM
 
         public void InsertChildAt(int index, Node child)
         {
+            _parent.EnsureElementId();
             var previous = BeforeOperation(child);
             InsertChild(index, child);
             AfterOperation(child, previous);
@@ -55,12 +59,14 @@ namespace Integrative.Lara.DOM
 
         public void Remove(Node child)
         {
+            _parent.EnsureElementId();
             RemoveInternal(child);
             AfterOperation(child, _parent);
         }
 
         public void RemoveAt(int index)
         {
+            _parent.EnsureElementId();
             var child = _parent.GetChildAt(index);
             RemoveInternal(index);
             AfterOperation(child, _parent);
@@ -68,6 +74,7 @@ namespace Integrative.Lara.DOM
 
         public void ClearChildren()
         {
+            _parent.EnsureElementId();
             var list = new List<Node>(_parent.Children);
             ClearChildrenInternal();
             foreach (var node in list)
@@ -217,6 +224,7 @@ namespace Integrative.Lara.DOM
             }
             _parent.OnChildRemoved(child);
             child.ParentElement = null;
+            child.NotifySlotted();
         }
 
         #endregion
@@ -339,6 +347,7 @@ namespace Integrative.Lara.DOM
             child.ParentElement?.OnChildRemoved(child);
             _parent.OnChildAppend(child);
             child.ParentElement = _parent;
+            child.NotifySlotted();
             NodeAddedDelta.Enqueue(child);
         }
 
@@ -353,6 +362,7 @@ namespace Integrative.Lara.DOM
             child.ParentElement?.OnChildRemoved(child);
             _parent.OnChildInsert(index, child);
             child.ParentElement = _parent;
+            child.NotifySlotted();
             NodeInsertedDelta.Enqueue(child, index);
         }
 

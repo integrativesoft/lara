@@ -23,7 +23,7 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Node node)
         {
-            if (node.QueueOpen)
+            if (node.ParentElement.QueueOpen)
             {
                 var parentId = node.ParentElement.EnsureElementId();
                 var content = node.GetContentNode();

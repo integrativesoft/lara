@@ -112,8 +112,10 @@ namespace Integrative.Lara
             Semaphore = new SemaphoreSlim(1);
             Head = Element.Create("head");
             Head.Document = this;
+            Head.IsSlotted = true;
             Body = Element.Create("body");
             Body.Document = this;
+            Body.IsSlotted = true;
             UpdateTimestamp();
             TemplateBuilder.Build(this, options);
             _serverEvents = new ServerEventsController(this);

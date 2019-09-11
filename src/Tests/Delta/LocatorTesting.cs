@@ -34,10 +34,9 @@ namespace Integrative.Lara.Tests.Delta
             a.AppendChild(b);
             var locator = ElementLocator.FromElement(b);
             var steps = locator.Steps;
-            Assert.Equal("x0", locator.StartingId);
-            Assert.Equal(2, steps.Count);
+            Assert.Equal(b.ParentElement.Id, locator.StartingId);
+            Assert.Single(steps);
             Assert.Equal(0, steps[0]);
-            Assert.Equal(3, steps[1]);
         }
     }
 }

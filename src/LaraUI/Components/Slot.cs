@@ -61,5 +61,13 @@ namespace Integrative.Lara
                 return TryFindParentComponent(parent, out component);
             }
         }
+
+        internal override bool SlottingAllChildren() => false;
+
+        internal override bool SlottingChild(Node child) => false;
+
+        internal override void NotifySlotted()
+        {
+        }
     }
 }

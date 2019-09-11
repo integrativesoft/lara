@@ -53,7 +53,7 @@
         </member>
         <member name="M:Integrative.Lara.WebComponent.AttachShadow">
             <summary>
-            Creates a shadow DOM tree for this element
+            Obsolete
             </summary>
         </member>
         <member name="M:Integrative.Lara.WebComponent.GetObservedAttributes">
@@ -859,6 +859,11 @@
             <value>
             The type of the node.
             </value>
+        </member>
+        <member name="P:Integrative.Lara.Node.IsSlotted">
+            <summary>
+            True when the node is currently rendered in a parent document.
+            </summary>
         </member>
         <member name="T:Integrative.Lara.TextNode">
             <summary>

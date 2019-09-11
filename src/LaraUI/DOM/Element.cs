@@ -1118,6 +1118,24 @@ namespace Integrative.Lara
         {
         }
 
+        internal bool QueueOpen =>
+            IsSlotted
+            && Document != null
+            && Document.QueueingEvents;
+
+        internal virtual bool SlottingChild(Node child) => IsSlotted;
+
+        internal virtual bool SlottingAllChildren() => IsSlotted;
+
+        internal override void NotifySlotted()
+        {
+            base.NotifySlotted();
+            foreach (var child in Children)
+            {
+                child.NotifySlotted();
+            }
+        }
+
         #endregion
 
         #region Other methods

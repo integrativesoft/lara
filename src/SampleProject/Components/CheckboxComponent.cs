@@ -21,7 +21,6 @@ namespace SampleProject
         {
             _checkbox = new Input();
             _label = Create("label");
-            AttachShadow();
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push("div", "form-group form-check")
                 .Push(_checkbox, "form-check-input")

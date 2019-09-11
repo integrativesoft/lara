@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -29,6 +30,10 @@ namespace Integrative.Lara.DOM
 
         internal void SetAttributeLower(string nameLower, string value)
         {
+            if (nameLower == "slot" && _element.ParentElement != null)
+            {
+                throw new InvalidOperationException("The 'slot' attribute can only be modified on elements not yet attached to a parent.");
+            }
             if (_values.TryGetValue(nameLower, out var previous))
             {
                 if (previous == value)

@@ -23,5 +23,33 @@ namespace Integrative.Lara.Components
         {
             return Enumerable.Empty<Node>();
         }
+
+        internal override bool SlottingAllChildren()
+        {
+            if (ParentComponent == null)
+            {
+                return false;
+            }
+            var superior = ParentComponent.ParentElement;
+            if (superior == null)
+            {
+                return false;
+            }
+            return superior.SlottingAllChildren()
+                || superior.SlottingChild(ParentComponent);
+        }
+
+        internal override bool SlottingChild(Node child)
+        {
+            return SlottingAllChildren();
+        }
+
+        internal override void NotifySlotted()
+        {
+            foreach (var child in Children)
+            {
+                child.NotifySlotted();
+            }
+        }
     }
 }

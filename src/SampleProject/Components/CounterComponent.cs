@@ -21,7 +21,6 @@ namespace SampleProject
         {
             _div = Create("div");
             _data = new CounterData();
-            AttachShadow();
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push(_div, Class)
                 .Push("span")
