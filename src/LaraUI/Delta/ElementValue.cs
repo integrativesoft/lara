@@ -19,5 +19,22 @@ namespace Integrative.Lara.Delta
 
         [DataMember]
         public bool Checked { get; set; }
+
+        public override string ToString()
+        {
+            return $"#{ElementId}='{Value}'{GetCheckedSuffix()}";
+        }
+
+        private string GetCheckedSuffix()
+        {
+            if (Checked)
+            {
+                return " checked";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }
