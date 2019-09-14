@@ -82,17 +82,27 @@ namespace Integrative.Lara.Reactive
         public void BindAttribute<T>(BindAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
-            UnbindAttribute(options.Attribute);
-            BindOptions(options);
-            _attributeBindings.Add(options.Attribute, options);
+            StoreBinding(options.Attribute, options);
         }
 
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
-            UnbindAttribute(options.Attribute);
+            StoreBinding(options.Attribute, options);
+        }
+
+        public void BindToggleClass<T>(BindToggleClassOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            var key = "class~" + options.ClassName;
+            StoreBinding(key, options);
+        }
+
+        private void StoreBinding(string key, BindPropertyOptions options)
+        {
+            UnbindAttribute(key);
             BindOptions(options);
-            _attributeBindings.Add(options.Attribute, options);
+            _attributeBindings.Add(key, options);
         }
 
         public void UnbindAttribute(string attribute)

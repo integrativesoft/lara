@@ -381,6 +381,25 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Adds bindings for toggling an element class
+        /// </summary>
+        /// <typeparam name="T">Data type for the data source</typeparam>
+        /// <param name="className">Class name</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindToggleClass<T>(string className, T instance, Func<bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindToggleClass<T>(new BindToggleClassOptions<T>
+            {
+                ClassName = className,
+                Object = instance,
+                Property = x => property()
+            });
+        }
+
+        /// <summary>
         /// Adds bindings for an attribute
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
@@ -403,6 +422,19 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             _stack.Peek().BindFlagAttribute<T>(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds bindings for toggling classes
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindToggleClass<T>(BindToggleClassOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindToggleClass<T>(options);
             return this;
         }
 
@@ -439,6 +471,25 @@ namespace Integrative.Lara
             return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
+                Object = instance,
+                Property = property
+            });
+        }
+
+        /// <summary>
+        /// Adds bindings for toggling a class
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="className">Class name</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns></returns>
+        public LaraBuilder BindToggleClass<T>(string className, T instance, Func<T, bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindToggleClass<T>(new BindToggleClassOptions<T>
+            {
+                ClassName = className,
                 Object = instance,
                 Property = property
             });

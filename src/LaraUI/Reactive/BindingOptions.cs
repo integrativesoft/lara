@@ -159,7 +159,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Binding options for flag attributes
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Source data type</typeparam>
     public sealed class BindFlagAttributeOptions<T> : BindPropertyOptions<T, bool>
         where T : INotifyPropertyChanged
     {
@@ -172,6 +172,25 @@ namespace Integrative.Lara
         {
             var value = GetCurrentValue();
             element.SetFlagAttribute(Attribute, value);
+        }
+    }
+
+    /// <summary>
+    /// Binding options to toggle element classes
+    /// </summary>
+    /// <typeparam name="T">Source data type</typeparam>
+    public sealed class BindToggleClassOptions<T> : BindPropertyOptions<T, bool>
+        where T : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Element class to toggle
+        /// </summary>
+        public string ClassName { get; set; }
+
+        internal override void Apply(Element element)
+        {
+            var value = GetCurrentValue();
+            element.ToggleClass(ClassName, value);
         }
     }
 

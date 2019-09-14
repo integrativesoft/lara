@@ -371,6 +371,22 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        public void BindToggleClassBinds()
+        {
+            var div = Element.Create("div");
+            var data = new MyData();
+            div.BindToggleClass(new BindToggleClassOptions<MyData>
+            {
+                ClassName = "lala",
+                Object = data,
+                Property = x => x.IsEven
+            });
+            Assert.True(div.HasClass("lala"));
+            data.Counter++;
+            Assert.False(div.HasClass("lala"));
+        }
+
+        [Fact]
         public void LaraFlagBinding()
         {
             var div = Element.Create("div");

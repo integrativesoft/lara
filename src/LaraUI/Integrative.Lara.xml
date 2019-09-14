@@ -705,6 +705,13 @@
             <typeparam name="T">Data type for data source instance</typeparam>
             <param name="options">Binding options</param>
         </member>
+        <member name="M:Integrative.Lara.Element.BindToggleClass``1(Integrative.Lara.BindToggleClassOptions{``0})">
+            <summary>
+            Bindings to toggle an element class
+            </summary>
+            <typeparam name="T">Data type for data source instance</typeparam>
+            <param name="options">Binding options</param>
+        </member>
         <member name="M:Integrative.Lara.Element.UnbindAttribute(System.String)">
             <summary>
             Removes bindings for an attribute
@@ -2633,11 +2640,22 @@
             <summary>
             Binding options for flag attributes
             </summary>
-            <typeparam name="T"></typeparam>
+            <typeparam name="T">Source data type</typeparam>
         </member>
         <member name="P:Integrative.Lara.BindFlagAttributeOptions`1.Attribute">
             <summary>
             Attribute to bind
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindToggleClassOptions`1">
+            <summary>
+            Binding options to toggle element classes
+            </summary>
+            <typeparam name="T">Source data type</typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindToggleClassOptions`1.ClassName">
+            <summary>
+            Element class to toggle
             </summary>
         </member>
         <member name="T:Integrative.Lara.BindChildrenOptions">
@@ -2969,6 +2987,16 @@
             <param name="property">Data source property</param>
             <returns>This instance</returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindToggleClass``1(System.String,``0,System.Func{System.Boolean})">
+            <summary>
+            Adds bindings for toggling an element class
+            </summary>
+            <typeparam name="T">Data type for the data source</typeparam>
+            <param name="className">Class name</param>
+            <param name="instance">Data source instance</param>
+            <param name="property">Data source property</param>
+            <returns>This instance</returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindAttribute``1(Integrative.Lara.BindAttributeOptions{``0})">
             <summary>
             Adds bindings for an attribute
@@ -2980,6 +3008,14 @@
         <member name="M:Integrative.Lara.LaraBuilder.BindFlagAttribute``1(Integrative.Lara.BindFlagAttributeOptions{``0})">
             <summary>
             Adds bindings for a flag attribute
+            </summary>
+            <typeparam name="T">Data type for data source instance</typeparam>
+            <param name="options">Binding options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindToggleClass``1(Integrative.Lara.BindToggleClassOptions{``0})">
+            <summary>
+            Adds bindings for toggling classes
             </summary>
             <typeparam name="T">Data type for data source instance</typeparam>
             <param name="options">Binding options</param>
@@ -3004,6 +3040,16 @@
             <param name="instance">Data source instance</param>
             <param name="property">Data source property</param>
             <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindToggleClass``1(System.String,``0,System.Func{``0,System.Boolean})">
+            <summary>
+            Adds bindings for toggling a class
+            </summary>
+            <typeparam name="T">Data type for data source instance</typeparam>
+            <param name="className">Class name</param>
+            <param name="instance">Data source instance</param>
+            <param name="property">Data source property</param>
+            <returns></returns>
         </member>
         <member name="M:Integrative.Lara.LaraBuilder.BindInnerText``1(``0,System.Func{System.String})">
             <summary>

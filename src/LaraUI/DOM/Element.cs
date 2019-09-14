@@ -993,6 +993,18 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Bindings to toggle an element class
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        public void BindToggleClass<T>(BindToggleClassOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            EnsureBindings();
+            _bindings.BindToggleClass<T>(options);
+        }
+
+        /// <summary>
         /// Removes bindings for an attribute
         /// </summary>
         /// <param name="attribute">Attribute to remove bindings of</param>
