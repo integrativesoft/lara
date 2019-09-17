@@ -56,7 +56,39 @@ namespace Integrative.Lara
         /// </param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (_holdCounter > 0)
+            {
+                _pendingEvents = true;
+            }
+            else
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private int _holdCounter;
+        private bool _pendingEvents;
+
+        /// <summary>
+        /// Holds all property changed notifications.
+        /// </summary>
+        public void BeginUpdate()
+        {
+            _holdCounter++;
+        }
+
+        /// <summary>
+        /// Stops holding property changed notifications.
+        /// If any property changed pending since BeginUpdate, a single property changed event is triggered.
+        /// </summary>
+        public void EndUpdate()
+        {
+            _holdCounter--;
+            if (_holdCounter == 0 && _pendingEvents)
+            {
+                _pendingEvents = false;
+                OnPropertyChanged("");
+            }
         }
     }
 }

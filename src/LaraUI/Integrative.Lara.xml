@@ -2576,6 +2576,17 @@
                 that support <see cref="T:System.Runtime.CompilerServices.CallerMemberNameAttribute" />.
             </param>
         </member>
+        <member name="M:Integrative.Lara.BindableBase.BeginUpdate">
+            <summary>
+            Holds all property changed notifications.
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.BindableBase.EndUpdate">
+            <summary>
+            Stops holding property changed notifications.
+            If any property changed pending since BeginUpdate, a single property changed event is triggered.
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.BindOptions">
             <summary>
             Base class for binding options

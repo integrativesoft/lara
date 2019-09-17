@@ -103,9 +103,13 @@ namespace Integrative.Lara
         public string Value
         {
             get => GetAttributeLower("value");
-            set
+            set { SetAttributeLower("value", value); }
+        }
+
+        internal override void AttributeChanged(string attribute, string value)
+        {
+            if (attribute == "value")
             {
-                SetAttributeLower("value", value);
                 UpdateChildOptions(value);
             }
         }

@@ -1126,7 +1126,7 @@ namespace Integrative.Lara
             return Children;
         }
 
-        internal virtual void AttributeChanged(string attribute)
+        internal virtual void AttributeChanged(string attribute, string value)
         {
         }
 

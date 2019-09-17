@@ -59,7 +59,7 @@ namespace Integrative.Lara.DOM
             {
                 AttributeEditedDelta.Enqueue(_element, nameLower, value);
             }
-            _element.AttributeChanged(nameLower);
+            _element.AttributeChanged(nameLower, value);
         }
 
         internal void RemoveAttributeLower(string nameLower)
@@ -77,7 +77,7 @@ namespace Integrative.Lara.DOM
             {
                 AttributeRemovedDelta.Enqueue(_element, nameLower);
             }
-            _element.AttributeChanged(nameLower);
+            _element.AttributeChanged(nameLower, null);
         }
 
         internal void SetFlagAttributeLower(string nameLower, bool value)
@@ -108,7 +108,7 @@ namespace Integrative.Lara.DOM
                 _values.Remove(ValueAttribute);
             }
             _values.Add(ValueAttribute, value);
-            _element.AttributeChanged(ValueAttribute);
+            _element.AttributeChanged(ValueAttribute, value);
         }
 
         internal void NotifyChecked(bool isChecked)
@@ -136,7 +136,7 @@ namespace Integrative.Lara.DOM
             {
                 _values.Remove(nameLower);
             }
-            _element.AttributeChanged(nameLower);
+            _element.AttributeChanged(nameLower, string.Empty);
         }
 
         internal string GetAttributeLower(string nameLower)

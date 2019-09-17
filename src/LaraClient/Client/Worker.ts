@@ -143,11 +143,7 @@ namespace LaraUI {
     function createElementNode(node: ContentElementNode): Element {
         let child = createRootNode(node);
         for (var attribute of node.Attributes) {
-            let value = attribute.Value;
-            if (!value) {
-                value = "";
-            }
-            child.setAttribute(attribute.Attribute, value);
+            setAttribute(child, attribute.Attribute, attribute.Value);
         }
         for (var branch of node.Children) {
             let nodes = createNodes(branch);
@@ -156,6 +152,23 @@ namespace LaraUI {
             }
         }
         return child;
+    }
+
+    function setAttribute(child: Element, attribute: string, value: string): void {
+        if (!value) {
+            value = "";
+        }
+        if (attribute == "value" && (child instanceof HTMLInputElement
+            || child instanceof HTMLSelectElement
+            || child instanceof HTMLTextAreaElement)) {
+            child.value = value;
+            return;
+        }
+        if (attribute == "checked" && child instanceof HTMLInputElement) {
+            child.checked = true;
+            return;
+        }
+        child.setAttribute(attribute, value);
     }
 
     function createRootNode(node: ContentElementNode): Element {

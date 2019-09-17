@@ -9,6 +9,7 @@ using Integrative.Lara.Tools;
 using System;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -236,7 +237,8 @@ namespace Integrative.Lara.Tests.Middleware
                 Factory = () => new RemovableService(),
                 Method = "GET"
             });
-            LaraUI.Publish(FileName, new StaticContent(new byte[0]));
+            var bytes = Encoding.UTF8.GetBytes("hello");
+            LaraUI.Publish(FileName, new StaticContent(bytes));
             LaraUI.Publish(new WebComponentOptions
             {
                 ComponentTagName = ComponentName,
