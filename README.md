@@ -12,7 +12,7 @@ Lara can be used to develop either websites or desktop apps with an HTML5 fronte
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
-## Sample application
+## Sample standalone application
 
 ```csharp
 namespace SampleProject
@@ -66,11 +66,11 @@ namespace SampleProject
 }
 ```
 
-## Integrating Lara into your existing web server
+## Integrating Lara into an existing web server
 
-The example above calls into Lara's StartServer() method to create a default web host.
+The example above creates a standalone Lara web server. It's also possible to integrate Lara into an existing ASP.NET Core host. This lets you have some pages, files and webservices with Lara, while keeping other non-Lara services in the same ASP.NET Core host.
 
-Alternatively, you can and add Lara as one more service with the following line:
+To add Lara to an existing ASP.NET Core server, use:
 
 ```csharp
 app.UseLara(options);
