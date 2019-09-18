@@ -88,7 +88,7 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## How to contribute
 
-Did you try out Lara? What was your experience? Did you run into any issue, or have any suggestion? How does Lara meet your needs? What functionality would you like to see? Please let me know by [direct message](https://www.linkedin.com/in/pablocar/).
+Did you try out Lara, what was your experience? Did you run into an issue or have any suggestions? How does Lara meet your needs? What functionality would you like to see? Please let me know by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!!
 
 **If you like Lara, please give it a star - it helps!**
 
