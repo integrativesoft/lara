@@ -88,10 +88,9 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## How to contribute
 
-Submit issues, ask questions, send feedback.
-**If you like Lara, please give it a star - it helps!**
+Did you try out Lara? What was your experience? Did you run into any issue, or have any suggestion? How does Lara meet your needs? What functionality would you like to see? Please let me know by [direct message](https://www.linkedin.com/in/pablocar/).
 
-We'd love to hear your [feedback](https://integrative.b-cdn.net/feedback_lara_briskforms.html)!
+**If you like Lara, please give it a star - it helps!**
 
 ## Credits
 
