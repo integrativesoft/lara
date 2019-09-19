@@ -1,20 +1,26 @@
 {
   "name": "lara-client",
-  "version": "0.0.0",
+  "version": "0.5.8",
   "description": "LaraClient",
-  "main": "app.js",
+  "main": "src/index.ts",
+  "private": true,
   "author": {
-    "name": ""
+    "name": "Integrative Software LLC"
   },
   "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "devDependencies": {
-    "@types/node": "^8.0.14",
-    "typescript": "^3.2.2"
+    "@types/node": "^12.7.5",
+    "clean-webpack-plugin": "^3.0.0",
+    "ts-loader": "^6.1.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
-    "@types/jquery": "^3.3.31"
+    "@types/jquery": "^3.3.31",
+    "@types/jquery.blockui": "0.0.28"
   }
 }

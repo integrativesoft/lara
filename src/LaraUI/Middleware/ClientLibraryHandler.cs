@@ -17,7 +17,7 @@ namespace Integrative.Lara.Middleware
 {
     sealed class ClientLibraryHandler : BaseHandler
     {
-        const string ResourceName = "Integrative.Lara.LaraClient.js";
+        const string ResourceName = "Integrative.Lara.lara-client.js";
 
         readonly string _address;
         readonly byte[] _library;

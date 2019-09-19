@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "module": "amd",
-    "target": "es5",
+    "outDir": "./dist/",
     "noImplicitAny": true,
-    "lib": ["es6", "dom"],
+    "module": "es6",
+    "target": "es5",
+    "lib": [ "es6", "dom" ],
     "sourceMap": true,
-    "outFile": "./build/LaraClient.js",
-    "outDir": "./build"
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "allowJs": true
+  }
 }

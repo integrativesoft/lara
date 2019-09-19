@@ -77,10 +77,6 @@ namespace SampleProject
                         .Pop()
                     .Pop()
                 .Pop()
-                .Push("button", "btn btn-danger mt-2")
-                    .AddTextNode("Throw unhandled error")
-                    .On("click", () => throw new InvalidOperationException("Sample exception thrown"))
-                .Pop()
             .Pop();
 
             return Task.CompletedTask;

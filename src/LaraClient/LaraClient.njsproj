@@ -33,19 +33,20 @@
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="tsconfig.json" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Client\" />
+    <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Client\Blocker.ts" />
-    <TypeScriptCompile Include="Client\BlockUiDeclarations.ts" />
-    <TypeScriptCompile Include="Client\ContentInterfaces.ts" />
-    <TypeScriptCompile Include="Client\DeltaInterfaces.ts" />
-    <TypeScriptCompile Include="Client\Initializer.ts" />
-    <TypeScriptCompile Include="Client\InputCollector.ts" />
-    <TypeScriptCompile Include="Client\LaraUI.ts" />
-    <TypeScriptCompile Include="Client\Worker.ts" />
+    <TypeScriptCompile Include="src\Blocker.ts" />
+    <TypeScriptCompile Include="src\ContentInterfaces.ts" />
+    <TypeScriptCompile Include="src\custom.d.ts" />
+    <TypeScriptCompile Include="src\DeltaInterfaces.ts" />
+    <TypeScriptCompile Include="src\Initializer.ts" />
+    <TypeScriptCompile Include="src\InputCollector.ts" />
+    <TypeScriptCompile Include="src\index.ts" />
+    <TypeScriptCompile Include="src\Worker.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

@@ -36,7 +36,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <EmbeddedResource Include="..\LaraClient\build\LaraClient.js" Link="LaraClient.js" />
+    <EmbeddedResource Include="..\LaraClient\dist\lara-client.js" Link="lara-client.js" />
     <EmbeddedResource Include="Assets\Error.svg" />
   </ItemGroup>
 
