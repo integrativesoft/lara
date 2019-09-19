@@ -2918,6 +2918,12 @@
             <param name="value">The value.</param>
             <returns>Thsi instance</returns>
         </member>
+        <member name="M:Integrative.Lara.LaraBuilder.EnsureElementId">
+            <summary>
+            Creates an ID for the current element if it doesn't have one
+            </summary>
+            <returns>This instance</returns>
+        </member>
         <member name="M:Integrative.Lara.LaraBuilder.FlagAttribute(System.String,System.Boolean)">
             <summary>
             Sets a flag attribute value.

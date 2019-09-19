@@ -238,6 +238,16 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Creates an ID for the current element if it doesn't have one
+        /// </summary>
+        /// <returns>This instance</returns>
+        public LaraBuilder EnsureElementId()
+        {
+            _stack.Peek().EnsureElementId();
+            return this;
+        }
+
+        /// <summary>
         /// Sets a flag attribute value.
         /// </summary>
         /// <param name="attribute">The attribute.</param>
