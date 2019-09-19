@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "module": "amd",
-    "target": "es6",
+    "target": "es5",
+    "noImplicitAny": true,
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "outFile": "./build/LaraClient.js",
