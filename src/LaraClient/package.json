@@ -2,7 +2,7 @@
   "name": "lara-client",
   "version": "0.5.8",
   "description": "LaraClient",
-  "main": "src/index.ts",
+  "module": "src/index.ts",
   "private": true,
   "author": {
     "name": "Integrative Software LLC"
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/jquery": "^3.3.31",
-    "@types/jquery.blockui": "0.0.28"
+    "@types/jquery.blockui": "0.0.28",
+    "jquery": "^3.4.1"
   }
 }

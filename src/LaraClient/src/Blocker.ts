@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 import { PlugOptions } from "./index";
+import "./blockUI.js";
 
 export function block(plug: PlugOptions): void {
     if (plug.Block) {

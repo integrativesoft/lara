@@ -42,14 +42,6 @@ namespace Integrative.Lara.Main
             };
             head.AppendChild(script);
 
-            // BlockUI.js
-            script = new Script
-            {
-                Src = options.AddressBlockUI,
-                Defer = true
-            };
-            head.AppendChild(script);
-
             // LaraClient.js
             script = new Script
             {

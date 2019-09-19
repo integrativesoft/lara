@@ -51,16 +51,9 @@ namespace Integrative.Lara
         /// </summary>
         public const string DefaultJQuery = "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js";
 
-        /// <summary>
-        /// Default address for blockUI.js
-        /// </summary>
-        public const string DefaultBlockUI = "https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js";
-
         private Uri _jquery;
-        private Uri _blockUI;
 
         internal string AddressJQuery { get; private set; } = DefaultJQuery;
-        internal string AddressBlockUI { get; private set; } = DefaultBlockUI;
 
         /// <summary>
         /// Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
@@ -78,26 +71,6 @@ namespace Integrative.Lara
                 else
                 {
                     AddressJQuery = value.ToString();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Specifies a custom URL for the blockUI.js library. If left blank, the default URL is used.
-        /// </summary>
-        public Uri CustomUrlBlockUI
-        {
-            get => _blockUI;
-            set
-            {
-                _blockUI = value;
-                if (value == null)
-                {
-                    AddressBlockUI = DefaultBlockUI;
-                }
-                else
-                {
-                    AddressBlockUI = value.ToString();
                 }
             }
         }

@@ -3226,19 +3226,9 @@
             Default address for JQuery.js
             </summary>
         </member>
-        <member name="F:Integrative.Lara.LaraOptions.DefaultBlockUI">
-            <summary>
-            Default address for blockUI.js
-            </summary>
-        </member>
         <member name="P:Integrative.Lara.LaraOptions.CustomUrlJQuery">
             <summary>
             Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
-            </summary>
-        </member>
-        <member name="P:Integrative.Lara.LaraOptions.CustomUrlBlockUI">
-            <summary>
-            Specifies a custom URL for the blockUI.js library. If left blank, the default URL is used.
             </summary>
         </member>
         <member name="T:Integrative.Lara.StartServerOptions">

@@ -327,20 +327,15 @@ namespace Integrative.Lara.Tests.Middleware
         public void CustomUrlsPassed()
         {
             const string JQuery = "https://a/a.js";
-            const string BlockUI = "https://b/b.js";
             var options = new LaraOptions
             {
-                CustomUrlJQuery = new Uri(JQuery),
-                CustomUrlBlockUI = new Uri(BlockUI)
+                CustomUrlJQuery = new Uri(JQuery)
             };
             var page = new MyPage();
             var document = new Document(page, options);
             var head1 = document.Head.GetChildAt(1) as Script;
-            var head2 = document.Head.GetChildAt(2) as Script;
             Assert.NotNull(head1);
-            Assert.NotNull(head2);
             Assert.Equal(JQuery, head1.Src);
-            Assert.Equal(BlockUI, head2.Src);
         }
 
         [Fact]
@@ -512,12 +507,9 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var options = new LaraOptions
             {
-                CustomUrlBlockUI = null,
                 CustomUrlJQuery = null
             };
-            Assert.Equal(LaraOptions.DefaultBlockUI, options.AddressBlockUI);
             Assert.Equal(LaraOptions.DefaultJQuery, options.AddressJQuery);
-            Assert.Null(options.CustomUrlBlockUI);
             Assert.Null(options.CustomUrlJQuery);
         }
 
