@@ -47,7 +47,7 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.5.7 adds bug fixes</PackageReleaseNotes>
+    <PackageReleaseNotes>0.5.8 adds bug fixes, and removes external CDNs to support development of offline desktop applications by default.</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
