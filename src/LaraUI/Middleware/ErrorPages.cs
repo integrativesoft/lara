@@ -5,12 +5,13 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
 using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     /// <summary>
     /// This class defines a set of default error pages
