@@ -2098,24 +2098,6 @@
             The method for creating instances of the web service class
             </summary>
         </member>
-        <member name="T:Integrative.Lara.Middleware.ErrorPages">
-            <summary>
-            This class defines a set of default error pages
-            </summary>
-        </member>
-        <member name="M:Integrative.Lara.Middleware.ErrorPages.SetDefaultPage(System.Net.HttpStatusCode,System.Func{Integrative.Lara.IPage})">
-            <summary>
-            Defines a default page to show for GET requests with a given error code
-            </summary>
-            <param name="code">status code</param>
-            <param name="factory">handler that creates page</param>
-        </member>
-        <member name="M:Integrative.Lara.Middleware.ErrorPages.Remove(System.Net.HttpStatusCode)">
-            <summary>
-            Removes a default error page associated with a status code
-            </summary>
-            <param name="code">status code</param>
-        </member>
         <member name="T:Integrative.Lara.ContentTypes">
             <summary>
             Constants for 'content-type' HTTP header
@@ -2402,6 +2384,24 @@
         </member>
         <member name="F:Integrative.Lara.ContentTypes.ApplicationZip">
             <summary>ZIP archive files; Registered[7]</summary>
+        </member>
+        <member name="T:Integrative.Lara.ErrorPages">
+            <summary>
+            This class defines a set of default error pages
+            </summary>
+        </member>
+        <member name="M:Integrative.Lara.ErrorPages.SetDefaultPage(System.Net.HttpStatusCode,System.Func{Integrative.Lara.IPage})">
+            <summary>
+            Defines a default page to show for GET requests with a given error code
+            </summary>
+            <param name="code">status code</param>
+            <param name="factory">handler that creates page</param>
+        </member>
+        <member name="M:Integrative.Lara.ErrorPages.Remove(System.Net.HttpStatusCode)">
+            <summary>
+            Removes a default error page associated with a status code
+            </summary>
+            <param name="code">status code</param>
         </member>
         <member name="T:Integrative.Lara.LaraMiddleware">
             <summary>

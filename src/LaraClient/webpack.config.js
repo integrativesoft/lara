@@ -25,7 +25,10 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            jquery: "jquery/src/jquery"
+        }
     },
     output: {
         filename: 'lara-client.js',
