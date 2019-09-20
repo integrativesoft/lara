@@ -94,16 +94,11 @@ namespace Integrative.Lara
         internal Queue<BaseDelta> GetQueue() => _queue;
 
         internal Document(IPage page)
-            : this(page, new LaraOptions())
+            : this(page, Connections.CreateCryptographicallySecureGuid())
         {
         }
 
-        internal Document(IPage page, LaraOptions options)
-            : this(page, Connections.CreateCryptographicallySecureGuid(), options)
-        {
-        }
-
-        internal Document(IPage page, Guid virtualId, LaraOptions options)
+        internal Document(IPage page, Guid virtualId)
         {
             VirtualId = virtualId;
             Page = page;
@@ -117,7 +112,7 @@ namespace Integrative.Lara
             Body.Document = this;
             Body.IsSlotted = true;
             UpdateTimestamp();
-            TemplateBuilder.Build(this, options);
+            TemplateBuilder.Build(this);
             _serverEvents = new ServerEventsController(this);
         }
 

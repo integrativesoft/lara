@@ -17,7 +17,7 @@ namespace Integrative.Lara.Main
             _libraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
-        public static void Build(Document document, LaraOptions options)
+        public static void Build(Document document)
         {
             var head = document.Head;
             var body = document.Body;
@@ -34,16 +34,8 @@ namespace Integrative.Lara.Main
             meta.SetAttribute("charset", "utf-8");
             head.AppendChild(meta);
 
-            // jQuery.js
-            var script = new Script
-            {
-                Src = options.AddressJQuery,
-                Defer = true
-            };
-            head.AppendChild(script);
-
             // LaraClient.js
-            script = new Script
+            var script = new Script
             {
                 Src = _libraryUrl,
                 Defer = true

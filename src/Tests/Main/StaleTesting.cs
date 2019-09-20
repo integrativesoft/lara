@@ -19,8 +19,8 @@ namespace Integrative.Lara.Tests.Main
         {
             var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            var doc1 = cnx.CreateDocument(new MyPage(), new LaraOptions());
-            var doc2 = cnx.CreateDocument(new MyPage(), new LaraOptions());
+            var doc1 = cnx.CreateDocument(new MyPage());
+            var doc2 = cnx.CreateDocument(new MyPage());
             doc2.ModifyLastUtcForTesting(DateTime.UtcNow.AddHours(-10));
             await Task.Delay(200);
             using (var collector = new StaleConnectionsCollector(connections))

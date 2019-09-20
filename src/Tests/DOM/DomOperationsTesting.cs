@@ -37,7 +37,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var guid = Connections.CreateCryptographicallySecureGuid();
             var page = new MyPage();
-            return new Document(page, guid, new LaraOptions());
+            return new Document(page, guid);
         }
 
         [Fact]

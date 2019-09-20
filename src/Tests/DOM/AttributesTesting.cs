@@ -44,7 +44,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var guid = Guid.Parse("{0857AE93-8591-4CB6-887E-C449ABFCAA7A}");
             var page = new MyPage();
-            return new Document(page, guid, new LaraOptions());
+            return new Document(page, guid);
         }
 
         [Fact]

@@ -3221,16 +3221,6 @@
               <c>true</c> if [add web sockets middleware]; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="F:Integrative.Lara.LaraOptions.DefaultJQuery">
-            <summary>
-            Default address for JQuery.js
-            </summary>
-        </member>
-        <member name="P:Integrative.Lara.LaraOptions.CustomUrlJQuery">
-            <summary>
-            Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
-            </summary>
-        </member>
         <member name="T:Integrative.Lara.StartServerOptions">
             <summary>
             Lara options for starting a web server

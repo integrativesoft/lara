@@ -324,21 +324,6 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
-        public void CustomUrlsPassed()
-        {
-            const string JQuery = "https://a/a.js";
-            var options = new LaraOptions
-            {
-                CustomUrlJQuery = new Uri(JQuery)
-            };
-            var page = new MyPage();
-            var document = new Document(page, options);
-            var head1 = document.Head.GetChildAt(1) as Script;
-            Assert.NotNull(head1);
-            Assert.Equal(JQuery, head1.Src);
-        }
-
-        [Fact]
         public async void SendReplyLeavesSocketOpen()
         {
             var page = new MyPage();
@@ -500,17 +485,6 @@ namespace Integrative.Lara.Tests.Middleware
         private void Session_Closing(object sender, EventArgs e)
         {
             throw new InvalidOperationException();
-        }
-
-        [Fact]
-        public void EmptyCdnsUseDefault()
-        {
-            var options = new LaraOptions
-            {
-                CustomUrlJQuery = null
-            };
-            Assert.Equal(LaraOptions.DefaultJQuery, options.AddressJQuery);
-            Assert.Null(options.CustomUrlJQuery);
         }
 
         [Fact]

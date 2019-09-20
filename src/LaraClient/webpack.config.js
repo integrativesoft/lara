@@ -10,7 +10,11 @@ module.exports = {
     entry: './src/index.ts',
     plugins: [
         new CleanWebpackPlugin(),
-        new webpack.BannerPlugin(banner)
+        new webpack.BannerPlugin(banner),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
     ],
     module: {
         rules: [
@@ -28,8 +32,5 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'var',
         library: 'LaraUI'
-    },
-    externals: {
-        jquery: 'jQuery'
     }
 };

@@ -93,7 +93,7 @@ namespace Integrative.Lara.Tests.Delta
         private static Document CreateDocument()
         {
             var page = new MyPage();
-            var doc = new Document(page, Connections.CreateCryptographicallySecureGuid(), new LaraOptions());
+            var doc = new Document(page, Connections.CreateCryptographicallySecureGuid());
             return doc;
         }
 

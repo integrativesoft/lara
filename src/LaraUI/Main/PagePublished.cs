@@ -35,7 +35,7 @@ namespace Integrative.Lara.Main
             var connection = GetConnection(http);
             var execution = new PageContext(http, connection);
             var page = CreateInstance();
-            var document = connection.CreateDocument(page, options);
+            var document = connection.CreateDocument(page);
             execution.Document = document;
             if (await RunPage(http, page, options))
             {

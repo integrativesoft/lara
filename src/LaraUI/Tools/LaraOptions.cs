@@ -45,35 +45,6 @@ namespace Integrative.Lara
         ///   <c>true</c> if [add web sockets middleware]; otherwise, <c>false</c>.
         /// </value>
         public bool AddWebSocketsMiddleware { get; set; } = true;
-
-        /// <summary>
-        /// Default address for JQuery.js
-        /// </summary>
-        public const string DefaultJQuery = "https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js";
-
-        private Uri _jquery;
-
-        internal string AddressJQuery { get; private set; } = DefaultJQuery;
-
-        /// <summary>
-        /// Specifies a custom URL for the JQuery.js library. If left blank, the default URL is used.
-        /// </summary>
-        public Uri CustomUrlJQuery
-        {
-            get => _jquery;
-            set
-            {
-                _jquery = value;
-                if (value == null)
-                {
-                    AddressJQuery = DefaultJQuery;
-                }
-                else
-                {
-                    AddressJQuery = value.ToString();
-                }
-            }
-        }
     }
 
     /// <summary>

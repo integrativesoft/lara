@@ -53,7 +53,7 @@ namespace Integrative.Lara.Tests.Main
         {
             var connections = new Connections();
             var connection = connections.CreateConnection(IPAddress.Loopback);
-            connection.CreateDocument(new MyPage(), new LaraOptions());
+            connection.CreateDocument(new MyPage());
             var required = DateTime.UtcNow.AddSeconds(10);
             Assert.NotEmpty(connection.GetDocuments());
             await StaleConnectionsCollector.CleanupExpired(connection, required);
@@ -65,7 +65,7 @@ namespace Integrative.Lara.Tests.Main
         {
             var connections = new Connections(200, 100);
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            var document = cnx.CreateDocument(new MyPage(), new LaraOptions());
+            var document = cnx.CreateDocument(new MyPage());
             Assert.NotEmpty(connections.GetConnections());
             document.ModifyLastUtcForTesting(DateTime.UtcNow.AddDays(-1));
             await Task.Delay(400);
