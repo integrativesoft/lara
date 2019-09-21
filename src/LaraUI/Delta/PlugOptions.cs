@@ -13,21 +13,18 @@ namespace Integrative.Lara.Delta
     sealed class PlugOptions
     {
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string EventName { get; set; }
-
-        [DataMember]
         public bool Block { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string BlockElementId { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string BlockHTML { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public string BlockShownId { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool LongRunning { get; set; }
 
         public PlugOptions()
@@ -36,7 +33,6 @@ namespace Integrative.Lara.Delta
 
         public PlugOptions(EventSettings settings)
         {
-            EventName = settings.EventName;
             Block = settings.Block;
             if (settings.BlockOptions != null)
             {

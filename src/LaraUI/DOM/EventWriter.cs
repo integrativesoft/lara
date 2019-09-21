@@ -82,15 +82,12 @@ namespace Integrative.Lara.DOM
 
         private string BuildEventCode()
         {
-            return $"LaraUI.plug(this, '{_settings.EventName}', event);";
+            return $"LaraUI.plug(this, event);";
         }
 
         private string BuildEventData()
         {
-            var plug = new PlugOptions(_settings)
-            {
-                EventName = null
-            };
+            var plug = new PlugOptions(_settings);
             return plug.ToJSON();
         }
 

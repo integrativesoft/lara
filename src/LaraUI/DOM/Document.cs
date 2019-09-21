@@ -159,9 +159,24 @@ namespace Integrative.Lara
 
         internal void OpenEventQueue()
         {
-            var json = FlushQueue();
-            Head.SetAttribute("data-lara-initialdelta", json);
+            if (_queue.Count > 0)
+            {
+                var json = FlushQueue();
+                Head.SetAttribute("data-lara-initialdelta", json);
+            }
             QueueingEvents = true;
+        }
+
+        internal string FlushQueue()
+        {
+            var list = new List<BaseDelta>();
+            while (_queue.Count > 0)
+            {
+                var step = _queue.Dequeue();
+                list.Add(step);
+            }
+            var result = new EventResult(list);
+            return result.ToJSON();
         }
 
         internal void Enqueue(BaseDelta delta)
@@ -187,18 +202,6 @@ namespace Integrative.Lara
         {
             _map.TryGetElementById(id, out var element);
             return element;
-        }
-
-        internal string FlushQueue()
-        {
-            var list = new List<BaseDelta>();
-            while (_queue.Count > 0)
-            {
-                var step = _queue.Dequeue();
-                list.Add(step);
-            }
-            var result = new EventResult(list);
-            return result.ToJSON();
         }
 
         /// <summary>

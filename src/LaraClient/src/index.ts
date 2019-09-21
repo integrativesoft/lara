@@ -36,12 +36,12 @@ function terminate(): void {
 
 export interface PlugOptions {
     EventName: string;
-    Block: boolean;
+    Block?: boolean;
     BlockElementId?: string;
     BlockHTML?: string;
     BlockShownId?: string;
-    ExtraData: string;
-    LongRunning: boolean;
+    ExtraData?: string;
+    LongRunning?: boolean;
 }
 
 export class EventParameters {
@@ -51,8 +51,9 @@ export class EventParameters {
     Message: ClientEventMessage;
 }
 
-export function plug(el: Element, eventName: string, event: Event): void {
+export function plug(el: Element, event: Event): void {
     event.stopPropagation();
+    let eventName = event.type;
     let attribute = "data-lara-event-" + eventName;
     let json = el.getAttribute(attribute);
     if (json) {
