@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Coffee.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Coffee.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LaraUI\LaraUI.csproj" />
   </ItemGroup>
 

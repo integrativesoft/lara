@@ -33,12 +33,14 @@ export function unblock(plug: PlugOptions): void {
 function buildParameters(plug: PlugOptions): JQBlockUIOptions {
     let result: JQBlockUIOptions = {};
     let shownId = plug.BlockShownId;
-    setDefaultCSS(result);
     if (shownId) {
+        setElementCSS(result);
         result.message = $("#" + shownId);
     } else if (plug.BlockHTML == "") {
+        setDefaultCSS(result);
         result.message = null;
     } else if (plug.BlockHTML) {
+        setDefaultCSS(result);
         result.message = plug.BlockHTML;
     }
     result.baseZ = 2000;
@@ -53,6 +55,22 @@ function resolveTarget(plug: PlugOptions): Element {
         }
     }
     return null;
+}
+
+function setElementCSS(options: JQBlockUIOptions): void {
+    options.css = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        padding: 'unset',
+        margin: 'unset',
+        border: 'unset',
+        width: 'unset',
+        'text-align': 'unset',
+        color: 'unset',
+        'background-color': 'unset'
+    };
 }
 
 function setDefaultCSS(options: JQBlockUIOptions): void {

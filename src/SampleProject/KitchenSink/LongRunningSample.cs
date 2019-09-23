@@ -5,30 +5,52 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
+using System;
 using System.Threading.Tasks;
 
 namespace SampleProject
 {
     class LongRunningSample
     {
-        readonly Button _button;
-        readonly Element _message;
+        readonly Button _button = new Button();
+        readonly Element _card = Element.Create("div");
+        readonly Element _coffeeText = Element.Create("p");
+        readonly Element _counterText = Element.Create("p");
 
-        public Element Root { get; }
+        readonly string[] _coffees = { "capuccino", "americano", "latte", "mocha" };
+        readonly string[] _sizes = { "small", "medium", "large" };
+        readonly string[] _steps = { "Putting grounds into container",
+            "Covering coffee and water mixture",
+            "Filtering coffee and water mixture",
+            "Serving..."
+        };
+
+        public Element Root { get; } = Element.Create("div");
 
         public LongRunningSample()
         {
-            _button = new Button
-            {
-                Class = "btn btn-primary my-2"
-            };
-            _message = Element.Create("div");
-            _message.Style = "display: none";
-            Root = Element.Create("div");
             Root.Class = "form-row";
-            Root.AppendChild(_button);
-            Root.AppendChild(_message);
-            _button.AppendChild(new TextNode("Long-running event"));
+            var builder = new LaraBuilder(Root);
+            builder.Push(_button, "btn btn-primary my-2")
+                .AddTextNode("Long-running action")
+            .Pop()
+            .Push(_card, "card text-center")
+                .Attribute("style", "display: none; width: 18rem")
+                .Push("img", "card-img-top mt-2")
+                    .Attribute("height", "100")
+                    .Attribute("src", "/Coffee.svg")
+                    .Attribute("alt", "coffee mug")
+                .Pop()
+                .Push("div", "card-body")
+                    .Push("h5", "card-title")
+                        .AddTextNode("Preparing...")
+                    .Pop()
+                    .Push(_coffeeText, "card-text")
+                    .Pop()
+                    .Push(_counterText, "card-text")
+                    .Pop()
+                .Pop()
+            .Pop();
             _button.On(new EventSettings
             {
                 EventName = "click",
@@ -37,21 +59,39 @@ namespace SampleProject
                 Block = true,
                 BlockOptions = new BlockOptions
                 {
-                    ShowElementId = _message.EnsureElementId(),
+                    ShowElementId = _card.EnsureElementId(),
                 }
             });
         }
 
         private async Task ButtonHandler()
         {
-            string[] numbers = { "five", "four", "three", "two", "one" };
-            for (int index = 0; index < numbers.Length; index++)
+            var header = BuildMessage();
+            _coffeeText.SetInnerText(header);
+            foreach (var step in _steps)
             {
-                _message.ClearChildren();
-                _message.AppendText(numbers[index]);
+                _counterText.SetInnerText(step);
                 await LaraUI.Page.Navigation.FlushPartialChanges();
-                await Task.Delay(700);
+                await Task.Delay(1000);
             }
+            _coffeeText.ClearChildren();
+            _counterText.ClearChildren();
+        }
+
+        private string BuildMessage()
+        {
+            var coffee = ChooseRandom(_coffees);
+            var size = ChooseRandom(_sizes);
+            return $"Brewing a {size} {coffee}";
+        }
+
+        private string ChooseRandom(string[] series)
+        {
+            var random = new Random();
+            var min = series.GetLowerBound(0);
+            var max = series.GetUpperBound(0);
+            var index = random.Next(min, max + 1);
+            return series[index];
         }
     }
 }

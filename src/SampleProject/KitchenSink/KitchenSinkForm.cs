@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
+using SampleProject.Other;
 using System.Threading.Tasks;
 
 namespace SampleProject
@@ -12,18 +13,26 @@ namespace SampleProject
     [LaraPage(Address = "/")]
     sealed class KitchenSinkForm : IPage
     {
-        public KitchenSinkForm()
+        static KitchenSinkForm()  // static constructor
+        {
+            // publish static image file of coffee mug
+            var assembly = typeof(KitchenSinkForm).Assembly;
+            var bytes = Tools.LoadEmbeddedResource(assembly, "SampleProject.Assets.Coffee.svg");
+            LaraUI.Publish("/Coffee.svg", new StaticContent(bytes, "image/svg+xml"));
+        }
+
+        public KitchenSinkForm()  // instance constructor
         {
         }
 
-        public Task OnGet()
+        public Task OnGet()  // OnGet method from inteface IPage
         {
             var document = LaraUI.Page.Document;
 
-            // Load styles library 'bootstrap'
+            // This sample application loads the CSS library 'Bootstrap'
             SampleAppBootstrap.AppendTo(document.Head);
 
-            // Load custom controls in document body.
+            // Load custom controls in document body
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "container p-4")
                 .AddNode(new CounterSample().Root)
@@ -42,37 +51,37 @@ namespace SampleProject
                     .Push("div", "mt-2")
                         .Push("a")
                             .Attribute("href", ReactiveSimplePage.PageAddress)
-                            .AddTextNode("Ractive programming example 1")
+                            .AddTextNode("Reactive programming example 1")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
                             .Attribute("href", RactiveCollectionPage.PageAddress)
-                            .AddTextNode("Ractive programming example 2")
+                            .AddTextNode("Reactive programming example 2")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
                             .Attribute("href", ReactiveFeedPage.PageAddress)
-                            .AddTextNode("Ractive programming example 3")
+                            .AddTextNode("Reactive programming example 3")
                         .Pop()
                     .Pop()
                     .Push("div", "mt-2")
                         .Push("a")
                             .Attribute("href", CounterPage.PageAddress)
-                            .AddTextNode("Component example 1")
+                            .AddTextNode("Web component example 1")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
                             .Attribute("href", CheckboxPage.PageAddress)
-                            .AddTextNode("Component example 2")
+                            .AddTextNode("Web component example 2")
                         .Pop()
                     .Pop()
                     .Push("div")
                         .Push("a")
                             .Attribute("href", CardPage.PageAddress)
-                            .AddTextNode("Component example 3")
+                            .AddTextNode("Web component example 3")
                         .Pop()
                     .Pop()
                 .Pop()
