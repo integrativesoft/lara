@@ -35,12 +35,14 @@ function buildParameters(plug: PlugOptions): JQBlockUIOptions {
     let shownId = plug.BlockShownId;
     if (shownId) {
         setElementCSS(result);
+    } else {
+        setDefaultCSS(result);
+    }
+    if (shownId) {
         result.message = $("#" + shownId);
     } else if (plug.BlockHTML == "") {
-        setDefaultCSS(result);
         result.message = null;
     } else if (plug.BlockHTML) {
-        setDefaultCSS(result);
         result.message = plug.BlockHTML;
     }
     result.baseZ = 2000;
