@@ -52,7 +52,7 @@ namespace SampleProject
         public Task OnGet()
         {
             var button = Element.Create("button");
-            button.AppendText("Click me");
+            button.SetInnerText("Click me");
             button.On("click", () =>
             {
                 counter++;
