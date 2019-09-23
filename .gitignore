@@ -229,3 +229,4 @@ project.lock.json
 /src/LaraClient/build
 *.map
 *.js
+/src/environment.txt

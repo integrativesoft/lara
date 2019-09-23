@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
     "@types/node": "^12.7.5",

@@ -21,6 +21,11 @@ EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "LaraDocumentation", "LaraDocumentation\LaraDocumentation.shfbproj", "{0019560B-ED95-4921-9050-8AD37BF9D7EF}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "LaraClient", "LaraClient\LaraClient.njsproj", "{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97} = {6D3AB3AA-7456-45F8-977A-EBC326F5EF97}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildHelper", "BuildHelper\BuildHelper.csproj", "{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +74,14 @@ Global
 		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|x64.ActiveCfg = Release|Any CPU
 		{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}.Release|x64.Build.0 = Release|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Debug|x64.Build.0 = Debug|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|x64.ActiveCfg = Release|Any CPU
+		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
