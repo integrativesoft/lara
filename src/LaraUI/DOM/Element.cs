@@ -1164,6 +1164,17 @@ namespace Integrative.Lara
             FocusDelta.Enqueue(this);
         }
 
+        /// <summary>
+        /// Calculates and returns the HTML code of the element
+        /// </summary>
+        /// <returns>HTML code</returns>
+        public string GetHtml()
+        {
+            var writer = new DocumentWriter();
+            writer.PrintElement(this, 0);
+            return writer.ToString();
+        }
+
         #endregion
     }
 }

@@ -768,6 +768,12 @@
             Focuses this element.
             </summary>
         </member>
+        <member name="M:Integrative.Lara.Element.GetHtml">
+            <summary>
+            Calculates and returns the HTML code of the element
+            </summary>
+            <returns>HTML code</returns>
+        </member>
         <member name="T:Integrative.Lara.EventSettings">
             <summary>
             Specifies settings to declare an event and associate execution code to it.

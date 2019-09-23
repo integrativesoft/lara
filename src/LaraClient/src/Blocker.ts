@@ -33,6 +33,7 @@ export function unblock(plug: PlugOptions): void {
 function buildParameters(plug: PlugOptions): JQBlockUIOptions {
     let result: JQBlockUIOptions = {};
     let shownId = plug.BlockShownId;
+    setDefaultCSS(result);
     if (shownId) {
         result.message = $("#" + shownId);
     } else if (plug.BlockHTML == "") {
@@ -52,4 +53,20 @@ function resolveTarget(plug: PlugOptions): Element {
         }
     }
     return null;
+}
+
+function setDefaultCSS(options: JQBlockUIOptions): void {
+    options.css = {
+        border: 'none',
+        padding: '15px',
+        backgroundColor: '#000',
+        '-webkit-border-radius': '10px',
+        '-moz-border-radius': '10px',
+        'border-radius': '10px',
+        opacity: '.5',
+        color: '#fff',
+        fontSize: '18px',
+        fontFamily: 'Verdana,Arial',
+        fontWeight: 200
+    };
 }

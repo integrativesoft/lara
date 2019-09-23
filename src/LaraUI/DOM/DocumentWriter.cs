@@ -18,8 +18,13 @@ namespace Integrative.Lara.DOM
         readonly StringBuilder _builder;
 
         public DocumentWriter(Document document)
+            : this()
         {
             _document = document;
+        }
+
+        public DocumentWriter()
+        {
             _builder = new StringBuilder();
         }
 
@@ -39,7 +44,7 @@ namespace Integrative.Lara.DOM
             _builder.AppendLine("</html>");
         }
 
-        private void PrintElement(Element element, int indent)
+        public void PrintElement(Element element, int indent)
         {
             VerifyNestedLevel(indent);
             if (IsInlineElement(element))

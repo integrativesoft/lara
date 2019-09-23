@@ -6,14 +6,11 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace SampleProject
 {
     class LockingSample
     {
-        private const string SpinnerPath = "https://cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif";
-
         readonly Button _button;
 
         public Element Root { get; }
@@ -35,15 +32,23 @@ namespace SampleProject
                 Handler = () => Task.Delay(1000),
                 BlockOptions = new BlockOptions
                 {
-                    ShowHtmlMessage = GetSpinnerHtml(" Please wait...")
+                    ShowHtmlMessage = GetSpinnerHtml("Brewing coffee..."),
                 }
             });
         }
 
         public static string GetSpinnerHtml(string message)
         {
-            string encoded = HttpUtility.HtmlEncode(" " + message);
-            return $"<h1><img src=\"{SpinnerPath}\"/>{encoded}</h1>";
+            var div = Element.Create("div");
+            div.Class = "d-flex justify-content-center";
+            var builder = new LaraBuilder(div);
+            builder.Push("div", "spinner-border")
+                .Attribute("role", "status")
+            .Pop()
+            .Push("div", "ml-2")
+                .AddTextNode(message)
+            .Pop();
+            return div.GetHtml();
         }
     }
 }
