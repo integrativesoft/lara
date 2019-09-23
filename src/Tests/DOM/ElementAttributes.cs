@@ -500,7 +500,17 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Same(Task.CompletedTask, task);
         }
 
-
-
+        [Fact]
+        public void AppendTextMergesNodes()
+        {
+            var x = Element.Create("div");
+            x.AppendText("hi");
+            x.AppendText(" ");
+            x.AppendText("bye");
+            Assert.Equal(1, x.ChildCount);
+            var node = x.GetChildAt(0) as TextNode;
+            Assert.NotNull(node);
+            Assert.Equal("hi bye", node.Data);
+        }
     }
 }

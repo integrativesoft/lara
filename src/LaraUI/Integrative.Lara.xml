@@ -588,7 +588,9 @@
         </member>
         <member name="M:Integrative.Lara.Element.AppendText(System.String)">
             <summary>
-            Appends a child text node
+            Adds text inside an element.
+            When the element's last child is a text node, the text is appended to that node.
+            Otherwise, a new child text node is added to the element.
             </summary>
             <param name="text">Text of the node</param>
         </member>
@@ -917,6 +919,13 @@
             </summary>
             <param name="data">The data.</param>
             <param name="encode">if set to <c>true</c> encode.</param>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.AppendText(System.String,System.Boolean)">
+            <summary>
+            Appends text to the node
+            </summary>
+            <param name="text">Text to append</param>
+            <param name="encode">true to encode, false to append raw HTML</param>
         </member>
         <member name="M:Integrative.Lara.TextNode.SetEncodedText(System.String)">
             <summary>

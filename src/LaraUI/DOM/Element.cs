@@ -652,12 +652,22 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Appends a child text node
+        /// Adds text inside an element.
+        /// When the element's last child is a text node, the text is appended to that node.
+        /// Otherwise, a new child text node is added to the element.
         /// </summary>
         /// <param name="text">Text of the node</param>
         public void AppendText(string text)
         {
-            AppendChild(new TextNode(text));
+            var count = _children.Count;
+            if (count > 0 && _children[count - 1] is TextNode node)
+            {
+                node.AppendText(text);
+            }
+            else
+            {
+                AppendChild(new TextNode(text));
+            }
         }
 
         /// <summary>

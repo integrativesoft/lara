@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.5.9</Version>
+    <Version>0.5.10</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -47,7 +47,7 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.5.9 adds bug fixes</PackageReleaseNotes>
+    <PackageReleaseNotes>0.5.10 adds bug fixes and improves the default styles used when blocking the user interface</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

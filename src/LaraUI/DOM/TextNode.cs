@@ -76,6 +76,27 @@ namespace Integrative.Lara
             }
         }
 
+        /// <summary>
+        /// Appends text to the node
+        /// </summary>
+        /// <param name="text">Text to append</param>
+        /// <param name="encode">true to encode, false to append raw HTML</param>
+        public void AppendText(string text, bool encode = true)
+        {
+            if (encode)
+            {
+                text = HttpUtility.HtmlEncode(text);
+            }
+            if (string.IsNullOrEmpty(_data))
+            {
+                _data = text;
+            }
+            else
+            {
+                _data += text;
+            }
+        }
+
         internal override ContentNode GetContentNode()
         {
             return new ContentTextNode
