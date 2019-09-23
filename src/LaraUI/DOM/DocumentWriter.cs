@@ -31,7 +31,7 @@ namespace Integrative.Lara.DOM
         public void Print()
         {
             _builder.AppendLine("<!doctype html>");
-            _builder.AppendLine("<!-- Rendered with LaraUI. https://laraui.com -->");
+            _builder.AppendLine("<!-- Rendered with Lara Web Engine. https://laraui.com -->");
             _builder.Append("<html");
             if (!string.IsNullOrEmpty(_document.Lang))
             {
