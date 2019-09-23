@@ -79,16 +79,30 @@ app.UseLara(options);
 ## Developing a desktop application
 
 Here you need to choose a tool to load your locally-hosted website inside a desktop window. Some options available:
+
 - Creating an electron app using [electron-cgi](https://github.com/ruidfigueiredo/electron-cgi) (recommended). This seems to be the most resilient way to run a web desktop app. It comes at the cost of having to distribute electron with nodejs.
 - Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Their Windows version based on CefSharp works very well.
+
+If you have other tool suggestions that worked out for you, please let me know.
 
 ## How does Lara work?
 
 Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
+## Getting started
+
+Lara is available as the NuGet package `Integrative.Lara`. Create a new project, add the NuGet package, and copy and paste the 'Sample standalone application' in this page.
+
+This repository also contains examples. You can run them directly by cloning this repository from the command line:
+```
+git clone https://github.com/integrativesoft/lara
+```
+
+The [wiki](https://github.com/integrativesoft/lara/wiki) contains the documentation for using Lara.
+
 ## How to contribute
 
-Did you try out Lara, what was your experience? Did you run into an issue or have any suggestions? How does Lara meet your needs? What functionality would you like to see? Please let me know by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!!
+Did you try out Lara, what was your experience? Did you run into an issue or have any suggestions? How does Lara meet your needs? What functionality would you like to see? Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!!
 
 **If you like Lara, please give it a star - it helps!**
 
