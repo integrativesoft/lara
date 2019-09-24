@@ -150,7 +150,7 @@ namespace Integrative.Lara
         /// <param name="text">The text.</param>
         /// <param name="encode">if set to <c>true</c> [encode].</param>
         /// <returns>This instance</returns>
-        [Obsolete("Use AppendText() instead of AddTextNode")]
+        [Obsolete("Use AppendText() or AppendData() instead of AddTextNode")]
         public LaraBuilder AddTextNode(string text, bool encode = true)
         {
             return AddTextNode(new TextNode(text, encode));
@@ -161,7 +161,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="node">The node.</param>
         /// <returns>This instance</returns>
-        [Obsolete("Use AppendText() instead of AddTextNode")]
+        [Obsolete("Use AppendText() or AppendData() instead of AddTextNode")]
         public LaraBuilder AddTextNode(TextNode node)
         {
             node = node ?? throw new ArgumentNullException(nameof(node));
