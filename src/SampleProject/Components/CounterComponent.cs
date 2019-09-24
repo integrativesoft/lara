@@ -28,7 +28,7 @@ namespace SampleProject
                 .Pop()
                 .Push("button", "btn btn-primary ml-2")
                     .On("click", () => _data.Counter++)
-                    .AddTextNode("increase")
+                    .AppendText("increase")
                 .Pop()
             .Pop();
         }

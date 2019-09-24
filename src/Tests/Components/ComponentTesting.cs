@@ -157,7 +157,7 @@ namespace Integrative.Lara.Tests.Components
                 .Pop()
                 .Push("div", "", "div2")
                 .Pop()
-                .AddTextNode("lalas");
+                .AppendText("lalas");
             }
         }
 
@@ -293,7 +293,7 @@ namespace Integrative.Lara.Tests.Components
             var builder = new LaraBuilder(document.Body);
             builder.Push("x-slotter")
                 .Push("div", "lalala")
-                    .AddTextNode("hello")
+                    .AppendText("hello")
                 .Pop()
             .Pop();
             var writer = new DocumentWriter(document);

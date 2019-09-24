@@ -42,7 +42,6 @@ namespace Integrative.Lara.Tools
         internal static void ConfigureApp(IApplicationBuilder app, StartServerOptions options)
         {
             ConfigureExceptions(app, options);
-            LaraUI.ErrorPages.PublishErrorImage();
             app.UseLara(options);
         }
 

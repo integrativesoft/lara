@@ -57,21 +57,17 @@ namespace Integrative.Lara.Middleware
 
         private static string LoadLibrary(Assembly assembly)
         {
-            using (var stream = assembly.GetManifestResourceStream(ResourceName))
-            using (var reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
+            using var stream = assembly.GetManifestResourceStream(ResourceName);
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         public static byte[] LoadFile(Assembly assembly, string name)
         {
-            using (var stream = assembly.GetManifestResourceStream(name))
-            {
-                var bytes = new byte[stream.Length];
-                stream.Read(bytes, 0, bytes.Length);
-                return bytes;
-            }
+            using var stream = assembly.GetManifestResourceStream(name);
+            var bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            return bytes;
         }
 
         internal override async Task<bool> ProcessRequest(HttpContext http)

@@ -12,12 +12,10 @@ namespace SampleProject.Other
     {
         public static byte[] LoadEmbeddedResource(Assembly assembly, string resourceName)
         {
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                var bytes = new byte[stream.Length];
-                stream.Read(bytes, 0, bytes.Length);
-                return bytes;
-            }
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            var bytes = new byte[stream.Length];
+            stream.Read(bytes, 0, bytes.Length);
+            return bytes;
         }
     }
 }

@@ -94,11 +94,9 @@ namespace Integrative.Lara
 
         private static string GetETag(byte[] bytes)
         {
-            using (var sha1 = new SHA1CryptoServiceProvider())
-            {
-                var hash = Convert.ToBase64String(sha1.ComputeHash(bytes));
-                return "\"" + hash + "\""; 
-            }
+            using var sha1 = new SHA1CryptoServiceProvider();
+            var hash = Convert.ToBase64String(sha1.ComputeHash(bytes));
+            return "\"" + hash + "\"";
         }
 
         /// <summary>

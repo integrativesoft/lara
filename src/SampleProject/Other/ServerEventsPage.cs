@@ -34,11 +34,9 @@ namespace SampleProject
         private async void DelayedTask()
         {
             await Task.Delay(4000);
-            using (var access = _button.Document.StartServerEvent())
-            {
-                _button.ClearChildren();
-                _button.AppendText("after");
-            }
+            using var access = _button.Document.StartServerEvent();
+            _button.ClearChildren();
+            _button.AppendText("after");
         }
     }
 }

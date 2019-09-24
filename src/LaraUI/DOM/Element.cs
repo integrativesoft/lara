@@ -652,21 +652,35 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Adds text inside an element.
+        /// Appends text inside an element.
         /// When the element's last child is a text node, the text is appended to that node.
         /// Otherwise, a new child text node is added to the element.
         /// </summary>
         /// <param name="text">Text of the node</param>
         public void AppendText(string text)
         {
+            AppendEncode(text, true);
+        }
+
+        /// <summary>
+        /// Appends raw HTML inside an element. The HTML won't be verified or parsed by Lara.
+        /// </summary>
+        /// <param name="data">raw HTML</param>
+        public void AppendData(string data)
+        {
+            AppendEncode(data, false);
+        }
+
+        internal void AppendEncode(string data, bool encode)
+        {
             var count = _children.Count;
             if (count > 0 && _children[count - 1] is TextNode node)
             {
-                node.AppendText(text);
+                node.AppendEncode(data, encode);
             }
             else
             {
-                AppendChild(new TextNode(text));
+                AppendChild(new TextNode(data, encode));
             }
         }
 
@@ -1090,17 +1104,38 @@ namespace Integrative.Lara
         /// <summary>
         /// Clears all child nodes and replaces them with a single text node
         /// </summary>
-        /// <param name="value">Text for the node</param>
-        public void SetInnerText(string value)
+        /// <param name="text">Text for the node</param>
+        public void SetInnerText(string text)
         {
-            if (_children.Count == 1 && _children[0] is TextNode text)
+            SetInnerEncode(text, true);
+        }
+
+        /// <summary>
+        /// Clears all child nodes and replaces them with raw HTML code. The HTML won't be parsed by Lara.
+        /// </summary>
+        /// <param name="data">raw HTML</param>
+        public void SetInnerData(string data)
+        {
+            SetInnerEncode(data, false);
+        }
+
+        internal void SetInnerEncode(string value, bool encode)
+        {
+            if (_children.Count == 1 && _children[0] is TextNode node)
             {
-                text.SetEncodedText(value);
+                if (encode)
+                {
+                    node.Data = value;
+                }
+                else
+                {
+                    node.SetEncodedText(value);
+                }
             }
             else
             {
                 ClearChildren();
-                AppendText(value);
+                AppendEncode(value, encode);
             }
         }
 

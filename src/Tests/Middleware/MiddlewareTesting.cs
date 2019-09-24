@@ -240,18 +240,16 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void UnpublishMethod()
         {
-            using (var x = new Published())
+            using var x = new Published();
+            x.Publish(new WebServiceContent
             {
-                x.Publish(new WebServiceContent
-                {
-                    Address = "/myws",
-                    Method = "PUT"
-                });
-                var combined = Published.CombinePathMethod("/myws", "PUT");
-                Assert.True(x.TryGetNode(combined, out _));
-                x.UnPublish("/myws", "PUT");
-                Assert.False(x.TryGetNode(combined, out _));
-            }
+                Address = "/myws",
+                Method = "PUT"
+            });
+            var combined = Published.CombinePathMethod("/myws", "PUT");
+            Assert.True(x.TryGetNode(combined, out _));
+            x.UnPublish("/myws", "PUT");
+            Assert.False(x.TryGetNode(combined, out _));
         }
 
         [Fact]
@@ -400,12 +398,10 @@ namespace Integrative.Lara.Tests.Middleware
         public void ProcessSocketMessageFailDeserialize()
         {
             var bytes = Encoding.UTF8.GetBytes("hello");
-            using (var ms = new MemoryStream(bytes))
-            {
-                var sr = new WebSocketReceiveResult(1, WebSocketMessageType.Text, true);
-                var result = MiddlewareCommon.ProcessWebSocketMessage<Element>(100, ms, sr);
-                Assert.False(result.Item1);
-            }
+            using var ms = new MemoryStream(bytes);
+            var sr = new WebSocketReceiveResult(1, WebSocketMessageType.Text, true);
+            var result = MiddlewareCommon.ProcessWebSocketMessage<Element>(100, ms, sr);
+            Assert.False(result.Item1);
         }
 
         [Fact]

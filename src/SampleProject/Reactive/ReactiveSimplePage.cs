@@ -29,7 +29,7 @@ namespace SampleProject
             .Push("div", "p-2")
                 .Push("button", "btn btn-primary")
                     .On("click", () => _data.IncreaseCounter())
-                    .AddTextNode("increase")
+                    .AppendText("increase")
                 .Pop()
             .Pop();
             return Task.CompletedTask;

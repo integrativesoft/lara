@@ -55,7 +55,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
-            builder.AddTextNode("&lt;");
+            builder.AppendText("&lt;");
             var node = root.Children.FirstOrDefault() as TextNode;
             Assert.NotNull(node);
             Assert.Equal("&amp;lt;", node.Data);

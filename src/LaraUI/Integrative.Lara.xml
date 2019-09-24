@@ -588,11 +588,17 @@
         </member>
         <member name="M:Integrative.Lara.Element.AppendText(System.String)">
             <summary>
-            Adds text inside an element.
+            Appends text inside an element.
             When the element's last child is a text node, the text is appended to that node.
             Otherwise, a new child text node is added to the element.
             </summary>
             <param name="text">Text of the node</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.AppendData(System.String)">
+            <summary>
+            Appends raw HTML inside an element. The HTML won't be verified or parsed by Lara.
+            </summary>
+            <param name="data">raw HTML</param>
         </member>
         <member name="M:Integrative.Lara.Element.InsertChildBefore(Integrative.Lara.Node,Integrative.Lara.Node)">
             <summary>
@@ -763,7 +769,13 @@
             <summary>
             Clears all child nodes and replaces them with a single text node
             </summary>
-            <param name="value">Text for the node</param>
+            <param name="text">Text for the node</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.SetInnerData(System.String)">
+            <summary>
+            Clears all child nodes and replaces them with raw HTML code. The HTML won't be parsed by Lara.
+            </summary>
+            <param name="data">raw HTML</param>
         </member>
         <member name="M:Integrative.Lara.Element.Focus">
             <summary>
@@ -920,12 +932,17 @@
             <param name="data">The data.</param>
             <param name="encode">if set to <c>true</c> encode.</param>
         </member>
-        <member name="M:Integrative.Lara.TextNode.AppendText(System.String,System.Boolean)">
+        <member name="M:Integrative.Lara.TextNode.AppendText(System.String)">
             <summary>
             Appends text to the node
             </summary>
             <param name="text">Text to append</param>
-            <param name="encode">true to encode, false to append raw HTML</param>
+        </member>
+        <member name="M:Integrative.Lara.TextNode.AppendData(System.String)">
+            <summary>
+            Appends raw HTML to the node
+            </summary>
+            <param name="data">raw HTML</param>
         </member>
         <member name="M:Integrative.Lara.TextNode.SetEncodedText(System.String)">
             <summary>
@@ -2895,6 +2912,34 @@
             Adds a text node.
             </summary>
             <param name="node">The node.</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AppendText(System.String)">
+            <summary>
+            Appends text to the current element
+            </summary>
+            <param name="text">Text to append</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.AppendData(System.String)">
+            <summary>
+            Appends raw HTML to the current element
+            </summary>
+            <param name="data">raw HTML</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.InnerText(System.String)">
+            <summary>
+            Clears all child elements and replaces them with a text node
+            </summary>
+            <param name="text">Text</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.InnerData(System.String)">
+            <summary>
+            Clears all child elements and replaces them with a text node
+            </summary>
+            <param name="data">raw HTML code</param>
             <returns>This instance</returns>
         </member>
         <member name="M:Integrative.Lara.LaraBuilder.AddNode(Integrative.Lara.Node)">

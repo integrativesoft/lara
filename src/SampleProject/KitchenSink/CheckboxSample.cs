@@ -42,13 +42,13 @@ namespace SampleProject
                     .Pop()
                     .Push("label", "form-check-label")
                         .Attribute("for", _checkbox.Id)
-                        .AddTextNode("Check me out")
+                        .AppendText("Check me out")
                     .Pop()
                 .Pop()
             .Pop()
             .Push("div", "form-group col-md-1")
                 .Push(_toggle)
-                    .AddTextNode("Toggle")
+                    .AppendText("Toggle")
                 .Pop()
             .Pop();
         }

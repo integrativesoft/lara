@@ -80,8 +80,21 @@ namespace Integrative.Lara
         /// Appends text to the node
         /// </summary>
         /// <param name="text">Text to append</param>
-        /// <param name="encode">true to encode, false to append raw HTML</param>
-        public void AppendText(string text, bool encode = true)
+        public void AppendText(string text)
+        {
+            AppendEncode(text, true);
+        }
+
+        /// <summary>
+        /// Appends raw HTML to the node
+        /// </summary>
+        /// <param name="data">raw HTML</param>
+        public void AppendData(string data)
+        {
+            AppendEncode(data, false);
+        }
+
+        internal void AppendEncode(string text, bool encode)
         {
             if (encode)
             {

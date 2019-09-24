@@ -402,8 +402,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void NotifyUnloadExceptionsIgnored()
         {
-            Task handler1() => throw new InvalidOperationException();
-            Task handler2() => Task.CompletedTask;
+            static Task handler1() => throw new InvalidOperationException();
+            static Task handler2() => Task.CompletedTask;
             await Document.IgnoreErrorHandler(handler1);
             await Document.IgnoreErrorHandler(handler2);
         }

@@ -150,6 +150,7 @@ namespace Integrative.Lara
         /// <param name="text">The text.</param>
         /// <param name="encode">if set to <c>true</c> [encode].</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use AppendText() instead of AddTextNode")]
         public LaraBuilder AddTextNode(string text, bool encode = true)
         {
             return AddTextNode(new TextNode(text, encode));
@@ -160,10 +161,69 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="node">The node.</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use AppendText() instead of AddTextNode")]
         public LaraBuilder AddTextNode(TextNode node)
         {
             node = node ?? throw new ArgumentNullException(nameof(node));
             return AddNode(node);
+        }
+
+        /// <summary>
+        /// Appends text to the current element
+        /// </summary>
+        /// <param name="text">Text to append</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder AppendText(string text)
+        {
+            return AppendEncode(text, false);
+        }
+
+        /// <summary>
+        /// Appends raw HTML to the current element
+        /// </summary>
+        /// <param name="data">raw HTML</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder AppendData(string data)
+        {
+            return AppendEncode(data, false);
+        }
+
+        private LaraBuilder AppendEncode(string value, bool encode)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                _stack.Peek().AppendEncode(value, encode);
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Clears all child elements and replaces them with a text node
+        /// </summary>
+        /// <param name="text">Text</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder InnerText(string text)
+        {
+            return InnerEncode(text, true);
+        }
+
+        /// <summary>
+        /// Clears all child elements and replaces them with a text node
+        /// </summary>
+        /// <param name="data">raw HTML code</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder InnerData(string data)
+        {
+            return InnerEncode(data, false);
+        }
+
+        private LaraBuilder InnerEncode(string data, bool encode)
+        {
+            if (!string.IsNullOrEmpty(data))
+            {
+                _stack.Peek().SetInnerEncode(data, encode);
+            }
+            return this;
         }
 
         /// <summary>

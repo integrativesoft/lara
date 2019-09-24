@@ -138,13 +138,11 @@ namespace Integrative.Lara.Tests.Middleware
             _document.OpenEventQueue();
             _controller.ServerEventsOn();
             await _controller.GetSocketCompletion(_socket.Object);
-            using (var access = _document.StartServerEvent())
-            {
-                _document.Body.AppendText("hello");
-                Assert.NotEmpty(_document.GetQueue());
-                await access.FlushPartialChanges();
-                Assert.Empty(_document.GetQueue());
-            }
+            using var access = _document.StartServerEvent();
+            _document.Body.AppendText("hello");
+            Assert.NotEmpty(_document.GetQueue());
+            await access.FlushPartialChanges();
+            Assert.Empty(_document.GetQueue());
         }
 
         [Fact]

@@ -32,7 +32,7 @@ namespace SampleProject
             Root.Class = "form-row";
             var builder = new LaraBuilder(Root);
             builder.Push(_button, "btn btn-primary my-2")
-                .AddTextNode("Long-running action")
+                .AppendText("Long-running action")
             .Pop()
             .Push(_card, "card text-center")
                 .Attribute("style", "display: none; width: 18rem")
@@ -43,7 +43,7 @@ namespace SampleProject
                 .Pop()
                 .Push("div", "card-body")
                     .Push("h5", "card-title")
-                        .AddTextNode("Preparing...")
+                        .AppendText("Preparing...")
                     .Pop()
                     .Push(_coffeeText, "card-text")
                     .Pop()

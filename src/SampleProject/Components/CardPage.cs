@@ -23,12 +23,12 @@ namespace SampleProject
                 .Attribute("heading", "this is the title")
                 .Attribute("subtitle", "this is the subtitle")
                 .Push("span")
-                    .AddTextNode("text 1")
+                    .AppendText("text 1")
                 .Pop()
                 .Push("br")
                 .Pop()
                 .Push("span")
-                    .AddTextNode("text 2")
+                    .AppendText("text 2")
                 .Pop()
             .Pop();
             return Task.CompletedTask;

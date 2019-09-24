@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -31,6 +30,7 @@ namespace Integrative.Lara
         {
             _published = new Published();
             ErrorPages = new ErrorPages();
+            ErrorPages.PublishErrorImage();
         }
 
         /// <summary>

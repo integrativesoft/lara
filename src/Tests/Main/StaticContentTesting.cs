@@ -62,13 +62,11 @@ namespace Integrative.Lara.Tests.Main
         private byte[] LoadResource(string filename)
         {
             var assembly = Assembly.GetAssembly(typeof(StaticContentTesting));
-            using (Stream resFilestream = assembly.GetManifestResourceStream(filename))
-            {
-                if (resFilestream == null) return null;
-                byte[] ba = new byte[resFilestream.Length];
-                resFilestream.Read(ba, 0, ba.Length);
-                return ba;
-            }
+            using Stream resFilestream = assembly.GetManifestResourceStream(filename);
+            if (resFilestream == null) return null;
+            byte[] ba = new byte[resFilestream.Length];
+            resFilestream.Read(ba, 0, ba.Length);
+            return ba;
         }
 
         [Fact]
@@ -83,19 +81,15 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await LaraUI.StartServer())
-            {
-                string address = LaraUI.GetFirstURL(host);
-                LaraUI.Publish("/", content);
-                using (var response = await _client.GetAsync(address))
-                {
-                    var downloaded = await response.Content.ReadAsByteArrayAsync();
-                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                    Assert.Equal(content.ETag, values.FirstOrDefault());
-                    Assert.Equal(bytes, downloaded);
-                }
-            }
+            using var host = await LaraUI.StartServer();
+            string address = LaraUI.GetFirstURL(host);
+            LaraUI.Publish("/", content);
+            using var response = await _client.GetAsync(address);
+            var downloaded = await response.Content.ReadAsByteArrayAsync();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(response.Headers.TryGetValues("ETag", out var values));
+            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(bytes, downloaded);
         }
 
         [Fact]
@@ -104,27 +98,23 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await LaraUI.StartServer())
+            using var host = await LaraUI.StartServer();
+            string address = LaraUI.GetFirstURL(host);
+            LaraUI.Publish("/", content);
+
+            var request = new HttpRequestMessage
             {
-                string address = LaraUI.GetFirstURL(host);
-                LaraUI.Publish("/", content);
+                Method = new HttpMethod("GET"),
+                RequestUri = new Uri(address)
+            };
+            request.Headers.TryAddWithoutValidation("If-None-Match", "lalalalala");
 
-                var request = new HttpRequestMessage
-                {
-                    Method = new HttpMethod("GET"),
-                    RequestUri = new Uri(address)
-                };
-                request.Headers.TryAddWithoutValidation("If-None-Match", "lalalalala");
-
-                using (var response = await _client.SendAsync(request))
-                {
-                    var downloaded = await response.Content.ReadAsByteArrayAsync();
-                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                    Assert.Equal(content.ETag, values.FirstOrDefault());
-                    Assert.Equal(bytes, downloaded);
-                }
-            }
+            using var response = await _client.SendAsync(request);
+            var downloaded = await response.Content.ReadAsByteArrayAsync();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(response.Headers.TryGetValues("ETag", out var values));
+            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(bytes, downloaded);
         }
 
         [Fact]
@@ -133,26 +123,22 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using (var host = await LaraUI.StartServer())
+            using var host = await LaraUI.StartServer();
+            string address = LaraUI.GetFirstURL(host);
+            LaraUI.Publish("/", content);
+
+            var request = new HttpRequestMessage
             {
-                string address = LaraUI.GetFirstURL(host);
-                LaraUI.Publish("/", content);
+                Method = new HttpMethod("GET"),
+                RequestUri = new Uri(address)
+            };
+            request.Headers.TryAddWithoutValidation("If-None-Match", content.ETag);
 
-                var request = new HttpRequestMessage
-                {
-                    Method = new HttpMethod("GET"),
-                    RequestUri = new Uri(address)
-                };
-                request.Headers.TryAddWithoutValidation("If-None-Match", content.ETag);
-
-                using (var response = await _client.SendAsync(request))
-                {
-                    var downloaded = await response.Content.ReadAsByteArrayAsync();
-                    Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
-                    Assert.False(response.Headers.Contains("ETag"));
-                    Assert.Empty(downloaded);
-                }
-            }
+            using var response = await _client.SendAsync(request);
+            var downloaded = await response.Content.ReadAsByteArrayAsync();
+            Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
+            Assert.False(response.Headers.Contains("ETag"));
+            Assert.Empty(downloaded);
         }
 
         [Fact]
@@ -161,19 +147,15 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadCompressibleBMP();
             var content = new StaticContent(bytes, "image");
 
-            using (var host = await LaraUI.StartServer())
-            {
-                string address = LaraUI.GetFirstURL(host);
-                LaraUI.Publish("/", content);
-                using (var response = await _client.GetAsync(address))
-                {
-                    var downloaded = await response.Content.ReadAsByteArrayAsync();
-                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                    Assert.True(response.Headers.TryGetValues("ETag", out var values));
-                    Assert.Equal(content.ETag, values.FirstOrDefault());
-                    Assert.Equal(bytes, downloaded);
-                }
-            }
+            using var host = await LaraUI.StartServer();
+            string address = LaraUI.GetFirstURL(host);
+            LaraUI.Publish("/", content);
+            using var response = await _client.GetAsync(address);
+            var downloaded = await response.Content.ReadAsByteArrayAsync();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(response.Headers.TryGetValues("ETag", out var values));
+            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(bytes, downloaded);
         }
 
     }

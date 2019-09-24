@@ -46,7 +46,7 @@ namespace SampleProject
                 .Attribute("role", "status")
             .Pop()
             .Push("div", "ml-2")
-                .AddTextNode(message)
+                .AppendText(message)
             .Pop();
             return div.GetHtml();
         }

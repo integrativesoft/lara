@@ -58,12 +58,10 @@ namespace Integrative.Lara.Main
 
         public static Guid CreateCryptographicallySecureGuid()
         {
-            using (var provider = new RNGCryptoServiceProvider())
-            {
-                var bytes = new byte[16];
-                provider.GetBytes(bytes);
-                return new Guid(bytes);
-            }
+            using var provider = new RNGCryptoServiceProvider();
+            var bytes = new byte[16];
+            provider.GetBytes(bytes);
+            return new Guid(bytes);
         }
 
         public void ClearEmptyConnection(Connection connection)

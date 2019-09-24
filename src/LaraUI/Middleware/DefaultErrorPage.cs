@@ -44,17 +44,17 @@ namespace Integrative.Lara.Middleware
         private void ShowContent()
         {
             var builder = new LaraBuilder(LaraUI.Page.Document.Body);
-            builder.Push("div", "container")
+            builder.Push("div", "container mt-2")
                 .Push("div", "jumbotron")
                     .Push("img")
                         .Attribute("src", ServerLauncher.ErrorAddress + ".svg")
                         .Attribute("height", "100px")
                     .Pop()
                     .Push("h1", "display-4")
-                        .AddTextNode(Title)
+                        .InnerText(Title)
                     .Pop()
                     .Push("p", "lead")
-                        .AddTextNode(Message)
+                        .InnerText(Message)
                     .Pop()
                 .Pop()
             .Pop();

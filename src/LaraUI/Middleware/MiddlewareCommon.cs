@@ -91,17 +91,15 @@ namespace Integrative.Lara.Middleware
             ReadWebSocketMessage<T>(WebSocket socket, int maxSize) where T : class
         {
             var buffer = new ArraySegment<byte>(new byte[8192]);
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            WebSocketReceiveResult result;
+            do
             {
-                WebSocketReceiveResult result;
-                do
-                {
-                    result = await socket.ReceiveAsync(buffer, CancellationToken.None);
-                    ms.Write(buffer.Array, buffer.Offset, result.Count);
-                }
-                while (!result.EndOfMessage && result.Count <= maxSize);
-                return ProcessWebSocketMessage<T>(maxSize, ms, result);
+                result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                ms.Write(buffer.Array, buffer.Offset, result.Count);
             }
+            while (!result.EndOfMessage && result.Count <= maxSize);
+            return ProcessWebSocketMessage<T>(maxSize, ms, result);
         }
 
         internal static (bool, T) ProcessWebSocketMessage<T>(int maxSize,
@@ -133,10 +131,8 @@ namespace Integrative.Lara.Middleware
             {
                 return string.Empty;
             }
-            using (var reader = new StreamReader(http.Request.Body, Encoding.UTF8))
-            {
-                return await reader.ReadToEndAsync();
-            }
+            using var reader = new StreamReader(http.Request.Body, Encoding.UTF8);
+            return await reader.ReadToEndAsync();
         }
 
         public static async Task<bool> RunHandler(HttpContext http, Func<Task> handler)

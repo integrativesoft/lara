@@ -70,13 +70,11 @@ namespace Integrative.Lara.Tools
         public static string Serialize(object instance, Type type)
         {
             var stream = new MemoryStream();
-            using (var reader = new StreamReader(stream))
-            {
-                var serializer = new DataContractJsonSerializer(type, _jsonSettings);
-                serializer.WriteObject(stream, instance);
-                stream.Position = 0;
-                return reader.ReadToEnd();
-            }
+            using var reader = new StreamReader(stream);
+            var serializer = new DataContractJsonSerializer(type, _jsonSettings);
+            serializer.WriteObject(stream, instance);
+            stream.Position = 0;
+            return reader.ReadToEnd();
         }
 
         public static T Deserialize<T>(string json) where T : class
@@ -85,10 +83,8 @@ namespace Integrative.Lara.Tools
             {
                 return default;
             }
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                return Deserialize<T>(stream);
-            }
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
+            return Deserialize<T>(stream);
         }
 
         public static T Deserialize<T>(Stream stream) where T : class
