@@ -619,13 +619,13 @@ namespace Integrative.Lara
         /// <param name="collection">Observable collection</param>
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
+        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren<T>(new BindChildrenOptions<T>
+            return BindChildren(new BindChildrenOptions<T>
             {
                 Collection = collection,
-                CreateCallback = x => creator()
+                CreateCallback = creator
             });
         }
 
@@ -636,13 +636,13 @@ namespace Integrative.Lara
         /// <param name="collection">Observable collection</param>
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
+        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren(new BindChildrenOptions<T>
+            return BindChildren<T>(new BindChildrenOptions<T>
             {
                 Collection = collection,
-                CreateCallback = creator
+                CreateCallback = x => creator()
             });
         }
 

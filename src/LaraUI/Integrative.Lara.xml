@@ -3154,7 +3154,7 @@
             <param name="options">Inner tetx binding options</param>
             <returns>This instance</returns>
         </member>
-        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{Integrative.Lara.Element})">
+        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{``0,Integrative.Lara.Element})">
             <summary>
             Adds bindings for the children collection
             </summary>
@@ -3163,7 +3163,7 @@
             <param name="creator">Handler to create elements</param>
             <returns>This instance</returns>
         </member>
-        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{``0,Integrative.Lara.Element})">
+        <member name="M:Integrative.Lara.LaraBuilder.BindChildren``1(System.Collections.ObjectModel.ObservableCollection{``0},System.Func{Integrative.Lara.Element})">
             <summary>
             Adds bindings for the children collection
             </summary>
