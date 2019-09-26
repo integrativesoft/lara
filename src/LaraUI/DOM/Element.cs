@@ -933,20 +933,20 @@ namespace Integrative.Lara
         /// <summary>
         /// Registers an event and associates code to execute.
         /// </summary>
-        /// <param name="eventName">Name of the event.</param>
-        /// <param name="handler">The handler to execute.</param>
-        public void On(string eventName, Func<Task> handler)
+        /// <param name="settings">The event's settings.</param>
+        public void On(EventSettings settings)
         {
-            EventWriter.On(this, eventName, handler);
+            EventWriter.On(this, settings);
         }
 
         /// <summary>
         /// Registers an event and associates code to execute.
         /// </summary>
-        /// <param name="settings">The event's settings.</param>
-        public void On(EventSettings settings)
+        /// <param name="eventName">Name of the event.</param>
+        /// <param name="handler">The handler to execute.</param>
+        public void On(string eventName, Func<Task> handler)
         {
-            EventWriter.On(this, settings);
+            EventWriter.On(this, eventName, handler);
         }
 
         #endregion

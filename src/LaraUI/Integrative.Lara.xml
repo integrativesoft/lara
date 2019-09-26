@@ -671,18 +671,18 @@
             Occurs when the element or one of its containing elements is moved within the same document's DOM.
             </summary>
         </member>
+        <member name="M:Integrative.Lara.Element.On(Integrative.Lara.EventSettings)">
+            <summary>
+            Registers an event and associates code to execute.
+            </summary>
+            <param name="settings">The event's settings.</param>
+        </member>
         <member name="M:Integrative.Lara.Element.On(System.String,System.Func{System.Threading.Tasks.Task})">
             <summary>
             Registers an event and associates code to execute.
             </summary>
             <param name="eventName">Name of the event.</param>
             <param name="handler">The handler to execute.</param>
-        </member>
-        <member name="M:Integrative.Lara.Element.On(Integrative.Lara.EventSettings)">
-            <summary>
-            Registers an event and associates code to execute.
-            </summary>
-            <param name="settings">The event's settings.</param>
         </member>
         <member name="M:Integrative.Lara.Element.Bind``1(``0,System.Action{``0,Integrative.Lara.Element})">
             <summary>
@@ -2772,6 +2772,12 @@
             Constructor
             </summary>
         </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(System.Func{System.Threading.Tasks.Task})">
+            <summary>
+            Adds an action to execute when this event is fired
+            </summary>
+            <param name="action">action to execute</param>
+        </member>
         <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(Integrative.Lara.AsyncEventHandler{`0})">
             <summary>
             Adds a method to execute when the event is fired
@@ -2783,12 +2789,6 @@
             Adds an event to trigger when this event is fired
             </summary>
             <param name="other">event to trigger</param>
-        </member>
-        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(System.Func{System.Threading.Tasks.Task})">
-            <summary>
-            Adds an action to execute when this event is fired
-            </summary>
-            <param name="action">action to execute</param>
         </member>
         <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(Integrative.Lara.AsyncEventHandler{`0})">
             <summary>

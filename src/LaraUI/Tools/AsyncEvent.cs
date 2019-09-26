@@ -55,6 +55,16 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Adds an action to execute when this event is fired
+        /// </summary>
+        /// <param name="action">action to execute</param>
+        public void Subscribe(Func<Task> action)
+        {
+            action = action ?? throw new ArgumentNullException(nameof(action));
+            _actions.Add(action);
+        }
+
+        /// <summary>
         /// Adds a method to execute when the event is fired
         /// </summary>
         /// <param name="handler">delegate</param>
@@ -72,16 +82,6 @@ namespace Integrative.Lara
         {
             other = other ?? throw new ArgumentNullException(nameof(other));
             _batons.Add(other);
-        }
-
-        /// <summary>
-        /// Adds an action to execute when this event is fired
-        /// </summary>
-        /// <param name="action">action to execute</param>
-        public void Subscribe(Func<Task> action)
-        {
-            action = action ?? throw new ArgumentNullException(nameof(action));
-            _actions.Add(action);
         }
 
         /// <summary>
