@@ -175,7 +175,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder AppendText(string text)
         {
-            return AppendEncode(text, false);
+            return AppendEncode(text, true);
         }
 
         /// <summary>
