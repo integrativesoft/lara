@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
-using System.Runtime.CompilerServices;
 
 namespace SampleProject
 {
