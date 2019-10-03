@@ -14,11 +14,6 @@ namespace Integrative.Lara
     public enum NodeType
     {
         /// <summary>
-        /// Document node
-        /// </summary>
-        Document,
-
-        /// <summary>
         /// Element node
         /// </summary>
         Element,

@@ -75,7 +75,7 @@ namespace Integrative.Lara
         /// <value>
         /// The type of the node.
         /// </value>
-        public override NodeType NodeType => NodeType.Element;
+        public override sealed NodeType NodeType => NodeType.Element;
 
         internal bool NeedsId => GetNeedsId();
 

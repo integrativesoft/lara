@@ -21,7 +21,7 @@ namespace Integrative.Lara
         /// <value>
         /// The type of the node.
         /// </value>
-        public override NodeType NodeType => NodeType.Text;
+        public override sealed NodeType NodeType => NodeType.Text;
 
         string _data;
 

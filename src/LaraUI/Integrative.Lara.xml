@@ -838,11 +838,6 @@
             Defines the types of document nodes
             </summary>
         </member>
-        <member name="F:Integrative.Lara.NodeType.Document">
-            <summary>
-            Document node
-            </summary>
-        </member>
         <member name="F:Integrative.Lara.NodeType.Element">
             <summary>
             Element node
