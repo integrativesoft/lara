@@ -143,6 +143,7 @@ export interface MessageOptions {
     blockElementId?: string;
     blockHtml?: string;
     blockShowElementId?: string;
+    longRunning?: boolean;
 }
 
 export function sendMessage(options: MessageOptions): void {
@@ -153,7 +154,7 @@ export function sendMessage(options: MessageOptions): void {
         BlockHTML: options.blockHtml,
         BlockShownId: options.blockShowElementId,
         ExtraData: options.data,
-        LongRunning: false
+        LongRunning: options.longRunning
     };
     plugOptions(document.head, params);
 }
