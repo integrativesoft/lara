@@ -12,7 +12,7 @@ Lara can be used to develop either websites or desktop apps with an HTML5 fronte
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
-## Sample standalone application
+## Sample application
 
 ```csharp
 namespace SampleProject
