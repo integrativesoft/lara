@@ -40,10 +40,10 @@ function buildParameters(plug: PlugOptions): JQBlockUIOptions {
     }
     if (shownId) {
         result.message = $("#" + shownId);
-    } else if (plug.BlockHTML == "") {
-        result.message = null;
     } else if (plug.BlockHTML) {
         result.message = plug.BlockHTML;
+    } else {
+        result.message = null;
     }
     result.baseZ = 2000;
     return result;
