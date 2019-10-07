@@ -13,11 +13,11 @@
     "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.5",
+    "@types/node": "^12.7.11",
     "clean-webpack-plugin": "^3.0.0",
-    "ts-loader": "^6.1.1",
+    "ts-loader": "^6.2.0",
     "typescript": "^3.6.3",
-    "webpack": "^4.40.2",
+    "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
