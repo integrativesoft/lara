@@ -12,7 +12,7 @@ namespace Integrative.Lara
     /// Declares a class as a web page that gets published with LaraUI.PublishAssemblies()
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class LaraPage : Attribute
+    public sealed class LaraPageAttribute : Attribute
     {
         /// <summary>
         /// Page's address (e.g. '/myPage')
@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LaraPage()
+        public LaraPageAttribute()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Integrative.Lara
         /// Constuctor with address
         /// </summary>
         /// <param name="address">Page's address</param>
-        public LaraPage(string address)
+        public LaraPageAttribute(string address)
             : this()
         {
             Address = address;

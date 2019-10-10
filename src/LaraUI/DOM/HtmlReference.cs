@@ -13,6 +13,7 @@ namespace Integrative.Lara.DOM
         static readonly HashSet<string> _selfClosingTags;
         static readonly HashSet<string> _requiresId;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static HtmlReference()
         {
             _selfClosingTags = new HashSet<string>

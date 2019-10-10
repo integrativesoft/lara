@@ -79,7 +79,7 @@ namespace Integrative.Lara
             return new DefaultErrorPage
             {
                 Title = "Internal Server Error",
-                Message = $"The server encountered an internal error or misconfiguration and was unable to complete your request."
+                Message = Resources.ServerErrorMessage
             };
         }
 

@@ -4,6 +4,7 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
+using System.Globalization;
 using System.Threading;
 
 namespace Integrative.Lara.DOM
@@ -15,7 +16,7 @@ namespace Integrative.Lara.DOM
         public static string GenerateElementId()
         {
             Interlocked.Increment(ref _counter);
-            return "_g" + _counter.ToString("X");
+            return "_g" + _counter.ToString("X", CultureInfo.InvariantCulture);
         }
     }
 }

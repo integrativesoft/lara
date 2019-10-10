@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -45,7 +46,8 @@ namespace Integrative.Lara.Middleware
 
         private static string BuildLibraryAddress(string version)
         {
-            return string.Format(GlobalConstants.LibraryAddress, version.Replace('.', '-'));
+            version = version.Replace('.', '-');
+            return GlobalConstants.LibraryAddress.Replace("{0}", version);
         }
 
         public static string GetLibraryPath()

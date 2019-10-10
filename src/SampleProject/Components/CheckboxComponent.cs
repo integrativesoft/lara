@@ -14,12 +14,12 @@ namespace SampleProject
     {
         public const string MyCheckbox = "my-checkbox";
 
-        readonly Input _checkbox;
+        readonly InputElement _checkbox;
         readonly Element _label;
 
         public CheckboxComponent() : base(MyCheckbox)
         {
-            _checkbox = new Input();
+            _checkbox = new InputElement();
             _label = Create("label");
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push("div", "form-group form-check")

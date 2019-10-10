@@ -23,7 +23,7 @@ namespace Integrative.Lara.Tools
 
         private static IEnumerable<Assembly> GetAssembliesReferencingLara()
         {
-            var definedIn = typeof(LaraWebService).Assembly.GetName().Name;
+            var definedIn = typeof(LaraWebServiceAttribute).Assembly.GetName().Name;
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (IncludeAssembly(assembly, definedIn))
@@ -52,8 +52,8 @@ namespace Integrative.Lara.Tools
 
         private static void LoadWebServices(Type type)
         {
-            var services = type.GetCustomAttributes(typeof(LaraWebService), true);
-            foreach (LaraWebService entry in services)
+            var services = type.GetCustomAttributes(typeof(LaraWebServiceAttribute), true);
+            foreach (LaraWebServiceAttribute entry in services)
             {
                 VerifyType(type, typeof(IWebService));
                 LaraUI.Publish(new WebServiceContent
@@ -77,8 +77,8 @@ namespace Integrative.Lara.Tools
 
         private static void LoadPages(Type type)
         {
-            var pages = type.GetCustomAttributes(typeof(LaraPage), true);
-            foreach (LaraPage entry in pages)
+            var pages = type.GetCustomAttributes(typeof(LaraPageAttribute), true);
+            foreach (LaraPageAttribute entry in pages)
             {
                 VerifyType(type, typeof(IPage));
                 LaraUI.Publish(entry.Address, () => (IPage)Activator.CreateInstance(type));
@@ -87,8 +87,8 @@ namespace Integrative.Lara.Tools
 
         private static void LoadComponents(Type type)
         {
-            var components = type.GetCustomAttributes(typeof(LaraWebComponent), true);
-            foreach (LaraWebComponent entry in components)
+            var components = type.GetCustomAttributes(typeof(LaraWebComponentAttribute), true);
+            foreach (LaraWebComponentAttribute entry in components)
             {
                 VerifyType(type, typeof(WebComponent));
                 LaraUI.Publish(new WebComponentOptions

@@ -74,7 +74,7 @@ namespace Integrative.Lara.Main
         {
             if (string.IsNullOrEmpty(method))
             {
-                throw new ArgumentException("Please specify the method for the web service (i.e. 'POST').");
+                throw new ArgumentException(Resources.SpecifyMethodService);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Integrative.Lara.Main
         {
             if (string.IsNullOrEmpty(path))
             {
-                throw new ArgumentException("Please specify the address for the web service.");
+                throw new ArgumentException(Resources.SpecifyAddressService);
             }
         }
 

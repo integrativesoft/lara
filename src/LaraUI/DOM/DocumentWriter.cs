@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.Globalization;
 using System.Text;
 using System.Web;
 
@@ -63,11 +64,11 @@ namespace Integrative.Lara.DOM
         {
             if (indent > MaxLevelDeep)
             {
-                throw new InvalidOperationException($"Document exceeded maximum nesting level of {MaxLevelDeep.ToString()}.");
+                throw new InvalidOperationException($"Document exceeded maximum nesting level of {MaxLevelDeep.ToString(CultureInfo.CurrentCulture)}.");
             }
         }
 
-        private bool IsInlineElement(Element element)
+        private static bool IsInlineElement(Element element)
         {
             bool hasChildren = false;
             foreach (var child in element.GetLightChildren())

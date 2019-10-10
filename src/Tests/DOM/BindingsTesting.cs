@@ -44,7 +44,7 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             div.BindInnerText(new BindInnerTextOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 5;
@@ -58,7 +58,7 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             div.Bind(new BindHandlerOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 ModifiedHandler = (x, y) => div.SetInnerText(data.Counter.ToString())
             });
             data.Counter = 5;
@@ -83,7 +83,7 @@ namespace Integrative.Lara.Tests.DOM
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 5;
@@ -98,9 +98,8 @@ namespace Integrative.Lara.Tests.DOM
                 new MyData()
             };
             var span = Element.Create("span");
-            span.BindChildren(new BindChildrenOptions<MyData>
+            span.BindChildren(new BindChildrenOptions<MyData>(collection)
             {
-                Collection = collection,
                 CreateCallback = MyCreateCallback
             });
             collection.Add(new MyData());
@@ -119,17 +118,16 @@ namespace Integrative.Lara.Tests.DOM
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
-            div.BindChildren(new BindChildrenOptions<MyData>
+            div.BindChildren(new BindChildrenOptions<MyData>(collection)
             {
-                Collection = collection,
                 CreateCallback = x => Element.Create("div")
             });
             span1.BindInnerText(new BindInnerTextOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 5;
@@ -152,13 +150,13 @@ namespace Integrative.Lara.Tests.DOM
             x.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = y => y.Counter.ToString()
             });
             x.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter2",
-                Object = data,
+                BindObject = data,
                 Property = y => y.Counter.ToString()
             });
             data.Counter = 5;
@@ -176,13 +174,13 @@ namespace Integrative.Lara.Tests.DOM
             x.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = y => y.Counter.ToString()
             });
             x.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter2",
-                Object = data,
+                BindObject = data,
                 Property = y => y.Counter.ToString()
             });
             data.Counter = 5;
@@ -202,7 +200,7 @@ namespace Integrative.Lara.Tests.DOM
             };
             div.BindInnerText(new BindInnerTextOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             VerifyInnerText(div, "5");
@@ -228,9 +226,8 @@ namespace Integrative.Lara.Tests.DOM
         {
             var collection = new ObservableCollection<MyData>();
             var div = Element.Create("div");
-            div.BindChildren(new BindChildrenOptions<MyData>
+            div.BindChildren(new BindChildrenOptions<MyData>(collection)
             {
-                Collection = collection,
                 CreateCallback = x => Element.Create("span")
             });
             collection.Add(new MyData());
@@ -247,12 +244,12 @@ namespace Integrative.Lara.Tests.DOM
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             div.Bind(new BindHandlerOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 ModifiedHandler = (x, y) => data.Counter++
             });
             bool found = false;
@@ -272,7 +269,7 @@ namespace Integrative.Lara.Tests.DOM
             var span = Element.Create("span");
             span.BindAttribute(new BindAttributeOptions<MyData>
             {
-                Object = arg,
+                BindObject = arg,
                 Attribute = "data-counter",
                 Property = x => arg.Counter.ToString()
             });
@@ -316,9 +313,8 @@ namespace Integrative.Lara.Tests.DOM
         {
             var collection = new ObservableCollection<MyData>();
             var div = Element.Create("div");
-            div.BindChildren(new BindChildrenOptions<MyData>
+            div.BindChildren(new BindChildrenOptions<MyData>(collection)
             {
-                Collection = collection,
                 CreateCallback = MyCreateCallback
             });
             collection.Add(new MyData(10));
@@ -362,7 +358,7 @@ namespace Integrative.Lara.Tests.DOM
             div.BindFlagAttribute(new BindFlagAttributeOptions<MyData>
             {
                 Attribute = "data-even",
-                Object = data,
+                BindObject = data,
                 Property = x => x.IsEven
             });
             Assert.True(div.HasAttribute("data-even"));
@@ -378,7 +374,7 @@ namespace Integrative.Lara.Tests.DOM
             div.BindToggleClass(new BindToggleClassOptions<MyData>
             {
                 ClassName = "lala",
-                Object = data,
+                BindObject = data,
                 Property = x => x.IsEven
             });
             Assert.True(div.HasClass("lala"));

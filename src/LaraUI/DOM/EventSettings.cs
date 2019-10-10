@@ -58,7 +58,7 @@ namespace Integrative.Lara
         {
             if (string.IsNullOrEmpty(EventName))
             {
-                throw new ArgumentNullException(nameof(EventName));
+                throw new ArgumentNullException(Resources.EventNameNull);
             }
         }
     }

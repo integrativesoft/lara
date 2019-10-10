@@ -11,14 +11,14 @@ namespace SampleProject
 {
     class CheckboxSample
     {
-        readonly Input _checkbox;
+        readonly InputElement _checkbox;
         readonly Button _toggle;
 
         public Element Root { get; }
 
         public CheckboxSample()
         {
-            _checkbox = new Input
+            _checkbox = new InputElement
             {
                 Id = "mycheckbox",
                 Type = "checkbox",

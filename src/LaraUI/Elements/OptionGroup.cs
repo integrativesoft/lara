@@ -42,13 +42,13 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets the child options.
         /// </summary>
-        public IEnumerable<Option> Options => GetOptions();
+        public IEnumerable<OptionElement> Options => GetOptions();
 
-        private IEnumerable<Option> GetOptions()
+        private IEnumerable<OptionElement> GetOptions()
         {
             foreach (var node in Children)
             {
-                if (node is Option option)
+                if (node is OptionElement option)
                 {
                     yield return option;
                 }
@@ -57,7 +57,7 @@ namespace Integrative.Lara
 
         internal override void OnChildAdded(Node child)
         {
-            if (ParentElement is Select parent && child is Option option)
+            if (ParentElement is SelectElement parent && child is OptionElement option)
             {
                 var value = parent.Value;
                 if (!string.IsNullOrEmpty(value))

@@ -9,6 +9,7 @@ using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Globalization;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -23,13 +24,13 @@ namespace Integrative.Lara
     {
         const float RequiredCompressionFactor = 0.9f;
 
+        readonly byte[] _bytes;
+
         /// <summary>
-        /// Gets the byte array of the content
+        /// Returns the byte array that is sent to clients
         /// </summary>
-        /// <value>
-        /// The byte array.
-        /// </value>
-        public byte[] Bytes { get; }
+        /// <returns></returns>
+        public byte[] GetBytes() => _bytes;
 
         /// <summary>
         /// Gets the 'content-type' HTTP header for the static content
@@ -73,20 +74,17 @@ namespace Integrative.Lara
         /// <param name="bytes">The byte array.</param>
         public StaticContent(byte[] bytes)
         {
-            if (bytes == null)
-            {
-                throw new NullReferenceException("The parameter 'bytes' cannot be null.");
-            }
+            bytes = bytes ?? throw new ArgumentNullException(nameof(bytes));
             var compressed = LaraTools.Compress(bytes);
             long required = (int)Math.Floor(bytes.LongLength * RequiredCompressionFactor);
             if (compressed.Length > required)
             {
-                Bytes = bytes;
+                _bytes = bytes;
                 Compressed = false;
             }
             else
             {
-                Bytes = compressed;
+                _bytes = compressed;
                 Compressed = true;
             }
             ETag = GetETag(bytes);
@@ -94,9 +92,27 @@ namespace Integrative.Lara
 
         private static string GetETag(byte[] bytes)
         {
-            using var sha1 = new SHA1CryptoServiceProvider();
-            var hash = Convert.ToBase64String(sha1.ComputeHash(bytes));
-            return "\"" + hash + "\"";
+            var hash = ComputeHash(bytes);
+            return "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
+        }
+
+        private static int ComputeHash(params byte[] data)
+        {
+            unchecked
+            {
+                const int p = 16777619;
+                int hash = (int)2166136261;
+
+                for (int i = 0; i < data.Length; i++)
+                    hash = (hash ^ data[i]) * p;
+
+                hash += hash << 13;
+                hash ^= hash >> 7;
+                hash += hash << 3;
+                hash ^= hash >> 17;
+                hash += hash << 5;
+                return hash;
+            }
         }
 
         /// <summary>
@@ -107,6 +123,7 @@ namespace Integrative.Lara
         /// <returns></returns>
         public async Task Run(HttpContext http, LaraOptions options)
         {
+            http = http ?? throw new ArgumentNullException(nameof(http));
             if (IsMatchETag(http.Request.Headers))
             {
                 SendMatchStatus(http);
@@ -145,7 +162,7 @@ namespace Integrative.Lara
             {
                 headers.Add("Content-Encoding", "deflate");
             }
-            await MiddlewareCommon.WriteBuffer(http, Bytes);
+            await MiddlewareCommon.WriteBuffer(http, _bytes);
         }
     }
 }

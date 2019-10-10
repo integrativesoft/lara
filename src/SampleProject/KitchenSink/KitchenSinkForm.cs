@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = "/")]
+    [LaraPageAttribute(Address = "/")]
     sealed class KitchenSinkForm : IPage
     {
         static KitchenSinkForm()  // static constructor

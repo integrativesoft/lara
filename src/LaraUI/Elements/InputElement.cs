@@ -12,12 +12,12 @@ namespace Integrative.Lara
     /// The 'input' HTML5 element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Input : Element
+    public sealed class InputElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Input"/> class.
+        /// Initializes a new instance of the <see cref="InputElement"/> class.
         /// </summary>
-        public Input() : base("input")
+        public InputElement() : base("input")
         {
         }
 

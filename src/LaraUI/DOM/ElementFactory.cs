@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +13,7 @@ namespace Integrative.Lara.DOM
     {
         private static readonly Dictionary<string, Type> _map;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static ElementFactory()
         {
             _map = new Dictionary<string, Type>();
@@ -21,17 +21,17 @@ namespace Integrative.Lara.DOM
             Register<Button>("button");
             Register<ColGroup>("colgroup");
             Register<Image>("img");
-            Register<Input>("input");
+            Register<InputElement>("input");
             Register<Label>("label");
             Register<Link>("link");
             Register<ListItem>("li");
             Register<Meta>("meta");
             Register<Meter>("meter");
-            Register<Option>("option");
+            Register<OptionElement>("option");
             Register<OptionGroup>("optgroup");
             Register<OrderedList>("ol");
             Register<Script>("script");
-            Register<Select>("select");
+            Register<SelectElement>("select");
             Register<Table>("table");
             Register<TableCell>("td");
             Register<TableHeader>("th");
@@ -44,6 +44,7 @@ namespace Integrative.Lara.DOM
             _map.Add(lowerTagName, typeof(T));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public static Element CreateElement(string tagName)
         {
             if (string.IsNullOrEmpty(tagName))
@@ -52,7 +53,7 @@ namespace Integrative.Lara.DOM
             }
             else if (tagName.IndexOf(' ') >= 0)
             {
-                throw new ArgumentException("Element tag names cannot contain spaces.");
+                throw new ArgumentException(Resources.TagNameSpaces);
             }
             else
             {

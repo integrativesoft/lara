@@ -73,7 +73,7 @@ namespace Integrative.Lara.Tests.DOM
             _builder.Bind(new BindHandlerOptions<MyData>
             {
                 ModifiedHandler = (x, y) => found = true,
-                Object = data
+                BindObject = data
             });
             data.Counter = 15;
             Assert.True(found);
@@ -93,9 +93,8 @@ namespace Integrative.Lara.Tests.DOM
         public void BindChildrenOptions()
         {
             var list = new ObservableCollection<MyData>();
-            _builder.BindChildren(new BindChildrenOptions<MyData>
+            _builder.BindChildren(new BindChildrenOptions<MyData>(list)
             {
-                Collection = list,
                 CreateCallback = x => Element.Create("span")
             });
             list.Add(new MyData());
@@ -126,7 +125,7 @@ namespace Integrative.Lara.Tests.DOM
             var data = new MyData();
             _builder.BindInnerText(new BindInnerTextOptions<MyData>
             {
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 3;
@@ -166,7 +165,7 @@ namespace Integrative.Lara.Tests.DOM
             _builder.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
-                Object = data,
+                BindObject = data,
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 2;

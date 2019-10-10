@@ -22,17 +22,20 @@ namespace Integrative.Lara.DOM
             _values = new Dictionary<string, string>();
         }
 
-        public bool HasAttribute(string name) => HasAttributeLower(name.ToLower());
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        public bool HasAttribute(string name) => HasAttributeLower(name.ToLowerInvariant());
 
-        public string GetAttribute(string name) => GetAttributeLower(name.ToLower());
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        public string GetAttribute(string name) => GetAttributeLower(name.ToLowerInvariant());
 
-        internal bool HasAttributeLower(string nameLower) => _values.ContainsKey(nameLower);
+        internal bool HasAttributeLower(string nameLower)
+            => _values.ContainsKey(nameLower);
 
         internal void SetAttributeLower(string nameLower, string value)
         {
             if (nameLower == "slot" && _element.ParentElement != null)
             {
-                throw new InvalidOperationException("The 'slot' attribute can only be modified on elements not yet attached to a parent.");
+                throw new InvalidOperationException(Resources.SlotOnlyParent);
             }
             if (_values.TryGetValue(nameLower, out var previous))
             {

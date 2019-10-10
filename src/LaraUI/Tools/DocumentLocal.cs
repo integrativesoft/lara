@@ -67,11 +67,11 @@ namespace Integrative.Lara
             }
         }
 
-        private Document GetDocument()
+        private static Document GetDocument()
         {
             if (LaraUI.Page == null)
             {
-                throw new InvalidOperationException("There is no current document.");
+                throw new InvalidOperationException(Resources.NoCurrentDocument);
             }
             return LaraUI.Page.Document;
         }

@@ -117,7 +117,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraWebServiceAttributeDefaults()
         {
-            var x = new LaraWebService();
+            var x = new LaraWebServiceAttribute();
             Assert.Equal("POST", x.Method);
             Assert.Equal("application/json", x.ContentType);
         }
@@ -125,7 +125,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraWebServiceAttributeProperties()
         {
-            var x = new LaraWebService
+            var x = new LaraWebServiceAttribute
             {
                 Address = "/",
                 ContentType = "lala",
@@ -136,7 +136,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal("PUT", x.Method);
         }
 
-        [LaraWebService(Address = "/myWS")]
+        [LaraWebServiceAttribute(Address = "/myWS")]
         class MyWebService : IWebService
         {
             public Task<string> Execute()
@@ -145,7 +145,7 @@ namespace Integrative.Lara.Tests.Middleware
             }
         }
 
-        [LaraPage("/myPage")]
+        [LaraPageAttribute("/myPage")]
         class MyPage : IPage
         {
             public Task OnGet()
@@ -223,25 +223,31 @@ namespace Integrative.Lara.Tests.Middleware
             PublishHelper.RunInsideLock(ClearAllAction);
         }
 
-        const string ServiceName = "/removableService";
-        const string ComponentName = "x-removable";
-        const string PageName = "/removablePage";
-        const string FileName = "/removableFile";
+        readonly string _serviceName = "/removableService" + GetRandom();
+        readonly string _componentName = "x-removable" + GetRandom();
+        readonly string _pageName = "/removablePage" + GetRandom();
+        readonly string _fileName = "/removableFile" + GetRandom();
+
+        static string GetRandom()
+        {
+            var random = new Random();
+            return random.Next(0, int.MaxValue).ToString();
+        }
 
         private void ClearAllAction()
         {
-            LaraUI.Publish(PageName, () => new RemovablePage());
+            LaraUI.Publish(_pageName, () => new RemovablePage());
             LaraUI.Publish(new WebServiceContent
             {
-                Address = ServiceName,
+                Address = _serviceName,
                 Factory = () => new RemovableService(),
                 Method = "GET"
             });
             var bytes = Encoding.UTF8.GetBytes("hello");
-            LaraUI.Publish(FileName, new StaticContent(bytes));
+            LaraUI.Publish(_fileName, new StaticContent(bytes));
             LaraUI.Publish(new WebComponentOptions
             {
-                ComponentTagName = ComponentName,
+                ComponentTagName = _componentName,
                 ComponentType = typeof(RemovableComponent)
             });
             VerifyFound(true);
@@ -252,10 +258,10 @@ namespace Integrative.Lara.Tests.Middleware
 
         private void VerifyFound(bool found)
         {
-            Assert.Equal(found, LaraUI.TryGetNode(PageName, out _));
-            Assert.Equal(found, LaraUI.TryGetNode(FileName, out _));
-            Assert.Equal(found, LaraUI.TryGetNode(ServiceName, out _));
-            Assert.Equal(found, LaraUI.TryGetComponent(ComponentName, out _));
+            Assert.Equal(found, LaraUI.TryGetNode(_pageName, out _));
+            Assert.Equal(found, LaraUI.TryGetNode(_fileName, out _));
+            Assert.Equal(found, LaraUI.TryGetNode(_serviceName, out _));
+            Assert.Equal(found, LaraUI.TryGetComponent(_componentName, out _));
         }
 
         class RemovablePage : IPage

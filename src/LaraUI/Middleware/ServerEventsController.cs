@@ -91,7 +91,7 @@ namespace Integrative.Lara.Middleware
         {
             if (!_serverEventsEnabled)
             {
-                throw new InvalidOperationException("Server events are not enabled. Call ServerEventsOn() in order to use ServerEventFlush().");
+                throw new InvalidOperationException(Resources.ServerEventsNotEnabled);
             }
             else if (!_document.HasPendingChanges)
             {

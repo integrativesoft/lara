@@ -131,16 +131,14 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void DocumentCreatesElements()
         {
-            var document = new Document(new MyPage());
-            var button = document.CreateElement("button");
+            var button = Document.CreateElement("button");
             Assert.NotNull(button);
         }
 
         [Fact]
         public void DocumentCreatesText()
         {
-            var document = new Document(new MyPage());
-            var text = document.CreateTextNode("hello");
+            var text = Document.CreateTextNode("hello");
             Assert.NotNull(text);
             Assert.Equal("hello", text.Data);
         }

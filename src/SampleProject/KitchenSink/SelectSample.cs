@@ -12,14 +12,14 @@ namespace SampleProject
 {
     class SelectSample
     {
-        readonly Select _select;
+        readonly SelectElement _select;
         readonly Button _advance;
 
         public Element Root { get; }
 
         public SelectSample()
         {
-            _select = new Select
+            _select = new SelectElement
             {
                 Id = "myselect",
                 Class = "form-control",

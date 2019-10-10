@@ -12,7 +12,7 @@ namespace SampleProject
 {
     sealed class CounterSample
     {
-        readonly Input _number;
+        readonly InputElement _number;
         readonly Button _increase;
         
         public Element Root { get; }
@@ -24,7 +24,7 @@ namespace SampleProject
                 Class = "btn btn-primary"
             };
             _increase.AppendText("Increase");
-            _number = new Input
+            _number = new InputElement
             {
                 Id = "number",
                 Type = "number",

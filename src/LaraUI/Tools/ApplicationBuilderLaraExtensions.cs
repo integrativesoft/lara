@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Builder;
+using System;
 
 namespace Integrative.Lara
 {
@@ -21,6 +22,7 @@ namespace Integrative.Lara
         /// <returns></returns>
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             if (options.AllowLocalhostOnly)
             {
                 app.UseMiddleware<LocalhostFilter>();

@@ -21,7 +21,7 @@ namespace Integrative.Lara
         /// </summary>
         protected Element ShadowRoot { get; private set; }
 
-        private readonly HashSet<string> _observedAttributes;
+        private HashSet<string> _observedAttributes;
 
         /// <summary>
         /// Constructor
@@ -29,12 +29,20 @@ namespace Integrative.Lara
         /// <param name="tagName">Component's custom tag name</param>
         protected WebComponent(string tagName) : base(tagName)
         {
-            _observedAttributes = new HashSet<string>(GetObservedAttributes());
+            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             VerifyTypeThrow(tagName, GetType());
             ShadowRoot = new Shadow
             {
                 ParentComponent = this
             };
+        }
+
+        private void InitializeObservedAttributes()
+        {
+            if (_observedAttributes == null)
+            {
+                _observedAttributes = new HashSet<string>(GetObservedAttributes());
+            }
         }
 
         internal static void VerifyTypeThrow(string tagName, Type componentType)
@@ -68,6 +76,7 @@ namespace Integrative.Lara
         /// Obsolete
         /// </summary>
         [Obsolete("Not needed anymore, Shadow root is automatically created")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Deprecated")]
         protected void AttachShadow()
         {
         }
@@ -146,6 +155,7 @@ namespace Integrative.Lara
         internal override void AttributeChanged(string attribute, string value)
         {
             base.AttributeChanged(attribute, value);
+            InitializeObservedAttributes();
             if (_observedAttributes.Contains(attribute))
             {
                 OnAttributeChanged(attribute);

@@ -16,7 +16,7 @@ namespace Integrative.Lara.Tools
             this SemaphoreSlim semaphore,
             CancellationToken cancelToken = default)
         {
-            await semaphore.WaitAsync(cancelToken).ConfigureAwait(false);
+            await semaphore.WaitAsync(cancelToken);
             return new ReleaseWrapper(semaphore);
         }
 

@@ -471,7 +471,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void SessionCloseIgnoresErrors()
         {
-            var connections = new Connections();
+            using var connections = new Connections();
             var connection = connections.CreateConnection(IPAddress.Loopback);
             var session = new Session(connection);
             session.Closing += Session_Closing;
@@ -486,7 +486,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraPageDefaultConstructor()
         {
-            var page = new LaraPage();
+            var page = new LaraPageAttribute();
             Assert.True(string.IsNullOrEmpty(page.Address));
         }
 

@@ -60,9 +60,11 @@ namespace Integrative.Lara
         /// <returns>Element created</returns>
         public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         internal Element(string tagName)
             : base()
         {
+            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             _attributes = new Attributes(this);
             _children = new List<Node>();
             Events = new Dictionary<string, Func<Task>>();
@@ -181,9 +183,11 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
         /// <param name="attributeValue">The value of the attribute.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetAttribute(string attributeName, string attributeValue)
         {
-            SetAttributeLower(attributeName.ToLower(), attributeValue);
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
+            SetAttributeLower(attributeName.ToLowerInvariant(), attributeValue);
         }
 
         internal void SetAttributeLower(string nameLower, string value)
@@ -205,7 +209,8 @@ namespace Integrative.Lara
         /// <returns>
         ///   <c>true</c> if the element has the specified attribute; otherwise, <c>false</c>.
         /// </returns>
-        public bool HasAttribute(string attributeName) => _attributes.HasAttribute(attributeName);
+        public bool HasAttribute(string attributeName)
+            => _attributes.HasAttribute(attributeName ?? throw new ArgumentNullException(nameof(attributeName)));
 
         internal bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
 
@@ -214,7 +219,8 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">The name of the attribute</param>
         /// <returns>Value of the attribute</returns>
-        public string GetAttribute(string attributeName) => _attributes.GetAttribute(attributeName);
+        public string GetAttribute(string attributeName)
+            => _attributes.GetAttribute(attributeName ?? throw new ArgumentNullException(nameof(attributeName)));
 
         internal string GetAttributeLower(string nameLower)
             => _attributes.GetAttributeLower(nameLower);
@@ -224,8 +230,12 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">Attribute's name</param>
         /// <param name="value">true to add, false to remove</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetFlagAttribute(string attributeName, bool value)
-            => _attributes.SetFlagAttributeLower(attributeName.ToLower(), value);
+        {
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
+            _attributes.SetFlagAttributeLower(attributeName.ToLowerInvariant(), value);
+        }
 
         internal void SetFlagAttributeLower(string nameLower, bool value)
             => _attributes.SetFlagAttributeLower(nameLower, value);
@@ -234,9 +244,11 @@ namespace Integrative.Lara
         /// Removes an attribute.
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void RemoveAttribute(string attributeName)
         {
-            attributeName = attributeName.ToLower();
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
+            attributeName = attributeName.ToLowerInvariant();
             if (attributeName == "id")
             {
                 Id = null;
@@ -757,7 +769,7 @@ namespace Integrative.Lara
         {
             if (ParentElement == null)
             {
-                throw new InvalidOperationException("Cannot remove from parent, the node has no parent element already");
+                throw new InvalidOperationException(Resources.CannotRemoveNoParent);
             }
             ParentElement.RemoveChild(this);
         }
@@ -936,6 +948,7 @@ namespace Integrative.Lara
         /// <param name="settings">The event's settings.</param>
         public void On(EventSettings settings)
         {
+            settings = settings ?? throw new ArgumentNullException(nameof(settings));
             EventWriter.On(this, settings);
         }
 
@@ -975,7 +988,7 @@ namespace Integrative.Lara
             EnsureBindings();
             _bindings.BindHandler(new BindHandlerOptions<T>
             {
-                Object = instance,
+                BindObject = instance,
                 ModifiedHandler = handler
             });
         }
@@ -1000,6 +1013,7 @@ namespace Integrative.Lara
         public void BindAttribute<T>(BindAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             EnsureBindings();
             _bindings.BindAttribute<T>(options);
         }
@@ -1012,6 +1026,7 @@ namespace Integrative.Lara
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             EnsureBindings();
             _bindings.BindFlagAttribute<T>(options);
         }
@@ -1024,6 +1039,7 @@ namespace Integrative.Lara
         public void BindToggleClass<T>(BindToggleClassOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             EnsureBindings();
             _bindings.BindToggleClass<T>(options);
         }
@@ -1081,6 +1097,7 @@ namespace Integrative.Lara
         public void BindChildren<T>(BindChildrenOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             EnsureBindings();
             _bindings.BindChildren(options);
         }
@@ -1204,7 +1221,7 @@ namespace Integrative.Lara
         {
             if (Document == null)
             {
-                throw new InvalidOperationException("To use the focus() method, first add the element to a document.");
+                throw new InvalidOperationException(Resources.FocusDisconnected);
             }
             FocusDelta.Enqueue(this);
         }

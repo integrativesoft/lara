@@ -18,7 +18,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public void ConnectionFound()
         {
-            var connections = new Connections();
+            using var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             int count = 0;
             foreach (var c in connections.GetConnections())
@@ -33,7 +33,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public void DiscardRemovesConnection()
         {
-            var connections = new Connections();
+            using var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             connections.Discard(cnx.Id);
             Assert.False(connections.TryGetConnection(cnx.Id, out _));
@@ -51,7 +51,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void TimerCleansUpDocuments()
         {
-            var connections = new Connections();
+            using var connections = new Connections();
             var connection = connections.CreateConnection(IPAddress.Loopback);
             connection.CreateDocument(new MyPage());
             var required = DateTime.UtcNow.AddSeconds(10);
@@ -63,7 +63,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void TimerCleansUp()
         {
-            var connections = new Connections(200, 100);
+            using var connections = new Connections(200, 100);
             var cnx = connections.CreateConnection(IPAddress.Loopback);
             var document = cnx.CreateDocument(new MyPage());
             Assert.NotEmpty(connections.GetConnections());

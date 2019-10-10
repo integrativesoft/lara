@@ -27,14 +27,14 @@ namespace Integrative.Lara.Main
             var context = new WebServiceContext
             {
                 Http = http,
-                RequestBody = await MiddlewareCommon.ReadBody(http)
+                RequestBody = await MiddlewareCommon.ReadBody(http).ConfigureAwait(false)
             };
             var handler = Factory();
             string data = string.Empty;
             if (await MiddlewareCommon.RunHandler(http, async () =>
             {
                 data = await handler.Execute();
-            }))
+            }).ConfigureAwait(false))
             {
                 await SendReply(context, data);
             }

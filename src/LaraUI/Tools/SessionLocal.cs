@@ -67,7 +67,7 @@ namespace Integrative.Lara
             }
         }
 
-        private Session GetSession()
+        private static Session GetSession()
         {
             if (LaraUI.Page != null)
             {
@@ -79,7 +79,7 @@ namespace Integrative.Lara
             }
             else
             {
-                throw new InvalidOperationException("There is no current session.");
+                throw new InvalidOperationException(Resources.NoCurrentSession);
             }            
         }
 

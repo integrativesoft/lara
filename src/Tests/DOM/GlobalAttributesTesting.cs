@@ -172,14 +172,14 @@ namespace Integrative.Lara.Tests.DOM
             var a1 = Element.Create("span", "a");
             var a2 = Element.Create("span", "a");
             map.NotifyAdded(a1);
-            DomOperationsTesting.Throws<DuplicateElementId>(() => map.NotifyAdded(a2));
+            DomOperationsTesting.Throws<DuplicateElementIdException>(() => map.NotifyAdded(a2));
         }
 
         [Fact]
         public void CheckedFalseFlushed()
         {
             var doc = new Document(null);
-            var x = new Input
+            var x = new InputElement
             {
                 Id = "x"
             };
@@ -199,7 +199,7 @@ namespace Integrative.Lara.Tests.DOM
         public void CheckedTrueFlushed()
         {
             var doc = new Document(null);
-            var x = new Input
+            var x = new InputElement
             {
                 Id = "x"
             };

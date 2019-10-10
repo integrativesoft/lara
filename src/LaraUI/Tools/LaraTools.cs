@@ -24,6 +24,7 @@ namespace Integrative.Lara.Tools
     {
         readonly static DataContractJsonSerializerSettings _jsonSettings;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static LaraTools()
         {
             _jsonSettings = new DataContractJsonSerializerSettings

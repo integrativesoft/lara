@@ -12,10 +12,6 @@ namespace Integrative.Lara.DOM
 {
     sealed class DomSurgeon
     {
-        const string CannotAddInsideItself = "Cannot add an element inside itself.";
-        const string ReferenceNodeNotFound = "Reference before/after node not found";
-        const string NodeNotFoundInsideParent = "Invalid child/parent nodes specified";
-
         readonly Element _parent;
 
         public DomSurgeon(Element parent)
@@ -87,12 +83,12 @@ namespace Integrative.Lara.DOM
 
         #region Connect and disconnect
 
-        private Element BeforeOperation(Node child)
+        private static Element BeforeOperation(Node child)
         {
             return child.ParentElement;
         }
 
-        private void AfterOperation(Node node, Element previousParent)
+        private static void AfterOperation(Node node, Element previousParent)
         {
             if (node is Element child)
             {
@@ -100,7 +96,7 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private void AfterOperation(Element child, Element previousParent)
+        private static void AfterOperation(Element child, Element previousParent)
         {
             var previousDocument = GetPreviousDocument(previousParent);
             if (previousDocument == child.Document)
@@ -124,7 +120,7 @@ namespace Integrative.Lara.DOM
             }            
         }
 
-        private Document GetPreviousDocument(Element previousParent)
+        private static Document GetPreviousDocument(Element previousParent)
         {
             if (previousParent == null)
             {
@@ -175,11 +171,11 @@ namespace Integrative.Lara.DOM
         {
             if (!_parent.ContainsChild(reference))
             {
-                throw new InvalidOperationException(ReferenceNodeNotFound);
+                throw new InvalidOperationException(Resources.ReferenceNodeNotFound);
             }
         }
 
-        private void GenerateIdsIfNeeded(bool needGenerateIds, Node child)
+        private static void GenerateIdsIfNeeded(bool needGenerateIds, Node child)
         {
             if (needGenerateIds)
             {
@@ -191,7 +187,7 @@ namespace Integrative.Lara.DOM
         {
             if (child.ParentElement != _parent)
             {
-                throw new InvalidOperationException(NodeNotFoundInsideParent);
+                throw new InvalidOperationException(Resources.NodeNotFoundInsideParent);
             }
             int index = _parent.GetChildNodePosition(child);
             RemoveInternalCommon(child);
@@ -235,7 +231,7 @@ namespace Integrative.Lara.DOM
         {
             if (child is Element element && _parent.DescendsFrom(element))
             {
-                throw new InvalidOperationException(CannotAddInsideItself);
+                throw new InvalidOperationException(Resources.CannotAddInsideItself);
             }
         }
 
@@ -306,7 +302,7 @@ namespace Integrative.Lara.DOM
                     string id = element.Id;
                     if (hash.Contains(id) || document.TryGetElementById(id, out _))
                     {
-                        throw DuplicateElementId.Create(id);
+                        throw DuplicateElementIdException.Create(id);
                     }
                     hash.Add(id);
                 }
@@ -326,7 +322,7 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private void RemoveFromPreviousDocument(List<Node> list, Document document)
+        private static void RemoveFromPreviousDocument(List<Node> list, Document document)
         {
             foreach (var node in list)
             {

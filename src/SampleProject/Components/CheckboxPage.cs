@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = PageAddress)]
+    [LaraPageAttribute(Address = PageAddress)]
     class CheckboxPage : IPage
     {
         public const string PageAddress = "/checkbox";

@@ -20,7 +20,7 @@ namespace Integrative.Lara.Middleware
 
         public async Task Invoke(HttpContext http)
         {
-            if (!await ProcessRequest(http))
+            if (!await ProcessRequest(http).ConfigureAwait(false))
             {
                 await _next.Invoke(http);
             }

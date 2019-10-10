@@ -9,9 +9,11 @@ using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Net;
+using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: NeutralResourcesLanguage("en-US")]
 namespace Integrative.Lara
 {
     /// <summary>
@@ -26,6 +28,7 @@ namespace Integrative.Lara
         /// </summary>
         public static ErrorPages ErrorPages { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static LaraUI()
         {
             _published = new Published();
@@ -90,14 +93,19 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="content">Web service settings</param>
         public static void Publish(WebServiceContent content)
-            => _published.Publish(content);
+        {
+            content = content ?? throw new ArgumentNullException(nameof(content));
+            _published.Publish(content);
+        }
 
         /// <summary>
         /// Unpublishes an address and its associated content.
         /// </summary>
         /// <param name="path">The path.</param>
         public static void UnPublish(string path)
-            => _published.UnPublish(path);
+        {
+            _published.UnPublish(path);
+        }
 
         /// <summary>
         /// Publishes all classes marked with the attributes [LaraPage] and [LaraWebService]
@@ -110,7 +118,10 @@ namespace Integrative.Lara
         /// <param name="address">The URL address of the web service</param>
         /// <param name="method">The HTTP method of the web service</param>
         public static void UnPublish(string address, string method)
-            => _published.UnPublish(address, method);
+        {
+            method = method ?? throw new ArgumentNullException(nameof(method));
+            _published.UnPublish(address, method);
+        }
 
         internal static bool TryGetNode(string path, out IPublishedItem item)
             => _published.TryGetNode(path, out item);
@@ -133,7 +144,10 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="options"></param>
         public static void Publish(WebComponentOptions options)
-            => _published.Publish(options);
+        {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            _published.Publish(options);
+        }
 
         /// <summary>
         /// Unregisters a specific web component
@@ -153,14 +167,14 @@ namespace Integrative.Lara
         /// Starts the web server. Use with 'await'.
         /// </summary>
         public static async Task<IWebHost> StartServer()
-            => await ServerLauncher.StartServer();
+            => await ServerLauncher.StartServer().ConfigureAwait(false);
 
         /// <summary>
         /// Starts the web server. Use with 'await'.
         /// </summary>
         /// <param name="options">The server options.</param>
         public static async Task<IWebHost> StartServer(StartServerOptions options)
-            => await ServerLauncher.StartServer(options);
+            => await ServerLauncher.StartServer(options).ConfigureAwait(false);
 
         /// <summary>
         /// Launches the user's default web browser on the specified address.
@@ -176,13 +190,18 @@ namespace Integrative.Lara
         public static void LaunchBrowser(IWebHost host)
                     => LaraTools.LaunchBrowser(host);
 
+
         /// <summary>
         /// Gets the first URL associated with the given host.
         /// </summary>
         /// <param name="host">The host.</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "Source of information is string")]
         public static string GetFirstURL(IWebHost host)
-            => LaraTools.GetFirstUrl(host);
+        {
+            host = host ?? throw new ArgumentNullException(nameof(host));
+            return LaraTools.GetFirstUrl(host);
+        }
 
         #endregion
 

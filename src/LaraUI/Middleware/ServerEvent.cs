@@ -40,7 +40,7 @@ namespace Integrative.Lara
         {
             if (_disposed)
             {
-                throw new InvalidOperationException("ServerEvent already disposed.");
+                throw new InvalidOperationException(Resources.ServerEventAlreadyDisposed);
             }
         }
 

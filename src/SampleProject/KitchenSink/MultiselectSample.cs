@@ -11,14 +11,14 @@ namespace SampleProject
 {
     class MultiselectSample
     {
-        readonly Select _select;
+        readonly SelectElement _select;
         readonly Button _toggle;
 
         public Element Root { get; }
 
         public MultiselectSample()
         {
-            _select = new Select
+            _select = new SelectElement
             {
                 Id = "mymulti",
                 Class = "form-control",
@@ -37,7 +37,7 @@ namespace SampleProject
             {
                 foreach (var child in _select.Children)
                 {
-                    if (child is Option option)
+                    if (child is OptionElement option)
                     {
                         option.Selected = !option.Selected;
                     }

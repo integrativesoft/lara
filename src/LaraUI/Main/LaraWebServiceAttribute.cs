@@ -12,7 +12,7 @@ namespace Integrative.Lara
     /// Declares a class as a web service that gets published with LaraUI.PublishAssemblies()
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class LaraWebService : Attribute
+    public sealed class LaraWebServiceAttribute : Attribute
     {
         /// <summary>
         /// Web Service's address (e.g. '/myWS')

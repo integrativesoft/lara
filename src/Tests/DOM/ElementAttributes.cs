@@ -25,17 +25,17 @@ namespace Integrative.Lara.Tests.DOM
             TestElement<Button>("button");
             TestElement<ColGroup>("colgroup");
             TestElement<Image>("img");
-            TestElement<Input>("input");
+            TestElement<InputElement>("input");
             TestElement<Label>("label");
             TestElement<Link>("link");
             TestElement<ListItem>("li");
             TestElement<Meta>("meta");
             TestElement<Meter>("meter");
-            TestElement<Option>("option");
+            TestElement<OptionElement>("option");
             TestElement<OptionGroup>("optgroup");
             TestElement<OrderedList>("ol");
             TestElement<Script>("script");
-            TestElement<Select>("select");
+            TestElement<SelectElement>("select");
             TestElement<Table>("table");
             TestElement<TableCell>("td");
             TestElement<TableHeader>("th");
@@ -122,7 +122,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetIntAttribute()
         {
-            var input = new Input
+            var input = new InputElement
             {
                 Height = 10
             };
@@ -181,7 +181,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InputAttributes()
         {
-            var input = new Input
+            var input = new InputElement
             {
                 MaxLength = 5,
                 Size = 3,
@@ -300,7 +300,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void DuplicateElementEmptyConstructor()
         {
-            var instance = Activator.CreateInstance<DuplicateElementId>();
+            var instance = Activator.CreateInstance<DuplicateElementIdException>();
             Assert.NotNull(instance);
         }
 
@@ -308,7 +308,7 @@ namespace Integrative.Lara.Tests.DOM
         public void DuplicateElementInner()
         {
             var inner = new InvalidOperationException("lala");
-            var instance = new DuplicateElementId("lele", inner);
+            var instance = new DuplicateElementIdException("lele", inner);
             Assert.Same(inner, instance.InnerException);
             Assert.Equal("lele", instance.Message);
         }
@@ -338,20 +338,20 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void LoopSelectOptions()
         {
-            var select = new Select();
-            var option1 = new Option();
+            var select = new SelectElement();
+            var option1 = new OptionElement();
             var group = Element.Create("optgroup");
-            var option2 = new Option();
+            var option2 = new OptionElement();
             group.AppendChild(option2);
             select.AppendChild(option1);
             select.AppendChild(group);
-            Assert.Equal( new List<Option>{ option1, option2 }, select.Options);
+            Assert.Equal( new List<OptionElement>{ option1, option2 }, select.Options);
         }
 
         [Fact]
         public void SelectProperties()
         {
-            var select = new Select
+            var select = new SelectElement
             {
                 Size = 3
             };
@@ -361,7 +361,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectNotifyValue()
         {
-            var select = new Select();
+            var select = new SelectElement();
             select.NotifyValue(new Lara.Delta.ElementEventValue
             {
                 Value = "lala"
@@ -372,7 +372,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectAddOption()
         {
-            var x = new Select();
+            var x = new SelectElement();
             x.AddOption("myvalue", "this is the text");
             var option = x.Options.FirstOrDefault();
             Assert.NotNull(option);
@@ -385,11 +385,11 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void OptionWithValueGetsSelected()
         {
-            var select = new Select
+            var select = new SelectElement
             {
                 Value = "lolo"
             };
-            var option = new Option
+            var option = new OptionElement
             {
                 Value = "lolo"
             };
@@ -400,11 +400,11 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddGroupWithSelectedOption()
         {
-            var select = new Select
+            var select = new SelectElement
             {
                 Value = "lolo"
             };
-            var option = new Option
+            var option = new OptionElement
             {
                 Value = "lolo"
             };
@@ -417,11 +417,11 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddSelectedOptionInGroup()
         {
-            var select = new Select
+            var select = new SelectElement
             {
                 Value = "lolo"
             };
-            var option = new Option
+            var option = new OptionElement
             {
                 Value = "lolo"
             };
@@ -434,12 +434,12 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectValueChangeOnChildOptions()
         {
-            var select = new Select();
-            var opt1 = new Option
+            var select = new SelectElement();
+            var opt1 = new OptionElement
             {
                 Value = "a"
             };
-            var opt2 = new Option
+            var opt2 = new OptionElement
             {
                 Value = "b"
             };
@@ -479,7 +479,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SomeTagsAlwaysNeedId()
         {
-            var input = new Input();
+            var input = new InputElement();
             Assert.True(input.NeedsId);
         }
 

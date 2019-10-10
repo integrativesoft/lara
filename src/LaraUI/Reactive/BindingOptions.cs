@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Instance to bind to
         /// </summary>
-        public T Object { get; set; }
+        public T BindObject { get; set; }
 
         /// <summary>
         /// Action to update the element whenever the data source is modified
@@ -54,18 +54,18 @@ namespace Integrative.Lara
         internal override void Apply(Element element)
         {
             _applying = true;
-            ModifiedHandler?.Invoke(Object, element);
+            ModifiedHandler?.Invoke(BindObject, element);
             _applying = false;
         }
 
         internal override void Subscribe()
         {
-            Object.PropertyChanged += Object_PropertyChanged;
+            BindObject.PropertyChanged += Object_PropertyChanged;
         }
 
         internal override void Unsubscribe()
         {
-            Object.PropertyChanged -= Object_PropertyChanged;
+            BindObject.PropertyChanged -= Object_PropertyChanged;
         }
 
         private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -76,10 +76,9 @@ namespace Integrative.Lara
 
         private void VerifyApplying()
         {
-            const string Template = "Cycle detected: modification handlers should not modify the source data.";
             if (_applying)
             {
-                throw new InvalidOperationException(Template);
+                throw new InvalidOperationException(Resources.BindingCycleDetected);
             }
         }
     }
@@ -95,7 +94,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Instance to track changes
         /// </summary>
-        public TData Object { get; set; }
+        public TData BindObject { get; set; }
 
         /// <summary>
         /// Function to retrieve the target value from instance that's tracked
@@ -106,12 +105,12 @@ namespace Integrative.Lara
 
         internal override void Subscribe()
         {
-            Object.PropertyChanged += ObjectChangedHandler;
+            BindObject.PropertyChanged += ObjectChangedHandler;
         }
 
         internal override void Unsubscribe()
         {
-            Object.PropertyChanged -= ObjectChangedHandler;
+            BindObject.PropertyChanged -= ObjectChangedHandler;
         }
 
         private void ObjectChangedHandler(object sender, PropertyChangedEventArgs args)
@@ -120,7 +119,7 @@ namespace Integrative.Lara
         }
 
         internal TValue GetCurrentValue()
-            => Property(Object);
+            => Property(BindObject);
     }
 
     /// <summary>
@@ -213,12 +212,21 @@ namespace Integrative.Lara
         /// <summary>
         /// Collection that is tracked
         /// </summary>
-        public ObservableCollection<T> Collection { get; set; }
+        public ObservableCollection<T> Collection { get; }
 
         /// <summary>
         /// Method for creating elements
         /// </summary>
         public Func<T, Element> CreateCallback { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="collection">Collection to bind</param>
+        public BindChildrenOptions(ObservableCollection<T> collection)
+        {
+            Collection = collection;
+        }
 
         internal override event NotifyCollectionChangedEventHandler CollectionChanged;
 

@@ -12,30 +12,30 @@ namespace Integrative.Lara
     /// Exception thrown when adding a duplicate element ID into a document
     /// </summary>
     /// <seealso cref="System.InvalidOperationException" />
-    public class DuplicateElementId : InvalidOperationException
+    public class DuplicateElementIdException : InvalidOperationException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DuplicateElementId"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateElementIdException"/> class.
         /// </summary>
-        public DuplicateElementId()
+        public DuplicateElementIdException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DuplicateElementId"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateElementIdException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public DuplicateElementId(string message)
+        public DuplicateElementIdException(string message)
             : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DuplicateElementId"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateElementIdException"/> class.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="inner">The inner.</param>
-        public DuplicateElementId(string message, Exception inner)
+        public DuplicateElementIdException(string message, Exception inner)
             : base(message, inner)
         {
         }
@@ -45,10 +45,10 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="id">The identifier that is duplicate.</param>
         /// <returns>Exception created</returns>
-        public static DuplicateElementId Create(string id)
+        public static DuplicateElementIdException Create(string id)
         {
             string message = $"Duplicate element Id: {id}";
-            return new DuplicateElementId(message);
+            return new DuplicateElementIdException(message);
         }
     }
 }

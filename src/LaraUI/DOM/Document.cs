@@ -44,7 +44,12 @@ namespace Integrative.Lara
     public class Document
     {
         internal IPage Page { get; }
-        internal Guid VirtualId { get; }
+
+        /// <summary>
+        /// Global unique identifier for the document
+        /// </summary>
+        public Guid VirtualId { get; }
+
         private readonly DocumentIdMap _map;
         private readonly Queue<BaseDelta> _queue;
         internal SemaphoreSlim Semaphore { get; }
@@ -121,14 +126,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="tagName">Name of the tag.</param>
         /// <returns>Element created</returns>
-        public Element CreateElement(string tagName) => Element.Create(tagName);
+        public static Element CreateElement(string tagName) => Element.Create(tagName);
 
         /// <summary>
         /// Creates a text node.
         /// </summary>
         /// <param name="data">The node's data.</param>
         /// <returns>Text node created</returns>
-        public TextNode CreateTextNode(string data) => new TextNode(data);
+        public static TextNode CreateTextNode(string data) => new TextNode(data);
 
         internal void UpdateTimestamp()
         {
@@ -223,12 +228,13 @@ namespace Integrative.Lara
             AfterUnload?.Invoke(this, new EventArgs());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
         internal static async Task IgnoreErrorHandler(Func<Task> handler)
         {
             if (handler != null)
             {
                 try { await handler(); }
-                catch {}
+                catch { }
             }
         }
 

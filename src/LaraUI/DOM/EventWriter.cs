@@ -80,7 +80,7 @@ namespace Integrative.Lara.DOM
             _element.SetAttribute(eventData, data);
         }
 
-        private string BuildEventCode()
+        private static string BuildEventCode()
         {
             return $"LaraUI.plug(this, event);";
         }

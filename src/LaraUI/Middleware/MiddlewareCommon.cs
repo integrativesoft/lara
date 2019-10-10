@@ -102,6 +102,7 @@ namespace Integrative.Lara.Middleware
             return ProcessWebSocketMessage<T>(maxSize, ms, result);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
         internal static (bool, T) ProcessWebSocketMessage<T>(int maxSize,
             MemoryStream ms, WebSocketReceiveResult result) where T : class
         {

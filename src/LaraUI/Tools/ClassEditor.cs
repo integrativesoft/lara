@@ -4,6 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System.Globalization;
+
 namespace Integrative.Lara.Front.Tools
 {
     static class ClassEditor
@@ -36,15 +38,15 @@ namespace Integrative.Lara.Front.Tools
             {
                 return "";
             }
-            else if (previous.StartsWith(name + " "))
+            else if (previous.StartsWith(name + " ", System.StringComparison.InvariantCulture))
             {
                 return previous.Substring(name.Length + 1);
             }
-            else if (previous.EndsWith(" " + name))
+            else if (previous.EndsWith(" " + name, System.StringComparison.InvariantCulture))
             {
                 return previous.Substring(0, previous.Length - name.Length - 1);
             }
-            int index = previous.IndexOf(" " + name + " ");
+            int index = previous.IndexOf(" " + name + " ", System.StringComparison.InvariantCulture);
             if (index == -1)
             {
                 return previous;
@@ -86,8 +88,8 @@ namespace Integrative.Lara.Front.Tools
             {
                 elementClass = elementClass.Trim();
                 return elementClass == className
-                    || elementClass.StartsWith(className + " ")
-                    || elementClass.EndsWith(" " + className)
+                    || elementClass.StartsWith(className + " ", System.StringComparison.InvariantCulture)
+                    || elementClass.EndsWith(" " + className, System.StringComparison.InvariantCulture)
                     || elementClass.Contains(" " + className + " ");
             }
         }

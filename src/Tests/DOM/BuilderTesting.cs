@@ -69,7 +69,7 @@ namespace Integrative.Lara.Tests.DOM
             var list = new List<Element>()
             {
                 new Button(),
-                new Option()
+                new OptionElement()
             };
             builder.AddNodes(list);
             Assert.Equal(2, root.ChildCount);
@@ -83,7 +83,7 @@ namespace Integrative.Lara.Tests.DOM
             var list = new List<Node>()
             {
                 new Button(),
-                new Option()
+                new OptionElement()
             };
             builder.AddNodes(list);
             Assert.Equal(2, root.ChildCount);

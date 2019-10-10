@@ -118,7 +118,7 @@ namespace Integrative.Lara
         {
             if (_stack.Count <= 1)
             {
-                throw new InvalidOperationException("Too many Pop() calls.");
+                throw new InvalidOperationException(Resources.TooManyPops);
             }
             var pop = _stack.Pop();
             if (_stack.Count > 0)
@@ -246,6 +246,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder AddNodes(IEnumerable<Node> nodes)
         {
+            nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
             var current = _stack.Peek();
             foreach (var node in nodes)
             {
@@ -261,6 +262,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder AddNodes(IEnumerable<Element> nodes)
         {
+            nodes = nodes ?? throw new ArgumentNullException(nameof(nodes));
             var current = _stack.Peek();
             foreach (var node in nodes)
             {
@@ -276,6 +278,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder Add(Action<LaraBuilder> action)
         {
+            action = action ?? throw new ArgumentNullException(nameof(action));
             action(this);
             return this;
         }
@@ -426,7 +429,7 @@ namespace Integrative.Lara
             return BindAttribute<T>(new BindAttributeOptions<T>
             {
                 Attribute = attribute,
-                Object = instance,
+                BindObject = instance,
                 Property = x => property()
             });
         }
@@ -445,7 +448,7 @@ namespace Integrative.Lara
             return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
-                Object = instance,
+                BindObject = instance,
                 Property = x => property()
             });
         }
@@ -464,7 +467,7 @@ namespace Integrative.Lara
             return BindToggleClass<T>(new BindToggleClassOptions<T>
             {
                 ClassName = className,
-                Object = instance,
+                BindObject = instance,
                 Property = x => property()
             });
         }
@@ -522,7 +525,7 @@ namespace Integrative.Lara
             return BindAttribute<T>(new BindAttributeOptions<T>
             {
                 Attribute = attribute,
-                Object = instance,
+                BindObject = instance,
                 Property = property
             });
         }
@@ -541,7 +544,7 @@ namespace Integrative.Lara
             return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
-                Object = instance,
+                BindObject = instance,
                 Property = property
             });
         }
@@ -560,7 +563,7 @@ namespace Integrative.Lara
             return BindToggleClass<T>(new BindToggleClassOptions<T>
             {
                 ClassName = className,
-                Object = instance,
+                BindObject = instance,
                 Property = property
             });
         }
@@ -577,7 +580,7 @@ namespace Integrative.Lara
         {
             return BindInnerText(new BindInnerTextOptions<T>
             {
-                Object = instance,
+                BindObject = instance,
                 Property = x => property()
             });
         }
@@ -594,7 +597,7 @@ namespace Integrative.Lara
         {
             return BindInnerText(new BindInnerTextOptions<T>
             {
-                Object = instance,
+                BindObject = instance,
                 Property = property
             });
         }
@@ -622,9 +625,8 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren(new BindChildrenOptions<T>
+            return BindChildren(new BindChildrenOptions<T>(collection)
             {
-                Collection = collection,
                 CreateCallback = creator
             });
         }
@@ -639,9 +641,8 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren<T>(new BindChildrenOptions<T>
+            return BindChildren<T>(new BindChildrenOptions<T>(collection)
             {
-                Collection = collection,
                 CreateCallback = x => creator()
             });
         }
@@ -672,7 +673,7 @@ namespace Integrative.Lara
             return Bind(new BindHandlerOptions<T>
             {
                 ModifiedHandler = (x, y) => action(),
-                Object = instance
+                BindObject = instance
             });
         }
 
@@ -689,7 +690,7 @@ namespace Integrative.Lara
             return Bind(new BindHandlerOptions<T>
             {
                 ModifiedHandler = action,
-                Object = instance
+                BindObject = instance
             });
         }
 

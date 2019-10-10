@@ -93,7 +93,7 @@ namespace Integrative.Lara.Middleware
             }
             else
             {
-                await MiddlewareCommon.SendStatusReply(http, HttpStatusCode.BadRequest, "Bad request");
+                await MiddlewareCommon.SendStatusReply(http, HttpStatusCode.BadRequest, Resources.BadRequest);
             }
         }
 
@@ -231,7 +231,7 @@ namespace Integrative.Lara.Middleware
         {
             if (string.IsNullOrEmpty(json))
             {
-                return new ArraySegment<byte>(new byte[0]);
+                return new ArraySegment<byte>(Array.Empty<byte>());
             }
             else
             {

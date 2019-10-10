@@ -97,7 +97,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifySelectedSetsSelected()
         {
-            var option = new Option();
+            var option = new OptionElement();
             option.NotifyValue(new ElementEventValue
             {
                 Checked = true,

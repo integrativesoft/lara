@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPage(Address = "/server")]
+    [LaraPageAttribute(Address = "/server")]
     class ServerEventsPage : IPage
     {
         readonly Button _button;

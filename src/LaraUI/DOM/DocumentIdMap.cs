@@ -46,7 +46,7 @@ namespace Integrative.Lara.DOM
         {
             if (_map.ContainsKey(after))
             {
-                throw DuplicateElementId.Create(after);
+                throw DuplicateElementIdException.Create(after);
             }
             _map.Add(after, element);
         }

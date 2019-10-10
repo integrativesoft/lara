@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 
 namespace Integrative.Lara.Main
 {
-    sealed class Connections
+    sealed class Connections : IDisposable
     {
         readonly ConcurrentDictionary<Guid, Connection> _connections;
         readonly StaleConnectionsCollector _collector;

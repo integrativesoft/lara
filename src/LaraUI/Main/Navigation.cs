@@ -13,7 +13,6 @@ namespace Integrative.Lara.Main
 {
     sealed class Navigation : INavigation
     {
-        private const string FlushNotAvailable = "The FlushPartialChanges() method is available only for events declared with the option LongRunnning = true.";
         readonly PageContext _context;
 
         public string RedirectLocation { get; private set; }
@@ -49,7 +48,7 @@ namespace Integrative.Lara.Main
         {
             if (_context.Socket == null)
             {
-                throw new InvalidOperationException(FlushNotAvailable);
+                throw new InvalidOperationException(Resources.FlushNotAvailable);
             }
             if (_context.Document.HasPendingChanges)
             {

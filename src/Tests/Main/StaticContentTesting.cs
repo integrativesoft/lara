@@ -38,7 +38,7 @@ namespace Integrative.Lara.Tests.Main
         {
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
-            Assert.Same(bytes, content.Bytes);
+            Assert.Same(bytes, content.GetBytes());
             Assert.Equal(ContentTypes.ImageJpeg, content.ContentType);
             Assert.False(content.Compressed);
             Assert.False(string.IsNullOrEmpty(content.ETag));
@@ -67,12 +67,6 @@ namespace Integrative.Lara.Tests.Main
             byte[] ba = new byte[resFilestream.Length];
             resFilestream.Read(ba, 0, ba.Length);
             return ba;
-        }
-
-        [Fact]
-        public void NullBytesThrowException()
-        {
-            Assert.Throws<NullReferenceException>(() => new StaticContent(null));
         }
 
         [Fact]

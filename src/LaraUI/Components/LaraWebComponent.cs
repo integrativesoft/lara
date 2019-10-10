@@ -12,7 +12,7 @@ namespace Integrative.Lara
     /// Classes marked as LaraWebComponent will registered when executing LaraUI.PublishAssemblies()
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class LaraWebComponent : Attribute
+    public sealed class LaraWebComponentAttribute : Attribute
     {
         /// <summary>
         /// Custom tag name for the component. Must contain the '-' character.
@@ -23,7 +23,7 @@ namespace Integrative.Lara
         /// Constructor with custom tag name
         /// </summary>
         /// <param name="customTagName"></param>
-        public LaraWebComponent(string customTagName)
+        public LaraWebComponentAttribute(string customTagName)
         {
             ComponentTagName = customTagName;
         }

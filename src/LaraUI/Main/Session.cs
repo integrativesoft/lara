@@ -28,6 +28,7 @@ namespace Integrative.Lara
             _parent = parent;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
         internal void Close()
         {
             var args = new EventArgs();

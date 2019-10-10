@@ -12,12 +12,12 @@ namespace Integrative.Lara
     /// The 'option' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Option : Element
+    public sealed class OptionElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Option"/> class.
+        /// Initializes a new instance of the <see cref="OptionElement"/> class.
         /// </summary>
-        public Option() : base("option")
+        public OptionElement() : base("option")
         {
         }
 

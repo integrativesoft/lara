@@ -28,7 +28,11 @@ export function initialize(id: string): void {
         processEventResult(result);
     }
 }
-    
+
+export function getDocumentId(): string {
+    return documentId;
+}
+
 function terminate(): void {
     let url = "/_discard?doc=" + documentId;
     navigator.sendBeacon(url);

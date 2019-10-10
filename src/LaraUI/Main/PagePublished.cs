@@ -8,6 +8,7 @@ using Integrative.Lara.DOM;
 using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace Integrative.Lara.Main
             var page = CreateInstance();
             var document = connection.CreateDocument(page);
             execution.Document = document;
-            if (await RunPage(http, page, options))
+            if (await RunPage(http, page, options).ConfigureAwait(false))
             {
                 await ProcessGetResult(http, document, execution, StatusCode);
             }
@@ -57,7 +58,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private async Task ReplyStatusCodeError(HttpContext http, StatusCodeException status, LaraOptions options)
+        private static async Task ReplyStatusCodeError(HttpContext http, StatusCodeException status, LaraOptions options)
         {
             if (LaraUI.ErrorPages.TryGetPage(status.StatusCode, out var page))
             {
@@ -101,7 +102,7 @@ namespace Integrative.Lara.Main
         {
             var connection = LaraUI.CreateConnection(http.Connection.RemoteIpAddress);
             http.Response.Cookies.Append(GlobalConstants.CookieSessionId,
-                connection.Id.ToString(GlobalConstants.GuidFormat));
+                connection.Id.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture));
             return connection;
         }
 

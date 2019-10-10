@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,14 +17,16 @@ namespace Integrative.Lara
     {
         readonly LaraOptions _options;
 
-#pragma warning disable IDE0060 // Remove unused parameter: required by ASP.NET Core
+
+
         /// <summary>
         /// Creates an instance of NotFoundMiddleware
         /// </summary>
         /// <param name="next"></param>
         /// <param name="options">Lara configuration options</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required by framework")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "Required by framework")]
         public NotFoundMiddleware(RequestDelegate next, LaraOptions options)
-#pragma warning restore IDE0060 // Remove unused parameter
         {
             _options = options;
         }

@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -37,12 +38,13 @@ namespace Integrative.Lara
         /// <param name="context">The HttpContext.</param>
         public async Task Invoke(HttpContext context)
         {
+            context = context ?? throw new ArgumentNullException(nameof(context));
             var remote = context.Connection.RemoteIpAddress;
             if (!IPAddress.IsLoopback(remote))
             {
                 string msg = $"Forbidden request from {remote}";
                 _logger.LogInformation(msg);
-                await MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, "HTTP 403: Forbidden.");
+                await MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
             }
             else
             {

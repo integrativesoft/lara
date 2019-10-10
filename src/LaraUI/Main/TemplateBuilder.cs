@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Middleware;
+using System.Globalization;
 
 namespace Integrative.Lara.Main
 {
@@ -12,6 +13,7 @@ namespace Integrative.Lara.Main
     {
         static readonly string _libraryUrl;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static TemplateBuilder()
         {
             _libraryUrl = ClientLibraryHandler.GetLibraryPath();
@@ -44,7 +46,7 @@ namespace Integrative.Lara.Main
 
             // initialization script
             var tag = Element.Create("script");
-            string value = document.VirtualId.ToString(GlobalConstants.GuidFormat);
+            string value = document.VirtualId.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
             string code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{value}'); }});";
             tag.AppendChild(new TextNode { Data = code });
             head.AppendChild(tag);

@@ -11,9 +11,6 @@ namespace Integrative.Lara.Components
 {
     sealed class ComponentRegistry
     {
-        public const string DashRequired = "Invalid tag name. It needs to have a '-' and cannot have spaces.";
-        public const string MustInherit = "Component types must inherit from the Component class";
-
         private readonly Dictionary<string, Type> _components;
 
         public ComponentRegistry()
@@ -25,7 +22,7 @@ namespace Integrative.Lara.Components
         {
             if (!IsValidTagName(name))
             {
-                throw new ArgumentException(DashRequired);
+                throw new ArgumentException(Resources.DashRequired);
             }
             else if (type is null)
             {
@@ -33,7 +30,7 @@ namespace Integrative.Lara.Components
             }
             else if (!type.IsSubclassOf(typeof(WebComponent)))
             {
-                throw new InvalidOperationException(MustInherit);
+                throw new InvalidOperationException(Resources.MustInherit);
             }
             else if (_components.TryGetValue(name, out var previous))
             {
@@ -51,7 +48,7 @@ namespace Integrative.Lara.Components
             _components.Remove(tagName);
         }
 
-        private bool IsValidTagName(string tagName)
+        private static bool IsValidTagName(string tagName)
         {
             return !string.IsNullOrEmpty(tagName)
                 && !tagName.Contains(" ")

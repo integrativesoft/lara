@@ -13,12 +13,12 @@ namespace Integrative.Lara
     /// The 'select' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Select : Element
+    public sealed class SelectElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Select"/> class.
+        /// Initializes a new instance of the <see cref="SelectElement"/> class.
         /// </summary>
-        public Select() : base("select")
+        public SelectElement() : base("select")
         {
         }
 
@@ -35,7 +35,7 @@ namespace Integrative.Lara
         /// <param name="text">The option's text.</param>
         public void AddOption(string value, string text)
         {
-            var option = new Option
+            var option = new OptionElement
             {
                 Value = value
             };
@@ -152,7 +152,7 @@ namespace Integrative.Lara
             {
                 return;
             }
-            if (child is Option option)
+            if (child is OptionElement option)
             {
                 option.NotifyAdded(value);
             }
@@ -165,13 +165,13 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets the child options.
         /// </summary>
-        public IEnumerable<Option> Options => GetOptions();
+        public IEnumerable<OptionElement> Options => GetOptions();
 
-        private IEnumerable<Option> GetOptions()
+        private IEnumerable<OptionElement> GetOptions()
         {
             foreach (var child in Children)
             {
-                if (child is Option option)
+                if (child is OptionElement option)
                 {
                     yield return option;
                 }
