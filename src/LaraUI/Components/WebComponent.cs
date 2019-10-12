@@ -27,7 +27,7 @@ namespace Integrative.Lara
         /// Constructor
         /// </summary>
         /// <param name="tagName">Component's custom tag name</param>
-        protected WebComponent(string tagName) : base(tagName)
+        protected WebComponent(string tagName) : base(tagName ?? throw new ArgumentNullException(nameof(tagName)))
         {
             tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             VerifyTypeThrow(tagName, GetType());

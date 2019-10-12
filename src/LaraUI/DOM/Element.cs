@@ -64,7 +64,7 @@ namespace Integrative.Lara
         internal Element(string tagName)
             : base()
         {
-            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
+            tagName = tagName ?? throw new ArgumentNullException(tagName);
             _attributes = new Attributes(this);
             _children = new List<Node>();
             Events = new Dictionary<string, Func<Task>>();
@@ -186,7 +186,7 @@ namespace Integrative.Lara
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetAttribute(string attributeName, string attributeValue)
         {
-            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
+            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
             SetAttributeLower(attributeName.ToLowerInvariant(), attributeValue);
         }
 
@@ -210,7 +210,10 @@ namespace Integrative.Lara
         ///   <c>true</c> if the element has the specified attribute; otherwise, <c>false</c>.
         /// </returns>
         public bool HasAttribute(string attributeName)
-            => _attributes.HasAttribute(attributeName ?? throw new ArgumentNullException(nameof(attributeName)));
+        {
+            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
+            return _attributes.HasAttribute(attributeName);
+        }
 
         internal bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
 
@@ -220,7 +223,10 @@ namespace Integrative.Lara
         /// <param name="attributeName">The name of the attribute</param>
         /// <returns>Value of the attribute</returns>
         public string GetAttribute(string attributeName)
-            => _attributes.GetAttribute(attributeName ?? throw new ArgumentNullException(nameof(attributeName)));
+        {
+            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
+            return _attributes.GetAttribute(attributeName);
+        }
 
         internal string GetAttributeLower(string nameLower)
             => _attributes.GetAttributeLower(nameLower);

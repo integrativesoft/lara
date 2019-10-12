@@ -119,6 +119,7 @@ namespace Integrative.Lara
         /// <param name="method">The HTTP method of the web service</param>
         public static void UnPublish(string address, string method)
         {
+            address = address ?? throw new ArgumentNullException(nameof(address));
             method = method ?? throw new ArgumentNullException(nameof(method));
             _published.UnPublish(address, method);
         }

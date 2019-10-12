@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara.DOM
 {
@@ -44,12 +45,13 @@ namespace Integrative.Lara.DOM
             _map.Add(lowerTagName, typeof(T));
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public static Element CreateElement(string tagName)
         {
+            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             if (string.IsNullOrEmpty(tagName))
             {
-                throw new ArgumentNullException(nameof(tagName));
+                throw new ArgumentException(Resources.InvalidTagName);
             }
             else if (tagName.IndexOf(' ') >= 0)
             {

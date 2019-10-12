@@ -392,7 +392,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 settings.Verify();
             }
-            catch (ArgumentNullException)
+            catch (ArgumentException)
             {
                 found = true;
             }

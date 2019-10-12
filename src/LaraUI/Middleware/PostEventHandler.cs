@@ -172,6 +172,7 @@ namespace Integrative.Lara.Middleware
         private static void ProcessMessage(Document document, ClientEventMessage message)
         {
             document = document ?? throw new ArgumentNullException(nameof(document));
+            message = message ?? throw new ArgumentNullException(nameof(message));
             foreach (var row in message.Values)
             {
                 if (document.TryGetElementById(row.ElementId, out var element))

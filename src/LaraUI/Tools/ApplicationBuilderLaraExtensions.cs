@@ -22,6 +22,7 @@ namespace Integrative.Lara
         /// <returns></returns>
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
         {
+            app = app ?? throw new ArgumentNullException(nameof(app));
             options = options ?? throw new ArgumentNullException(nameof(options));
             if (options.AllowLocalhostOnly)
             {

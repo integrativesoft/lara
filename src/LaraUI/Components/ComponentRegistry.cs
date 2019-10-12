@@ -20,13 +20,11 @@ namespace Integrative.Lara.Components
 
         public void Register(string name, Type type)
         {
+            name = name ?? throw new ArgumentNullException(nameof(name));
+            type = type ?? throw new ArgumentNullException(nameof(type));
             if (!IsValidTagName(name))
             {
                 throw new ArgumentException(Resources.DashRequired);
-            }
-            else if (type is null)
-            {
-                throw new ArgumentNullException(nameof(type));
             }
             else if (!type.IsSubclassOf(typeof(WebComponent)))
             {

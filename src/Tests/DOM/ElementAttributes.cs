@@ -45,8 +45,8 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ElementNeedsTag()
         {
-            DomOperationsTesting.Throws<ArgumentNullException>(() => Element.Create(""));
-            DomOperationsTesting.Throws<ArgumentNullException>(() => Element.Create(null));
+            DomOperationsTesting.Throws<ArgumentException>(() => Element.Create(""));
+            DomOperationsTesting.Throws<ArgumentException>(() => Element.Create(null));
         }
 
         private void TestElement<T>(string tagName) where T : Element

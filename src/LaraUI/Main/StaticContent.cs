@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Globalization;
 using System.Net;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara

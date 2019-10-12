@@ -2726,6 +2726,13 @@
             </summary>
             <param name="collection">Collection to bind</param>
         </member>
+        <member name="M:Integrative.Lara.BindChildrenOptions`1.#ctor(System.Collections.ObjectModel.ObservableCollection{`0},System.Func{`0,Integrative.Lara.Element})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="collection">Collection to bind</param>
+            <param name="createCallback">Method for creating elements</param>
+        </member>
         <member name="T:Integrative.Lara.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -2785,6 +2792,11 @@
         <member name="P:Integrative.Lara.Resources.Http403">
             <summary>
               Looks up a localized string similar to HTTP 403: Forbidden..
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Resources.InvalidTagName">
+            <summary>
+              Looks up a localized string similar to Invalid tag name..
             </summary>
         </member>
         <member name="P:Integrative.Lara.Resources.MustInherit">

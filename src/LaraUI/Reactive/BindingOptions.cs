@@ -228,6 +228,17 @@ namespace Integrative.Lara
             Collection = collection;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="collection">Collection to bind</param>
+        /// <param name="createCallback">Method for creating elements</param>
+        public BindChildrenOptions(ObservableCollection<T> collection, Func<T, Element> createCallback)
+            : this(collection)
+        {
+            CreateCallback = createCallback;
+        }
+
         internal override event NotifyCollectionChangedEventHandler CollectionChanged;
 
         internal override void Apply(Element element, NotifyCollectionChangedEventArgs args)

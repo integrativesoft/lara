@@ -142,6 +142,15 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid tag name..
+        /// </summary>
+        internal static string InvalidTagName {
+            get {
+                return ResourceManager.GetString("InvalidTagName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Component types must inherit from the Component class..
         /// </summary>
         internal static string MustInherit {

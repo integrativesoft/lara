@@ -103,7 +103,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         public LaraBuilder Push(Element element, string className)
         {
-            element = element ?? throw new ArgumentNullException(nameof(element));
+            className = className ?? throw new ArgumentNullException(nameof(className));
             Push(element);
             element.Class = className;
             return this;
