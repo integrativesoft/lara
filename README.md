@@ -1,4 +1,4 @@
-## About
+### Lara Web Engine
 
 **Lara Web Engine** is a lightweight, high-performance cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
 
