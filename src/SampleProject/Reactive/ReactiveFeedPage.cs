@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPageAttribute(Address = PageAddress)]
+    [LaraPage(Address = PageAddress)]
     class ReactiveFeedPage : IPage
     {
         public const string PageAddress = "/reactor3";

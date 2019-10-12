@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPageAttribute(Address = PageAddress)]
+    [LaraPage(Address = PageAddress)]
     class RactiveCollectionPage : IPage
     {
         public const string PageAddress = "/reactor2";

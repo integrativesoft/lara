@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPageAttribute(PageAddress)]
+    [LaraPage(PageAddress)]
     class CounterPage : IPage
     {
         public const string PageAddress = "/contercomponentpage";

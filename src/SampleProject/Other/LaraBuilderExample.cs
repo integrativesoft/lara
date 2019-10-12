@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPageAttribute(PageAddress)]
+    [LaraPage(PageAddress)]
     class LaraBuilderExample : IPage
     {
         public const string PageAddress = "/builderexample";
