@@ -73,7 +73,13 @@ The example above creates a standalone Lara web server. It's also possible to in
 To add Lara to an existing ASP.NET Core server, use:
 
 ```csharp
-app.UseLara(options);
+public void Configure(IApplicationBuilder app)  
+{  
+    app.UseLara(new LaraOptions
+    {
+        // configuration options
+    });
+} 
 ```
 
 ## Developing a desktop application
