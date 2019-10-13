@@ -112,10 +112,7 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 Lara is available as the NuGet package `Integrative.Lara`. Create a new project, add the NuGet package, and copy and paste the 'Sample standalone application' in this page.
 
-This repository also contains examples. You can run them directly by cloning this repository from the command line:
-```
-git clone https://github.com/integrativesoft/lara
-```
+This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
 The [wiki](https://github.com/integrativesoft/lara/wiki) contains the documentation for using Lara.
 
