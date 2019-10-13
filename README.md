@@ -47,11 +47,14 @@ namespace SampleProject
             await host.WaitForShutdownAsync();
         }
     }
+}
 ```
 
 Main web page:
 
 ```csharp
+namespace SampleProject
+{
     [LaraPage(Address = "/")]
     class MyPage : IPage
     {
