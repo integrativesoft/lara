@@ -50,7 +50,7 @@ namespace SampleProject
 }
 ```
 
-Main web page:
+Default web page:
 
 ```csharp
 namespace SampleProject
