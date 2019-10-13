@@ -16,6 +16,8 @@ The source code contains a [sample project](https://github.com/integrativesoft/l
 
 ## Sample application
 
+Main program:
+
 ```csharp
 namespace SampleProject
 {
@@ -45,7 +47,11 @@ namespace SampleProject
             await host.WaitForShutdownAsync();
         }
     }
+```
 
+Main web page:
+
+```csharp
     [LaraPage(Address = "/")]
     class MyPage : IPage
     {
