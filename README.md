@@ -81,9 +81,7 @@ namespace SampleProject
 
 ## Integrating Lara into an existing web server
 
-The previous example created a standalone Lara web server. Another option is to integrate Lara into an existing ASP.NET Core host.
-
-To add Lara to an existing ASP.NET Core server, use:
+The previous example created a standalone Lara web server. Another option is to integrate Lara into an existing ASP.NET Core host. To add Lara to an existing ASP.NET Core server, use:
 
 ```csharp
 public void Configure(IApplicationBuilder app)  
