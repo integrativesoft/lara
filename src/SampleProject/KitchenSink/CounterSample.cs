@@ -13,17 +13,11 @@ namespace SampleProject
     sealed class CounterSample
     {
         readonly InputElement _number;
-        readonly Button _increase;
         
         public Element Root { get; }
 
         public CounterSample()
         {
-            _increase = new Button
-            {
-                Class = "btn btn-primary"
-            };
-            _increase.AppendText("Increase");
             _number = new InputElement
             {
                 Id = "number",
@@ -39,7 +33,8 @@ namespace SampleProject
                 .Pop()
             .Pop()
             .Push("div", "form-group col-md-1")
-                .Push(_increase)
+                .Push("button", "btn btn-primary")
+                    .InnerText("Increase")
                     .On("click", OnIncrease)
                 .Pop()
             .Pop();

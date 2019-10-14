@@ -974,11 +974,8 @@ namespace Integrative.Lara
 
         internal void FlushEvent(EventSettings settings)
         {
-            Document.Enqueue(new SubscribeDelta
-            {
-                ElementId = EnsureElementId(),
-                Settings = ClientEventSettings.CreateFrom(settings)
-            });
+            var delta = SubscribeDelta.CreateFrom(this, settings);
+            Document.Enqueue(delta);
         }
 
         /// <summary>

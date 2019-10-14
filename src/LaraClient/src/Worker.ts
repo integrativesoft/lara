@@ -14,8 +14,9 @@ import {
     ReplaceDelta, SetCheckedDelta, SetIdDelta, SetValueDelta, SubmitJsDelta, SubscribeDelta,
     SwapChildrenDelta, TextModifiedDelta, UnsubscribeDelta
 } from "./DeltaInterfaces";
-import { listenServerEvents, plug } from "./index";
+import { listenServerEvents, plug, plugEvent } from "./index";
 import { addElementEvent, removeElementEvent } from "./RegisteredEvents";
+import { debounce } from "debounce";
 
 export function processResult(steps: BaseDelta[]): void {
     for (var step of steps) {
@@ -294,10 +295,29 @@ function swapDom(obj1: Node, obj2: Node): void {
 
 function subscribe(step: SubscribeDelta): void {
     let element = document.getElementById(step.ElementId);
+    let handler = buildHandler(element, step);
+    addElementEvent(element, step.Settings.EventName, handler);
+}
+
+function buildHandler(element: Element, step: SubscribeDelta): EventListener {
+    if (step.DebounceInterval) {
+        return buildDebouncedHandler(element, step);
+    } else {
+        return buildRegularHandler(element, step);
+    }
+}
+
+function buildDebouncedHandler(element: Element, step: SubscribeDelta): EventListener {
     let handler = function (_ev: Event): void {
         plug(element, step.Settings);
     };
-    addElementEvent(element, step.Settings.EventName, handler);
+    return debounce(handler, step.DebounceInterval);
+}
+
+function buildRegularHandler(element: Element, step: SubscribeDelta): EventListener {
+    return function (ev: Event): void {
+        plugEvent(element, ev, step.Settings);
+    };
 }
 
 function unsubscribe(step: UnsubscribeDelta): void {

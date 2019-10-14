@@ -23,6 +23,12 @@ namespace Integrative.Lara
         public string EventName { get; set; }
 
         /// <summary>
+        /// Specifies an interval in millisenconds to postpone and hold an event while it gets triggered repeatedly.
+        /// The resulting 'debounced' event will execute only after it has not been triggered for the interval specified.
+        /// </summary>
+        public int DebounceInterval { get; set; }
+
+        /// <summary>
         /// Block the UI while the event is executing?
         /// </summary>
         /// <value>

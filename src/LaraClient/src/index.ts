@@ -55,13 +55,17 @@ export class EventParameters {
     Message: ClientEventMessage;
 }
 
-export function plug(el: Element, plug: PlugOptions): void {
-    event.stopPropagation();
-    if (plug.LongRunning) {
-        plugWebSocket(el, plug);
+export function plug(el: Element, options: PlugOptions): void {
+    if (options.LongRunning) {
+        plugWebSocket(el, options);
     } else {
-        plugAjax(el, plug);
+        plugAjax(el, options);
     }
+}
+
+export function plugEvent(el: Element, ev: Event, options: PlugOptions): void {
+    ev.stopPropagation();
+    plug(el, options);
 }
 
 function plugWebSocket(el: Element, plug: PlugOptions): void {

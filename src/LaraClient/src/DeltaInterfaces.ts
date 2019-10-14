@@ -120,6 +120,7 @@ export interface SwapChildrenDelta extends BaseDelta {
 export interface SubscribeDelta extends BaseDelta {
     ElementId: string;
     Settings: PlugOptions;
+    DebounceInterval: number;
 }
 
 export interface UnsubscribeDelta extends BaseDelta {

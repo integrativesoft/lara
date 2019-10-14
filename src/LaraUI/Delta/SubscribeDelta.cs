@@ -17,8 +17,21 @@ namespace Integrative.Lara.Delta
         [DataMember]
         public ClientEventSettings Settings { get; set; }
 
+        [DataMember(EmitDefaultValue = false)]
+        public int DebounceInterval { get; set; }
+
         public SubscribeDelta() : base(DeltaType.Subscribe)
         {
+        }
+
+        public static SubscribeDelta CreateFrom(Element element, EventSettings settings)
+        {
+            return new SubscribeDelta
+            {
+                ElementId = element.EnsureElementId(),
+                Settings = ClientEventSettings.CreateFrom(settings),
+                DebounceInterval = settings.DebounceInterval
+            };
         }
     }
 
@@ -52,7 +65,7 @@ namespace Integrative.Lara.Delta
             {
                 Block = settings.Block,
                 EventName = settings.EventName,
-                LongRunning = settings.LongRunning
+                LongRunning = settings.LongRunning,
             };
             if (settings.BlockOptions != null)
             {
