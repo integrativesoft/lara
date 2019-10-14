@@ -116,7 +116,7 @@ The [wiki](https://github.com/integrativesoft/lara/wiki) contains the documentat
 
 ## How to contribute
 
-Did you try out Lara, what was your experience? Did you run into an issue or have any suggestions? How does Lara meet your needs? What functionality would you like to see? Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!!
+Please send feedback! Issues, questions, suggestions, requests for features, and success stories. Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!
 
 **If you like Lara, please give it a star - it helps!**
 
