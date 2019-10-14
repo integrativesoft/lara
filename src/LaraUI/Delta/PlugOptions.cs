@@ -31,7 +31,7 @@ namespace Integrative.Lara.Delta
         {
         }
 
-        public PlugOptions(EventSettings settings)
+        public PlugOptions(Lara.EventSettings settings)
         {
             Block = settings.Block;
             if (settings.BlockOptions != null)

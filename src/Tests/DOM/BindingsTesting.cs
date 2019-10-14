@@ -98,10 +98,7 @@ namespace Integrative.Lara.Tests.DOM
                 new MyData()
             };
             var span = Element.Create("span");
-            span.BindChildren(new BindChildrenOptions<MyData>(collection)
-            {
-                CreateCallback = MyCreateCallback
-            });
+            span.BindChildren(new BindChildrenOptions<MyData>(collection, MyCreateCallback));
             collection.Add(new MyData());
             Assert.Equal(2, span.ChildCount);
         }
@@ -121,10 +118,7 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = x => x.Counter.ToString()
             });
-            div.BindChildren(new BindChildrenOptions<MyData>(collection)
-            {
-                CreateCallback = x => Element.Create("div")
-            });
+            div.BindChildren(new BindChildrenOptions<MyData>(collection, x => Element.Create("div")));
             span1.BindInnerText(new BindInnerTextOptions<MyData>
             {
                 BindObject = data,

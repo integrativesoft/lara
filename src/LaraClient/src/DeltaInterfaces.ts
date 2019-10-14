@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 import { ContentNode } from "./ContentInterfaces";
+import { PlugOptions } from "./index";
 
 export enum EventResultType {
     Success = 0,
@@ -27,7 +28,9 @@ export enum DeltaType {
     ClearChildren = 12,
     Replace = 13,
     ServerEvents = 14,
-    SwapChildren = 15
+    SwapChildren = 15,
+    Subscribe = 16,
+    Unsubscribe = 17
 }
 
 export interface BaseDelta {
@@ -112,4 +115,14 @@ export interface SwapChildrenDelta extends BaseDelta {
     ParentId: string;
     Index1: number;
     Index2: number;
+}
+
+export interface SubscribeDelta extends BaseDelta {
+    ElementId: string;
+    Settings: PlugOptions;
+}
+
+export interface UnsubscribeDelta extends BaseDelta {
+    ElementId: string;
+    EventName: string;
 }

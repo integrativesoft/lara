@@ -47,6 +47,9 @@
     <TypeScriptCompile Include="src\Initializer.ts" />
     <TypeScriptCompile Include="src\InputCollector.ts" />
     <TypeScriptCompile Include="src\index.ts" />
+    <TypeScriptCompile Include="src\RegisteredEvents.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Worker.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />

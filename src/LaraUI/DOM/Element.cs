@@ -25,7 +25,7 @@ namespace Integrative.Lara
         private readonly Attributes _attributes;
         private readonly List<Node> _children;
 
-        internal Dictionary<string, Func<Task>> Events { get; }
+        internal Dictionary<string, EventSettings> Events { get; }
 
         private string _id;
 
@@ -67,7 +67,7 @@ namespace Integrative.Lara
             tagName = tagName ?? throw new ArgumentNullException(tagName);
             _attributes = new Attributes(this);
             _children = new List<Node>();
-            Events = new Dictionary<string, Func<Task>>();
+            Events = new Dictionary<string, EventSettings>();
             TagName = tagName.ToLowerInvariant();
         }
 
@@ -835,6 +835,7 @@ namespace Integrative.Lara
 
         internal void NotifyConnect()
         {
+            FlushEvents();
             OnConnect();
             foreach (var child in GetNotifyList())
             {
@@ -941,9 +942,9 @@ namespace Integrative.Lara
 
         internal Task NotifyEvent(string eventName)
         {
-            if (Events.TryGetValue(eventName, out var handler))
+            if (Events.TryGetValue(eventName, out var settings))
             {
-                return handler();
+                return settings.Handler();
             }
             return Task.CompletedTask;
         }
@@ -955,7 +956,29 @@ namespace Integrative.Lara
         public void On(EventSettings settings)
         {
             settings = settings ?? throw new ArgumentNullException(nameof(settings));
-            EventWriter.On(this, settings);
+            settings.Verify();
+            Events.Add(settings.EventName, settings);
+            if (Document != null)
+            {
+                FlushEvent(settings);
+            }
+        }
+
+        private void FlushEvents()
+        {
+            foreach (var settings in Events.Values)
+            {
+                FlushEvent(settings);
+            }
+        }
+
+        internal void FlushEvent(EventSettings settings)
+        {
+            Document.Enqueue(new SubscribeDelta
+            {
+                ElementId = EnsureElementId(),
+                Settings = ClientEventSettings.CreateFrom(settings)
+            });
         }
 
         /// <summary>
@@ -965,7 +988,32 @@ namespace Integrative.Lara
         /// <param name="handler">The handler to execute.</param>
         public void On(string eventName, Func<Task> handler)
         {
-            EventWriter.On(this, eventName, handler);
+            eventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
+            if (handler == null)
+            {
+                RemoveEvent(eventName);
+            }
+            else
+            {
+                On(new EventSettings
+                {
+                    EventName = eventName,
+                    Handler = handler
+                });
+            }
+        }
+
+        private void RemoveEvent(string eventName)
+        {
+            Events.Remove(eventName);
+            if (Document != null)
+            {
+                Document.Enqueue(new UnsubscribeDelta
+                {
+                    ElementId = EnsureElementId(),
+                    EventName = eventName
+                });
+            }
         }
 
         #endregion

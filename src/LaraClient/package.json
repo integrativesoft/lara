@@ -21,8 +21,10 @@
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
+    "@types/debounce": "^1.2.0",
     "@types/jquery": "^3.3.31",
     "@types/jquery.blockui": "0.0.28",
+    "debounce": "^1.2.0",
     "jquery": "^3.4.1"
   }
 }

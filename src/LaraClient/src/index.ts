@@ -10,10 +10,10 @@ This file is the client runtime for Lara.
 https://laraui.com
 */
 
-import { clean } from "./Initializer";
-import { ClientEventMessage, collectValues } from "./InputCollector";
 import { block, unblock } from "./Blocker";
 import { EventResult, EventResultType } from "./DeltaInterfaces";
+import { clean } from "./Initializer";
+import { ClientEventMessage, collectValues } from "./InputCollector";
 import { processResult } from "./Worker";
 
 let documentId: string;
@@ -55,19 +55,8 @@ export class EventParameters {
     Message: ClientEventMessage;
 }
 
-export function plug(el: Element, event: Event): void {
+export function plug(el: Element, plug: PlugOptions): void {
     event.stopPropagation();
-    let eventName = event.type;
-    let attribute = "data-lara-event-" + eventName;
-    let json = el.getAttribute(attribute);
-    if (json) {
-        let options = JSON.parse(json) as PlugOptions;
-        options.EventName = eventName;
-        plugOptions(el, options);
-    }
-}
-
-function plugOptions(el: Element, plug: PlugOptions): void {
     if (plug.LongRunning) {
         plugWebSocket(el, plug);
     } else {
@@ -160,7 +149,7 @@ export function sendMessage(options: MessageOptions): void {
         ExtraData: options.data,
         LongRunning: options.longRunning
     };
-    plugOptions(document.head, params);
+    plug(document.head, params);
 }
 
 function processAjax(ajax: XMLHttpRequest): void {

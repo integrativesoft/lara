@@ -625,10 +625,7 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren(new BindChildrenOptions<T>(collection)
-            {
-                CreateCallback = creator
-            });
+            return BindChildren(new BindChildrenOptions<T>(collection, creator));
         }
 
         /// <summary>
@@ -641,10 +638,7 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : INotifyPropertyChanged
         {
-            return BindChildren<T>(new BindChildrenOptions<T>(collection)
-            {
-                CreateCallback = x => creator()
-            });
+            return BindChildren<T>(new BindChildrenOptions<T>(collection, x => creator()));
         }
 
         /// <summary>

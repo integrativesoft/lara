@@ -5,14 +5,17 @@ Author: Pablo Carbonell
 */
 
 import {
-    BaseDelta, DeltaType, NodeAddedDelta, NodeInsertedDelta,
-    TextModifiedDelta, NodeRemovedDelta, AttributeEditedDelta,
-    AttributeRemovedDelta, FocusDelta, SetIdDelta, SetValueDelta,
-    SubmitJsDelta, SetCheckedDelta, ClearChildrenDelta, ReplaceDelta,
-    SwapChildrenDelta, ElementLocator
+    ContentArrayNode, ContentElementNode, ContentNode,
+    ContentNodeType, ContentTextNode
+} from "./ContentInterfaces";
+import {
+    AttributeEditedDelta, AttributeRemovedDelta, BaseDelta, ClearChildrenDelta, DeltaType,
+    ElementLocator, FocusDelta, NodeAddedDelta, NodeInsertedDelta, NodeRemovedDelta,
+    ReplaceDelta, SetCheckedDelta, SetIdDelta, SetValueDelta, SubmitJsDelta, SubscribeDelta,
+    SwapChildrenDelta, TextModifiedDelta, UnsubscribeDelta
 } from "./DeltaInterfaces";
-import { listenServerEvents } from "./index";
-import { ContentNode, ContentNodeType, ContentTextNode, ContentElementNode, ContentArrayNode } from "./ContentInterfaces";
+import { listenServerEvents, plug } from "./index";
+import { addElementEvent, removeElementEvent } from "./RegisteredEvents";
 
 export function processResult(steps: BaseDelta[]): void {
     for (var step of steps) {
@@ -81,6 +84,13 @@ function processStep(step: BaseDelta): void {
         case DeltaType.SwapChildren:
             swapChildren(step as SwapChildrenDelta);
             break;
+        case DeltaType.Subscribe:
+            subscribe(step as SubscribeDelta);
+            break;
+        case DeltaType.Unsubscribe:
+            unsubscribe(step as UnsubscribeDelta);
+            break;
+
         default:
             console.log("Error processing event response. Unknown step type: " + step.Type);
     }
@@ -280,4 +290,17 @@ function swapDom(obj1: Node, obj2: Node): void {
     obj2.parentNode.insertBefore(obj1, obj2);
     temp.parentNode.insertBefore(obj2, temp);
     temp.parentNode.removeChild(temp);
+}
+
+function subscribe(step: SubscribeDelta): void {
+    let element = document.getElementById(step.ElementId);
+    let handler = function (_ev: Event): void {
+        plug(element, step.Settings);
+    };
+    addElementEvent(element, step.Settings.EventName, handler);
+}
+
+function unsubscribe(step: UnsubscribeDelta): void {
+    let element = document.getElementById(step.ElementId);
+    removeElementEvent(element, step.EventName);
 }

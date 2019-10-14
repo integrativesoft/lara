@@ -10,8 +10,10 @@ const banner = 'Lara Web Engine\n'
 var data = fs.readFileSync('../environment.txt', 'utf8');
 var configuration = data.toString().trim();
 var buildMode = "production";
+var devtool = "nosources-source-map";
 if (configuration === "Debug") {
     buildMode = "development";
+    devtool = "source-map";
 }
 console.log("configuration: " + configuration);
 console.log("mode: " + buildMode);
@@ -19,6 +21,7 @@ console.log("mode: " + buildMode);
 module.exports = {
     entry: './src/index.ts',
     mode: buildMode,
+    devtool: devtool,
     plugins: [
         new CleanWebpackPlugin(),
         new webpack.BannerPlugin(banner),

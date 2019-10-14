@@ -24,7 +24,9 @@ namespace Integrative.Lara.Delta
         ClearChildren = 12,
         Replace = 13,
         ServerEvents = 14,
-        SwapChildren = 15
+        SwapChildren = 15,
+        Subscribe = 16,
+        Unsubscribe = 17
     }
 
     [DataContract]
@@ -43,6 +45,8 @@ namespace Integrative.Lara.Delta
     [KnownType(typeof(ReplaceDelta))]
     [KnownType(typeof(ServerEventsDelta))]
     [KnownType(typeof(SwapChildrenDelta))]
+    [KnownType(typeof(SubscribeDelta))]
+    [KnownType(typeof(UnsubscribeDelta))]
     abstract class BaseDelta
     {
         [DataMember]
