@@ -541,6 +541,18 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        public void SetInnerDataReplacesData()
+        {
+            var div = Element.Create("div");
+            div.SetInnerData("a");
+            div.SetInnerData("@@");
+            Assert.Equal(1, div.ChildCount);
+            var child = div.GetChildAt(0) as TextNode;
+            Assert.NotNull(child);
+            Assert.Equal("@@", child.Data);
+        }
+
+        [Fact]
         public void RemoveEventYieldsDelta()
         {
             var doc = CreateDocument();
@@ -571,6 +583,20 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             var html = div.GetHtml();
             Assert.StartsWith("<div></div>", html);
+        }
+
+        [Fact]
+        public void FocusEnqueues()
+        {
+            var doc = CreateDocument();
+            var div = Element.Create("div");
+            doc.Body.AppendChild(div);
+            div.Focus();
+            var q = doc.GetQueue();
+            Assert.Single(q);
+            var first = q.Peek() as FocusDelta;
+            Assert.NotNull(first);
+            Assert.Equal(div.EnsureElementId(), first.ElementId);
         }
     }
 }
