@@ -6,7 +6,7 @@
 
 **Lara Web Engine** is a lightweight, high-performance cross-platform C# library for Web UI development with DOM manipulation and server-side rendering.
 
-The purpose of **Lara** is to give you full control of the HTML document tree from the server in pure C#.
+The purpose of **Lara** is to give you full control of the HTML document tree from the server in C#.
 
 - Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS. Tested on NET Core and NET Framework.
 - Web UI: Create HTML5 web applications with full control of the DOM tree in C#.
