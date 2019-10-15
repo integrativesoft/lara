@@ -610,5 +610,21 @@ namespace Integrative.Lara.Tests.DOM
             });
             Assert.Equal("test", x.GetAttribute("value"));
         }
+
+        [Fact]
+        public void TextNodeAppendData()
+        {
+            var x = new TextNode();
+            x.AppendData("a<a");
+            Assert.Equal("a<a", x.Data);
+        }
+
+        [Fact]
+        public void TextNodeAppendText()
+        {
+            var x = new TextNode();
+            x.AppendText("a<a");
+            Assert.Equal("a&lt;a", x.Data);
+        }
     }
 }

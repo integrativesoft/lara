@@ -17,8 +17,6 @@ namespace Integrative.Lara
     {
         readonly LaraOptions _options;
 
-
-
         /// <summary>
         /// Creates an instance of NotFoundMiddleware
         /// </summary>

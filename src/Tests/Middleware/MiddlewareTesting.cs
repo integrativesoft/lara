@@ -510,5 +510,44 @@ namespace Integrative.Lara.Tests.Middleware
             LaraUI.ClearEmptyConnection(x);
             Assert.False(LaraUI.TryGetConnection(x.Id, out _));
         }
+
+        [Fact]
+        public void SetDefaultErrorPage()
+        {
+            var x = new ErrorPages();
+            var page = new MyPage();
+            x.SetDefaultPage(HttpStatusCode.ExpectationFailed, () => page);
+            var result = x.GetPage(HttpStatusCode.ExpectationFailed);
+            var show = result.CreateInstance();
+            Assert.Same(page, show);
+
+            x.Remove(HttpStatusCode.ExpectationFailed);
+            result = x.GetPage(HttpStatusCode.ExpectationFailed);
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void DefaultErrorPageReturned()
+        {
+            var x = new ErrorPages();
+            var page = x.DefaultServerError();
+            Assert.True(page is DefaultErrorPage);
+        }
+
+        [Fact]
+        public void DefaultNotFoundReturned()
+        {
+            var context = new Mock<IPageContext>();
+            LaraUI.InternalContext.Value = context.Object;
+            var http = new Mock<HttpContext>();
+            context.Setup(x => x.Http).Returns(http.Object);
+            var request = new Mock<HttpRequest>();
+            http.Setup(x => x.Request).Returns(request.Object);
+            request.Setup(x => x.Path).Returns("/abc");
+
+            var x = new ErrorPages();
+            var page = x.DefaultNotFound();
+            Assert.True(page is DefaultErrorPage);
+        }
     }
 }

@@ -387,5 +387,18 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(div.HasAttribute("data-even1"));
             Assert.True(div.HasAttribute("data-even2"));
         }
+
+        [Fact]
+        public void BindableBaseHoldsEvents()
+        {
+            int counter = 0;
+            var data = new MyData();
+            data.PropertyChanged += (sender, args) => counter++;
+            data.BeginUpdate();
+            data.Counter = 5;
+            Assert.Equal(0, counter);
+            data.EndUpdate();
+            Assert.Equal(1, counter);
+        }
     }
 }

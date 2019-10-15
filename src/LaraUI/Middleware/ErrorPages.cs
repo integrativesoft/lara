@@ -64,7 +64,7 @@ namespace Integrative.Lara
                 || _defaults.TryGetValue(code, out page);
         }
 
-        private IPage DefaultNotFound()
+        internal IPage DefaultNotFound()
         {
             var url = LaraUI.Context.Http.Request.Path;
             return new DefaultErrorPage
