@@ -44,5 +44,5 @@ namespace Integrative.Lara.Delta
         }
 
         public string ToJSON() => LaraTools.Serialize(this);
-        }
+    }
 }
