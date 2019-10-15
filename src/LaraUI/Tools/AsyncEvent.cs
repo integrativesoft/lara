@@ -85,6 +85,16 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Subscribes an action to execute when the event is triggered
+        /// </summary>
+        /// <param name="handler">Action</param>
+        public void Subscribe(Action handler)
+        {
+            handler = handler ?? throw new ArgumentNullException(nameof(handler));
+            _voids.Add(handler);
+        }
+
+        /// <summary>
         /// Unsubscribes a previously subscribed handler
         /// </summary>
         /// <param name="handler">handler</param>
@@ -107,11 +117,21 @@ namespace Integrative.Lara
         /// <summary>
         /// Unsubscribes a previously subscribed action
         /// </summary>
-        /// <param name="action"></param>
+        /// <param name="action">Action</param>
         public void Unsubscribe(Func<Task> action)
         {
             action = action ?? throw new ArgumentNullException(nameof(action));
             _actions.Remove(action);
+        }
+
+        /// <summary>
+        /// Unsubscribes a previously subscribed action
+        /// </summary>
+        /// <param name="action">Action</param>
+        public void Unsubscribe(Action action)
+        {
+            action = action ?? throw new ArgumentNullException(nameof(action));
+            _voids.Remove(action);
         }
 
         /// <summary>

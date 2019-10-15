@@ -2962,6 +2962,12 @@
             </summary>
             <param name="other">event to trigger</param>
         </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Subscribe(System.Action)">
+            <summary>
+            Subscribes an action to execute when the event is triggered
+            </summary>
+            <param name="handler">Action</param>
+        </member>
         <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(Integrative.Lara.AsyncEventHandler{`0})">
             <summary>
             Unsubscribes a previously subscribed handler
@@ -2978,7 +2984,13 @@
             <summary>
             Unsubscribes a previously subscribed action
             </summary>
-            <param name="action"></param>
+            <param name="action">Action</param>
+        </member>
+        <member name="M:Integrative.Lara.AsyncEvent`1.Unsubscribe(System.Action)">
+            <summary>
+            Unsubscribes a previously subscribed action
+            </summary>
+            <param name="action">Action</param>
         </member>
         <member name="M:Integrative.Lara.AsyncEvent`1.InvokeAsync(System.Object,`0)">
             <summary>

@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Moq;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -115,6 +116,80 @@ namespace Integrative.Lara.Tests.DOM
             }
             doc.OnMessage("a", handler);
             doc.Head.NotifyEvent("_a");
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public async void AsyncEventDispatches()
+        {
+            int counter = 0;
+            var ev = new AsyncEvent();
+            Task myMethod()
+            {
+                counter++;
+                return Task.CompletedTask;
+            }
+            ev.Subscribe(myMethod);
+            await ev.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+            
+            ev.Unsubscribe(myMethod);
+            await ev.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public async void AsyncEventPassesAlong()
+        {
+            int counter = 0;
+            var ev = new AsyncEvent();
+            ev.Subscribe(() =>
+            {
+                counter++;
+                return Task.CompletedTask;
+            });
+            var ev2 = new AsyncEvent();
+            ev2.Subscribe(ev);
+            await ev2.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+
+            ev2.Unsubscribe(ev);
+            await ev2.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public async void AsyncEventSubscribeHandler()
+        {
+            int counter = 0;
+            Task myMethod(object sender, EventArgs args)
+            {
+                counter++;
+                return Task.CompletedTask;
+            };
+            var handler = new AsyncEventHandler<EventArgs>(myMethod);
+            var ev = new AsyncEvent();
+            ev.Subscribe(handler);
+            await ev.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+
+            ev.Unsubscribe(handler);
+            await ev.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public async void AsyncEventSyncHandler()
+        {
+            int counter = 0;
+            void myMethod() => counter++;
+            var ev = new AsyncEvent<EventArgs>();
+            ev.Subscribe(myMethod);
+            await ev.InvokeAsync(this, new EventArgs());
+            Assert.Equal(1, counter);
+
+            ev.Unsubscribe(myMethod);
+            await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
         }
     }
