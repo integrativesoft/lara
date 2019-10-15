@@ -29,13 +29,25 @@ namespace Integrative.Lara.Main
             });
         }
 
+        [Obsolete("Use instead AddMessageListener() and RemoveMessageListener().")]
         public void OnMessage(string key, Func<Task> handler)
         {
             _parent.Document.OnMessage(key, handler);
         }
 
+        public void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        {
+            _parent.Document.AddMessageListener(messageId, handler);
+        }
+
+        public void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        {
+            _parent.Document.RemoveMessageListener(messageId, handler);
+        }
+
         public void ServerEventsOn() => _parent.Document.ServerEventsOn();
 
         public Task ServerEventsOff() => _parent.Document.ServerEventsOff();
+
     }
 }

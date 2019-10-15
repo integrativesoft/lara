@@ -844,6 +844,16 @@
               <c>true</c> if [long running]; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="T:Integrative.Lara.MessageEventArgs">
+            <summary>
+            Parameters for custom JavaScript events
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.MessageEventArgs.Body">
+            <summary>
+            Text body of the custom JavaScript event
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.NodeType">
             <summary>
             Defines the types of document nodes
@@ -1805,8 +1815,22 @@
             <summary>
             Register a custom event that can be called from JavaScript code
             </summary>
-            <param name="key">The key for the event.</param>
+            <param name="messageId">Message type identifier</param>
             <param name="handler">The handler for the event.</param>
+        </member>
+        <member name="M:Integrative.Lara.IJSBridge.AddMessageListener(System.String,System.Func{Integrative.Lara.MessageEventArgs,System.Threading.Tasks.Task})">
+            <summary>
+            Register a listener to a custom event that can be called from JavaScript code
+            </summary>
+            <param name="messageId">Message type identifier</param>
+            <param name="handler">Handler to execute</param>
+        </member>
+        <member name="M:Integrative.Lara.IJSBridge.RemoveMessageListener(System.String,System.Func{Integrative.Lara.MessageEventArgs,System.Threading.Tasks.Task})">
+            <summary>
+            Unregister a listener to a custom event called from JavaScript code
+            </summary>
+            <param name="messageId">Message type identifier</param>
+            <param name="handler">Handler to execute</param>
         </member>
         <member name="P:Integrative.Lara.IJSBridge.EventData">
             <summary>

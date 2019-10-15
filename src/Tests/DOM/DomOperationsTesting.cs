@@ -33,7 +33,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Same(button, found);
         }
 
-        private Document CreateDocument()
+        internal static Document CreateDocument()
         {
             var guid = Connections.CreateCryptographicallySecureGuid();
             var page = new MyPage();
@@ -207,16 +207,6 @@ namespace Integrative.Lara.Tests.DOM
             doc.Body.InsertChildBefore(dummy, div);
             Assert.False(string.IsNullOrEmpty(span.Id));
             Assert.False(string.IsNullOrEmpty(div.Id));
-        }
-
-        [Fact]
-        public void ElementRemoveHandler()
-        {
-            var x = Element.Create("button");
-            x.On("click", _emptyHandler);
-            Assert.True(x.HasAttribute("onclick"));
-            x.On("click", null);
-            Assert.False(x.HasAttribute("onclick"));
         }
 
         [Fact]
@@ -400,15 +390,6 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public async void NotifyUnloadExceptionsIgnored()
-        {
-            static Task handler1() => throw new InvalidOperationException();
-            static Task handler2() => Task.CompletedTask;
-            await Document.IgnoreErrorHandler(handler1);
-            await Document.IgnoreErrorHandler(handler2);
-        }
-
-        [Fact]
         public void DocumentGetElementById()
         {
             var document = new Document(new MyPage());
@@ -457,5 +438,139 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(2, first.Index2);
         }
 
+        [Fact]
+        public void InputNotifyValueUpdates()
+        {
+            var input = new InputElement();
+            input.NotifyValue(new ElementEventValue
+            {
+                Checked = true,
+                ElementId = input.EnsureElementId(),
+                Value = "a"
+            });
+            Assert.True(input.Checked);
+            Assert.Equal("a", input.Value);
+        }
+
+        [Fact]
+        public void ElementGetChildPosition2nd()
+        {
+            var div = Element.Create("div");
+            var x1 = Element.Create("div");
+            var x2 = Element.Create("div");
+            div.AppendChild(x1);
+            div.AppendChild(x2);
+            var index = div.GetChildElementPosition(x2);
+            Assert.Equal(1, index);
+        }
+
+        [Fact]
+        public void RemoveEventRemovesIt()
+        {
+            var div = Element.Create("div");
+            div.On("click", () => Task.CompletedTask);
+            div.On("click", null);
+            Assert.Empty(div.Events);
+        }
+
+        [Fact]
+        public void ElementAppendDataWorks()
+        {
+            var div = Element.Create("div");
+            div.AppendData("@@");
+            Assert.Equal(1, div.ChildCount);
+            var child = div.GetChildAt(0) as TextNode;
+            Assert.NotNull(child);
+            Assert.Equal("@@", child.Data);
+        }
+
+        class DummyAdoptable : WebComponent
+        {
+            public int AdoptedCount { get; private set; }
+
+            public DummyAdoptable() : base("x-adoptable")
+            {
+            }
+
+            protected override void OnAdopted()
+            {
+                AdoptedCount++;
+            }
+        }
+
+        [Fact]
+        public void NotifyAdoptedPassedToChildren()
+        {
+            LaraUI.Publish(new WebComponentOptions
+            {
+                ComponentTagName = "x-adoptable",
+                ComponentType = typeof(DummyAdoptable)
+            });
+            var div = Element.Create("div");
+            var x = new DummyAdoptable();
+            div.AppendChild(x);
+            var doc1 = CreateDocument();
+            doc1.Body.AppendChild(div);
+            var doc2 = CreateDocument();
+            doc2.Body.AppendChild(div);
+            Assert.Equal(1, x.AdoptedCount);
+            LaraUI.UnPublishWebComponent("x-adoptable");
+        }
+
+        [Fact]
+        public void SetInnerDataSetsData()
+        {
+            var div = Element.Create("div");
+            div.SetInnerData("@@");
+            Assert.Equal(1, div.ChildCount);
+            var child = div.GetChildAt(0) as TextNode;
+            Assert.NotNull(child);
+            Assert.Equal("@@", child.Data);
+        }
+
+        [Fact]
+        public void SetInnerTextReplacesText()
+        {
+            var div = Element.Create("div");
+            div.SetInnerText("bb");
+            div.SetInnerText("a<a");
+            Assert.Equal(1, div.ChildCount);
+            var child = div.GetChildAt(0) as TextNode;
+            Assert.NotNull(child);
+            Assert.Equal("a&lt;a", child.Data);
+        }
+
+        [Fact]
+        public void RemoveEventYieldsDelta()
+        {
+            var doc = CreateDocument();
+            var div = Element.Create("div");
+            int counter = 0;
+            Task handler()
+            {
+                counter++;
+                return Task.CompletedTask;
+            }
+            div.On("click", handler);
+            div.NotifyEvent("click");
+            doc.Body.AppendChild(div);
+            doc.FlushQueue();
+            div.On("click", null);
+            div.NotifyEvent("click");
+            Assert.Equal(1, counter);
+            var queue = doc.GetQueue();
+            Assert.Single(queue);
+            var first = queue.Peek() as UnsubscribeDelta;
+            Assert.Equal(div.Id, first.ElementId);
+            Assert.Equal("click", first.EventName);
+        }
+
+        [Fact]
+        public void ElementGetHtml()
+        {
+            var div = Element.Create("div");
+            var html = div.GetHtml();
+            Assert.StartsWith("<div></div>", html);
+        }
     }
 }

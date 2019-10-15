@@ -4,8 +4,6 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using System.Runtime.Serialization;
-
 namespace Integrative.Lara
 {
     /// <summary>

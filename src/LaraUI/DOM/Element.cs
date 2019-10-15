@@ -957,6 +957,7 @@ namespace Integrative.Lara
         {
             settings = settings ?? throw new ArgumentNullException(nameof(settings));
             settings.Verify();
+            RemoveEvent(settings.EventName);
             Events.Add(settings.EventName, settings);
             if (Document != null)
             {
@@ -1002,14 +1003,17 @@ namespace Integrative.Lara
 
         private void RemoveEvent(string eventName)
         {
-            Events.Remove(eventName);
-            if (Document != null)
+            if (Events.ContainsKey(eventName))
             {
-                Document.Enqueue(new UnsubscribeDelta
+                Events.Remove(eventName);
+                if (Document != null)
                 {
-                    ElementId = EnsureElementId(),
-                    EventName = eventName
-                });
+                    Document.Enqueue(new UnsubscribeDelta
+                    {
+                        ElementId = EnsureElementId(),
+                        EventName = eventName
+                    });
+                }
             }
         }
 
@@ -1193,11 +1197,11 @@ namespace Integrative.Lara
             {
                 if (encode)
                 {
-                    node.Data = value;
+                    node.SetEncodedText(value);
                 }
                 else
                 {
-                    node.SetEncodedText(value);
+                    node.Data = value;
                 }
             }
             else

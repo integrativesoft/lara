@@ -55,6 +55,7 @@ namespace Integrative.Lara
         internal SemaphoreSlim Semaphore { get; }
 
         readonly ServerEventsController _serverEvents;
+        readonly MessageRegistry _messageRegistry;
 
         int _serializer;
 
@@ -119,6 +120,7 @@ namespace Integrative.Lara
             UpdateTimestamp();
             TemplateBuilder.Build(this);
             _serverEvents = new ServerEventsController(this);
+            _messageRegistry = new MessageRegistry(this);
         }
 
         /// <summary>
@@ -219,6 +221,16 @@ namespace Integrative.Lara
             Head.On("_" + key, handler);
         }
 
+        internal void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        {
+            _messageRegistry.Add(messageId, handler);
+        }
+
+        internal void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        {
+            _messageRegistry.Remove(messageId, handler);
+        }
+
         internal async Task NotifyUnload()
         {
             await _serverEvents.NotifyUnload();
@@ -226,16 +238,6 @@ namespace Integrative.Lara
             OnUnload?.Invoke(this, args);
             await OnUnloadAsync.InvokeAsync(this, args);
             AfterUnload?.Invoke(this, new EventArgs());
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
-        internal static async Task IgnoreErrorHandler(Func<Task> handler)
-        {
-            if (handler != null)
-            {
-                try { await handler(); }
-                catch { }
-            }
         }
 
         /// <summary>

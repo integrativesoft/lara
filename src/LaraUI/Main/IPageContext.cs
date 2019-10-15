@@ -61,9 +61,23 @@ namespace Integrative.Lara
         /// <summary>
         /// Register a custom event that can be called from JavaScript code
         /// </summary>
-        /// <param name="key">The key for the event.</param>
+        /// <param name="messageId">Message type identifier</param>
         /// <param name="handler">The handler for the event.</param>
-        void OnMessage(string key, Func<Task> handler);
+        void OnMessage(string messageId, Func<Task> handler);
+
+        /// <summary>
+        /// Register a listener to a custom event that can be called from JavaScript code
+        /// </summary>
+        /// <param name="messageId">Message type identifier</param>
+        /// <param name="handler">Handler to execute</param>
+        void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler);
+
+        /// <summary>
+        /// Unregister a listener to a custom event called from JavaScript code
+        /// </summary>
+        /// <param name="messageId">Message type identifier</param>
+        /// <param name="handler">Handler to execute</param>
+        void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler);
 
         /// <summary>
         /// Gets extra event data that can be passed by the client on custom events.
