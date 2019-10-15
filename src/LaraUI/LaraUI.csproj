@@ -10,7 +10,7 @@
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
-    <Description>Lara Web Engine is a pure C# web UI framework supporting web component development and reactive programming.</Description>
+    <Description>Lara Web Engine is a lightweight C# Web UI framework for server-side DOM rendering.</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
