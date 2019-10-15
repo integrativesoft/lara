@@ -468,5 +468,49 @@ namespace Integrative.Lara.Tests.Components
                 }
             }
         }
+
+        [LaraWebComponent("x-obsolete")]
+        class ObsoleteComponent : WebComponent
+        {
+            public ObsoleteComponent() : base("x-obsolete")
+            {
+            }
+
+            public int Counter { get; set; }
+
+            [Obsolete]
+            public void Test()
+            {
+                AttachShadow();
+                Counter++;
+            }
+        }
+
+        [Fact]
+        [Obsolete]
+        public void AttachShadowExecutes()
+        {
+            var x = new ObsoleteComponent();
+            x.Test();
+            Assert.Equal(1, x.Counter);
+        }
+
+        [Fact]
+        public void SlotNameNotPresent()
+        {
+            var x = new MyDummyComponent();
+            var div = Element.Create("div");
+            Assert.False(x.SlottingChild(div));
+            Assert.False(x.SlottingAllChildren());
+        }
+
+        [Fact]
+        public void SlotSimpleOverrides()
+        {
+            var x = new Slot();
+            Assert.False(x.SlottingAllChildren());
+            var div = Element.Create("div");
+            Assert.False(x.SlottingChild(div));
+        }
     }
 }
