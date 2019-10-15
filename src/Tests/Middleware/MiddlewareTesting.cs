@@ -11,7 +11,6 @@ using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -499,6 +498,17 @@ namespace Integrative.Lara.Tests.Middleware
                 ShowExceptions = true
             });
             app.Verify(x => x.ApplicationServices, Times.Once);
+        }
+
+        [Fact]
+        public void LaraCreateConnection()
+        {
+            var x = LaraUI.CreateConnection(IPAddress.Loopback);
+            var ok = LaraUI.TryGetConnection(x.Id, out var y);
+            Assert.True(ok);
+            Assert.Same(x, y);
+            LaraUI.ClearEmptyConnection(x);
+            Assert.False(LaraUI.TryGetConnection(x.Id, out _));
         }
     }
 }

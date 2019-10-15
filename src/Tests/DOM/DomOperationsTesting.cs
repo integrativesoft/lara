@@ -598,5 +598,17 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotNull(first);
             Assert.Equal(div.EnsureElementId(), first.ElementId);
         }
+
+        [Fact]
+        public void ButtonNotifyValue()
+        {
+            var x = new Button();
+            x.NotifyValue(new ElementEventValue
+            {
+                ElementId = x.EnsureElementId(),
+                Value = "test"
+            });
+            Assert.Equal("test", x.GetAttribute("value"));
+        }
     }
 }

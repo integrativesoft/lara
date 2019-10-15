@@ -4,6 +4,7 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.ObjectModel;
 using Xunit;
 
@@ -208,6 +209,109 @@ namespace Integrative.Lara.Tests.DOM
                 get => _counter;
                 set { SetProperty(ref _counter, value); }
             }
+        }
+
+        [Fact]
+        [Obsolete]
+        public void AddTextNode1()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            builder.AddTextNode("@@", false);
+            var node = div.GetChildAt(0) as TextNode;
+            Assert.Equal("@@", node.Data);
+        }
+
+        [Fact]
+        [Obsolete]
+        public void AddTextNode2()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            var node = new TextNode("test");
+            builder.AddTextNode(node);
+            var x = div.GetChildAt(0) as TextNode;
+            Assert.Same(node, x);
+        }
+
+        [Fact]
+        public void InnerText()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            builder.InnerText("a<a");
+            var node = div.GetChildAt(0) as TextNode;
+            Assert.Equal("a&lt;a", node.Data);
+        }
+
+        [Fact]
+        public void InnerData()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            builder.InnerData("a<a");
+            var node = div.GetChildAt(0) as TextNode;
+            Assert.Equal("a<a", node.Data);
+        }
+
+        [Fact]
+        public void AppendData()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            builder.AppendData("a<a");
+            var node = div.GetChildAt(0) as TextNode;
+            Assert.Equal("a<a", node.Data);
+        }
+
+        [Fact]
+        public void EnsureElementId()
+        {
+            var div = Element.Create("div");
+            var builder = new LaraBuilder(div);
+            builder.EnsureElementId();
+            Assert.False(string.IsNullOrEmpty(div.Id));
+        }
+
+        [Fact]
+        public void ToggleClass1()
+        {
+            var data = new MyData();
+            _builder.BindToggleClass(new BindToggleClassOptions<MyData>
+            {
+                BindObject = data,
+                ClassName = "red",
+                Property = x => x.Counter > 0
+            });
+            Assert.False(_root.HasClass("red"));
+            data.Counter = 1;
+            Assert.True(_root.HasClass("red"));
+            data.Counter = 0;
+            Assert.False(_root.HasClass("red"));
+        }
+
+        [Fact]
+        public void ToggleClass2()
+        {
+            var data = new MyData();
+            _builder.BindToggleClass("red", data, () => data.Counter > 0);
+            Assert.False(_root.HasClass("red"));
+            data.Counter = 1;
+            Assert.True(_root.HasClass("red"));
+            data.Counter = 0;
+            Assert.False(_root.HasClass("red"));
+        }
+
+        [Fact]
+        public void ToggleClass3()
+        {
+            var data = new MyData();
+            _builder.BindToggleClass("red", data, x => x.Counter > 0);
+            Assert.False(_root.HasClass("red"));
+            data.Counter = 1;
+            Assert.True(_root.HasClass("red"));
+            data.Counter = 0;
+            Assert.False(_root.HasClass("red"));
         }
     }
 }
