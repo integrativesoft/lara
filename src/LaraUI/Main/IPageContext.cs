@@ -63,6 +63,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="messageId">Message type identifier</param>
         /// <param name="handler">The handler for the event.</param>
+        [Obsolete("Use instead AddMessageListener() and RemoveMessageListener().")]
         void OnMessage(string messageId, Func<Task> handler);
 
         /// <summary>
