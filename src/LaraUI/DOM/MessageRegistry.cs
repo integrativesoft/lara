@@ -10,42 +10,26 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
-    /// <summary>
-    /// Parameters for custom JavaScript events
-    /// </summary>
-    public class MessageEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Text body of the custom JavaScript event
-        /// </summary>
-        public string Body { get; }
-
-        internal MessageEventArgs(string body)
-        {
-            Body = body;
-        }
-    }
-
     class MessageTypeRegistry
     {
-        readonly HashSet<Func<MessageEventArgs, Task>> _registry = new HashSet<Func<MessageEventArgs, Task>>();
+        readonly HashSet<Func<Task>> _registry = new HashSet<Func<Task>>();
 
-        public void Add(Func<MessageEventArgs, Task> handler)
+        public void Add(Func<Task> handler)
         {
             _registry.Add(handler);
         }
 
-        public void Remove(Func<MessageEventArgs, Task> handler)
+        public void Remove(Func<Task> handler)
         {
             _registry.Remove(handler);
         }
 
-        public async Task RunAll(string body)
+        public async Task RunAll()
         {
-            var args = new MessageEventArgs(body);
-            foreach (var handler in _registry)
+            var list = new List<Func<Task>>(_registry);
+            foreach (var handler in list)
             {
-                await handler(args);
+                await handler();
             }
         }
     }
@@ -61,7 +45,13 @@ namespace Integrative.Lara
             _map = new Dictionary<string, MessageTypeRegistry>();
         }
 
-        public void Add(string messageId, Func<MessageEventArgs, Task> handler)
+        public void Add(string messageId, Func<Task> handler)
+        {
+            var registry = GetRegistry(messageId);
+            registry.Add(handler);
+        }
+
+        private MessageTypeRegistry GetRegistry(string messageId)
         {
             if (!_map.TryGetValue(messageId, out var registry))
             {
@@ -69,14 +59,14 @@ namespace Integrative.Lara
                 _map.Add(messageId, registry);
                 _parent.Head.On("_" + messageId, () =>
                 {
-                    var body = LaraUI.Page.JSBridge.EventData;
-                    return RunAll(messageId, body);
+                    return RunAll(messageId);
                 });
             }
-            registry.Add(handler);
+
+            return registry;
         }
 
-        public void Remove(string messageId, Func<MessageEventArgs, Task> handler)
+        public void Remove(string messageId, Func<Task> handler)
         {
             if (_map.TryGetValue(messageId, out var registry))
             {
@@ -84,11 +74,11 @@ namespace Integrative.Lara
             }
         }
 
-        public async Task RunAll(string messageId, string body)
+        public async Task RunAll(string messageId)
         {
             if (_map.TryGetValue(messageId, out var registry))
             {
-                await registry.RunAll(body);
+                await registry.RunAll();
             }
         }
     }

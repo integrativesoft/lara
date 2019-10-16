@@ -71,14 +71,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="messageId">Message type identifier</param>
         /// <param name="handler">Handler to execute</param>
-        void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler);
+        void AddMessageListener(string messageId, Func<Task> handler);
 
         /// <summary>
         /// Unregister a listener to a custom event called from JavaScript code
         /// </summary>
         /// <param name="messageId">Message type identifier</param>
         /// <param name="handler">Handler to execute</param>
-        void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler);
+        void RemoveMessageListener(string messageId, Func<Task> handler);
 
         /// <summary>
         /// Gets extra event data that can be passed by the client on custom events.

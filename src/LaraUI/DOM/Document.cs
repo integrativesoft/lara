@@ -221,12 +221,12 @@ namespace Integrative.Lara
             Head.On("_" + key, handler);
         }
 
-        internal void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        internal void AddMessageListener(string messageId, Func<Task> handler)
         {
             _messageRegistry.Add(messageId, handler);
         }
 
-        internal void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
+        internal void RemoveMessageListener(string messageId, Func<Task> handler)
         {
             _messageRegistry.Remove(messageId, handler);
         }
