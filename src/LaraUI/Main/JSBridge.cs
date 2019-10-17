@@ -35,12 +35,12 @@ namespace Integrative.Lara.Main
             _parent.Document.OnMessage(key, handler);
         }
 
-        public void AddMessageListener(string messageId, Func<Task> handler)
+        public void AddMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
         {
             _parent.Document.AddMessageListener(messageId, handler);
         }
 
-        public void RemoveMessageListener(string messageId, Func<Task> handler)
+        public void RemoveMessageListener(string messageId, Func<MessageEventArgs, Task> handler)
         {
             _parent.Document.RemoveMessageListener(messageId, handler);
         }

@@ -18,16 +18,18 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = new MessageTypeRegistry();
             int counter = 0;
-            Task handler()
+            Task handler(MessageEventArgs args)
             {
+                Assert.Equal("test", args.Body);
                 counter++;
                 return Task.CompletedTask;
             }
             x.Add(handler);
-            await x.RunAll();
+            var args = new MessageEventArgs("test");
+            await x.RunAll(args);
             Assert.Equal(1, counter);
             x.Remove(handler);
-            await x.RunAll();
+            await x.RunAll(args);
             Assert.Equal(1, counter);
         }
 
@@ -39,7 +41,7 @@ namespace Integrative.Lara.Tests.DOM
             var document = DomOperationsTesting.CreateDocument();
             var x = new MessageRegistry(document);
             int counter = 0;
-            Task handler()
+            Task handler(MessageEventArgs args)
             {
                 counter++;
                 return Task.CompletedTask;
@@ -82,7 +84,7 @@ namespace Integrative.Lara.Tests.DOM
             CreateMessageContext();
             var doc = DomOperationsTesting.CreateDocument();
             int counter = 0;
-            Task handler()
+            Task handler(MessageEventArgs args)
             {
                 counter++;
                 return Task.CompletedTask;
