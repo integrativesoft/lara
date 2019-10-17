@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Components;
 using Integrative.Lara.Delta;
 
 namespace Integrative.Lara
@@ -67,16 +68,11 @@ namespace Integrative.Lara
         /// </summary>
         public bool IsSlotted { get; internal set; }
 
-        internal virtual void NotifySlotted()
+        internal void UpdateSlotted()
         {
-            if (ParentElement == null)
-            {
-                IsSlotted = false;
-            }
-            else
-            {
-                IsSlotted = ParentElement.SlottingChild(this);
-            }
+            SlottedCalculator.UpdateSlotted(this);
         }
+
+        internal virtual bool IsPrintable => true;
     }
 }

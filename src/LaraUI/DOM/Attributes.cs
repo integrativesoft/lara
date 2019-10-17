@@ -63,6 +63,10 @@ namespace Integrative.Lara.DOM
                 AttributeEditedDelta.Enqueue(_element, nameLower, value);
             }
             _element.AttributeChanged(nameLower, value);
+            if (nameLower == "slot")
+            {
+                _element.UpdateSlotted();
+            }
         }
 
         internal void RemoveAttributeLower(string nameLower)

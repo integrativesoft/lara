@@ -220,7 +220,7 @@ namespace Integrative.Lara.DOM
             }
             _parent.OnChildRemoved(child);
             child.ParentElement = null;
-            child.NotifySlotted();
+            child.UpdateSlotted();
         }
 
         #endregion
@@ -343,7 +343,7 @@ namespace Integrative.Lara.DOM
             child.ParentElement?.OnChildRemoved(child);
             _parent.OnChildAppend(child);
             child.ParentElement = _parent;
-            child.NotifySlotted();
+            child.UpdateSlotted();
             NodeAddedDelta.Enqueue(child);
         }
 
@@ -358,7 +358,7 @@ namespace Integrative.Lara.DOM
             child.ParentElement?.OnChildRemoved(child);
             _parent.OnChildInsert(index, child);
             child.ParentElement = _parent;
-            child.NotifySlotted();
+            child.UpdateSlotted();
             NodeInsertedDelta.Enqueue(child, index);
         }
 

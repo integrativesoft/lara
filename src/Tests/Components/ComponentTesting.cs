@@ -393,14 +393,6 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
-        public void ShadowLightEmpty()
-        {
-            var shadow = new Shadow();
-            shadow.AppendText("bah");
-            Assert.Empty(shadow.GetLightSlotted());
-        }
-
-        [Fact]
         public void VerifyComponentRegistered()
         {
             bool blown = false;
@@ -493,24 +485,6 @@ namespace Integrative.Lara.Tests.Components
             var x = new ObsoleteComponent();
             x.Test();
             Assert.Equal(1, x.Counter);
-        }
-
-        [Fact]
-        public void SlotNameNotPresent()
-        {
-            var x = new MyDummyComponent();
-            var div = Element.Create("div");
-            Assert.False(x.SlottingChild(div));
-            Assert.False(x.SlottingAllChildren());
-        }
-
-        [Fact]
-        public void SlotSimpleOverrides()
-        {
-            var x = new Slot();
-            Assert.False(x.SlottingAllChildren());
-            var div = Element.Create("div");
-            Assert.False(x.SlottingChild(div));
         }
     }
 }

@@ -24,14 +24,17 @@ namespace Integrative.Lara.Delta
         {
         }
 
-        public static SubscribeDelta CreateFrom(Element element, EventSettings settings)
+        public static void Enqueue(Element element, EventSettings settings)
         {
-            return new SubscribeDelta
+            if (element.AcceptsEvents)
             {
-                ElementId = element.EnsureElementId(),
-                Settings = ClientEventSettings.CreateFrom(settings),
-                DebounceInterval = settings.DebounceInterval
-            };
+                element.Document.Enqueue(new SubscribeDelta
+                {
+                    ElementId = element.EnsureElementId(),
+                    Settings = ClientEventSettings.CreateFrom(settings),
+                    DebounceInterval = settings.DebounceInterval
+                });
+            }
         }
     }
 

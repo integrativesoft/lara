@@ -19,7 +19,11 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'shadow root' is the element that contains the shadow DOM tree
         /// </summary>
-        protected Element ShadowRoot { get; private set; }
+        protected Element ShadowRoot => _shadow;
+
+        readonly Shadow _shadow;
+
+        internal Shadow GetShadow() => _shadow;
 
         private HashSet<string> _observedAttributes;
 
@@ -31,10 +35,7 @@ namespace Integrative.Lara
         {
             tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             VerifyTypeThrow(tagName, GetType());
-            ShadowRoot = new Shadow
-            {
-                ParentComponent = this
-            };
+            _shadow = new Shadow(this);
         }
 
         private void InitializeObservedAttributes()
@@ -179,33 +180,31 @@ namespace Integrative.Lara
             yield return ShadowRoot;
         }
 
-        internal override bool SlottingAllChildren() => false;
+        internal override bool IsPrintable => false;
 
-        internal override bool SlottingChild(Node child)
+        internal bool IsSlotActive(string slotName)
         {
-            return child is Element element
-                && SlotNamePresent(element.GetAttributeLower("slot"));
+            return IsSlotActive(ShadowRoot, slotName);
         }
 
-        private bool SlotNamePresent(string slotName)
+        private static bool IsSlotActive(Element parent, string slotName)
         {
-            foreach (var child in Children)
+            foreach (var child in parent.Children)
             {
-                if (NodeMatchesSlot(child, slotName))
+                if (child is Slot slot)
                 {
-                    return true;
+                    if (slot.MatchesName(slotName))
+                    {
+                        return true;
+                    }
+                }
+                else if (child is Element element
+                    && IsSlotActive(element, slotName))
+                {
+                    return true; 
                 }
             }
             return false;
-        }
-
-        internal override void NotifySlotted()
-        {
-            foreach (var child in Children)
-            {
-                child.NotifySlotted();
-            }
-            ShadowRoot.NotifySlotted();
         }
     }
 }

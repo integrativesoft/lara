@@ -961,7 +961,7 @@ namespace Integrative.Lara
             Events.Add(settings.EventName, settings);
             if (Document != null)
             {
-                FlushEvent(settings);
+                SubscribeDelta.Enqueue(this, settings);
             }
         }
 
@@ -969,14 +969,8 @@ namespace Integrative.Lara
         {
             foreach (var settings in Events.Values)
             {
-                FlushEvent(settings);
+                SubscribeDelta.Enqueue(this, settings);
             }
-        }
-
-        internal void FlushEvent(EventSettings settings)
-        {
-            var delta = SubscribeDelta.CreateFrom(this, settings);
-            Document.Enqueue(delta);
         }
 
         /// <summary>
@@ -1248,22 +1242,13 @@ namespace Integrative.Lara
         }
 
         internal bool QueueOpen =>
-            IsSlotted
-            && Document != null
+            AcceptsEvents
             && Document.QueueingEvents;
 
-        internal virtual bool SlottingChild(Node child) => IsSlotted;
-
-        internal virtual bool SlottingAllChildren() => IsSlotted;
-
-        internal override void NotifySlotted()
-        {
-            base.NotifySlotted();
-            foreach (var child in Children)
-            {
-                child.NotifySlotted();
-            }
-        }
+        internal bool AcceptsEvents =>
+            IsSlotted
+            && IsPrintable
+            && Document != null;
 
         #endregion
 

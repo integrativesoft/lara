@@ -13,43 +13,18 @@ namespace Integrative.Lara.Components
     {
         public const string ShadowTagName = "__shadow";
 
-        public Shadow() : base(ShadowTagName)
+        public Shadow(WebComponent parent) : base(ShadowTagName)
         {
+            ParentComponent = parent;
         }
 
-        public WebComponent ParentComponent { get; set; }
+        public WebComponent ParentComponent { get; }
 
         internal override IEnumerable<Node> GetLightSlotted()
         {
             return Enumerable.Empty<Node>();
         }
 
-        internal override bool SlottingAllChildren()
-        {
-            if (ParentComponent == null)
-            {
-                return false;
-            }
-            var superior = ParentComponent.ParentElement;
-            if (superior == null)
-            {
-                return false;
-            }
-            return superior.SlottingAllChildren()
-                || superior.SlottingChild(ParentComponent);
-        }
-
-        internal override bool SlottingChild(Node child)
-        {
-            return SlottingAllChildren();
-        }
-
-        internal override void NotifySlotted()
-        {
-            foreach (var child in Children)
-            {
-                child.NotifySlotted();
-            }
-        }
+        internal override bool IsPrintable => false;
     }
 }

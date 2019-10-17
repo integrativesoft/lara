@@ -31,6 +31,19 @@ namespace Integrative.Lara
         {
         }
 
+        internal bool MatchesName(string slotName)
+        {
+            var name = Name;
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.IsNullOrEmpty(name);
+            }
+            else
+            {
+                return name == slotName;
+            }
+        }
+
         internal override IEnumerable<Node> GetLightSlotted()
         {
             if (TryFindParentComponent(this, out var component))
@@ -62,12 +75,6 @@ namespace Integrative.Lara
             }
         }
 
-        internal override bool SlottingAllChildren() => false;
-
-        internal override bool SlottingChild(Node child) => false;
-
-        internal override void NotifySlotted()
-        {
-        }
+        internal override bool IsPrintable => false;
     }
 }
