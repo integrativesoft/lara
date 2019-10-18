@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq.Expressions;
 
 namespace Integrative.Lara
 {
@@ -190,6 +191,78 @@ namespace Integrative.Lara
         {
             var value = GetCurrentValue();
             element.ToggleClass(ClassName, value);
+        }
+    }
+
+    /// <summary>
+    /// Base class for two-way binding
+    /// </summary>
+    public abstract class BindTwoWayOptions<TData, TValue> : BindPropertyOptions
+        where TData : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Bind model property
+        /// </summary>
+        public Expression<Func<TData, TValue>> Property { get; set; }
+
+        /// <summary>
+        /// Instance to track changes
+        /// </summary>
+        public TData BindObject { get; set; }
+
+        internal TValue GetCurrentValue()
+        {
+            var getter = Property.Compile();
+            return getter(BindObject);
+        }
+
+        internal void SetValue(TValue value)
+        {
+            var member = (MemberExpression)Property.Body;
+            var param = Expression.Parameter(typeof(TValue), "value");
+            var set = Expression.Lambda<Action<TData, TValue>>(
+                Expression.Assign(member, param), Property.Parameters[0], param);
+            var action = set.Compile();
+            action(BindObject, value);
+        }
+
+        internal abstract void Collect(Element element);
+
+        internal override event PropertyChangedEventHandler PropertyChanged;
+
+        internal override void Subscribe()
+        {
+            BindObject.PropertyChanged += ObjectChangedHandler;
+        }
+
+        internal override void Unsubscribe()
+        {
+            BindObject.PropertyChanged -= ObjectChangedHandler;
+        }
+
+        private void ObjectChangedHandler(object sender, PropertyChangedEventArgs args)
+        {
+            PropertyChanged?.Invoke(this, args);
+        }
+    }
+
+    /// <summary>
+    /// Binding options for two-way binding of element 'value' property
+    /// </summary>
+    /// <typeparam name="T">Source data type</typeparam>
+    public sealed class BindValueOptions<T> : BindTwoWayOptions<T, string>
+        where T : INotifyPropertyChanged
+    {
+        internal override void Apply(Element element)
+        {
+            var value = GetCurrentValue();
+            element.SetAttributeLower("value", value);
+        }
+
+        internal override void Collect(Element element)
+        {
+            var value = element.GetAttributeLower("value");
+            SetValue(value);
         }
     }
 

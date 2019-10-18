@@ -10,6 +10,23 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
+    class MyInputData : BindableBase
+    {
+        string _myvalue;
+        public string MyValue
+        {
+            get => _myvalue;
+            set => SetProperty(ref _myvalue, value);
+        }
+
+        bool _mychecked;
+        public bool MyChecked
+        {
+            get => _mychecked;
+            set => SetProperty(ref _mychecked, value);
+        }
+    }
+
     public class BindingsTesting
     {
         [Fact]
@@ -399,6 +416,26 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(0, counter);
             data.EndUpdate();
             Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void BindableValueBinding()
+        {
+            var data = new MyInputData
+            {
+                MyValue = "hello"
+            };
+            var input = new InputElement();
+            var binding = new BindValueOptions<MyInputData>
+            {
+                BindObject = data,
+                Property = x => x.MyValue
+            };
+            binding.Apply(input);
+            Assert.Equal("hello", input.Value);
+            input.Value = "bye";
+            binding.Collect(input);
+            Assert.Equal("bye", data.MyValue);
         }
     }
 }
