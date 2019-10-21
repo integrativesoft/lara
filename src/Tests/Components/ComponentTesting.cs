@@ -19,6 +19,93 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Components
 {
+    [LaraWebComponent("x-dummy")]
+    class MyDummyComponent : WebComponent
+    {
+        public int Moved { get; private set; }
+
+        public MyDummyComponent() : base("x-dummy")
+        {
+        }
+
+        protected override IEnumerable<string> GetObservedAttributes()
+        {
+            return new string[] { "class" };
+        }
+
+        protected override void OnMove()
+        {
+            base.OnMove();
+            Moved++;
+        }
+    }
+
+    [LaraWebComponent("x-com")]
+    class XCOM : WebComponent
+    {
+        public XCOM() : base("x-com")
+        {
+            var builder = new LaraBuilder(ShadowRoot);
+            builder.Push("div", "", "div1")
+                .Push("div", "", "div1a")
+                .Pop()
+            .Pop()
+            .Push("div", "", "div2")
+            .Pop()
+            .AppendText("lalas");
+        }
+    }
+
+    [LaraWebComponent("x-light")]
+    class LightCom : WebComponent
+    {
+        public LightCom() : base("x-light")
+        {
+        }
+    }
+
+    [LaraWebComponent("x-slotter")]
+    class MySlotter : WebComponent
+    {
+        public MySlotter() : base("x-slotter")
+        {
+            var div = Create("div");
+            var slot = Create("slot");
+            ShadowRoot.AppendChild(div);
+            div.AppendChild(slot);
+        }
+    }
+
+    [LaraWebComponent("x-twodiv")]
+    class MyTwoDivComponent : WebComponent
+    {
+        public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
+        {
+            if (useShadow)
+            {
+                ShadowRoot.AppendChild(Create("div"));
+                ShadowRoot.AppendText("hello");
+            }
+        }
+    }
+
+    [LaraWebComponent("x-obsolete")]
+    class ObsoleteComponent : WebComponent
+    {
+        public ObsoleteComponent() : base("x-obsolete")
+        {
+        }
+
+        public int Counter { get; set; }
+
+        [Obsolete]
+        public void Test()
+        {
+            AttachShadow();
+            Counter++;
+        }
+    }
+
     public class ComponentTesting
     {
         public ComponentTesting()
@@ -145,30 +232,6 @@ namespace Integrative.Lara.Tests.Components
             }
         }
 
-        [LaraWebComponent("x-com")]
-        class XCOM : WebComponent
-        {
-            public XCOM() : base("x-com")
-            {
-                var builder = new LaraBuilder(ShadowRoot);
-                builder.Push("div", "", "div1")
-                    .Push("div", "", "div1a")
-                    .Pop()
-                .Pop()
-                .Push("div", "", "div2")
-                .Pop()
-                .AppendText("lalas");
-            }
-        }
-
-        [LaraWebComponent("x-light")]
-        class LightCom : WebComponent
-        {
-            public LightCom() : base("x-light")
-            {
-            }
-        }
-
         [Fact]
         public void GetSlotElementFinds()
         {
@@ -199,18 +262,6 @@ namespace Integrative.Lara.Tests.Components
             Assert.Single(list);
             var child = list[0] as Element;
             Assert.Equal("slot3", child.Id);
-        }
-
-        [LaraWebComponent("x-slotter")]
-        class MySlotter : WebComponent
-        {
-            public MySlotter() : base("x-slotter")
-            {
-                var div = Create("div");
-                var slot = Create("slot");
-                ShadowRoot.AppendChild(div);
-                div.AppendChild(slot);
-            }
         }
 
         [Fact]
@@ -256,27 +307,6 @@ namespace Integrative.Lara.Tests.Components
                 Class = "lala"
             };
             Assert.Equal("lala", x.Class);
-        }
-
-        [LaraWebComponent("x-dummy")]
-        class MyDummyComponent : WebComponent
-        {
-            public int Moved { get; private set; }
-
-            public MyDummyComponent() : base("x-dummy")
-            {
-            }
-
-            protected override IEnumerable<string> GetObservedAttributes()
-            {
-                return new string[] { "class" };
-            }
-
-            protected override void OnMove()
-            {
-                base.OnMove();
-                Moved++;
-            }
         }
 
         [Fact]
@@ -448,36 +478,6 @@ namespace Integrative.Lara.Tests.Components
             Assert.Equal(ContentNodeType.Text, array.Nodes[1].Type);
         }
 
-        [LaraWebComponent("x-twodiv")]
-        class MyTwoDivComponent : WebComponent
-        {
-            public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
-            {
-                if (useShadow)
-                {
-                    ShadowRoot.AppendChild(Create("div"));
-                    ShadowRoot.AppendText("hello");
-                }
-            }
-        }
-
-        [LaraWebComponent("x-obsolete")]
-        class ObsoleteComponent : WebComponent
-        {
-            public ObsoleteComponent() : base("x-obsolete")
-            {
-            }
-
-            public int Counter { get; set; }
-
-            [Obsolete]
-            public void Test()
-            {
-                AttachShadow();
-                Counter++;
-            }
-        }
-
         [Fact]
         [Obsolete]
         public void AttachShadowExecutes()
@@ -485,6 +485,46 @@ namespace Integrative.Lara.Tests.Components
             var x = new ObsoleteComponent();
             x.Test();
             Assert.Equal(1, x.Counter);
+        }
+
+        [Fact]
+        public void ParentSlotNotSlotting()
+        {
+            var slot = new Slot
+            {
+                IsSlotted = true
+            };
+            var x = Element.Create("div");
+            slot.AppendChild(x);
+            Assert.False(SlottedCalculator.IsParentSlotting(x));
+        }
+
+        [Fact]
+        public void ShadowLightSlottedEmpty()
+        {
+            var component = new MyDummyComponent();
+            var div = Element.Create("div");
+            var x = component.GetShadow();
+            x.AppendChild(div);
+            Assert.Empty(x.GetLightSlotted());
+        }
+
+        [Fact]
+        public void ShadowNotPrintable()
+        {
+            var component = new MyDummyComponent();
+            var x = component.GetShadow();
+            Assert.False(x.IsPrintable);
+        }
+
+        [Fact]
+        public void SlotNameMatches()
+        {
+            var x = new Slot
+            {
+                Name = "red"
+            };
+            Assert.True(x.MatchesName("red"));
         }
     }
 }

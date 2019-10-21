@@ -177,5 +177,36 @@ namespace Integrative.Lara.Tests.DOM
             }
             Assert.True(found);
         }
+
+        [Fact]
+        public void NotifyFlagSkipsSameValue()
+        {
+            var input = new InputElement
+            {
+                Checked = true
+            };
+            input.NotifyChecked(true);
+            Assert.True(input.Checked);
+        }
+
+        [Fact]
+        public void NotifyValueSkipsSameValue()
+        {
+            var input = new InputElement
+            {
+                Value = "hello"
+            };
+            input.NotifyValue("hello");
+            Assert.Equal("hello", input.Value);
+        }
+
+        [Fact]
+        public void ModifySlotElementWithParent()
+        {
+            var x = Element.Create("div");
+            var div = Element.Create("div");
+            div.AppendChild(x);
+            Assert.ThrowsAny<InvalidOperationException>(() => x.SetAttributeLower("slot", "test"));
+        }
     }
 }

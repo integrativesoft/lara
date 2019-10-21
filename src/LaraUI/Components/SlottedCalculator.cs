@@ -22,7 +22,7 @@ namespace Integrative.Lara.Components
             }
         }
 
-        private static bool IsParentSlotting(Node node)
+        internal static bool IsParentSlotting(Node node)
         {
             var parent = node.ParentElement;
             if (parent == null)

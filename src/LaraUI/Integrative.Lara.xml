@@ -725,6 +725,20 @@
             <typeparam name="T">Data type for data source instance</typeparam>
             <param name="options">Binding options</param>
         </member>
+        <member name="M:Integrative.Lara.Element.BindInput``1(Integrative.Lara.BindInputOptions{``0})">
+            <summary>
+            Two-way bindings for element attributes (e.g. 'value' attribute populated by user)
+            </summary>
+            <typeparam name="T">Source data type</typeparam>
+            <param name="options">Binding options</param>
+        </member>
+        <member name="M:Integrative.Lara.Element.BindFlagInput``1(Integrative.Lara.BindFlagInputOptions{``0})">
+            <summary>
+            Two-way bindings for element flag attributes (e.g. 'checked' attribute populated by user)
+            </summary>
+            <typeparam name="T">Source data type</typeparam>
+            <param name="options">Binding options</param>
+        </member>
         <member name="M:Integrative.Lara.Element.UnbindAttribute(System.String)">
             <summary>
             Removes bindings for an attribute
@@ -2729,6 +2743,43 @@
             Element class to toggle
             </summary>
         </member>
+        <member name="T:Integrative.Lara.BindInputOptions">
+            <summary>
+            Base class for two-way binding of attributes
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindInputOptions.Attribute">
+            <summary>
+            Attribute to bind
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindInputOptions`2">
+            <summary>
+            Base class for two-way binding
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindInputOptions`2.Property">
+            <summary>
+            Bind model property
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.BindInputOptions`2.BindObject">
+            <summary>
+            Instance to track changes
+            </summary>
+        </member>
+        <member name="T:Integrative.Lara.BindInputOptions`1">
+            <summary>
+            Binding options for two-way binding of attributes
+            </summary>
+            <typeparam name="T">Data source type</typeparam>
+        </member>
+        <member name="T:Integrative.Lara.BindFlagInputOptions`1">
+            <summary>
+            Binding options for two-way binding of flag attributes
+            </summary>
+            <typeparam name="T">Data source type</typeparam>
+        </member>
         <member name="T:Integrative.Lara.BindChildrenOptions">
             <summary>
             Binding options for child element collections
@@ -2822,6 +2873,11 @@
         <member name="P:Integrative.Lara.Resources.Http403">
             <summary>
               Looks up a localized string similar to HTTP 403: Forbidden..
+            </summary>
+        </member>
+        <member name="P:Integrative.Lara.Resources.InvalidBindingExpression">
+            <summary>
+              Looks up a localized string similar to Invalid expression for binding. Expecting a member expression..
             </summary>
         </member>
         <member name="P:Integrative.Lara.Resources.InvalidTagName">
@@ -3362,6 +3418,42 @@
             </summary>
             <typeparam name="T">Type of elements in observable collection</typeparam>
             <param name="options">Children bindings options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInput``1(Integrative.Lara.BindInputOptions{``0})">
+            <summary>
+            Adds a two-way binding for an attribute (e.g. 'value' attribute)
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Binding options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindInput``1(System.String,``0,System.Linq.Expressions.Expression{System.Func{``0,System.String}})">
+            <summary>
+            Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="attribure">Attribute</param>
+            <param name="data">Data source</param>
+            <param name="property">Data source property</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindFlagInput``1(Integrative.Lara.BindFlagInputOptions{``0})">
+            <summary>
+            Adds a two-way binding for an attribute (e.g. 'value' attribute)
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="options">Binding options</param>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Integrative.Lara.LaraBuilder.BindFlagInput``1(System.String,``0,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
+            </summary>
+            <typeparam name="T">Type of data source</typeparam>
+            <param name="attribure">Attribute</param>
+            <param name="data">Data source</param>
+            <param name="property">Data source property</param>
             <returns>This instance</returns>
         </member>
         <member name="M:Integrative.Lara.LaraBuilder.Bind``1(``0,System.Action)">

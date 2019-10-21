@@ -438,6 +438,36 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        public void InputBindingGetterLara()
+        {
+            var data = new MyInputData
+            {
+                MyValue = "hello"
+            };
+            var input = new InputElement();
+            var builder = new LaraBuilder(input);
+            builder.BindInput("value", data, x => x.MyValue);
+            Assert.Equal("hello", input.Value);
+            data.MyValue = "bye";
+            Assert.Equal("bye", input.Value);
+        }
+
+        [Fact]
+        public void InputBindingGetterLaraFlag()
+        {
+            var data = new MyInputData
+            {
+                MyChecked = true
+            };
+            var input = new InputElement();
+            var builder = new LaraBuilder(input);
+            builder.BindFlagInput("checked", data, x => x.MyChecked);
+            Assert.True(input.Checked);
+            data.MyChecked = false;
+            Assert.False(input.Checked);
+        }
+
+        [Fact]
         public void InputBindingSetter()
         {
             var data = new MyInputData

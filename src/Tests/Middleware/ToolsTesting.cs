@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using Integrative.Lara.Tools;
 using Moq;
 using System;
 using System.Net;
@@ -178,6 +179,14 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(0, local.Value);
             local.Value = 11;
             Assert.Equal(11, local.Value);
+        }
+
+        [Fact]
+        public void SmaValueNullTrue()
+        {
+            string x1 = null;
+            string x2 = null;
+            Assert.True(LaraTools.SameValue(x1, x2));
         }
     }
 }
