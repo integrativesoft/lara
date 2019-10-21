@@ -98,8 +98,10 @@ namespace Integrative.Lara.Reactive
             StoreBinding(key, options);
         }
 
-        public void BindInput(BindInputOptions options)
+        public void BindInput<TData, TValue>(BindInputOptions<TData, TValue> options)
+            where TData : INotifyPropertyChanged
         {
+            options.Compile();
             StoreBinding(options.Attribute, options);
         }
 

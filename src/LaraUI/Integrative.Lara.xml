@@ -2671,16 +2671,22 @@
             Base class for property-changed based bindings
             </summary>
         </member>
+        <member name="T:Integrative.Lara.BindPropertyOptions`1">
+            <summary>
+            Base class for property-changed based bindings of source type T
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Integrative.Lara.BindPropertyOptions`1.BindObject">
+            <summary>
+            Instance to bind to
+            </summary>
+        </member>
         <member name="T:Integrative.Lara.BindHandlerOptions`1">
             <summary>
             Binding options for generic modification handler
             </summary>
             <typeparam name="T">Type of data source</typeparam>
-        </member>
-        <member name="P:Integrative.Lara.BindHandlerOptions`1.BindObject">
-            <summary>
-            Instance to bind to
-            </summary>
         </member>
         <member name="P:Integrative.Lara.BindHandlerOptions`1.ModifiedHandler">
             <summary>
@@ -2693,11 +2699,6 @@
             </summary>
             <typeparam name="TData">Data type for data source instance</typeparam>
             <typeparam name="TValue">Data type for data source property</typeparam>
-        </member>
-        <member name="P:Integrative.Lara.BindPropertyOptions`2.BindObject">
-            <summary>
-            Instance to track changes
-            </summary>
         </member>
         <member name="P:Integrative.Lara.BindPropertyOptions`2.Property">
             <summary>
@@ -2743,29 +2744,19 @@
             Element class to toggle
             </summary>
         </member>
-        <member name="T:Integrative.Lara.BindInputOptions">
-            <summary>
-            Base class for two-way binding of attributes
-            </summary>
-        </member>
-        <member name="P:Integrative.Lara.BindInputOptions.Attribute">
-            <summary>
-            Attribute to bind
-            </summary>
-        </member>
         <member name="T:Integrative.Lara.BindInputOptions`2">
             <summary>
             Base class for two-way binding
             </summary>
         </member>
+        <member name="P:Integrative.Lara.BindInputOptions`2.Attribute">
+            <summary>
+            Attribute to bind
+            </summary>
+        </member>
         <member name="P:Integrative.Lara.BindInputOptions`2.Property">
             <summary>
             Bind model property
-            </summary>
-        </member>
-        <member name="P:Integrative.Lara.BindInputOptions`2.BindObject">
-            <summary>
-            Instance to track changes
             </summary>
         </member>
         <member name="T:Integrative.Lara.BindInputOptions`1">

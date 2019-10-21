@@ -481,9 +481,46 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = x => x.MyValue
             };
+            binding.Compile();
             input.Value = "bye";
             binding.Collect(input);
             Assert.Equal("bye", data.MyValue);
+        }
+
+        [Fact]
+        public void InputBindingFlagSetter()
+        {
+            var data = new MyInputData
+            {
+                MyChecked = true
+            };
+            var input = new InputElement();
+            var binding = new BindFlagInputOptions<MyInputData>
+            {
+                Attribute = "checked",
+                BindObject = data,
+                Property = x => x.MyChecked
+            };
+            binding.Compile();
+            input.Checked = false;
+            binding.Collect(input);
+            Assert.False(data.MyChecked);
+        }
+
+        [Fact]
+        public void InvalidSetterThrows()
+        {
+            var data = new MyInputData();
+            var x = new InputElement();
+            Assert.ThrowsAny<ArgumentException>(() =>
+            {
+                x.BindInput(new BindInputOptions<MyInputData>
+                {
+                    Attribute = "value",
+                    BindObject = data,
+                    Property = x => x.MyValue + "a"
+                });
+            });
         }
     }
 }

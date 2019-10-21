@@ -28,36 +28,25 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class BindPropertyOptions : BindOptions
     {
-        internal abstract event PropertyChangedEventHandler PropertyChanged;
+        internal event PropertyChangedEventHandler PropertyChanged;
+
+        internal virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, e);
+        }
     }
 
     /// <summary>
-    /// Binding options for generic modification handler
+    /// Base class for property-changed based bindings of source type T
     /// </summary>
-    /// <typeparam name="T">Type of data source</typeparam>
-    public sealed class BindHandlerOptions<T> : BindPropertyOptions
+    /// <typeparam name="T"></typeparam>
+    public abstract class BindPropertyOptions<T> : BindPropertyOptions
         where T : INotifyPropertyChanged
     {
         /// <summary>
         /// Instance to bind to
         /// </summary>
         public T BindObject { get; set; }
-
-        /// <summary>
-        /// Action to update the element whenever the data source is modified
-        /// </summary>
-        public Action<T, Element> ModifiedHandler { get; set; }
-
-        internal override event PropertyChangedEventHandler PropertyChanged;
-
-        private bool _applying;
-
-        internal override void Apply(Element element)
-        {
-            _applying = true;
-            ModifiedHandler?.Invoke(BindObject, element);
-            _applying = false;
-        }
 
         internal override void Subscribe()
         {
@@ -71,8 +60,36 @@ namespace Integrative.Lara
 
         private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            OnPropertyChanged(e);
+        }
+
+    }
+
+    /// <summary>
+    /// Binding options for generic modification handler
+    /// </summary>
+    /// <typeparam name="T">Type of data source</typeparam>
+    public sealed class BindHandlerOptions<T> : BindPropertyOptions<T>
+        where T : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Action to update the element whenever the data source is modified
+        /// </summary>
+        public Action<T, Element> ModifiedHandler { get; set; }
+
+        private bool _applying;
+
+        internal override void Apply(Element element)
+        {
+            _applying = true;
+            ModifiedHandler?.Invoke(BindObject, element);
+            _applying = false;
+        }
+
+        internal override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
             VerifyApplying();
-            PropertyChanged?.Invoke(this, e);
+            base.OnPropertyChanged(e);
         }
 
         private void VerifyApplying()
@@ -89,35 +106,13 @@ namespace Integrative.Lara
     /// </summary>
     /// <typeparam name="TData">Data type for data source instance</typeparam>
     /// <typeparam name="TValue">Data type for data source property</typeparam>
-    public abstract class BindPropertyOptions<TData, TValue> : BindPropertyOptions
+    public abstract class BindPropertyOptions<TData, TValue> : BindPropertyOptions<TData>
         where TData : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Instance to track changes
-        /// </summary>
-        public TData BindObject { get; set; }
-
         /// <summary>
         /// Function to retrieve the target value from instance that's tracked
         /// </summary>
         public Func<TData, TValue> Property { get; set; }
-
-        internal override event PropertyChangedEventHandler PropertyChanged;
-
-        internal override void Subscribe()
-        {
-            BindObject.PropertyChanged += ObjectChangedHandler;
-        }
-
-        internal override void Unsubscribe()
-        {
-            BindObject.PropertyChanged -= ObjectChangedHandler;
-        }
-
-        private void ObjectChangedHandler(object sender, PropertyChangedEventArgs args)
-        {
-            PropertyChanged?.Invoke(this, args);
-        }
 
         internal TValue GetCurrentValue()
             => Property(BindObject);
@@ -193,11 +188,12 @@ namespace Integrative.Lara
             element.ToggleClass(ClassName, value);
         }
     }
-    
+
     /// <summary>
-    /// Base class for two-way binding of attributes
+    /// Base class for two-way binding
     /// </summary>
-    public abstract class BindInputOptions : BindPropertyOptions
+    public abstract class BindInputOptions<TData, TValue> : BindPropertyOptions<TData>
+        where TData : INotifyPropertyChanged
     {
         private string _attribute;
 
@@ -215,36 +211,28 @@ namespace Integrative.Lara
                 _attribute = value.ToLowerInvariant();
             }
         }
-    }
 
-    /// <summary>
-    /// Base class for two-way binding
-    /// </summary>
-    public abstract class BindInputOptions<TData, TValue> : BindInputOptions
-        where TData : INotifyPropertyChanged
-    {
         /// <summary>
         /// Bind model property
         /// </summary>
         public Expression<Func<TData, TValue>> Property { get; set; }
 
-        /// <summary>
-        /// Instance to track changes
-        /// </summary>
-        public TData BindObject { get; set; }
-
         private Func<TData, TValue> _getter;
         private Action<TData, TValue> _setter;
 
+        internal void Compile()
+        {
+            _getter = Property.Compile();
+            _setter = CompileSetter();
+        }
+
         internal TValue GetCurrentValue()
         {
-            _getter ??= Property.Compile();
             return _getter(BindObject);
         }
 
         internal void SetValue(TValue value)
         {
-            _setter ??= CompileSetter();
             _setter(BindObject, value);
         }
 
@@ -262,23 +250,6 @@ namespace Integrative.Lara
         }
 
         internal abstract void Collect(Element element);
-
-        internal override event PropertyChangedEventHandler PropertyChanged;
-
-        internal override void Subscribe()
-        {
-            BindObject.PropertyChanged += ObjectChangedHandler;
-        }
-
-        internal override void Unsubscribe()
-        {
-            BindObject.PropertyChanged -= ObjectChangedHandler;
-        }
-
-        private void ObjectChangedHandler(object sender, PropertyChangedEventArgs args)
-        {
-            PropertyChanged?.Invoke(this, args);
-        }
     }
 
     /// <summary>
