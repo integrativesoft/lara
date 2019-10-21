@@ -144,6 +144,9 @@
   <data name="Http403" xml:space="preserve">
     <value>HTTP 403: Forbidden.</value>
   </data>
+  <data name="InvalidBindingExpression" xml:space="preserve">
+    <value>Invalid expression for binding. Expecting a member expression.</value>
+  </data>
   <data name="InvalidTagName" xml:space="preserve">
     <value>Invalid tag name.</value>
   </data>

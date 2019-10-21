@@ -1094,6 +1094,32 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Two-way bindings for element attributes (e.g. 'value' attribute populated by user)
+        /// </summary>
+        /// <typeparam name="T">Source data type</typeparam>
+        /// <param name="options">Binding options</param>
+        public void BindInput<T>(BindInputOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            EnsureBindings();
+            _bindings.BindInput(options);
+        }
+
+        /// <summary>
+        /// Two-way bindings for element flag attributes (e.g. 'checked' attribute populated by user)
+        /// </summary>
+        /// <typeparam name="T">Source data type</typeparam>
+        /// <param name="options">Binding options</param>
+        public void BindFlagInput<T>(BindFlagInputOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            EnsureBindings();
+            _bindings.BindInput(options);
+        }
+
+        /// <summary>
         /// Removes bindings for an attribute
         /// </summary>
         /// <param name="attribute">Attribute to remove bindings of</param>

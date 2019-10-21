@@ -98,6 +98,11 @@ namespace Integrative.Lara.Reactive
             StoreBinding(key, options);
         }
 
+        public void BindInput(BindInputOptions options)
+        {
+            StoreBinding(options.Attribute, options);
+        }
+
         private void StoreBinding(string key, BindPropertyOptions options)
         {
             UnbindAttribute(key);

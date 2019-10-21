@@ -419,20 +419,38 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void BindableValueBinding()
+        public void InputBindingGetter()
         {
             var data = new MyInputData
             {
                 MyValue = "hello"
             };
             var input = new InputElement();
-            var binding = new BindValueOptions<MyInputData>
+            input.BindInput(new BindInputOptions<MyInputData>
             {
+                Attribute = "value",
+                BindObject = data,
+                Property = x => x.MyValue
+            });
+            Assert.Equal("hello", input.Value);
+            data.MyValue = "bye";
+            Assert.Equal("bye", input.Value);
+        }
+
+        [Fact]
+        public void InputBindingSetter()
+        {
+            var data = new MyInputData
+            {
+                MyValue = "hello"
+            };
+            var input = new InputElement();
+            var binding = new BindInputOptions<MyInputData>
+            {
+                Attribute = "value",
                 BindObject = data,
                 Property = x => x.MyValue
             };
-            binding.Apply(input);
-            Assert.Equal("hello", input.Value);
             input.Value = "bye";
             binding.Collect(input);
             Assert.Equal("bye", data.MyValue);

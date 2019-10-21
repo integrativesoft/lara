@@ -142,6 +142,15 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid expression for binding. Expecting a member expression..
+        /// </summary>
+        internal static string InvalidBindingExpression {
+            get {
+                return ResourceManager.GetString("InvalidBindingExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid tag name..
         /// </summary>
         internal static string InvalidTagName {

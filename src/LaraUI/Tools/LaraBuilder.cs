@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -652,6 +653,70 @@ namespace Integrative.Lara
         {
             _stack.Peek().BindChildren(options);
             return this;
+        }
+
+        /// <summary>
+        /// Adds a two-way binding for an attribute (e.g. 'value' attribute)
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindInput<T>(BindInputOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindInput(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="attribure">Attribute</param>
+        /// <param name="data">Data source</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindInput<T>(string attribure, T data, Expression<Func<T, string>> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindInput<T>(new BindInputOptions<T>
+            {
+                Attribute = attribure,
+                BindObject = data,
+                Property = property
+            });
+        }
+
+        /// <summary>
+        /// Adds a two-way binding for an attribute (e.g. 'value' attribute)
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindFlagInput<T>(BindFlagInputOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindFlagInput(options);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
+        /// </summary>
+        /// <typeparam name="T">Type of data source</typeparam>
+        /// <param name="attribure">Attribute</param>
+        /// <param name="data">Data source</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindFlagInput<T>(string attribure, T data, Expression<Func<T, bool>> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindFlagInput<T>(new BindFlagInputOptions<T>
+            {
+                Attribute = attribure,
+                BindObject = data,
+                Property = property
+            });
         }
 
         /// <summary>

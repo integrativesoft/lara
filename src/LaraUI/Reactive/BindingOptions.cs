@@ -193,11 +193,34 @@ namespace Integrative.Lara
             element.ToggleClass(ClassName, value);
         }
     }
+    
+    /// <summary>
+    /// Base class for two-way binding of attributes
+    /// </summary>
+    public abstract class BindInputOptions : BindPropertyOptions
+    {
+        private string _attribute;
+
+        /// <summary>
+        /// Attribute to bind
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization",
+            "CA1308:Normalize strings to uppercase", Justification = "html attributes are lowercase")]
+        public string Attribute
+        {
+            get => _attribute;
+            set
+            {
+                value = value ?? throw new ArgumentNullException(nameof(Attribute));
+                _attribute = value.ToLowerInvariant();
+            }
+        }
+    }
 
     /// <summary>
     /// Base class for two-way binding
     /// </summary>
-    public abstract class BindTwoWayOptions<TData, TValue> : BindPropertyOptions
+    public abstract class BindInputOptions<TData, TValue> : BindInputOptions
         where TData : INotifyPropertyChanged
     {
         /// <summary>
@@ -210,20 +233,32 @@ namespace Integrative.Lara
         /// </summary>
         public TData BindObject { get; set; }
 
+        private Func<TData, TValue> _getter;
+        private Action<TData, TValue> _setter;
+
         internal TValue GetCurrentValue()
         {
-            var getter = Property.Compile();
-            return getter(BindObject);
+            _getter ??= Property.Compile();
+            return _getter(BindObject);
         }
 
         internal void SetValue(TValue value)
         {
-            var member = (MemberExpression)Property.Body;
+            _setter ??= CompileSetter();
+            _setter(BindObject, value);
+        }
+
+        private Action<TData, TValue> CompileSetter()
+        {
+            if (!(Property.Body is MemberExpression member))
+            {
+                throw new ArgumentException(Resources.InvalidBindingExpression);
+            }
             var param = Expression.Parameter(typeof(TValue), "value");
             var set = Expression.Lambda<Action<TData, TValue>>(
                 Expression.Assign(member, param), Property.Parameters[0], param);
             var action = set.Compile();
-            action(BindObject, value);
+            return action;
         }
 
         internal abstract void Collect(Element element);
@@ -247,21 +282,41 @@ namespace Integrative.Lara
     }
 
     /// <summary>
-    /// Binding options for two-way binding of element 'value' property
+    /// Binding options for two-way binding of attributes
     /// </summary>
-    /// <typeparam name="T">Source data type</typeparam>
-    public sealed class BindValueOptions<T> : BindTwoWayOptions<T, string>
+    /// <typeparam name="T">Data source type</typeparam>
+    public class BindInputOptions<T> : BindInputOptions<T, string>
         where T : INotifyPropertyChanged
     {
         internal override void Apply(Element element)
         {
             var value = GetCurrentValue();
-            element.SetAttributeLower("value", value);
+            element.SetAttributeLower(Attribute, value);
         }
 
         internal override void Collect(Element element)
         {
-            var value = element.GetAttributeLower("value");
+            var value = element.GetAttributeLower(Attribute);
+            SetValue(value);
+        }
+    }
+
+    /// <summary>
+    /// Binding options for two-way binding of flag attributes
+    /// </summary>
+    /// <typeparam name="T">Data source type</typeparam>
+    public class BindFlagInputOptions<T> : BindInputOptions<T, bool>
+        where T : INotifyPropertyChanged
+    {
+        internal override void Apply(Element element)
+        {
+            var value = GetCurrentValue();
+            element.SetFlagAttributeLower(Attribute, value);
+        }
+
+        internal override void Collect(Element element)
+        {
+            var value = element.HasAttributeLower(Attribute);
             SetValue(value);
         }
     }
