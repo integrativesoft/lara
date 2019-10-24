@@ -108,7 +108,7 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## Getting started
 
-Create a new project, add the NuGet package `Integrative.Lara`, and copy and paste the 'Sample application' in this page.
+Create a new project, add the NuGet package `Integrative.Lara`, and copy and paste the [sample application](https://github.com/integrativesoft/lara/wiki/Sample-Application).
 
 This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
