@@ -13,9 +13,9 @@
     "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
-    "@types/node": "^12.11.2",
+    "@types/node": "^12.11.6",
     "clean-webpack-plugin": "^3.0.0",
-    "ts-loader": "^6.2.0",
+    "ts-loader": "^6.2.1",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
