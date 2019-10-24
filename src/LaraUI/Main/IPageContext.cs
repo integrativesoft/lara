@@ -56,7 +56,8 @@ namespace Integrative.Lara
         /// Submits the specified java script code to execute on the client. The code is executed after the current event finishes on the server and control returns to the client.
         /// </summary>
         /// <param name="javaScriptCode">The JavaScript code to execute.</param>
-        void Submit(string javaScriptCode);
+        /// <param name="payload">Optional payload to send to the client</param>
+        void Submit(string javaScriptCode, string payload = null);
 
         /// <summary>
         /// Register a custom event that can be called from JavaScript code

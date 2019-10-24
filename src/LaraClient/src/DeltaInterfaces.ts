@@ -96,6 +96,7 @@ export interface SetValueDelta extends BaseDelta {
 
 export interface SubmitJsDelta extends BaseDelta {
     Code: string;
+    Payload?: string;
 }
 
 export interface SetCheckedDelta extends BaseDelta {

@@ -21,11 +21,12 @@ namespace Integrative.Lara.Main
             _parent = parent;
         }
 
-        public void Submit(string javaScriptCode)
+        public void Submit(string javaScriptCode, string payload = null)
         {
             _parent.Document.Enqueue(new SubmitJsDelta
             {
-                Code = javaScriptCode
+                Code = javaScriptCode,
+                Payload = payload
             });
         }
 

@@ -254,9 +254,9 @@ function setValue(delta: SetValueDelta): void {
     input.value = delta.Value;
 }
 
-function submitJS(delta: SubmitJsDelta): void {
+function submitJS(context: SubmitJsDelta): void {
     try {
-        eval(delta.Code);
+        eval(context.Code);
     } catch (e) {
         console.log((<Error>e).message);
     }

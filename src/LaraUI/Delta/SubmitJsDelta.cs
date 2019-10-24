@@ -14,6 +14,9 @@ namespace Integrative.Lara.Delta
         [DataMember]
         public string Code { get; set; }
 
+        [DataMember(EmitDefaultValue = false)]
+        public string Payload { get; set; }
+
         public SubmitJsDelta() : base(DeltaType.SubmitJS)
         {
         }
