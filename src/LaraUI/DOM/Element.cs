@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -1197,6 +1198,7 @@ namespace Integrative.Lara
         /// Clears all child nodes and replaces them with a single text node
         /// </summary>
         /// <param name="text">Text for the node</param>
+        [Obsolete("Use InnerText property instead of SetInnerText method")]
         public void SetInnerText(string text)
         {
             SetInnerEncode(text, true);
@@ -1229,6 +1231,37 @@ namespace Integrative.Lara
                 ClearChildren();
                 AppendEncode(value, encode);
             }
+        }
+
+        internal override string GetNodeInnerText()
+        {
+            if (ChildCount == 0)
+            {
+                return string.Empty;
+            }
+            else if (ChildCount == 1)
+            {
+                return GetChildAt(0).InnerText;
+            }
+            else
+            {
+                var builder = new StringBuilder();
+                AppendNodeInnerText(builder);
+                return builder.ToString();
+            }
+        }
+
+        internal override void AppendNodeInnerText(StringBuilder builder)
+        {
+            foreach (var child in Children)
+            {
+                child.AppendNodeInnerText(builder);
+            }
+        }
+
+        internal override void SetNodeInnerText(string value)
+        {
+            SetInnerEncode(value, true);
         }
 
         #endregion

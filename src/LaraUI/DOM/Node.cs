@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Components;
 using Integrative.Lara.Delta;
+using System.Text;
 
 namespace Integrative.Lara
 {
@@ -74,5 +75,22 @@ namespace Integrative.Lara
         }
 
         internal virtual bool IsPrintable => true;
+
+        /// <summary>
+        /// The InnerText property represents the text content of a node and all of its descendants.
+        /// When setting the property, all descendants are replaced with a text node and the given text content.
+        /// When getting the property, it retrieves the text of all descendants.
+        /// </summary>
+        public string InnerText
+        {
+            get => GetNodeInnerText();
+            set => SetNodeInnerText(value);
+        }
+
+        internal abstract string GetNodeInnerText();
+
+        internal abstract void SetNodeInnerText(string value);
+
+        internal abstract void AppendNodeInnerText(StringBuilder builder);
     }
 }

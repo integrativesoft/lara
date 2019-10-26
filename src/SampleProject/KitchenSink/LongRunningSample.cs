@@ -67,10 +67,10 @@ namespace SampleProject
         private async Task ButtonHandler()
         {
             var header = BuildMessage();
-            _coffeeText.SetInnerText(header);
+            _coffeeText.InnerText = header;
             foreach (var step in _steps)
             {
-                _counterText.SetInnerText(step);
+                _counterText.InnerText = step;
                 await LaraUI.Page.Navigation.FlushPartialChanges();
                 await Task.Delay(1000);
             }

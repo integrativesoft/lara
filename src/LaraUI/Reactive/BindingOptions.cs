@@ -128,7 +128,7 @@ namespace Integrative.Lara
         internal override void Apply(Element element)
         {
             var value = GetCurrentValue();
-            element.SetInnerText(value);
+            element.InnerText = value;
         }
     }
 

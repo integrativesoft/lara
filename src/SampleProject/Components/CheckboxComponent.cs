@@ -36,7 +36,7 @@ namespace SampleProject
         private void UpdateLabel()
         {
             var text = _checkbox.Checked ? "checked" : "unchecked";
-            _label.SetInnerText(text);
+            _label.InnerText = text;
         }
 
         public bool Checked
@@ -53,7 +53,7 @@ namespace SampleProject
             set
             {
                 _labelText = value;
-                _label.SetInnerText(value);
+                _label.InnerText = value;
             }
         }
 

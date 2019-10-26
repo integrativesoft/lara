@@ -40,10 +40,10 @@ namespace Integrative.Lara.Tests.Delta
         {
             var doc = DomOperationsTesting.CreateDocument();
             var span = Element.Create("span");
-            span.SetInnerText("a");
+            span.InnerText = "a";
             doc.Body.AppendChild(span);
             doc.OpenEventQueue();
-            span.SetInnerText("test");
+            span.InnerText = "test";
             var q = doc.GetQueue();
             Assert.Single(q);
             var first = q.Peek() as TextModifiedDelta;

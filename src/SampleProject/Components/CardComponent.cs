@@ -46,7 +46,7 @@ namespace SampleProject
             set
             {
                 _title = value;
-                _spanTitle.SetInnerText(value);
+                _spanSubtitle.InnerText = value;
             }
         }
 
@@ -58,7 +58,7 @@ namespace SampleProject
             set
             {
                 _subtitle = value;
-                _spanSubtitle.SetInnerText(value);
+                _spanSubtitle.InnerText = value;
             }
         }
 

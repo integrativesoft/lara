@@ -532,8 +532,8 @@ namespace Integrative.Lara.Tests.DOM
         public void SetInnerTextReplacesText()
         {
             var div = Element.Create("div");
-            div.SetInnerText("bb");
-            div.SetInnerText("a<a");
+            div.InnerText = "bb";
+            div.InnerText = "a<a";
             Assert.Equal(1, div.ChildCount);
             var child = div.GetChildAt(0) as TextNode;
             Assert.NotNull(child);

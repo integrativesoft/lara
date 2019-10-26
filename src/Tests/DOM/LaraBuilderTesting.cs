@@ -195,7 +195,7 @@ namespace Integrative.Lara.Tests.DOM
         public void BindActionElement()
         {
             var data = new MyData();
-            _builder.Bind(data, (x, y) => y.SetInnerText(x.Counter.ToString()));
+            _builder.Bind(data, (x, y) => y.InnerText = x.Counter.ToString());
             data.Counter = 14;
             VerifyInnerText(_root, "14");
         }

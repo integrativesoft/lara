@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.ObjectModel;
+using System.Web;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -33,12 +34,12 @@ namespace Integrative.Lara.Tests.DOM
         public void SetInnerTextSetsText()
         {
             var x = Element.Create("span");
-            x.SetInnerText("hello");
+            x.InnerText = "hello";
             Assert.Equal(1, x.ChildCount);
-            VerifyInnerText(x, "hello");
+            VerifyInnerData(x, "hello");
         }
 
-        private void VerifyInnerText(Element element, string data)
+        private void VerifyInnerData(Element element, string data)
         {
             var node = element.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
@@ -48,10 +49,12 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InnerTextReplacesPrevious()
         {
+            const string Bye = "<bye";
             var x = Element.Create("span");
-            x.SetInnerText("hello");
-            x.SetInnerText("bye");
-            VerifyInnerText(x, "bye");
+            x.InnerText = "hello";
+            x.InnerText = Bye;
+            Assert.Equal(Bye, x.InnerText);
+            VerifyInnerData(x, "&lt;bye");
         }
 
         [Fact]
@@ -65,7 +68,7 @@ namespace Integrative.Lara.Tests.DOM
                 Property = x => x.Counter.ToString()
             });
             data.Counter = 5;
-            VerifyInnerText(div, "5");
+            VerifyInnerData(div, "5");
         }
 
         [Fact]
@@ -76,10 +79,10 @@ namespace Integrative.Lara.Tests.DOM
             div.Bind(new BindHandlerOptions<MyData>
             {
                 BindObject = data,
-                ModifiedHandler = (x, y) => div.SetInnerText(data.Counter.ToString())
+                ModifiedHandler = (x, y) => div.InnerText = data.Counter.ToString()
             });
             data.Counter = 5;
-            VerifyInnerText(div, "5");
+            VerifyInnerData(div, "5");
         }
 
         [Fact]
@@ -87,9 +90,9 @@ namespace Integrative.Lara.Tests.DOM
         {
             var data = new MyData();
             var div = Element.Create("div");
-            div.Bind(data, (x, y) => div.SetInnerText(data.Counter.ToString()));
+            div.Bind(data, (x, y) => div.InnerText = data.Counter.ToString());
             data.Counter = 5;
-            VerifyInnerText(div, "5");
+            VerifyInnerData(div, "5");
         }
 
         [Fact]
@@ -128,7 +131,7 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             var span1 = Element.Create("span");
             var span2 = Element.Create("span");
-            span2.Bind(data, (x, y) => span2.SetInnerText(x.Counter.ToString()));
+            span2.Bind(data, (x, y) => span2.InnerText = x.Counter.ToString());
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
@@ -147,8 +150,8 @@ namespace Integrative.Lara.Tests.DOM
             span2.UnbindAll();
             collection.Add(data);
             data.Counter = 10;
-            VerifyInnerText(span1, "5");
-            VerifyInnerText(span2, "5");
+            VerifyInnerData(span1, "5");
+            VerifyInnerData(span2, "5");
             Assert.Equal(0, div.ChildCount);
             Assert.Equal("5", div.GetAttribute("data-counter"));
         }
@@ -214,10 +217,10 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = x => x.Counter.ToString()
             });
-            VerifyInnerText(div, "5");
+            VerifyInnerData(div, "5");
             div.UnbindInnerText();
             data.Counter = 10;
-            VerifyInnerText(div, "5");
+            VerifyInnerData(div, "5");
         }
 
         [Fact]
@@ -225,11 +228,11 @@ namespace Integrative.Lara.Tests.DOM
         {
             var div = Element.Create("div");
             var data = new MyData();
-            div.Bind(data, (x, y) => div.SetInnerText(data.Counter.ToString()));
+            div.Bind(data, (x, y) => div.InnerText = data.Counter.ToString());
             data.Counter = 3;
             div.UnbindHandler();
             data.Counter = 8;
-            VerifyInnerText(div, "3");
+            VerifyInnerData(div, "3");
         }
 
         [Fact]
