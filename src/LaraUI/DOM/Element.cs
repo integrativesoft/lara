@@ -1198,7 +1198,7 @@ namespace Integrative.Lara
         /// Clears all child nodes and replaces them with a single text node
         /// </summary>
         /// <param name="text">Text for the node</param>
-        [Obsolete("Use InnerText property instead of SetInnerText method")]
+        [Obsolete("Use InnerText property instead.")]
         public void SetInnerText(string text)
         {
             SetInnerEncode(text, true);
