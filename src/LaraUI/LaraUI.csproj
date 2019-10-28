@@ -67,9 +67,9 @@
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>0.6.1:
-- adds two-way bindings for input elements
-- extends methods for calling external client libraries
-- improves support for concurrent events</PackageReleaseNotes>
+- adds options for two-way binding of input elements
+- allows passing payload data in the SubmitJS method
+- improves support for concurrent events guaranteeing execution order</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
