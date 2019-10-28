@@ -10,6 +10,32 @@ using System.Threading.Tasks;
 namespace Integrative.Lara
 {
     /// <summary>
+    /// Propagation options for client events
+    /// </summary>
+    public enum PropagationType
+    {
+        /// <summary>
+        /// Uses the 'StopPropagation' option
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Prevents the event to bubble up to parent elements
+        /// </summary>
+        StopPropagation = 1,
+
+        /// <summary>
+        /// Prevents the event to bubble up to parent elements or any other handler
+        /// </summary>
+        StopImmediatePropagation = 2,
+
+        /// <summary>
+        /// Allows event propagation
+        /// </summary>
+        AllowAll = 3
+    }
+
+    /// <summary>
     /// Specifies settings to declare an event and associate execution code to it.
     /// </summary>
     public sealed class EventSettings
@@ -59,6 +85,11 @@ namespace Integrative.Lara
         ///   <c>true</c> if [long running]; otherwise, <c>false</c>.
         /// </value>
         public bool LongRunning { get; set; }
+
+        /// <summary>
+        /// Specifies propagation options for client events
+        /// </summary>
+        public PropagationType Propagation { get; set; }
 
         internal void Verify()
         {

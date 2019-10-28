@@ -10,7 +10,8 @@ import { PlugOptions } from "./index";
 export enum EventResultType {
     Success = 0,
     NoSession = 1,
-    NoElement = 2
+    NoElement = 2,
+    OutOfSequence = 3
 }
 
 export enum DeltaType {

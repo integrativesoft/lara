@@ -549,5 +549,52 @@ namespace Integrative.Lara.Tests.Middleware
             var page = x.DefaultNotFound();
             Assert.True(page is DefaultErrorPage);
         }
+
+        [Fact]
+        public void SequencerReorders()
+        {
+            var builder = new StringBuilder();
+            var x = new Sequencer();
+            Task.Run(async () =>
+            {
+                var ok = await x.WaitForTurn(2);
+                Assert.True(ok);
+                AddChars(builder, "a");
+            });
+            Task.Run(async () =>
+            {
+                var ok = await x.WaitForTurn(1);
+                Assert.True(ok);
+                AddChars(builder, "b");
+            });
+            Task.Run(async () =>
+            {
+                var ok = await x.WaitForTurn(3);
+                Assert.True(ok);
+                Assert.Equal("ba", builder.ToString());
+            });
+        }
+
+        [Fact]
+        public void SequencerAborts()
+        {
+            var x = new Sequencer();
+            Task.Run(async () =>
+            {
+                var ok = await x.WaitForTurn(3);
+                Assert.False(ok);
+            });
+            Task.Run(async () =>
+            {
+                var ok = await x.WaitForTurn(1);
+                Assert.True(ok);
+                x.AbortAll();
+            });
+        }
+
+        private void AddChars(StringBuilder builder, string text)
+        {
+            builder.Append(text);
+        }
     }
 }

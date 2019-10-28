@@ -15,11 +15,16 @@ import { EventResult, EventResultType } from "./DeltaInterfaces";
 import { clean } from "./Initializer";
 import { ClientEventMessage, collectValues } from "./InputCollector";
 import { processResult } from "./Worker";
+import { Sequencer } from "./Sequencer";
 
 let documentId: string;
+let lastEventNumber: number;
+let sequencer: Sequencer;
 
 export function initialize(id: string): void {
+    sequencer = new Sequencer();
     documentId = id;
+    lastEventNumber = 0;
     window.addEventListener("unload", terminate, false);
     clean(document);
     let json = document.head.getAttribute('data-lara-initialdelta');
@@ -38,6 +43,13 @@ function terminate(): void {
     navigator.sendBeacon(url);
 }
 
+export enum PropagationType {
+    Default = 0,
+    StopPropagation = 1,
+    StopImmediatePropagation = 2,
+    AllowAll = 3
+}
+
 export interface PlugOptions {
     EventName: string;
     Block?: boolean;
@@ -46,13 +58,25 @@ export interface PlugOptions {
     BlockShownId?: string;
     ExtraData?: string;
     LongRunning?: boolean;
+    IgnoreSequence?: boolean;
+    Propagation?: PropagationType;
 }
 
 export class EventParameters {
     DocumentId: string;
     ElementId: string;
     EventName: string;
+    EventNumber: number;
     Message: ClientEventMessage;
+}
+
+export function plugEvent(el: Element, ev: Event, options: PlugOptions): void {
+    if (options.Propagation == PropagationType.StopImmediatePropagation) {
+        ev.stopImmediatePropagation();
+    } else if (options.Propagation != PropagationType.AllowAll) {
+        ev.stopPropagation();
+    }
+    plug(el, options);
 }
 
 export function plug(el: Element, options: PlugOptions): void {
@@ -63,23 +87,19 @@ export function plug(el: Element, options: PlugOptions): void {
     }
 }
 
-export function plugEvent(el: Element, ev: Event, options: PlugOptions): void {
-    ev.stopPropagation();
-    plug(el, options);
-}
-
 function plugWebSocket(el: Element, plug: PlugOptions): void {
     block(plug);
     let url = getSocketUrl('/_event');
     let socket = new WebSocket(url);
+    let params = buildEventParameters(el, plug);
     socket.onopen = function (_event) {
-        socket.onmessage = function (e1) {
-            onSocketMessage(e1.data);
+        socket.onmessage = async function (e1) {
+            await onSocketMessage(e1.data, params.EventNumber);
         };
         socket.onclose = function (_e2) {
             unblock(plug);
         }
-        let json = buildEventParameters(el, plug);
+        let json = JSON.stringify(params);
         socket.send(json);
     };
     socket.onerror = function (_event) {
@@ -98,28 +118,40 @@ function getSocketUrl(name: string): string {
     return url + window.location.host + name;
 }
 
-function buildEventParameters(el: Element, plug: PlugOptions): string {
+function buildEventParameters(el: Element, plug: PlugOptions): EventParameters {
     let params = new EventParameters();
+    if (plug.IgnoreSequence) {
+        params.EventNumber = 0;
+    } else {
+        params.EventNumber = getEventNumber();
+    }
     params.DocumentId = documentId;
     params.ElementId = el.id;
     params.EventName = plug.EventName;
     params.Message = collectValues();
     params.Message.ExtraData = plug.ExtraData;
-    return JSON.stringify(params);
+    return params;
 }
 
-function onSocketMessage(json: string): void {
+function getEventNumber(): number {
+    lastEventNumber++;
+    return lastEventNumber;
+}
+
+async function onSocketMessage(json: string, eventNumber: number): Promise<void> {
+    await sequencer.waitForTurn(eventNumber);
     let result = JSON.parse(json) as EventResult;
     processEventResult(result);
 }
 
 function plugAjax(el: Element, plug: PlugOptions): void {
     block(plug);
-    let url = getEventUrl(el, plug.EventName);
+    let eventNumber = getEventNumber();
+    let url = getEventUrl(el, plug.EventName, eventNumber);
     let ajax = new XMLHttpRequest();
-    ajax.onreadystatechange = function () {
+    ajax.onreadystatechange = async function () {
         if (this.readyState == 4) {
-            processAjax(this);
+            await processAjax(this, eventNumber);
             unblock(plug);
         }
     };
@@ -156,21 +188,23 @@ export function sendMessage(options: MessageOptions): void {
     plug(document.head, params);
 }
 
-function processAjax(ajax: XMLHttpRequest): void {
+async function processAjax(ajax: XMLHttpRequest, eventNumber: number): Promise<void> {
     if (ajax.status == 200) {
-        processAjaxResult(ajax);
+        await processAjaxResult(ajax, eventNumber);
     } else {
         processAjaxError(ajax);
     }
 }
 
-function getEventUrl(el: Element, eventName: string): string {
+function getEventUrl(el: Element, eventName: string, eventNumber: number): string {
     return "/_event?doc=" + documentId
         + "&el=" + el.id
-        + "&ev=" + eventName;
+        + "&ev=" + eventName
+        + "&seq=" + eventNumber.toString();
 }
 
-function processAjaxResult(ajax: XMLHttpRequest): void {
+async function processAjaxResult(ajax: XMLHttpRequest, eventNumber: number): Promise<void> {
+    await sequencer.waitForTurn(eventNumber);
     let result = JSON.parse(ajax.responseText) as EventResult;
     processEventResult(result);
 }
@@ -198,6 +232,7 @@ export function listenServerEvents(): void {
         EventName: '_server_event',
         Block: false,
         ExtraData: '',
-        LongRunning: true
+        LongRunning: true,
+        IgnoreSequence: true
     });
 }

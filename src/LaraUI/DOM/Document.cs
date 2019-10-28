@@ -56,6 +56,7 @@ namespace Integrative.Lara
 
         readonly ServerEventsController _serverEvents;
         readonly MessageRegistry _messageRegistry;
+        readonly Sequencer _sequencer = new Sequencer();
 
         int _serializer;
 
@@ -238,6 +239,7 @@ namespace Integrative.Lara
             OnUnload?.Invoke(this, args);
             await OnUnloadAsync.InvokeAsync(this, args);
             AfterUnload?.Invoke(this, new EventArgs());
+            _sequencer.AbortAll();
         }
 
         /// <summary>
@@ -271,5 +273,6 @@ namespace Integrative.Lara
         internal ServerEventsController GetServerEventsController()
             => _serverEvents;
 
+        internal Task<bool> WaitForTurn(long turn) => _sequencer.WaitForTurn(turn);
     }
 }

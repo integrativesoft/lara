@@ -66,7 +66,10 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.6.1 adds two-way bindings and extends methods for calling external client libraries</PackageReleaseNotes>
+    <PackageReleaseNotes>0.6.1:
+- adds two-way bindings for input elements
+- extends methods for calling external client libraries
+- improves support for concurrent events</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

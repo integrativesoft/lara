@@ -66,9 +66,9 @@ namespace Integrative.Lara.Middleware
         {
             if (_serverEventsSocket != null)
             {
+                _completion.SetResult(true);
                 await PostEventHandler.CloseSocket(_serverEventsSocket);
                 _serverEventsSocket = null;
-                _completion.SetResult(true);
             }
         }
 

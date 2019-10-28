@@ -62,6 +62,9 @@ namespace Integrative.Lara.Delta
         [DataMember(EmitDefaultValue = false)]
         public bool LongRunning { get; set; }
 
+        [DataMember(EmitDefaultValue = false)]
+        public PropagationType Propagation { get; set; }
+
         public static ClientEventSettings CreateFrom(EventSettings settings)
         {
             var client = new ClientEventSettings
@@ -69,6 +72,7 @@ namespace Integrative.Lara.Delta
                 Block = settings.Block,
                 EventName = settings.EventName,
                 LongRunning = settings.LongRunning,
+                Propagation = settings.Propagation
             };
             if (settings.BlockOptions != null)
             {

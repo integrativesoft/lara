@@ -14,7 +14,8 @@ namespace Integrative.Lara.Delta
     {
         Success = 0,
         NoSession = 1,
-        NoElement = 2
+        NoElement = 2,
+        OutOfSequence = 3
     }
 
     [DataContract]

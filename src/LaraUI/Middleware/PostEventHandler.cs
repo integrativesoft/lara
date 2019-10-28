@@ -116,7 +116,12 @@ namespace Integrative.Lara.Middleware
         {
             Task release;
             var document = context.Document;
-            if (document.TryGetElementById(context.Parameters.ElementId, out var element))
+            var proceed = await document.WaitForTurn(context.Parameters.EventNumber);
+            if (!proceed)
+            {
+                await SendEvent(context, EventResultType.OutOfSequence);
+            }
+            else if (document.TryGetElementById(context.Parameters.ElementId, out var element))
             {
                 context.Element = element;
                 using (var access = await document.Semaphore.UseWaitAsync())

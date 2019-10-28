@@ -10,6 +10,7 @@ using Integrative.Lara.Front.Tools;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
 using System;
+using System.Text;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -207,6 +208,48 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             div.AppendChild(x);
             Assert.ThrowsAny<InvalidOperationException>(() => x.SetAttributeLower("slot", "test"));
+        }
+
+        [Fact]
+        [Obsolete]
+        public void SetInnerText()
+        {
+            var x = Element.Create("div");
+            x.SetInnerText("<a");
+            Assert.Equal("<a", x.InnerText);
+        }
+
+        [Fact]
+        public void AppendNodeInnerText()
+        {
+            var x = Element.Create("div");
+            x.InnerText = "a";
+            var builder = new StringBuilder();
+            x.AppendNodeInnerText(builder);
+            Assert.Equal("a", builder.ToString());
+        }
+
+        [Fact]
+        public void GetNodeInnerText()
+        {
+            var x = Element.Create("div");
+            Assert.True(string.IsNullOrEmpty(x.InnerText));
+            var x1 = Element.Create("div");
+            var x2 = Element.Create("div");
+            x.AppendChild(x1);
+            x.AppendChild(x2);
+            x1.InnerText = "<";
+            x2.InnerText = ">";
+            Assert.Equal("<>", x.InnerText);
+        }
+
+        [Fact]
+        public void NodeInnerText()
+        {
+            var x = new TextNode();
+            Assert.Equal(string.Empty, x.InnerText);
+            x.InnerText = "<<";
+            Assert.Equal("<<", x.InnerText);
         }
     }
 }
