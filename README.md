@@ -3,8 +3,6 @@ Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apa
 
 >*"It is similar to server-side Blazor, but is much more lightweight and easier to install. For example, while any type of Blazor requires a whole SDK, Lara is just a NuGet package."* [ScientificProgrammer.net](https://scientificprogrammer.net/2019/08/18/pros-and-cons-of-blazor-for-web-development/?pagename=pros-and-cons-of-blazor)
 
-**Lara Web Engine** is a C# library for Web UI development with DOM manipulation and server-side rendering.
-
 The purpose of **Lara** is to give you full control of the HTML document tree from the server in C#.
 
 - Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS. Tested on NET Core and NET Framework.
