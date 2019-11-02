@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    public class WebServicesTesting
+    public class WebServicesTesting : DummyContextTesting
     {
         static WebServicesTesting()
         {
@@ -158,14 +158,15 @@ namespace Integrative.Lara.Tests.Middleware
         public void PublishAssembliesService()
         {
             const string Address = "/mydummy1";
-            LaraUI.Publish(new WebServiceContent
+            using var app = new Application();
+            app.PublishService(new WebServiceContent
             {
                 Address = Address,
                 Method = "POST",
                 Factory = () => new DummyWS()
             });
             var combined = Published.CombinePathMethod(Address, "POST");
-            var found = LaraUI.TryGetNode(combined, out var item);
+            var found = app.TryGetNode(combined, out var item);
             Assert.True(found);
             var service = item as WebServicePublished;
             Assert.NotNull(service);
@@ -181,8 +182,9 @@ namespace Integrative.Lara.Tests.Middleware
         public void PublishAssembliesPage()
         {
             const string Address = "/mypapapapa";
-            LaraUI.Publish(Address, () => new MyPage());
-            bool found = LaraUI.TryGetNode(Address, out var item);
+            using var app = new Application();
+            app.PublishPage(Address, () => new MyPage());
+            bool found = app.TryGetNode(Address, out var item);
             Assert.True(found);
             var page = item as PagePublished;
             Assert.NotNull(page.CreateInstance());
@@ -192,6 +194,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void UnpublishWebservice()
         {
             const string Address = "/mylalala";
+            using var app = new Application();
             LaraUI.Publish(new WebServiceContent
             {
                 Address = Address,
@@ -199,7 +202,7 @@ namespace Integrative.Lara.Tests.Middleware
             });
             LaraUI.UnPublish("/mylalala", "POST");
             var combined = Published.CombinePathMethod(Address, "POST");
-            Assert.False(LaraUI.TryGetNode(combined, out _));
+            Assert.False(app.TryGetNode(combined, out _));
         }
 
         [Fact]
@@ -220,7 +223,25 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void ClearAllRemovesPublished()
         {
-            PublishHelper.RunInsideLock(ClearAllAction);
+            using var app = new Application();
+            app.PublishPage(_pageName, () => new RemovablePage());
+            app.PublishService(new WebServiceContent
+            {
+                Address = _serviceName,
+                Factory = () => new RemovableService(),
+                Method = "GET"
+            });
+            var bytes = Encoding.UTF8.GetBytes("hello");
+            app.PublishFile(_fileName, new StaticContent(bytes));
+            app.PublishComponent(new WebComponentOptions
+            {
+                ComponentTagName = _componentName,
+                ComponentType = typeof(RemovableComponent)
+            });
+            VerifyFound(app, true);
+            app.ClearAllPublished();
+            VerifyFound(app, false);
+            app.PublishAssemblies();
         }
 
         readonly string _serviceName = "/removableService" + GetRandom();
@@ -234,34 +255,12 @@ namespace Integrative.Lara.Tests.Middleware
             return random.Next(0, int.MaxValue).ToString();
         }
 
-        private void ClearAllAction()
+        private void VerifyFound(Application app, bool found)
         {
-            LaraUI.Publish(_pageName, () => new RemovablePage());
-            LaraUI.Publish(new WebServiceContent
-            {
-                Address = _serviceName,
-                Factory = () => new RemovableService(),
-                Method = "GET"
-            });
-            var bytes = Encoding.UTF8.GetBytes("hello");
-            LaraUI.Publish(_fileName, new StaticContent(bytes));
-            LaraUI.Publish(new WebComponentOptions
-            {
-                ComponentTagName = _componentName,
-                ComponentType = typeof(RemovableComponent)
-            });
-            VerifyFound(true);
-            LaraUI.ClearAll();
-            VerifyFound(false);
-            LaraUI.PublishAssemblies();
-        }
-
-        private void VerifyFound(bool found)
-        {
-            Assert.Equal(found, LaraUI.TryGetNode(_pageName, out _));
-            Assert.Equal(found, LaraUI.TryGetNode(_fileName, out _));
-            Assert.Equal(found, LaraUI.TryGetNode(_serviceName, out _));
-            Assert.Equal(found, LaraUI.TryGetComponent(_componentName, out _));
+            Assert.Equal(found, app.TryGetNode(_pageName, out _));
+            Assert.Equal(found, app.TryGetNode(_fileName, out _));
+            Assert.Equal(found, app.TryGetNode(_serviceName, out _));
+            Assert.Equal(found, app.TryGetComponent(_componentName, out _));
         }
 
         class RemovablePage : IPage

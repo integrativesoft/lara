@@ -6,11 +6,12 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.Tests.DOM;
+using Integrative.Lara.Tests.Middleware;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
 {
-    public class DeltaTesting
+    public class DeltaTesting : DummyContextTesting
     {
         [Fact]
         public void SubmitJsStores()

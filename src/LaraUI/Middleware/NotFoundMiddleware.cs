@@ -20,8 +20,8 @@ namespace Integrative.Lara
         /// <summary>
         /// Creates an instance of NotFoundMiddleware
         /// </summary>
-        /// <param name="next"></param>
-        /// <param name="options">Lara configuration options</param>
+        /// <param name="next">Next middleware</param>
+        /// <param name="options">Configuration options</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required by framework")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "Required by framework")]
         public NotFoundMiddleware(RequestDelegate next, LaraOptions options)

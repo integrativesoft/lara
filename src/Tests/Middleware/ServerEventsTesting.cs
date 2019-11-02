@@ -16,7 +16,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    public class ServerEventsTesting
+    public class ServerEventsTesting : DummyContextTesting
     {
         readonly Document _document;
         readonly ServerEventsController _controller;

@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tests.Middleware;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class ElementAttributes
+    public class ElementAttributes : DummyContextTesting
     {
         int _counter;
 

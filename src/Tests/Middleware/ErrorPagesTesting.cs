@@ -4,17 +4,16 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    public class ErrorPagesTesting
+    public class ErrorPagesTesting : DummyContextTesting
     {
         [Fact]
         public void DefaultNotFoundRuns()
         {
-            var pages = new ErrorPages();
+            var pages = new ErrorPages(_context.Application.GetPublished());
             var page = pages.GetPage(System.Net.HttpStatusCode.NotFound);
             Assert.NotNull(page);
         }
@@ -22,7 +21,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultServerErrorRuns()
         {
-            var pages = new ErrorPages();
+            var pages = new ErrorPages(_context.Application.GetPublished());
             var found = pages.TryGetPage(System.Net.HttpStatusCode.InternalServerError, out var page);
             Assert.True(found);
             Assert.NotNull(page);

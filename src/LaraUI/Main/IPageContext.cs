@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -19,6 +20,11 @@ namespace Integrative.Lara
         /// Gets the .NET Core HttpContext instance
         /// </summary>
         HttpContext Http { get; }
+
+        /// <summary>
+        /// Parent Application object
+        /// </summary>
+        Application Application { get; }
     }
 
     /// <summary>

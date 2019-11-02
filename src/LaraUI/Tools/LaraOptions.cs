@@ -4,7 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using System;
+using Integrative.Lara.Main;
 using System.Diagnostics;
 
 namespace Integrative.Lara
@@ -14,6 +14,11 @@ namespace Integrative.Lara
     /// </summary>
     public class LaraOptions
     {
+        /// <summary>
+        /// Parent application object that stores published web objects
+        /// </summary>
+        public Application Application { get; set; } = LaraUI.DefaultApplication;
+
         /// <summary>
         /// Gets or sets a value indicating whether to allow localhost requests only.
         /// </summary>

@@ -24,9 +24,8 @@ namespace Integrative.Lara.Main
 
         public async Task Run(HttpContext http, LaraOptions options)
         {
-            var context = new WebServiceContext
+            var context = new WebServiceContext(options.Application, http)
             {
-                Http = http,
                 RequestBody = await MiddlewareCommon.ReadBody(http).ConfigureAwait(false)
             };
             var handler = Factory();

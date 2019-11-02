@@ -4,6 +4,7 @@ Created: 7/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace Integrative.Lara.Tools
 {
     static class AssembliesReader
     {
-        public static void LoadAssemblies()
+        public static void LoadAssemblies(Application app)
         {
             foreach (var assembly in GetAssembliesReferencingLara())
             {
-                LoadAssembly(assembly);
+                LoadAssembly(app, assembly);
             }
         }
 
@@ -40,23 +41,30 @@ namespace Integrative.Lara.Tools
                     || assembly.GetReferencedAssemblies().Any(a => a.Name == definedIn));
         }
 
-        private static void LoadAssembly(Assembly assembly)
+        private static void LoadAssembly(Application app, Assembly assembly)
         {
-            foreach (var type in assembly.GetTypes())
+            try
             {
-                LoadWebServices(type);
-                LoadPages(type);
-                LoadComponents(type);
+                var types = assembly.GetTypes();
+                foreach (var type in types)
+                {
+                    LoadWebServices(app, type);
+                    LoadPages(app, type);
+                    LoadComponents(app, type);
+                }
+            }
+            catch (ReflectionTypeLoadException)
+            {
             }
         }
 
-        private static void LoadWebServices(Type type)
+        private static void LoadWebServices(Application app, Type type)
         {
             var services = type.GetCustomAttributes(typeof(LaraWebServiceAttribute), true);
             foreach (LaraWebServiceAttribute entry in services)
             {
                 VerifyType(type, typeof(IWebService));
-                LaraUI.Publish(new WebServiceContent
+                app.PublishService(new WebServiceContent
                 {
                     Address = entry.Address,
                     ContentType = entry.ContentType,
@@ -75,23 +83,23 @@ namespace Integrative.Lara.Tools
             }
         }
 
-        private static void LoadPages(Type type)
+        private static void LoadPages(Application app, Type type)
         {
             var pages = type.GetCustomAttributes(typeof(LaraPageAttribute), true);
             foreach (LaraPageAttribute entry in pages)
             {
                 VerifyType(type, typeof(IPage));
-                LaraUI.Publish(entry.Address, () => (IPage)Activator.CreateInstance(type));
+                app.PublishPage(entry.Address, () => (IPage)Activator.CreateInstance(type));
             }
         }
 
-        private static void LoadComponents(Type type)
+        private static void LoadComponents(Application app, Type type)
         {
             var components = type.GetCustomAttributes(typeof(LaraWebComponentAttribute), true);
             foreach (LaraWebComponentAttribute entry in components)
             {
                 VerifyType(type, typeof(WebComponent));
-                LaraUI.Publish(new WebComponentOptions
+                app.PublishComponent(new WebComponentOptions
                 {
                     ComponentTagName = entry.ComponentTagName,
                     ComponentType = type

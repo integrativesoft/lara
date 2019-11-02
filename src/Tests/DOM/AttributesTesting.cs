@@ -7,15 +7,15 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Front.Tools;
-using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Text;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class AttributesTesting
+    public class AttributesTesting : DummyContextTesting
     {
         [Fact]
         public void HasAttributeFindsAttribute()

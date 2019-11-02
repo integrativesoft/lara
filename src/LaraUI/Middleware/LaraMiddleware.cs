@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -20,14 +21,15 @@ namespace Integrative.Lara
         /// <summary>
         /// Initializes a new instance of the <see cref="LaraMiddleware"/> class.
         /// </summary>
-        /// <param name="next">The next.</param>
+        /// <param name="next">The next middleware</param>
         /// <param name="options">Configuration options</param>
         public LaraMiddleware(RequestDelegate next, LaraOptions options)
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
             next = new ClientLibraryHandler(next).Invoke;
             next = new PublishedItemHandler(next, options).Invoke;
-            next = new DiscardHandler(next).Invoke;
-            _next = new PostEventHandler(next).Invoke;
+            next = new DiscardHandler(options.Application, next).Invoke;
+            _next = new PostEventHandler(options.Application, next).Invoke;
         }
 
         /// <summary>

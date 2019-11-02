@@ -10,20 +10,19 @@ using Microsoft.AspNetCore.Http;
 
 namespace Integrative.Lara.Main
 {
-    sealed class WebServiceContext : IWebServiceContext
+    sealed class WebServiceContext : BaseContext, IWebServiceContext
     {
-        public HttpContext Http { get; set; }
         public string RequestBody { get; set; }
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
 
-        public WebServiceContext()
+        public WebServiceContext(Application app, HttpContext http)
+            : base(app, http)
         {
-            LaraUI.InternalContext.Value = this;
         }
 
         public bool TryGetSession(out Session session)
         {
-            if (MiddlewareCommon.TryFindConnection(Http, out var connection))
+            if (MiddlewareCommon.TryFindConnection(Application, Http, out var connection))
             {
                 session = connection.Session;
                 return true;

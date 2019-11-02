@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -16,7 +17,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class BuilderTesting
+    public class BuilderTesting : DummyContextTesting
     {
         [Fact]
         public void PushAdds()
@@ -138,7 +139,7 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(http.Object, null, new Document(page.Object));
+            var context = new PageContext(_context.Application, http.Object, null, new Document(page.Object));
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -156,7 +157,7 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(http.Object, null, new Document(page.Object));
+            var context = new PageContext(_context.Application, http.Object, null, new Document(page.Object));
             await root.NotifyEvent("click");
             Assert.True(executed);
         }

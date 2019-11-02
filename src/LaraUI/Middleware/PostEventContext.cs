@@ -13,6 +13,7 @@ namespace Integrative.Lara.Middleware
 {
     class PostEventContext
     {
+        public Application Application { get; set; }
         public HttpContext Http { get; set; }
         public WebSocket Socket { get; set; }
         public EventParameters Parameters { get; set; }

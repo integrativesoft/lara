@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Main
 {
-    public class StaticContentTesting
+    public class StaticContentTesting : DummyContextTesting
     {
         static readonly HttpClient _client;
 
@@ -75,7 +75,10 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using var host = await LaraUI.StartServer();
+            using var host = await LaraUI.StartServer(new StartServerOptions
+            {
+                Application = _context.Application
+            });
             string address = LaraUI.GetFirstURL(host);
             LaraUI.Publish("/", content);
             using var response = await _client.GetAsync(address);
@@ -92,7 +95,10 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using var host = await LaraUI.StartServer();
+            using var host = await LaraUI.StartServer(new StartServerOptions
+            {
+                Application = _context.Application
+            });
             string address = LaraUI.GetFirstURL(host);
             LaraUI.Publish("/", content);
 
@@ -117,7 +123,10 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            using var host = await LaraUI.StartServer();
+            using var host = await LaraUI.StartServer(new StartServerOptions
+            {
+                Application = _context.Application
+            });
             string address = LaraUI.GetFirstURL(host);
             LaraUI.Publish("/", content);
 
@@ -141,9 +150,12 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadCompressibleBMP();
             var content = new StaticContent(bytes, "image");
 
-            using var host = await LaraUI.StartServer();
-            string address = LaraUI.GetFirstURL(host);
-            LaraUI.Publish("/", content);
+            using var host = await LaraUI.StartServer(new StartServerOptions
+            {
+                Application = _context.Application
+            });
+            var address = LaraUI.GetFirstURL(host);
+            _context.Application.PublishFile("/", content);
             using var response = await _client.GetAsync(address);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

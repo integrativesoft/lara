@@ -5,7 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
-using Moq;
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Main
 {
-    public class ConnectionsTesting
+    public class ConnectionsTesting : DummyContextTesting
     {
         [Fact]
         public void ConnectionFound()

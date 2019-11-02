@@ -9,26 +9,24 @@ using System.Net.WebSockets;
 
 namespace Integrative.Lara.Main
 {
-    sealed class PageContext : IPageContext
+    sealed class PageContext : BaseContext, IPageContext
     {
-        public HttpContext Http { get; }
         public Document Document { get; internal set; }
 
         readonly JSBridge _bridge;
         readonly Navigation _navigation;
         readonly Connection _connection;
 
-        public PageContext(HttpContext http, Connection connection)
+        public PageContext(Application app, HttpContext http, Connection connection)
+            : base(app, http)
         {
-            LaraUI.InternalContext.Value = this;
-            Http = http;
             _navigation = new Navigation(this);
             _bridge = new JSBridge(this);
             _connection = connection;
         }
 
-        public PageContext(HttpContext http, Connection connection, Document document)
-            : this(http, connection)
+        public PageContext(Application app, HttpContext http, Connection connection, Document document)
+            : this(app, http, connection)
         {
             Document = document;
         }

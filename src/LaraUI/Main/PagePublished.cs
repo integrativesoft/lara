@@ -33,8 +33,8 @@ namespace Integrative.Lara.Main
 
         public async Task Run(HttpContext http, LaraOptions options)
         {
-            var connection = GetConnection(http);
-            var execution = new PageContext(http, connection);
+            var connection = GetConnection(options.Application, http);
+            var execution = new PageContext(options.Application, http, connection);
             var page = CreateInstance();
             var document = connection.CreateDocument(page);
             execution.Document = document;
@@ -44,7 +44,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private async Task<bool> RunPage(HttpContext http, IPage page, LaraOptions options)
+        private static async Task<bool> RunPage(HttpContext http, IPage page, LaraOptions options)
         {
             try
             {
@@ -86,21 +86,21 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private static Connection GetConnection(HttpContext http)
+        private static Connection GetConnection(Application app, HttpContext http)
         {
-            if (MiddlewareCommon.TryFindConnection(http, out var connection))
+            if (MiddlewareCommon.TryFindConnection(app, http, out var connection))
             {
                 return connection;
             }
             else
             {
-                return CreateConnection(http);
+                return CreateConnection(app, http);
             }
         }
 
-        private static Connection CreateConnection(HttpContext http)
+        private static Connection CreateConnection(Application app, HttpContext http)
         {
-            var connection = LaraUI.CreateConnection(http.Connection.RemoteIpAddress);
+            var connection = app.CreateConnection(http.Connection.RemoteIpAddress);
             http.Response.Cookies.Append(GlobalConstants.CookieSessionId,
                 connection.Id.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture));
             return connection;

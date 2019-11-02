@@ -25,12 +25,12 @@ namespace Integrative.Lara.Tests.Middleware
             }
         }
 
-        public static void RunInsideLock(Action action)
+        /*public static void RunInsideLock(Action action)
         {
             lock (_mylock)
             {
                 action();
             }
-        }
+        }*/
     }
 }

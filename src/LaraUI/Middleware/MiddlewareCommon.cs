@@ -63,12 +63,12 @@ namespace Integrative.Lara.Middleware
             http.Response.Headers.Add("Content-Type", "application/json");
         }
 
-        public static bool TryFindConnection(HttpContext http, out Connection connection)
+        public static bool TryFindConnection(Application app, HttpContext http, out Connection connection)
         {
             connection = null;
             return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out string value)
                 && Guid.TryParseExact(value, GlobalConstants.GuidFormat, out var guid)
-                && LaraUI.TryGetConnection(guid, out connection)
+                && app.TryGetConnection(guid, out connection)
                 && connection.RemoteIP.Equals(http.Connection.RemoteIpAddress);
         }
 

@@ -9,21 +9,23 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Main
 {
-    public class PublishedTesting
+    public class PublishedTesting : DummyContextTesting
     {
         [Fact]
         public void UnpublishRemoves()
         {
-            using var published = LaraUI.GetPublished();
+            using var app = new Application();
+            using var published = app.GetPublished();
             published.Publish("/coco", new StaticContent(new byte[0]));
             published.Publish("/lala", new StaticContent(new byte[0]));
-            LaraUI.UnPublish("/coco");
+            app.UnPublish("/coco");
             Assert.True(published.TryGetNode("/lala", out _));
             Assert.False(published.TryGetNode("/coco", out _));
         }
@@ -39,7 +41,7 @@ namespace Integrative.Lara.Tests.Main
             request.Setup(x => x.Method).Returns("GET");
             var page = new MyRedirectPage();
             var document = new Document(page);
-            var context = new PageContext(http.Object, null, document);
+            var context = new PageContext(_context.Application, http.Object, null, document);
             await page.OnGet();
             await PagePublished.ProcessGetResult(http.Object, document, context, HttpStatusCode.OK);
             response.Verify(x => x.Redirect("https://www.google.com"));

@@ -7,12 +7,13 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using Integrative.Lara.Tests.Middleware;
 using System;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
 {
-    public class AttributeEditTesting
+    public class AttributeEditTesting : DummyContextTesting
     {
         [Fact]
         public void AttributeEdited()

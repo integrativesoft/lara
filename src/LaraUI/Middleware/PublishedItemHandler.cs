@@ -22,7 +22,7 @@ namespace Integrative.Lara.Middleware
         internal override async Task<bool> ProcessRequest(HttpContext http)
         {
             var combined = Published.CombinePathMethod(http.Request.Path, http.Request.Method);
-            if (LaraUI.TryGetNode(combined, out var item))
+            if (_options.Application.TryGetNode(combined, out var item))
             {
                 await item.Run(http, _options);
                 return true;

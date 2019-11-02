@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    public class ToolsTesting
+    public class ToolsTesting : DummyContextTesting
     {
         [Fact]
         public void DocumentLocalException()

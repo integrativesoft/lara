@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class DomOperationsTesting
+    public class DomOperationsTesting : DummyContextTesting
     {
         readonly Func<Task> _emptyHandler;
 
@@ -501,7 +502,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifyAdoptedPassedToChildren()
         {
-            LaraUI.Publish(new WebComponentOptions
+            _context.Application.PublishComponent(new WebComponentOptions
             {
                 ComponentTagName = "x-adoptable",
                 ComponentType = typeof(DummyAdoptable)
@@ -514,7 +515,7 @@ namespace Integrative.Lara.Tests.DOM
             var doc2 = CreateDocument();
             doc2.Body.AppendChild(div);
             Assert.Equal(1, x.AdoptedCount);
-            LaraUI.UnPublishWebComponent("x-adoptable");
+            _context.Application.UnPublishWebComponent("x-adoptable");
         }
 
         [Fact]

@@ -6,13 +6,14 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
+using Integrative.Lara.Tests.Middleware;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class GlobalAttributesTesting
+    public class GlobalAttributesTesting : DummyContextTesting
     {
         [Fact]
         public void AccessKey()

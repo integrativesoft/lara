@@ -7,7 +7,6 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Reflection;

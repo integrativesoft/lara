@@ -16,7 +16,7 @@ namespace Integrative.Lara
     public sealed class LaraJson
     {
         /// <summary>
-        /// Parses a JSON string into a class
+        /// Parses a JSON string into a class. The class needs to be decorated with the DataContract attribute.
         /// </summary>
         /// <typeparam name="T">Class type</typeparam>
         /// <param name="json">Source JSON string</param>
@@ -39,6 +39,7 @@ namespace Integrative.Lara
 
         /// <summary>
         /// Parses a JSON string. If parsing fails, throws a StatusCodeException that returns a Bad Request (400).
+        /// The class needs to be decorated with the DataContract attribute.
         /// </summary>
         /// <typeparam name="T">Class type</typeparam>
         /// <param name="json">JSON source text</param>

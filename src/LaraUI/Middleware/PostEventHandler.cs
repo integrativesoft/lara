@@ -26,8 +26,11 @@ namespace Integrative.Lara.Middleware
         public static event EventHandler EventComplete;
         private static readonly EventArgs _eventArgs = new EventArgs();
 
-        public PostEventHandler(RequestDelegate next) : base(next)
+        readonly Application _app;
+
+        public PostEventHandler(Application app, RequestDelegate next) : base(next)
         {
+            _app = app;
         }
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
@@ -38,12 +41,12 @@ namespace Integrative.Lara.Middleware
             }
             else if (http.WebSockets.IsWebSocketRequest)
             {
-                await ProcessWebSocketEvent(http);
+                await ProcessWebSocketEvent(_app, http);
                 return true;
             }
             else if (http.Request.Method == AjaxMethod)
             {
-                await ProcessAjaxRequest(http);
+                await ProcessAjaxRequest(_app, http);
                 return true;
             }
             else
@@ -52,12 +55,13 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static async Task ProcessWebSocketEvent(HttpContext http)
+        private static async Task ProcessWebSocketEvent(Application app, HttpContext http)
         {
             var socket = await http.WebSockets.AcceptWebSocketAsync();
             var result = await MiddlewareCommon.ReadWebSocketMessage<EventParameters>(socket, MaxSizeBytes);
             var context = new PostEventContext
             {
+                Application = app,
                 Http = http,
                 Socket = socket,
                 Parameters = result.Item2
@@ -79,7 +83,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        internal static async Task ProcessAjaxRequest(HttpContext http)
+        internal static async Task ProcessAjaxRequest(Application app, HttpContext http)
         {
             if (EventParameters.TryParse(http.Request.Query, out var parameters))
             {
@@ -87,7 +91,8 @@ namespace Integrative.Lara.Middleware
                 var post = new PostEventContext
                 {
                     Http = http,
-                    Parameters = parameters
+                    Parameters = parameters,
+                    Application = app
                 };
                 await ProcessRequest(post);
             }
@@ -99,7 +104,7 @@ namespace Integrative.Lara.Middleware
 
         private static async Task ProcessRequest(PostEventContext context)
         {
-            if (MiddlewareCommon.TryFindConnection(context.Http, out var connection)
+            if (MiddlewareCommon.TryFindConnection(context.Application, context.Http, out var connection)
                 && connection.TryGetDocument(context.Parameters.DocumentId, out var document))
             {
                 context.Connection = connection;
@@ -138,7 +143,7 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task<Task> RunEvent(PostEventContext post)
         {
-            var context = new PageContext(post.Http, post.Connection, post.Document)
+            var context = new PageContext(post.Application, post.Http, post.Connection, post.Document)
             {
                 Socket = post.Socket
             };

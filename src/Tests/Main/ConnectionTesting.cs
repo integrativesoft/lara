@@ -5,12 +5,13 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Middleware;
 using System.Net;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Main
 {
-    public class ConnectionTesting
+    public class ConnectionTesting : DummyContextTesting
     {
         [Fact]
         public void NonExistingDocument()

@@ -20,9 +20,11 @@ namespace Integrative.Lara
     {
         readonly Dictionary<HttpStatusCode, PagePublished> _map;
         readonly Dictionary<HttpStatusCode, PagePublished> _defaults;
+        readonly Published _published;
 
-        internal ErrorPages()
+        internal ErrorPages(Published published)
         {
+            _published = published;
             _map = new Dictionary<HttpStatusCode, PagePublished>();
             _defaults = new Dictionary<HttpStatusCode, PagePublished>
             {
@@ -86,20 +88,18 @@ namespace Integrative.Lara
         internal void PublishErrorPage()
         {
             var address = ServerLauncher.ErrorAddress;
-            var publish = LaraUI.GetPublished();
             var page = new PagePublished(DefaultServerError, HttpStatusCode.InternalServerError);
-            publish.Publish(address, page);
+            _published.Publish(address, page);
             var combined = Published.CombinePathMethod(address, "POST");
-            publish.Publish(combined, page);
+            _published.Publish(combined, page);
         }
 
         internal void PublishErrorImage()
         {
             var address = ServerLauncher.ErrorAddress + ".svg";
-            var publish = LaraUI.GetPublished();
             var assembly = typeof(LaraUI).Assembly;
             var bytes = ClientLibraryHandler.LoadFile(assembly, "Integrative.Lara.Assets.Error.svg");
-            publish.Publish(address, new StaticContent(bytes, "image/svg+xml"));
+            _published.Publish(address, new StaticContent(bytes, "image/svg+xml"));
         }
     }
 }

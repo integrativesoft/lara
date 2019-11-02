@@ -4,6 +4,7 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Collections.ObjectModel;
 using System.Web;
@@ -28,7 +29,7 @@ namespace Integrative.Lara.Tests.DOM
         }
     }
 
-    public class BindingsTesting
+    public class BindingsTesting : DummyContextTesting
     {
         [Fact]
         public void SetInnerTextSetsText()

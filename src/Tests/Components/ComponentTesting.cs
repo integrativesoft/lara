@@ -8,7 +8,6 @@ using Integrative.Lara.Components;
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
-using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -106,23 +105,34 @@ namespace Integrative.Lara.Tests.Components
         }
     }
 
-    public class ComponentTesting
+    public class ComponentTesting : IDisposable
     {
+        readonly Application _app;
+
         public ComponentTesting()
         {
-            PublishHelper.PublishIfNeeded();
+            _app = new Application();
+            _app.PublishAssemblies();
+            var http = new Mock<HttpContext>();
+            var context = new PageContext(_app, http.Object, null);
+            LaraUI.InternalContext.Value = context;
+        }
+
+        public void Dispose()
+        {
+            _app.Dispose();
         }
 
         [Fact]
         public void RegisterComponentSucceeds()
         {
-            LaraUI.Publish(new WebComponentOptions
+            _app.PublishComponent(new WebComponentOptions
             {
                 ComponentTagName = "x-caca",
                 ComponentType = typeof(MyComponent)
             });
             Assert.True(LaraUI.TryGetComponent("x-caca", out var type));
-            LaraUI.UnPublishWebComponent("x-caca");
+            _app.UnPublishWebComponent("x-caca");
             Assert.Equal(typeof(MyComponent), type);
             Assert.False(LaraUI.TryGetComponent("x-caca", out _));
         }
@@ -160,7 +170,7 @@ namespace Integrative.Lara.Tests.Components
             var connection = new Connection(guid, IPAddress.Loopback);
             var page = new MyPage();
             var document = new Document(page);
-            return new PageContext(http.Object, connection, document);
+            return new PageContext(_app, http.Object, connection, document);
         }
 
         [Fact]
@@ -267,7 +277,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ComponentNotifiedAttributeChanged()
         {
-            LaraUI.Publish(new WebComponentOptions
+            _app.PublishComponent(new WebComponentOptions
             {
                 ComponentTagName = "x-att",
                 ComponentType = typeof(MyAttributeSubscriptor)

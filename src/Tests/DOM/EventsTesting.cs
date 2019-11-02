@@ -4,6 +4,7 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tests.Middleware;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class EventsTesting
+    public class EventsTesting : DummyContextTesting
     {
         [Fact]
         public async void AddRemoveHandler()
@@ -59,13 +60,14 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(2, counter);
         }
 
-        private static void CreateMessageContext()
+        private void CreateMessageContext()
         {
             var context = new Mock<IPageContext>();
             LaraUI.InternalContext.Value = context.Object;
             var bridge = new Mock<IJSBridge>();
             context.Setup(x => x.JSBridge).Returns(bridge.Object);
             bridge.Setup(x => x.EventData).Returns("test");
+            context.Setup(x => x.Application).Returns(_context.Application);
         }
 
         [Fact]

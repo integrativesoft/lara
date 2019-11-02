@@ -27,7 +27,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    public class MiddlewareTesting
+    public class MiddlewareTesting : DummyContextTesting
     {
         [Fact]
         public void TryParseMissingDocFails()
@@ -90,7 +90,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var context = new PageContext(http.Object, null, document);
+            var context = new PageContext(_context.Application, http.Object, null, document);
             var parameters = new EventParameters();
             PostEventHandler.ProcessMessageIfNeeded(context, parameters);
         }
@@ -119,7 +119,7 @@ namespace Integrative.Lara.Tests.Middleware
             query.Add("doc", "EF2FF98720E34A2EA29E619977A5F04A");
             query.Add("el", "lala");
             query.Add("ev", "lala");
-            var handler = new PostEventHandler(null);
+            var handler = new PostEventHandler(_context.Application, null);
             bool result = await handler.ProcessRequest(http.Object);
             Assert.True(result);
         }
@@ -179,7 +179,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var page = new PageContext(http.Object, null, document);
+            var page = new PageContext(_context.Application, http.Object, null, document);
             var socket = new Mock<WebSocket>();
             page.Socket = socket.Object;
             Assert.Same(socket.Object, page.Socket);
@@ -190,7 +190,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
-            var page = new PageContext(http.Object, null, document);
+            var page = new PageContext(_context.Application, http.Object, null, document);
             await DomOperationsTesting.ThrowsAsync<InvalidOperationException>(async ()
                 => await page.Navigation.FlushPartialChanges());
         }
@@ -201,7 +201,7 @@ namespace Integrative.Lara.Tests.Middleware
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage());
             var socket = new Mock<WebSocket>();
-            var page = new PageContext(http.Object, null, document)
+            var page = new PageContext(_context.Application, http.Object, null, document)
             {
                 Socket = socket.Object
             };
@@ -255,10 +255,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void WebServiceSessionNotFound()
         {
             var http = new Mock<HttpContext>();
-            var context = new WebServiceContext
-            {
-                Http = http.Object
-            };
+            var context = new WebServiceContext(_context.Application, http.Object);
             var request = new Mock<HttpRequest>();
             http.Setup(x => x.Request).Returns(request.Object);
             var cookies = new Mock<IRequestCookieCollection>();
@@ -271,7 +268,8 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void WebServiceCustomCode()
         {
-            var x = new WebServiceContext
+            var http = new Mock<HttpContext>();
+            var x = new WebServiceContext(_context.Application, http.Object)
             {
                 StatusCode = HttpStatusCode.BadRequest
             };
@@ -282,7 +280,7 @@ namespace Integrative.Lara.Tests.Middleware
         public async void PostEventHandlerSkipsRequests()
         {
             var http = new Mock<HttpContext>();
-            var post = new PostEventHandler(null);
+            var post = new PostEventHandler(_context.Application, null);
             var request = new Mock<HttpRequest>();
             http.Setup(x => x.Request).Returns(request.Object);
             request.Setup(x => x.Path).Returns(PostEventHandler.EventPrefix);
@@ -436,7 +434,7 @@ namespace Integrative.Lara.Tests.Middleware
             response.Setup(x => x.Headers).Returns(headers.Object);
             var body = new Mock<Stream>();
             response.Setup(x => x.Body).Returns(body.Object);
-            await PostEventHandler.ProcessAjaxRequest(http.Object);
+            await PostEventHandler.ProcessAjaxRequest(_context.Application, http.Object);
         }
 
         [Fact]
@@ -503,18 +501,20 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraCreateConnection()
         {
-            var x = LaraUI.CreateConnection(IPAddress.Loopback);
-            var ok = LaraUI.TryGetConnection(x.Id, out var y);
+            using var app = new Application();
+            var x = app.CreateConnection(IPAddress.Loopback);
+            var ok = app.TryGetConnection(x.Id, out var y);
             Assert.True(ok);
             Assert.Same(x, y);
-            LaraUI.ClearEmptyConnection(x);
-            Assert.False(LaraUI.TryGetConnection(x.Id, out _));
+            app.ClearEmptyConnection(x);
+            Assert.False(app.TryGetConnection(x.Id, out _));
         }
 
         [Fact]
         public void SetDefaultErrorPage()
         {
-            var x = new ErrorPages();
+            var published = _context.Application.GetPublished();
+            var x = new ErrorPages(published);
             var page = new MyPage();
             x.SetDefaultPage(HttpStatusCode.ExpectationFailed, () => page);
             var result = x.GetPage(HttpStatusCode.ExpectationFailed);
@@ -529,7 +529,8 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultErrorPageReturned()
         {
-            var x = new ErrorPages();
+            var published = _context.Application.GetPublished();
+            var x = new ErrorPages(published);
             var page = x.DefaultServerError();
             Assert.True(page is DefaultErrorPage);
         }
@@ -537,15 +538,15 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultNotFoundReturned()
         {
-            var context = new Mock<IPageContext>();
+            /*var context = new Mock<IPageContext>();
             LaraUI.InternalContext.Value = context.Object;
             var http = new Mock<HttpContext>();
             context.Setup(x => x.Http).Returns(http.Object);
             var request = new Mock<HttpRequest>();
             http.Setup(x => x.Request).Returns(request.Object);
-            request.Setup(x => x.Path).Returns("/abc");
+            request.Setup(x => x.Path).Returns("/abc");*/
 
-            var x = new ErrorPages();
+            var x = new ErrorPages(_context.Application.GetPublished());
             var page = x.DefaultNotFound();
             Assert.True(page is DefaultErrorPage);
         }

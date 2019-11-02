@@ -16,11 +16,6 @@ namespace Integrative.Lara.Tools
     {
         public const string ErrorAddress = "/Error";
 
-        public static async Task<IWebHost> StartServer()
-        {
-            return await StartServer(new StartServerOptions());
-        }
-
         public static async Task<IWebHost> StartServer(StartServerOptions options)
         {
             var host = CreateBrowserHost(options);

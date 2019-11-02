@@ -5,11 +5,12 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using Integrative.Lara.Tests.Middleware;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
 {
-    public class LocatorTesting
+    public class LocatorTesting : DummyContextTesting
     {
         [Fact]
         public void LocateElementWithId()

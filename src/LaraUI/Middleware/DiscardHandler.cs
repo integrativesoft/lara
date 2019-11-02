@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -13,8 +14,11 @@ namespace Integrative.Lara.Middleware
     {
         private const int DiscardDelay = 3000;
 
-        public DiscardHandler(RequestDelegate next) : base(next)
+        readonly Application _app;
+
+        public DiscardHandler(Application app, RequestDelegate next) : base(next)
         {
+            _app = app;
         }
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
@@ -22,11 +26,11 @@ namespace Integrative.Lara.Middleware
             if (http.Request.Method == "POST"
                 && http.Request.Path == "/_discard"
                 && DiscardParameters.TryParse(http, out var parameters)
-                && MiddlewareCommon.TryFindConnection(http, out var connection))
+                && MiddlewareCommon.TryFindConnection(_app, http, out var connection))
             {
                 await Task.Delay(DiscardDelay);
                 await connection.Discard(parameters.DocumentId);
-                LaraUI.ClearEmptyConnection(connection);
+                _app.ClearEmptyConnection(connection);
                 return true;
             }
             return false;

@@ -4,13 +4,14 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Collections.ObjectModel;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    public class LaraBuilderTesting
+    public class LaraBuilderTesting : DummyContextTesting
     {
         readonly Element _root;
         readonly LaraBuilder _builder;
