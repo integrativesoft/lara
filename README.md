@@ -49,11 +49,11 @@ namespace SampleProject
         public Task OnGet()
         {
             var button = Element.Create("button");
-            button.SetInnerText("Click me");
+            button.InnerText = "Click me";
             button.On("click", () =>
             {
                 counter++;
-                button.SetInnerText($"Clicked {counter} times");
+                button.InnerText = $"Clicked {counter} times";
                 return Task.CompletedTask;
             });
             LaraUI.Page.Document.Body.AppendChild(button);
