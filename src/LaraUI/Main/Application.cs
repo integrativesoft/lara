@@ -203,6 +203,8 @@ namespace Integrative.Lara
 
         internal double KeepAliveInterval => _modeController.KeepAliveInterval;
 
+        internal bool AllowLocalhostOnly => _modeController.LocalhostOnly;
+
         #endregion
     }
 }

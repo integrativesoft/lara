@@ -63,5 +63,7 @@ namespace Integrative.Lara.Middleware
                 return false;
             }
         }
+
+        public override bool LocalhostOnly => true;
     }
 }

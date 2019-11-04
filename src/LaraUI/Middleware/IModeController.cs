@@ -18,6 +18,7 @@ namespace Integrative.Lara.Middleware
         Connection CreateConnection(IPAddress remoteIp);
         double KeepAliveInterval { get; }
         ApplicationMode Mode { get; }
+        bool LocalhostOnly { get; }
     }
 
     static class ModeControllerFactory
@@ -50,7 +51,9 @@ namespace Integrative.Lara.Middleware
 
         public virtual double KeepAliveInterval => DefaultKeepAliveInterval;
 
-        public virtual ApplicationMode Mode { get; }
+        public ApplicationMode Mode { get; }
+
+        public virtual bool LocalhostOnly => false;
 
         public virtual Connection CreateConnection(IPAddress remoteIp)
         {
