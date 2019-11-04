@@ -24,32 +24,19 @@ namespace SampleProject
     {
         static async Task Main()
         {
-            // Load classes decorated with Lara attributes.
-            LaraUI.PublishAssemblies();  // alternatively, use LaraUI.Publish(..) to pick individual classes
-
-            // Start web server.
-            var host = await LaraUI.StartServer(new StartServerOptions
+            using var app = new Application();
+            await app.Start(new StartServerOptions
             {
-                Port = 8181,  // alternatively, leave as 0 to assign dynamic port
-                AllowLocalhostOnly = true  // accept connection from current machine only (default)
+                Mode = ApplicationMode.BrowserApp,   // launches web browser and terminates when closed
+                PublishAssembliesOnStart = true,     // searches for classes with 'Lara' attributes
             });
-
-            // Write address in console.
-            string address = LaraUI.GetFirstURL(host);
-            Console.WriteLine($"Server listening in {address}.");
-
-            // Launch browser tab. Alternatively, comment out and direct the user to localhost:8181.
-            LaraUI.LaunchBrowser(address);
-
-            // Wait for termination.
-            Console.WriteLine("Press Ctrl+C to terminate");
-            await host.WaitForShutdownAsync();
+            await app.WaitForShutdown();
         }
     }
 }
 ```
 
-Default web page:
+Main web page:
 
 ```csharp
 namespace SampleProject
@@ -78,7 +65,7 @@ namespace SampleProject
 
 ## Integrating Lara into an existing web server
 
-The previous example created a standalone Lara web server. Another option is to integrate Lara into an existing ASP.NET Core host. To add Lara to an existing ASP.NET Core server, use:
+To add Lara to an existing ASP.NET Core server, use:
 
 ```csharp
 public void Configure(IApplicationBuilder app)  
@@ -89,15 +76,6 @@ public void Configure(IApplicationBuilder app)
     });
 } 
 ```
-
-## Developing a desktop application
-
-Here you need to choose a tool to load your locally-hosted website inside a desktop window. Some options available:
-
-- Creating an electron app using [electron-cgi](https://github.com/ruidfigueiredo/electron-cgi) (recommended). This seems to be the most resilient way to run a web desktop app. It comes at the cost of having to distribute electron with nodejs.
-- Using [Chromely](https://github.com/chromelyapps/Chromely). Currently supports Windows and Linux. Their Windows version based on CefSharp works very well.
-
-If you have other tool suggestions that worked out for you, please let me know.
 
 ## How does Lara work?
 
