@@ -21,7 +21,7 @@ namespace Integrative.Lara.Middleware
         Connection _connection;
 
         public BrowserAppController(Application app)
-            : base(app)
+            : base(app, ApplicationMode.BrowserApp)
         {
         }
 

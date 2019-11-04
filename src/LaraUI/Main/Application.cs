@@ -179,7 +179,10 @@ namespace Integrative.Lara
 
         internal void CreateModeController(ApplicationMode mode)
         {
-            _modeController = ModeControllerFactory.Create(this, mode);
+            if (_modeController == null || _modeController.Mode != mode)
+            {
+                _modeController = ModeControllerFactory.Create(this, mode);
+            }
         }
 
         /// <summary>

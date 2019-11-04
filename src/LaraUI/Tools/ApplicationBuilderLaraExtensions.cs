@@ -25,7 +25,9 @@ namespace Integrative.Lara
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, Application laraApp, LaraOptions options)
         {
             app = app ?? throw new ArgumentNullException(nameof(app));
+            laraApp = laraApp ?? throw new ArgumentNullException(nameof(laraApp));
             options = options ?? throw new ArgumentNullException(nameof(options));
+            laraApp.CreateModeController(options.Mode);
             if (options.AllowLocalhostOnly)
             {
                 app.UseMiddleware<LocalhostFilter>();

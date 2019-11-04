@@ -17,6 +17,7 @@ namespace Integrative.Lara.Middleware
         Task<IWebHost> Start(Application app, StartServerOptions options);
         Connection CreateConnection(IPAddress remoteIp);
         double KeepAliveInterval { get; }
+        ApplicationMode Mode { get; }
     }
 
     static class ModeControllerFactory
@@ -29,7 +30,7 @@ namespace Integrative.Lara.Middleware
             }
             else
             {
-                return new BaseModeController(app);
+                return new BaseModeController(app, ApplicationMode.Default);
             }
         }
     }
@@ -41,12 +42,15 @@ namespace Integrative.Lara.Middleware
 
         protected readonly Application _app;
 
-        public BaseModeController(Application app)
+        public BaseModeController(Application app, ApplicationMode mode)
         {
             _app = app;
+            Mode = mode;
         }
 
         public virtual double KeepAliveInterval => DefaultKeepAliveInterval;
+
+        public virtual ApplicationMode Mode { get; }
 
         public virtual Connection CreateConnection(IPAddress remoteIp)
         {

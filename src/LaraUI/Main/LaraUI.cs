@@ -47,14 +47,14 @@ namespace Integrative.Lara
         /// <param name="address">The URL address of the content.</param>
         /// <param name="content">The static content to be published.</param>
         public static void Publish(string address, StaticContent content)
-            => Context.Application.PublishFile(address, content);
+            => DefaultApplication.PublishFile(address, content);
 
         /// <summary>
         /// Publishes a web service
         /// </summary>
         /// <param name="content">Web service settings</param>
         public static void Publish(WebServiceContent content)
-            => Context.Application.PublishService(content);
+            => DefaultApplication.PublishService(content);
 
         /// <summary>
         /// Unpublishes an address and its associated content.
