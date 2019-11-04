@@ -523,9 +523,12 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void ShadowNotPrintable()
         {
+            var div = Element.Create("div");
             var component = new MyDummyComponent();
             var x = component.GetShadow();
             Assert.False(x.IsPrintable);
+            Assert.True(div.IsPrintable);
+            Assert.False(component.IsPrintable);
         }
 
         [Fact]

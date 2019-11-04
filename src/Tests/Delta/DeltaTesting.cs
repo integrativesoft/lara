@@ -105,7 +105,9 @@ namespace Integrative.Lara.Tests.Delta
                     ShowHtmlMessage = "c"
                 },
                 EventName = "click",
-                LongRunning = true
+                LongRunning = true,
+                Propagation = PropagationType.StopImmediatePropagation,
+                DebounceInterval = 400
             };
             var client = ClientEventSettings.CreateFrom(x);
             client.ExtraData = "xx";
@@ -115,6 +117,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Equal(x.BlockOptions.ShowHtmlMessage, client.BlockHTML);
             Assert.Equal(x.EventName, client.EventName);
             Assert.Equal(x.LongRunning, client.LongRunning);
+            Assert.Equal(x.Propagation, client.Propagation);
             Assert.Equal("xx", client.ExtraData);
         }
     }
