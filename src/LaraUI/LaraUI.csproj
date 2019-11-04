@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.6.1</Version>
+    <Version>0.7.0</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -66,10 +66,12 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.6.1:
+    <PackageReleaseNotes>0.7.0:
 - adds options for two-way binding of input elements
 - allows passing payload data in the SubmitJS method
-- improves support for concurrent events guaranteeing execution order</PackageReleaseNotes>
+- improves support for concurrent events by retaining execution order
+- adds built-in for browser-based desktop applications
+- adds support for multiple site hosting</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
