@@ -15,9 +15,10 @@ The source code contains a [sample project](https://github.com/integrativesoft/l
 
 ## Sample application
 
-Main program:
-
 ```csharp
+using Integrative.Lara;
+using System.Threading.Tasks;
+
 namespace SampleProject
 {
     class Program
@@ -27,20 +28,13 @@ namespace SampleProject
             using var app = new Application();
             await app.Start(new StartServerOptions
             {
-                Mode = ApplicationMode.BrowserApp,   // launches web browser and terminates when closed
-                PublishAssembliesOnStart = true,     // searches for classes with 'Lara' attributes
+                Mode = ApplicationMode.BrowserApp,  // launches web browser and terminates when closed
+                PublishAssembliesOnStart = true,    // searches for classes with 'Lara' attributes
             });
             await app.WaitForShutdown();
         }
     }
-}
-```
 
-Main web page:
-
-```csharp
-namespace SampleProject
-{
     [LaraPage(Address = "/")]
     class MyPage : IPage
     {
