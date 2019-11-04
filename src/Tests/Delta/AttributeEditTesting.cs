@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System;
@@ -93,7 +94,9 @@ namespace Integrative.Lara.Tests.Delta
         private static Document CreateDocument()
         {
             var page = new MyPage();
-            var doc = new Document(page, Connections.CreateCryptographicallySecureGuid());
+            var doc = new Document(page,
+                Connections.CreateCryptographicallySecureGuid(),
+                BaseModeController.DefaultKeepAliveInterval);
             return doc;
         }
 
@@ -108,7 +111,7 @@ namespace Integrative.Lara.Tests.Delta
         public void ClearChildrenOnEvent()
         {
             var div = Element.Create("div");
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             document.Body.AppendChild(div);
             document.OpenEventQueue();
             document.Body.ClearChildren();

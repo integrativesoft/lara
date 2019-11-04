@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System;
@@ -38,7 +39,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var guid = Connections.CreateCryptographicallySecureGuid();
             var page = new MyPage();
-            return new Document(page, guid);
+            return new Document(page, guid, BaseModeController.DefaultKeepAliveInterval);
         }
 
         [Fact]
@@ -393,7 +394,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void DocumentGetElementById()
         {
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var div = Element.Create("div");
             div.Id = "lala";
             document.Body.AppendChild(div);
@@ -405,7 +406,7 @@ namespace Integrative.Lara.Tests.DOM
         public async void DocumentOnUnloadExecutes()
         {
             int counter = 0;
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             document.OnUnload += (sender, args) => counter++;
             await document.NotifyUnload();
             Assert.Equal(1, counter);
@@ -414,7 +415,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SwapChildrenSwaps()
         {
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var div = Element.Create("div");
             var n1 = new TextNode("n1");
             var n2 = new TextNode("n2");

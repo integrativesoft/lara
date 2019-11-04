@@ -31,20 +31,24 @@ namespace Integrative.Lara.Main
             StatusCode = status;
         }
 
-        public async Task Run(HttpContext http, LaraOptions options)
+        public async Task Run(Application app, HttpContext http, LaraOptions options)
         {
-            var connection = GetConnection(options.Application, http);
-            var execution = new PageContext(options.Application, http, connection);
+            var connection = GetConnection(app, http);
+            var execution = new PageContext(app, http, connection);
             var page = CreateInstance();
-            var document = connection.CreateDocument(page);
+            var document = connection.CreateDocument(page, app.KeepAliveInterval);
             execution.Document = document;
-            if (await RunPage(http, page, options).ConfigureAwait(false))
+            if (await RunPage(app, http, page, options).ConfigureAwait(false))
             {
                 await ProcessGetResult(http, document, execution, StatusCode);
             }
+            if (document.CanDiscard)
+            {
+                await connection.Discard(document.VirtualId);
+            }
         }
 
-        private static async Task<bool> RunPage(HttpContext http, IPage page, LaraOptions options)
+        private static async Task<bool> RunPage(Application app, HttpContext http, IPage page, LaraOptions options)
         {
             try
             {
@@ -53,16 +57,16 @@ namespace Integrative.Lara.Main
             }
             catch (StatusCodeException status)
             {
-                await ReplyStatusCodeError(http, status, options);
+                await ReplyStatusCodeError(app, http, status, options);
                 return false;
             }
         }
 
-        private static async Task ReplyStatusCodeError(HttpContext http, StatusCodeException status, LaraOptions options)
+        private static async Task ReplyStatusCodeError(Application app, HttpContext http, StatusCodeException status, LaraOptions options)
         {
             if (LaraUI.ErrorPages.TryGetPage(status.StatusCode, out var page))
             {
-                await page.Run(http, options);
+                await page.Run(app, http, options);
             }
             else
             {

@@ -17,11 +17,6 @@ namespace Integrative.Lara.Tests.Middleware
 {
     public class WebServicesTesting : DummyContextTesting
     {
-        static WebServicesTesting()
-        {
-            PublishHelper.PublishIfNeeded();
-        }
-
         [Fact]
         public void LaraJsonSerializeType()
         {

@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Builder;
 using System;
 
@@ -18,9 +19,10 @@ namespace Integrative.Lara
         /// Use the Lara Web Engine.
         /// </summary>
         /// <param name="app">The application.</param>
+        /// <param name="laraApp">Lara application</param>
         /// <param name="options">The options.</param>
         /// <returns></returns>
-        public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
+        public static IApplicationBuilder UseLara(this IApplicationBuilder app, Application laraApp, LaraOptions options)
         {
             app = app ?? throw new ArgumentNullException(nameof(app));
             options = options ?? throw new ArgumentNullException(nameof(options));
@@ -32,13 +34,22 @@ namespace Integrative.Lara
             {
                 app.UseWebSockets();
             }
-            app.UseMiddleware<LaraMiddleware>(options);
+            app.UseMiddleware<LaraMiddleware>(laraApp, options);
             if (options.ShowNotFoundPage)
             {
-                app.UseMiddleware<NotFoundMiddleware>(options);
+                app.UseMiddleware<NotFoundMiddleware>(laraApp, options);
             }
             return app;
         }
+
+        /// <summary>
+        /// Use the Lara Web Engine.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <param name="options">The options.</param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
+            => UseLara(app, LaraUI.DefaultApplication, options);
 
         /// <summary>
         /// Use the Lara Web Engine.

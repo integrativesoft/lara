@@ -89,7 +89,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void ProcessMessageSkipsEmptyMessage()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var context = new PageContext(_context.Application, http.Object, null, document);
             var parameters = new EventParameters();
             PostEventHandler.ProcessMessageIfNeeded(context, parameters);
@@ -178,7 +178,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void PageContextSocket()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var page = new PageContext(_context.Application, http.Object, null, document);
             var socket = new Mock<WebSocket>();
             page.Socket = socket.Object;
@@ -189,7 +189,7 @@ namespace Integrative.Lara.Tests.Middleware
         public async void CannotFlushAjax()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var page = new PageContext(_context.Application, http.Object, null, document);
             await DomOperationsTesting.ThrowsAsync<InvalidOperationException>(async ()
                 => await page.Navigation.FlushPartialChanges());
@@ -199,7 +199,7 @@ namespace Integrative.Lara.Tests.Middleware
         public async void FlushSendsMessage()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var socket = new Mock<WebSocket>();
             var page = new PageContext(_context.Application, http.Object, null, document)
             {
@@ -295,7 +295,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var http = new Mock<HttpContext>();
             var page = new MyPage();
-            var document = new Document(page);
+            var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             var context = new PostEventContext
             {
                 Document = document,
@@ -322,7 +322,7 @@ namespace Integrative.Lara.Tests.Middleware
         public async void SendReplyLeavesSocketOpen()
         {
             var page = new MyPage();
-            var document = new Document(page);
+            var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             document.ServerEventsOn();
             var post = new Mock<PostEventContext>();
             post.Object.Document = document;
@@ -441,7 +441,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void PostGetCompletionRuns()
         {
             var page = new MyPage();
-            var document = new Mock<Document>(page);
+            var document = new Mock<Document>(page, 200);
             var socket = new Mock<WebSocket>();
             var post = new PostEventContext
             {
@@ -502,6 +502,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void LaraCreateConnection()
         {
             using var app = new Application();
+            app.CreateModeController(ApplicationMode.Default);
             var x = app.CreateConnection(IPAddress.Loopback);
             var ok = app.TryGetConnection(x.Id, out var y);
             Assert.True(ok);

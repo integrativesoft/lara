@@ -25,7 +25,7 @@ namespace Integrative.Lara.Tests.Middleware
         public ServerEventsTesting()
         {
             var page = new MyPage();
-            _document = new Document(page);
+            _document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             _controller = _document.GetServerEventsController();
             _controller.ServerEventsOn();
             _socket = new Mock<WebSocket>();

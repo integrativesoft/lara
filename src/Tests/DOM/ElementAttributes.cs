@@ -289,12 +289,10 @@ namespace Integrative.Lara.Tests.DOM
             {
                 AllowLocalhostOnly = false,
                 ShowNotFoundPage = false,
-                Port = 1234,
                 AddWebSocketsMiddleware = false
             };
             Assert.False(x.AllowLocalhostOnly);
             Assert.False(x.ShowNotFoundPage);
-            Assert.Equal(1234, x.Port);
             Assert.False(x.AddWebSocketsMiddleware);
         }
 

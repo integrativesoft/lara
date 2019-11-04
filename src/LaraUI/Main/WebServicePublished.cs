@@ -22,9 +22,9 @@ namespace Integrative.Lara.Main
             ContentType = content.ContentType;
         }
 
-        public async Task Run(HttpContext http, LaraOptions options)
+        public async Task Run(Application app, HttpContext http, LaraOptions options)
         {
-            var context = new WebServiceContext(options.Application, http)
+            var context = new WebServiceContext(app, http)
             {
                 RequestBody = await MiddlewareCommon.ReadBody(http).ConfigureAwait(false)
             };

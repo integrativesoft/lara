@@ -8,6 +8,7 @@ using Integrative.Lara.Components;
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -169,7 +170,7 @@ namespace Integrative.Lara.Tests.Components
             var guid = Guid.Parse("{5166FB58-FB45-4622-90E6-195E2448F2C9}");
             var connection = new Connection(guid, IPAddress.Loopback);
             var page = new MyPage();
-            var document = new Document(page);
+            var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             return new PageContext(_app, http.Object, connection, document);
         }
 
@@ -329,7 +330,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void SlotsPrintHostElements()
         {
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var builder = new LaraBuilder(document.Body);
             builder.Push("x-slotter")
                 .Push("div", "lalala")
@@ -347,7 +348,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void OrphanSlotPrintsItself()
         {
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var builder = new LaraBuilder(document.Body);
             builder.Push("slot", "lalala").Pop();
             var writer = new DocumentWriter(document);
@@ -463,7 +464,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void NotifyMovedCalledDirectly()
         {
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var x = new MyDummyComponent();
             var div1 = Element.Create("div");
             var div2 = Element.Create("div");

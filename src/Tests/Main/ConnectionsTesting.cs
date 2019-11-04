@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Net;
@@ -31,11 +32,11 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [Fact]
-        public void DiscardRemovesConnection()
+        public async void DiscardRemovesConnection()
         {
             using var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            connections.Discard(cnx.Id);
+            await connections.Discard(cnx.Id);
             Assert.False(connections.TryGetConnection(cnx.Id, out _));
         }
 
@@ -53,7 +54,7 @@ namespace Integrative.Lara.Tests.Main
         {
             using var connections = new Connections();
             var connection = connections.CreateConnection(IPAddress.Loopback);
-            connection.CreateDocument(new MyPage());
+            connection.CreateDocument(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var required = DateTime.UtcNow.AddSeconds(10);
             Assert.NotEmpty(connection.GetDocuments());
             await StaleConnectionsCollector.CleanupExpired(connection, required);
@@ -65,7 +66,7 @@ namespace Integrative.Lara.Tests.Main
         {
             using var connections = new Connections(200, 100);
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            var document = cnx.CreateDocument(new MyPage());
+            var document = cnx.CreateDocument(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             Assert.NotEmpty(connections.GetConnections());
             document.ModifyLastUtcForTesting(DateTime.UtcNow.AddDays(-1));
             await Task.Delay(400);

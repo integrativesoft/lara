@@ -100,12 +100,12 @@ namespace Integrative.Lara
 
         internal Queue<BaseDelta> GetQueue() => _queue;
 
-        internal Document(IPage page)
-            : this(page, Connections.CreateCryptographicallySecureGuid())
+        internal Document(IPage page, double keepAliveInterval)
+            : this(page, Connections.CreateCryptographicallySecureGuid(), keepAliveInterval)
         {
         }
 
-        internal Document(IPage page, Guid virtualId)
+        internal Document(IPage page, Guid virtualId, double keepAliveInterval)
         {
             VirtualId = virtualId;
             Page = page;
@@ -119,7 +119,7 @@ namespace Integrative.Lara
             Body.Document = this;
             Body.IsSlotted = true;
             UpdateTimestamp();
-            TemplateBuilder.Build(this);
+            TemplateBuilder.Build(this, keepAliveInterval);
             _serverEvents = new ServerEventsController(this);
             _messageRegistry = new MessageRegistry(this);
         }
@@ -256,7 +256,10 @@ namespace Integrative.Lara
             => _serverEvents.StartServerEvent();
 
         internal void ServerEventsOn()
-            => _serverEvents.ServerEventsOn();
+        {
+            NotifyHasEvent();
+            _serverEvents.ServerEventsOn();
+        }
 
         internal Task ServerEventsOff()
             => _serverEvents.ServerEventsOff();
@@ -274,5 +277,12 @@ namespace Integrative.Lara
             => _serverEvents;
 
         internal Task<bool> WaitForTurn(long turn) => _sequencer.WaitForTurn(turn);
+
+        internal bool CanDiscard { get; private set; } = true;
+
+        internal void NotifyHasEvent()
+        {
+            CanDiscard = false;
+        }
     }
 }

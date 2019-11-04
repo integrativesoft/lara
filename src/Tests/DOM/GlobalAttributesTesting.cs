@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using System.Collections;
 using System.Collections.Generic;
@@ -156,7 +157,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InlineChildElementsPrintedInline()
         {
-            var doc = new Document(null);
+            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
             var b = Element.Create("span");
             doc.Body.AppendChild(b);
             doc.Body.AppendChild(new TextNode("hello"));
@@ -179,7 +180,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CheckedFalseFlushed()
         {
-            var doc = new Document(null);
+            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
             var x = new InputElement
             {
                 Id = "x"
@@ -199,7 +200,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CheckedTrueFlushed()
         {
-            var doc = new Document(null);
+            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
             var x = new InputElement
             {
                 Id = "x"

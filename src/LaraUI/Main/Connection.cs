@@ -20,6 +20,8 @@ namespace Integrative.Lara.Main
         public SessionStorage Storage { get; }
         public Session Session { get; }
 
+        public AsyncEvent Closing { get; } = new AsyncEvent();
+
         public Connection(Guid id, IPAddress remoteId)
         {
             Id = id;
@@ -42,10 +44,10 @@ namespace Integrative.Lara.Main
             }
         }
 
-        public Document CreateDocument(IPage page)
+        public Document CreateDocument(IPage page, double keepAliveInterval)
         {
             var virtualId = Connections.CreateCryptographicallySecureGuid();
-            var document = new Document(page, virtualId);
+            var document = new Document(page, virtualId, keepAliveInterval);
             _documents.Add(virtualId, document);
             return document;
         }
@@ -67,8 +69,9 @@ namespace Integrative.Lara.Main
 
         public bool IsEmpty => _documents.Count == 0;
 
-        public void Close()
+        public async Task Close()
         {
+            await Closing.InvokeAsync(this, new EventArgs());
             Session.Close();
         }
     }

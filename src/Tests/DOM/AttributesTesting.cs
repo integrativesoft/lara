@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Front.Tools;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System;
@@ -45,7 +46,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var guid = Guid.Parse("{0857AE93-8591-4CB6-887E-C449ABFCAA7A}");
             var page = new MyPage();
-            return new Document(page, guid);
+            return new Document(page, guid, BaseModeController.DefaultKeepAliveInterval);
         }
 
         [Fact]
@@ -88,7 +89,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var element = Element.Create("div");
             element.Class = "lala";
-            var document = new Document(new MyPage());
+            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             document.Body.AppendChild(element);
             document.OpenEventQueue();
             element.Class = "lala";

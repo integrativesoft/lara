@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tools;
 using Moq;
@@ -104,7 +105,7 @@ namespace Integrative.Lara.Tests.Middleware
         private DocumentLocal<int> BuildLocal(out Document document)
         {
             var context = new Mock<IPageContext>();
-            document = new Document(new MyPage());
+            document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             context.Setup(x => x.Document).Returns(document);
             LaraUI.InternalContext.Value = context.Object;
             return new DocumentLocal<int>();

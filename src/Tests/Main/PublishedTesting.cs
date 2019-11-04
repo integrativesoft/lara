@@ -9,6 +9,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -40,7 +41,7 @@ namespace Integrative.Lara.Tests.Main
             http.Setup(x => x.Request).Returns(request.Object);
             request.Setup(x => x.Method).Returns("GET");
             var page = new MyRedirectPage();
-            var document = new Document(page);
+            var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             var context = new PageContext(_context.Application, http.Object, null, document);
             await page.OnGet();
             await PagePublished.ProcessGetResult(http.Object, document, context, HttpStatusCode.OK);

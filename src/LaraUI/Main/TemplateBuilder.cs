@@ -19,7 +19,7 @@ namespace Integrative.Lara.Main
             _libraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
-        public static void Build(Document document)
+        public static void Build(Document document, double keepAliveInterval)
         {
             var head = document.Head;
             var body = document.Body;
@@ -46,8 +46,9 @@ namespace Integrative.Lara.Main
 
             // initialization script
             var tag = Element.Create("script");
-            string value = document.VirtualId.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
-            string code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{value}'); }});";
+            var id = document.VirtualId.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
+            var interval = keepAliveInterval.ToString(CultureInfo.InvariantCulture);
+            var code = $"document.addEventListener('DOMContentLoaded', function() {{ LaraUI.initialize('{id}', {interval}); }});";
             tag.AppendChild(new TextNode { Data = code });
             head.AppendChild(tag);
         }

@@ -21,7 +21,7 @@ let documentId: string;
 let lastEventNumber: number;
 let sequencer: Sequencer;
 
-export function initialize(id: string): void {
+export function initialize(id: string, keepAliveInterval: number): void {
     sequencer = new Sequencer();
     documentId = id;
     lastEventNumber = 0;
@@ -32,6 +32,9 @@ export function initialize(id: string): void {
         let result = JSON.parse(json);
         processEventResult(result);
     }
+    if (keepAliveInterval) {
+        window.setInterval(sendKeepAlive, keepAliveInterval);
+    }
 }
 
 export function getDocumentId(): string {
@@ -40,6 +43,12 @@ export function getDocumentId(): string {
 
 function terminate(): void {
     let url = "/_discard?doc=" + documentId;
+    navigator.sendBeacon(url);
+}
+
+function sendKeepAlive() {
+    let id = getDocumentId();
+    let url = "/_keepAlive?doc=" + id;
     navigator.sendBeacon(url);
 }
 

@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -30,7 +29,7 @@ namespace Integrative.Lara.Middleware
             {
                 await Task.Delay(DiscardDelay);
                 await connection.Discard(parameters.DocumentId);
-                _app.ClearEmptyConnection(connection);
+                await _app.ClearEmptyConnection(connection);
                 return true;
             }
             return false;

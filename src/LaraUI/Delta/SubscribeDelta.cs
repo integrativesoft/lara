@@ -28,7 +28,9 @@ namespace Integrative.Lara.Delta
         {
             if (element.AcceptsEvents)
             {
-                element.Document.Enqueue(new SubscribeDelta
+                var document = element.Document;
+                document.NotifyHasEvent();
+                document.Enqueue(new SubscribeDelta
                 {
                     ElementId = element.EnsureElementId(),
                     Settings = ClientEventSettings.CreateFrom(settings),

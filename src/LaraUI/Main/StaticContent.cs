@@ -117,10 +117,11 @@ namespace Integrative.Lara
         /// <summary>
         /// Public method used by the Lara framework
         /// </summary>
+        /// <param name="app">Lara application</param>
         /// <param name="http">Http context</param>
         /// <param name="options">Lara options</param>
         /// <returns></returns>
-        public async Task Run(HttpContext http, LaraOptions options)
+        public async Task Run(Application app, HttpContext http, LaraOptions options)
         {
             http = http ?? throw new ArgumentNullException(nameof(http));
             if (IsMatchETag(http.Request.Headers))

@@ -4,18 +4,30 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tools;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
     /// <summary>
     /// Represents a hosted Lara application
     /// </summary>
     public sealed class Application : IDisposable
     {
-        readonly Published _published = new Published();
+        readonly Published _published;
+        
+        IModeController _modeController;
+
+        /// <summary>
+        /// Web host instance created after calling the Start() method
+        /// </summary>
+        public IWebHost Host { get; private set; }
 
         /// <summary>
         /// Defines default error pages
@@ -27,6 +39,7 @@ namespace Integrative.Lara.Main
         /// </summary>
         public Application()
         {
+            _published = new Published();
             ErrorPages = new ErrorPages(_published);
             ErrorPages.PublishErrorImage();
         }
@@ -48,6 +61,7 @@ namespace Integrative.Lara.Main
         {
             ClearAllPublished();
             _published.Dispose();
+            Host?.Dispose();
         }
 
         #region Publishing
@@ -112,9 +126,9 @@ namespace Integrative.Lara.Main
             => _published.Connections.TryGetConnection(guid, out connection);
 
         internal Connection CreateConnection(IPAddress remoteIp)
-            => _published.Connections.CreateConnection(remoteIp);
+            => _modeController.CreateConnection(remoteIp);
 
-        internal void ClearEmptyConnection(Connection connection)
+        internal Task ClearEmptyConnection(Connection connection)
             => _published.Connections.ClearEmptyConnection(connection);
 
         #endregion
@@ -140,6 +154,51 @@ namespace Integrative.Lara.Main
 
         internal bool TryGetComponent(string tagName, out Type type)
             => _published.TryGetComponent(tagName, out type);
+
+        #endregion
+
+        #region Server
+
+        /// <summary>
+        /// Starts the web server
+        /// </summary>
+        public Task Start()
+            => Start(new StartServerOptions());
+
+        /// <summary>
+        /// Starts the web server. Use with 'await'.
+        /// </summary>
+        /// <param name="options">The server options.</param>
+        public async Task Start(StartServerOptions options)
+        {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            Host?.Dispose();
+            CreateModeController(options.Mode);
+            Host = await _modeController.Start(this, options);
+        }
+
+        internal void CreateModeController(ApplicationMode mode)
+        {
+            _modeController = ModeControllerFactory.Create(this, mode);
+        }
+
+        /// <summary>
+        /// Stops the web server gracefully
+        /// </summary>
+        /// <param name="token">Token to indicate when the stop should not be graceful anymore</param>
+        public Task Stop(CancellationToken token = default) => Host.StopAsync(token);
+
+        /// <summary>
+        /// Returns a task that is completed when the server stops
+        /// </summary>
+        /// <param name="token">Token to trigger shutdown</param>
+        public Task WaitForShutdown(CancellationToken token = default) => Host.WaitForShutdownAsync(token);
+
+        #endregion
+
+        #region Application behavior modes
+
+        internal double KeepAliveInterval => _modeController.KeepAliveInterval;
 
         #endregion
     }

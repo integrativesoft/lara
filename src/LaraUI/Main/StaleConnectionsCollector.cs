@@ -13,22 +13,29 @@ namespace Integrative.Lara.Main
 {
     sealed class StaleConnectionsCollector : IDisposable
     {
-        public const double TimerInterval = 5 * 60000;
-        public const double ExpireInterval = 4 * 3600 * 1000;
+        public const double DefaultTimerInterval = 5 * 60 * 1000;      // 5 minutes to trigger updates
+        public const double DefaultExpireInterval = 4 * 3600 * 1000;   // 4 hours to expire
 
         readonly Connections _connections;
         readonly Timer _timer;
-        readonly double _expireInterval;
+
+        public double ExpirationInterval { get; set; }
+
+        public double TimerInterval
+        {
+            get => _timer.Interval;
+            set => _timer.Interval = value;
+        }
 
         public StaleConnectionsCollector(Connections connections)
-            : this(connections, TimerInterval, ExpireInterval)
+            : this(connections, DefaultTimerInterval, DefaultExpireInterval)
         {
         }
 
         public StaleConnectionsCollector(Connections connections, double timerInterval, double expireInternal)
         {
             _connections = connections;
-            _expireInterval = expireInternal;
+            ExpirationInterval = expireInternal;
             _timer = new Timer
             {
                 Interval = timerInterval
@@ -61,7 +68,7 @@ namespace Integrative.Lara.Main
 
         private async Task CleanupNonDisposed()
         {
-            var minRequired = DateTime.UtcNow.AddMilliseconds(-_expireInterval);
+            var minRequired = DateTime.UtcNow.AddMilliseconds(-ExpirationInterval);
             var list = new List<KeyValuePair<Guid, Connection>>();
             foreach (var pair in _connections.GetConnections())
             {
@@ -75,7 +82,7 @@ namespace Integrative.Lara.Main
             {
                 if (pair.Value.IsEmpty)
                 {
-                    _connections.Discard(pair.Key);
+                    await _connections.Discard(pair.Key);
                 }
             }
         }

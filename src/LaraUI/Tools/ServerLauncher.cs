@@ -4,10 +4,10 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tools
@@ -16,28 +16,32 @@ namespace Integrative.Lara.Tools
     {
         public const string ErrorAddress = "/Error";
 
-        public static async Task<IWebHost> StartServer(StartServerOptions options)
+        public static async Task<IWebHost> StartServer(Application app, StartServerOptions options)
         {
-            var host = CreateBrowserHost(options);
+            var host = CreateBrowserHost(app, options);
+            if (options.PublishAssembliesOnStart)
+            {
+                app.PublishAssemblies();
+            }
             await host.StartAsync();
             return host;
         }
 
-        private static IWebHost CreateBrowserHost(StartServerOptions options)
+        private static IWebHost CreateBrowserHost(Application laraApp, StartServerOptions options)
         {
             return new WebHostBuilder()
-                .UseKestrel(kestrel => kestrel.Listen(IPAddress.Loopback, options.Port))
+                .UseKestrel(kestrel => kestrel.Listen(options.IPAddress, options.Port))
                 .Configure(app =>
                 {
-                    ConfigureApp(app, options);
+                    ConfigureApp(app, laraApp, options);
                 })
                 .Build();
         }
 
-        internal static void ConfigureApp(IApplicationBuilder app, StartServerOptions options)
+        internal static void ConfigureApp(IApplicationBuilder app, Application laraApp, StartServerOptions options)
         {
             ConfigureExceptions(app, options);
-            app.UseLara(options);
+            app.UseLara(laraApp, options);
         }
 
         internal static void ConfigureExceptions(IApplicationBuilder app, StartServerOptions options)

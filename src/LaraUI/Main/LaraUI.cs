@@ -4,11 +4,9 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
-using System.Net;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
@@ -129,9 +127,12 @@ namespace Integrative.Lara
         /// Starts the web server. Use with 'await'.
         /// </summary>
         /// <param name="options">The server options.</param>
-        public static Task<IWebHost> StartServer(StartServerOptions options)
-            => ServerLauncher.StartServer(options);
-
+        public static async Task<IWebHost> StartServer(StartServerOptions options)
+        {
+            await DefaultApplication.Start(options);
+            return DefaultApplication.Host;
+        }
+        
         /// <summary>
         /// Launches the user's default web browser on the specified address.
         /// </summary>

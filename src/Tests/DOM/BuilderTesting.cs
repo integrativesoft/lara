@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Main;
+using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -139,7 +140,8 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(_context.Application, http.Object, null, new Document(page.Object));
+            var context = new PageContext(_context.Application,
+                http.Object, null, new Document(page.Object, BaseModeController.DefaultKeepAliveInterval));
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -157,7 +159,8 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(_context.Application, http.Object, null, new Document(page.Object));
+            var context = new PageContext(_context.Application, http.Object, null,
+                new Document(page.Object, BaseModeController.DefaultKeepAliveInterval));
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
