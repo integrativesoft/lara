@@ -1,10 +1,16 @@
 language: csharp
 solution: src/LaraUI.sln
+mono: none
 dotnet: 3.0.100
 
 install:
   - nuget restore src/LaraUI.sln
 
 script:
- - msbuild /property:Configuration=Debug src/LaraUI.sln
- - dotnet test src/Test/Tests.csproj
+ - cd src/LaraClient
+ - npm install .
+ - cd ..
+ - cd ..
+ - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
+ - dotnet build --configuration Debug src/Tests/Tests.csproj
+ - dotnet test src/Tests/Tests.csproj
