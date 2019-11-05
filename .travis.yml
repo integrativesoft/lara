@@ -3,9 +3,11 @@ solution: src/LaraUI.sln
 mono: none
 dotnet: 3.0.100
 
+before_install:
+ - msbuild-prepare
+
 install:
  - dotnet restore src/LaraUI.sln
-  - choco install windows-sdk-10-version-1809-all
 
 script:
  - msbuild /p:Configuration=Debug src/LaraUI.sln
