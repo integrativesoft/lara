@@ -12,6 +12,7 @@ install:
 script:
  - cd src/LaraClient
  - npm install .
+ - npm run-script build
  - cd ..
  - cd ..
  - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
