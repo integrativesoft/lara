@@ -5,6 +5,7 @@ dotnet: 3.0.100
 
 before_install:
  - sudo apt install nuget
+ - sudo choco install codecov
 
 install:
   - nuget restore src/LaraUI.sln
@@ -19,7 +20,7 @@ script:
  - cd ..
  - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
  - dotnet build --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj
- - dotnet test --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+ - dotnet test --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=results.xml
  
 after_script:
- - bash <(curl -s https://codecov.io/bash)
+ - .\codecov -f src/Tests/results.xml -t CODECOV_TOKEN
