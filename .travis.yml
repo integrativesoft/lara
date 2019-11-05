@@ -2,7 +2,6 @@ language: csharp
 solution: src/LaraUI.sln
 mono: none
 dotnet: 3.0.100
-dist: trusty
 
 install:
  - dotnet restore src/LaraUI.sln
