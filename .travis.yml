@@ -7,7 +7,7 @@ before_install:
  - sudo apt install nuget
 
 install:
- - nuget install MSBuild.Microsoft.VisualStudio.Web.targets
+ - dotnet add package MSBuild.Microsoft.VisualStudio.Web.targets
  - nuget restore src/LaraUI.sln
 
 script:
