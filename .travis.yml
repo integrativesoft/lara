@@ -5,7 +5,7 @@ dotnet: 3.0.100
 
 before_install:
  - sudo apt install nuget
- - dotnet tool install -g coveralls.net 
+ - dotnet tool install coveralls.net --tool-path tools
 
 install:
   - nuget restore src/LaraUI.sln
@@ -23,7 +23,13 @@ script:
  - dotnet test --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=results.xml
  
 after_script:
- - curl -s https://codecov.io/bash > codecov
- - chmod +x codecov
- - ./codecov -f src/Tests/results.xml
- - csmacnz.Coveralls --opencover -i src/Tests/results.xml --repoToken $COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName travis-ci  --useRelativePaths 
+  - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
+  - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
+  - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")
+  - echo $TRAVIS_COMMIT
+  - echo $TRAVIS_BRANCH
+  - echo $REPO_COMMIT_AUTHOR
+  - echo $REPO_COMMIT_AUTHOR_EMAIL
+  - echo $REPO_COMMIT_MESSAGE
+  - echo $TRAVIS_JOB_ID
+  - ./tools/csmacnz.Coveralls --opencover -i src/Tests/results.xml --repoToken $COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName travis-ci  --useRelativePaths 
