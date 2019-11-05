@@ -5,6 +5,7 @@ dotnet: 3.0.100
 
 before_install:
  - sudo apt install nuget
+ - dotnet tool install -g coveralls.net 
 
 install:
   - nuget restore src/LaraUI.sln
@@ -25,3 +26,4 @@ after_script:
  - curl -s https://codecov.io/bash > codecov
  - chmod +x codecov
  - ./codecov -f src/Tests/results.xml
+ - csmacnz.Coveralls --opencover -i src/Tests/results.xml --repoToken $COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID  --serviceName travis-ci  --useRelativePaths 
