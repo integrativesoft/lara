@@ -598,5 +598,14 @@ namespace Integrative.Lara.Tests.Middleware
         {
             builder.Append(text);
         }
+
+        [Fact]
+        public void ApplicationModeControllerProperties()
+        {
+            using var app = new Application();
+            app.CreateModeController(ApplicationMode.BrowserApp);
+            Assert.Equal(BrowserAppController.DefaultKeepAliveInterval, app.KeepAliveInterval);
+            Assert.True(app.AllowLocalhostOnly);
+        }
     }
 }

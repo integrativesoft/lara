@@ -42,7 +42,7 @@ namespace Integrative.Lara
         /// <value>
         ///   <c>true</c> if [allow localhost only]; otherwise, <c>false</c>.
         /// </value>
-        public bool AllowLocalhostOnly { get; set; } = true;
+        public bool AllowLocalhostOnly { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether Lara will show its default 'not found' page.

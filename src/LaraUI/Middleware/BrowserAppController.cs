@@ -16,7 +16,7 @@ namespace Integrative.Lara.Middleware
         private const double DefaultTimerInterval = 20 * 1000;          // 20 seconds to trigger updates
         private const double DefaultExpireInterval = 60 * 1000;         // 60 seconds to expire
 
-        private const double DefaultKeepAlive = DefaultExpireInterval / 2.5;
+        public new const double DefaultKeepAliveInterval = DefaultExpireInterval / 2.5;
 
         Connection _connection;
 
@@ -35,7 +35,7 @@ namespace Integrative.Lara.Middleware
             return host;
         }
 
-        public override double KeepAliveInterval => DefaultKeepAlive;
+        public override double KeepAliveInterval => DefaultKeepAliveInterval;
 
         public override Connection CreateConnection(IPAddress remoteIp)
         {
