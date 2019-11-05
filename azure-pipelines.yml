@@ -26,5 +26,6 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+  workingDirectory: src/LaraClient
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
