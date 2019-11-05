@@ -6,5 +6,5 @@ install:
   - nuget restore src/LaraUI.sln
 
 script:
- - msbuild --configuration Debug src/LaraUI.sln
+ - msbuild /property:Configuration=Debug src/LaraUI.sln
  - dotnet test src/Test/Tests.csproj
