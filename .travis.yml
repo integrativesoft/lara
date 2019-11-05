@@ -1,7 +1,5 @@
 language: csharp
 solution: src/LaraUI.sln
-mono: none
-os: windows
 dotnet: 3.0.100
 
 install:
