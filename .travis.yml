@@ -3,7 +3,7 @@ solution: src/LaraUI.sln
 mono: none
 dotnet: 3.0.100
 install:
- - dotnet restore ./src/LaraUI.sln
+ - dotnet restore src/LaraUI.sln
  script:
- - msbuild /p:Configuration=Debug ./src/LaraUI.sln
- - dotnet test ./src/Test/Tests.csproj
+ - msbuild /p:Configuration=Debug src/LaraUI.sln
+ - dotnet test src/Test/Tests.csproj
