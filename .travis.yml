@@ -5,7 +5,7 @@ dotnet: 3.0.100
 
 install:
  - dotnet restore src/LaraUI.sln
- 
- script:
+
+script:
  - msbuild /p:Configuration=Debug src/LaraUI.sln
  - dotnet test src/Test/Tests.csproj
