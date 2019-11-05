@@ -230,3 +230,5 @@ project.lock.json
 *.map
 *.js
 /src/environment.txt
+/src/Tests/results.xml
+/codecov
