@@ -2,7 +2,6 @@ language: csharp
 solution: src/LaraUI.sln
 dotnet: 3.0.100
 
-before
 install:
  - nuget restore src/LaraUI.sln
 
