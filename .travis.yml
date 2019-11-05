@@ -5,6 +5,7 @@ dotnet: 3.0.100
  
 before_install:
  - sudo apt install nuget
+ - sudo apt-get install dotnet-sdk-2.1=2.1.300-1 
  - dotnet tool install coveralls.net --tool-path tools
 
 install:
