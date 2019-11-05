@@ -5,6 +5,7 @@ dotnet: 3.0.100
 
 install:
  - dotnet restore src/LaraUI.sln
+  - choco install windows-sdk-10-version-1809-all
 
 script:
  - msbuild /p:Configuration=Debug src/LaraUI.sln
