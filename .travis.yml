@@ -3,6 +3,9 @@ solution: src/LaraUI.sln
 mono: none
 dotnet: 3.0.100
 
+before_install:
+ - sudo apt install nuget
+
 install:
   - nuget restore src/LaraUI.sln
 
