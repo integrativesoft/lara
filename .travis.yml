@@ -1,10 +1,8 @@
 language: csharp
 solution: src/LaraUI.sln
 mono: none
+os: windows
 dotnet: 3.0.100
-
-before_install:
- - sudo apt install nuget
 
 install:
   - nuget restore src/LaraUI.sln
