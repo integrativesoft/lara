@@ -191,20 +191,18 @@ namespace Integrative.Lara
         {
             foreach (var child in parent.Children)
             {
-                if (child is Slot slot)
+                if (IsSlotChildActive(child, slotName))
                 {
-                    if (slot.MatchesName(slotName))
-                    {
-                        return true;
-                    }
-                }
-                else if (child is Element element
-                    && IsSlotActive(element, slotName))
-                {
-                    return true; 
+                    return true;
                 }
             }
             return false;
+        }
+
+        private static bool IsSlotChildActive(Node child, string slotName)
+        {
+            return (child is Slot slot && slot.MatchesName(slotName))
+                || (child is Element element && IsSlotActive(element, slotName));
         }
     }
 }

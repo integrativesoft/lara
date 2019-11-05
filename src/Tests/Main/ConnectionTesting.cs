@@ -8,6 +8,7 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Main
@@ -52,6 +53,38 @@ namespace Integrative.Lara.Tests.Main
             await connection.Discard(document.VirtualId);
             Assert.False(connection.TryGetDocument(document.VirtualId, out _));
             Assert.True(page.Disposed);
+        }
+
+        [Fact]
+        public void CanDiscardStartsFalse()
+        {
+            var x = CreateDocument();
+            Assert.True(x.CanDiscard);
+        }
+
+        [Fact]
+        public void CannotDiscardAfterServerEventsOn()
+        {
+            var x = CreateDocument();
+            x.ServerEventsOn();
+            Assert.False(x.CanDiscard);
+        }
+
+        [Fact]
+        public void CannotDiscardAfterEvent()
+        {
+            var x = CreateDocument();
+            var div = Element.Create("div");
+            div.On("click", () => Task.CompletedTask);
+            x.Body.AppendChild(div);
+            Assert.False(x.CanDiscard);
+        }
+
+        private static Document CreateDocument()
+        {
+            var connectionId = Connections.CreateCryptographicallySecureGuid();
+            var connection = new Connection(connectionId, IPAddress.Loopback);
+            return connection.CreateDocument(new MyPage(), 100);
         }
     }
 }

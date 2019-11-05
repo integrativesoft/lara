@@ -146,6 +146,5 @@ namespace Integrative.Lara.Tests.Main
             Assert.Equal(content.ETag, values.FirstOrDefault());
             Assert.Equal(bytes, downloaded);
         }
-
     }
 }

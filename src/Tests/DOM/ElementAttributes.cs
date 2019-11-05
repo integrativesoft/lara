@@ -287,13 +287,17 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = new LaraOptions
             {
-                AllowLocalhostOnly = false,
+                AllowLocalhostOnly = true,
                 ShowNotFoundPage = false,
-                AddWebSocketsMiddleware = false
+                AddWebSocketsMiddleware = false,
+                Mode = ApplicationMode.BrowserApp,
+                PublishAssembliesOnStart = true
             };
-            Assert.False(x.AllowLocalhostOnly);
+            Assert.True(x.AllowLocalhostOnly);
             Assert.False(x.ShowNotFoundPage);
             Assert.False(x.AddWebSocketsMiddleware);
+            Assert.Equal(ApplicationMode.BrowserApp, x.Mode);
+            Assert.True(x.PublishAssembliesOnStart);
         }
 
         [Fact]

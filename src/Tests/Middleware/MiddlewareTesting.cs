@@ -539,14 +539,6 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultNotFoundReturned()
         {
-            /*var context = new Mock<IPageContext>();
-            LaraUI.InternalContext.Value = context.Object;
-            var http = new Mock<HttpContext>();
-            context.Setup(x => x.Http).Returns(http.Object);
-            var request = new Mock<HttpRequest>();
-            http.Setup(x => x.Request).Returns(request.Object);
-            request.Setup(x => x.Path).Returns("/abc");*/
-
             var x = new ErrorPages(_context.Application.GetPublished());
             var page = x.DefaultNotFound();
             Assert.True(page is DefaultErrorPage);
