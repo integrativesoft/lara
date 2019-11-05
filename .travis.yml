@@ -2,8 +2,26 @@ language: csharp
 solution: src/LaraUI.sln
 mono: none
 dotnet: 3.0.100
+
+before_install:
+ - sudo apt install nuget
+
 install:
- - dotnet restore src/LaraUI.sln
- script:
- - msbuild /p:Configuration=Debug src/LaraUI.sln
- - dotnet test src/Test/Tests.csproj
+  - nuget restore src/LaraUI.sln
+
+script:
+ - cd src
+ - echo "Debug" > environment.txt
+ - cd LaraClient
+ - npm install .
+ - npm run-script build
+ - cd ..
+ - cd ..
+ - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
+ - dotnet build --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj
+ - dotnet test --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=results.xml
+ 
+after_script:
+ - curl -s https://codecov.io/bash > codecov
+ - chmod +x codecov
+ - ./codecov -f src/Tests/results.xml -t CODECOV_TOKEN
