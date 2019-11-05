@@ -10,6 +10,7 @@ install:
   - nuget restore src/LaraUI.sln
 
 script:
+ - echo "Debug" ? src/environment.txt
  - cd src/LaraClient
  - npm install .
  - npm run-script build
