@@ -19,4 +19,4 @@ script:
  - cd ..
  - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
  - dotnet build --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj
- - dotnet test src/Tests/Tests.csproj
+ - dotnet test --configuration Debug --framework netcoreapp3.0 src/Tests/Tests.csproj
