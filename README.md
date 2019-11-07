@@ -1,13 +1,13 @@
-Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue)](https://github.com/integrativesoft/lara/blob/master/LICENSE) [![NuGet version](http://img.shields.io/nuget/v/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Download count](https://img.shields.io/nuget/dt/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Build Status](https://travis-ci.org/integrativesoft/lara.svg?branch=master)](https://travis-ci.org/integrativesoft/lara)
+Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue)](https://github.com/integrativesoft/lara/blob/master/LICENSE) [![NuGet version](http://img.shields.io/nuget/v/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Download count](https://img.shields.io/nuget/dt/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Build Status](https://travis-ci.org/integrativesoft/lara.svg?branch=master)](https://travis-ci.org/integrativesoft/lara)  [![Coverage Status](https://coveralls.io/repos/github/integrativesoft/lara/badge.svg?branch=master)](https://coveralls.io/github/integrativesoft/lara?branch=master)
 ==================
 
 >*"It is similar to server-side Blazor, but is much more lightweight and easier to install. For example, while any type of Blazor requires a whole SDK, Lara is just a NuGet package."* [ScientificProgrammer.net](https://scientificprogrammer.net/2019/08/18/pros-and-cons-of-blazor-for-web-development/?pagename=pros-and-cons-of-blazor)
 
-The purpose of **Lara** is to give you full control of the HTML document tree from the server in C#.
+**Lara**'s purpose is to give you full control of the HTML document tree from the server in C#.
 
-- Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS. Tested on NET Core and NET Framework.
 - Web UI: Create HTML5 web applications with full control of the DOM tree in C#.
 - Server-side rendering: The server keeps a virtual copy of the page and flushes the modifications to the browser.
+- Cross-Platform: .NET Standard and runs on Windows, Linux, and MacOS. Tested on .NET Core and .NET Framework.
 
 **Lara** can be used to develop either websites or desktop apps with an HTML5 frontend.
 
