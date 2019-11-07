@@ -4,19 +4,14 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+import { ContentArrayNode, ContentElementNode, ContentNode, ContentNodeType, ContentTextNode } from "./ContentInterfaces";
 import {
-    ContentArrayNode, ContentElementNode, ContentNode,
-    ContentNodeType, ContentTextNode
-} from "./ContentInterfaces";
-import {
-    AttributeEditedDelta, AttributeRemovedDelta, BaseDelta, ClearChildrenDelta, DeltaType,
-    ElementLocator, FocusDelta, NodeAddedDelta, NodeInsertedDelta, NodeRemovedDelta,
-    ReplaceDelta, SetCheckedDelta, SetIdDelta, SetValueDelta, SubmitJsDelta, SubscribeDelta,
-    SwapChildrenDelta, TextModifiedDelta, UnsubscribeDelta
+    AttributeEditedDelta, AttributeRemovedDelta, BaseDelta, ClearChildrenDelta, DeltaType, ElementLocator,
+    FocusDelta, NodeAddedDelta, NodeInsertedDelta, NodeRemovedDelta, ReplaceDelta, SetCheckedDelta,
+    SetIdDelta, SetValueDelta, SubmitJsDelta, SubscribeDelta, SwapChildrenDelta, TextModifiedDelta, UnsubscribeDelta
 } from "./DeltaInterfaces";
-import { listenServerEvents, plug, plugEvent } from "./index";
-import { addElementEvent, removeElementEvent } from "./RegisteredEvents";
-import { debounce } from "debounce";
+import { listenServerEvents } from "./index";
+import { subscribe, unsubscribe } from "./RegisteredEvents";
 
 export function processResult(steps: BaseDelta[]): void {
     for (var step of steps) {
@@ -293,34 +288,3 @@ function swapDom(obj1: Node, obj2: Node): void {
     temp.parentNode.removeChild(temp);
 }
 
-function subscribe(step: SubscribeDelta): void {
-    let element = document.getElementById(step.ElementId);
-    let handler = buildHandler(element, step);
-    addElementEvent(element, step.Settings.EventName, handler);
-}
-
-function buildHandler(element: Element, step: SubscribeDelta): EventListener {
-    if (step.DebounceInterval) {
-        return buildDebouncedHandler(element, step);
-    } else {
-        return buildRegularHandler(element, step);
-    }
-}
-
-function buildDebouncedHandler(element: Element, step: SubscribeDelta): EventListener {
-    let handler = function (_ev: Event): void {
-        plug(element, step.Settings);
-    };
-    return debounce(handler, step.DebounceInterval);
-}
-
-function buildRegularHandler(element: Element, step: SubscribeDelta): EventListener {
-    return function (ev: Event): void {
-        plugEvent(element, ev, step.Settings);
-    };
-}
-
-function unsubscribe(step: UnsubscribeDelta): void {
-    let element = document.getElementById(step.ElementId);
-    removeElementEvent(element, step.EventName);
-}

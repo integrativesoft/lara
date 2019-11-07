@@ -966,14 +966,6 @@ namespace Integrative.Lara
             }
         }
 
-        private void FlushEvents()
-        {
-            foreach (var settings in Events.Values)
-            {
-                SubscribeDelta.Enqueue(this, settings);
-            }
-        }
-
         /// <summary>
         /// Registers an event and associates code to execute.
         /// </summary>
@@ -1009,6 +1001,14 @@ namespace Integrative.Lara
                         EventName = eventName
                     });
                 }
+            }
+        }
+
+        private void FlushEvents()
+        {
+            foreach (var settings in Events.Values)
+            {
+                SubscribeDelta.Enqueue(this, settings);
             }
         }
 

@@ -119,26 +119,35 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task ProcessRequestDocument(PostEventContext context)
         {
-            Task release;
             var document = context.Document;
             var proceed = await document.WaitForTurn(context.Parameters.EventNumber);
             if (!proceed)
             {
                 await SendEvent(context, EventResultType.OutOfSequence);
             }
+            else if (string.IsNullOrEmpty(context.Parameters.ElementId))
+            {
+                await ProcessRequestDocument(context, document);
+            }
             else if (document.TryGetElementById(context.Parameters.ElementId, out var element))
             {
                 context.Element = element;
-                using (var access = await document.Semaphore.UseWaitAsync())
-                {
-                    release = await RunEvent(context);
-                }
-                await release;
+                await ProcessRequestDocument(context, document);
             }
             else
             {
                 await SendEvent(context, EventResultType.NoElement);
             }
+        }
+
+        private static async Task ProcessRequestDocument(PostEventContext context, Document document)
+        {
+            Task release;
+            using (var access = await document.Semaphore.UseWaitAsync())
+            {
+                release = await RunEvent(context);
+            }
+            await release;
         }
 
         internal static async Task<Task> RunEvent(PostEventContext post)
@@ -154,7 +163,7 @@ namespace Integrative.Lara.Middleware
         internal static async Task<Task> RunEventHandler(PostEventContext post)
         {
             if (await MiddlewareCommon.RunHandler(post.Http,
-                async () => await post.Element.NotifyEvent(post.Parameters.EventName)))
+                () => NotifyEventHandler(post)))
             {
                 string queue = post.Document.FlushQueue();
                 return await SendReply(post, queue);
@@ -162,6 +171,18 @@ namespace Integrative.Lara.Middleware
             else
             {
                 return Task.CompletedTask;
+            }
+        }
+
+        private static Task NotifyEventHandler(PostEventContext post)
+        {
+            if (post.Element == null)
+            {
+                return post.Document.NotifyEvent(post.Parameters.EventName);
+            }
+            else
+            {
+                return post.Element.NotifyEvent(post.Parameters.EventName);
             }
         }
 

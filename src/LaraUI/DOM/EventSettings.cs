@@ -87,6 +87,12 @@ namespace Integrative.Lara
         public bool LongRunning { get; set; }
 
         /// <summary>
+        /// Defines JavaScript code to execute in order to determine if the event should trigger.
+        /// When this property is set, the event is trigger only if the expression evaluates to true.
+        /// </summary>
+        public string EvalFilter { get; set; }
+
+        /// <summary>
         /// Specifies propagation options for client events
         /// </summary>
         public PropagationType Propagation { get; set; }

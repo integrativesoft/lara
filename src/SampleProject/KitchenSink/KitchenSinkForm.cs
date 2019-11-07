@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SampleProject
 {
-    [LaraPageAttribute(Address = "/")]
+    [LaraPage(Address = "/")]
     sealed class KitchenSinkForm : IPage
     {
         static KitchenSinkForm()  // static constructor
@@ -18,14 +18,15 @@ namespace SampleProject
             // publish static image file of coffee mug
             var assembly = typeof(KitchenSinkForm).Assembly;
             var bytes = Tools.LoadEmbeddedResource(assembly, "SampleProject.Assets.Coffee.svg");
-            LaraUI.Publish("/Coffee.svg", new StaticContent(bytes, "image/svg+xml"));
+            var app = LaraUI.Context.Application;
+            app.PublishFile("/Coffee.svg", new StaticContent(bytes, "image/svg+xml"));
         }
 
         public KitchenSinkForm()  // instance constructor
         {
         }
 
-        public Task OnGet()  // OnGet method from inteface IPage
+        public Task OnGet()  // OnGet method from interface IPage
         {
             var document = LaraUI.Page.Document;
 

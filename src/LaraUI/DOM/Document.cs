@@ -58,6 +58,8 @@ namespace Integrative.Lara
         readonly MessageRegistry _messageRegistry;
         readonly Sequencer _sequencer = new Sequencer();
 
+        internal Dictionary<string, EventSettings> Events { get; } = new Dictionary<string, EventSettings>();
+
         int _serializer;
 
         /// <summary>
@@ -284,5 +286,63 @@ namespace Integrative.Lara
         {
             CanDiscard = false;
         }
+
+        internal Task NotifyEvent(string eventName)
+        {
+            if (Events.TryGetValue(eventName, out var settings))
+            {
+                return settings.Handler();
+            }
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Registers an event and associates code to execute.
+        /// </summary>
+        /// <param name="settings">The event's settings.</param>
+        public void On(EventSettings settings)
+        {
+            settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            settings.Verify();
+            RemoveEvent(settings.EventName);
+            Events.Add(settings.EventName, settings);
+            SubscribeDelta.Enqueue(this, settings);
+        }
+
+        /// <summary>
+        /// Registers an event and associates code to execute.
+        /// </summary>
+        /// <param name="eventName">Name of the event.</param>
+        /// <param name="handler">The handler to execute.</param>
+        public void On(string eventName, Func<Task> handler)
+        {
+            eventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
+            if (handler == null)
+            {
+                RemoveEvent(eventName);
+            }
+            else
+            {
+                On(new EventSettings
+                {
+                    EventName = eventName,
+                    Handler = handler
+                });
+            }
+        }
+
+        private void RemoveEvent(string eventName)
+        {
+            if (Events.ContainsKey(eventName))
+            {
+                Events.Remove(eventName);
+                Enqueue(new UnsubscribeDelta
+                {
+                    ElementId = string.Empty,
+                    EventName = eventName
+                });
+            }
+        }
+
     }
 }

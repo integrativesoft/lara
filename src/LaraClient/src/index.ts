@@ -79,7 +79,7 @@ export class EventParameters {
     Message: ClientEventMessage;
 }
 
-export function plugEvent(el: Element, ev: Event, options: PlugOptions): void {
+export function plugEvent(el: EventTarget, ev: Event, options: PlugOptions): void {
     if (options.Propagation == PropagationType.StopImmediatePropagation) {
         ev.stopImmediatePropagation();
     } else if (options.Propagation != PropagationType.AllowAll) {
@@ -88,7 +88,7 @@ export function plugEvent(el: Element, ev: Event, options: PlugOptions): void {
     plug(el, options);
 }
 
-export function plug(el: Element, options: PlugOptions): void {
+export function plug(el: EventTarget, options: PlugOptions): void {
     if (options.LongRunning) {
         plugWebSocket(el, options);
     } else {
@@ -96,7 +96,7 @@ export function plug(el: Element, options: PlugOptions): void {
     }
 }
 
-function plugWebSocket(el: Element, plug: PlugOptions): void {
+function plugWebSocket(el: EventTarget, plug: PlugOptions): void {
     block(plug);
     let url = getSocketUrl('/_event');
     let socket = new WebSocket(url);
@@ -127,7 +127,7 @@ function getSocketUrl(name: string): string {
     return url + window.location.host + name;
 }
 
-function buildEventParameters(el: Element, plug: PlugOptions): EventParameters {
+function buildEventParameters(el: EventTarget, plug: PlugOptions): EventParameters {
     let params = new EventParameters();
     if (plug.IgnoreSequence) {
         params.EventNumber = 0;
@@ -135,7 +135,7 @@ function buildEventParameters(el: Element, plug: PlugOptions): EventParameters {
         params.EventNumber = getEventNumber();
     }
     params.DocumentId = documentId;
-    params.ElementId = el.id;
+    params.ElementId = getTargetId(el);
     params.EventName = plug.EventName;
     params.Message = collectValues();
     params.Message.ExtraData = plug.ExtraData;
@@ -153,7 +153,15 @@ async function onSocketMessage(json: string, eventNumber: number): Promise<void>
     processEventResult(result);
 }
 
-function plugAjax(el: Element, plug: PlugOptions): void {
+export function getTargetId(target: EventTarget): string {
+    if (target instanceof Element) {
+        return target.id;
+    } else {
+        return "";
+    }
+}
+
+function plugAjax(el: EventTarget, plug: PlugOptions): void {
     block(plug);
     let eventNumber = getEventNumber();
     let url = getEventUrl(el, plug.EventName, eventNumber);
@@ -205,9 +213,9 @@ async function processAjax(ajax: XMLHttpRequest, eventNumber: number): Promise<v
     }
 }
 
-function getEventUrl(el: Element, eventName: string, eventNumber: number): string {
+function getEventUrl(el: EventTarget, eventName: string, eventNumber: number): string {
     return "/_event?doc=" + documentId
-        + "&el=" + el.id
+        + "&el=" + getTargetId(el)
         + "&ev=" + eventName
         + "&seq=" + eventNumber.toString();
 }

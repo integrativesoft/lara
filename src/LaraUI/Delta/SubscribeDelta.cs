@@ -20,6 +20,9 @@ namespace Integrative.Lara.Delta
         [DataMember(EmitDefaultValue = false)]
         public int DebounceInterval { get; set; }
 
+        [DataMember(EmitDefaultValue = false)]
+        public string EvalFilter { get; set; }
+
         public SubscribeDelta() : base(DeltaType.Subscribe)
         {
         }
@@ -30,13 +33,25 @@ namespace Integrative.Lara.Delta
             {
                 var document = element.Document;
                 document.NotifyHasEvent();
-                document.Enqueue(new SubscribeDelta
-                {
-                    ElementId = element.EnsureElementId(),
-                    Settings = ClientEventSettings.CreateFrom(settings),
-                    DebounceInterval = settings.DebounceInterval
-                });
+                document.Enqueue(CreateDelta(element.EnsureElementId(), settings));
             }
+        }
+
+        public static void Enqueue(Document document, EventSettings settings)
+        {
+            document.NotifyHasEvent();
+            document.Enqueue(CreateDelta(string.Empty, settings));
+        }
+
+        private static SubscribeDelta CreateDelta(string id, EventSettings settings)
+        {
+            return new SubscribeDelta
+            {
+                ElementId = id,
+                Settings = ClientEventSettings.CreateFrom(settings),
+                DebounceInterval = settings.DebounceInterval,
+                EvalFilter = settings.EvalFilter
+            };
         }
     }
 
