@@ -216,7 +216,8 @@ namespace Integrative.Lara
             return _attributes.HasAttribute(attributeName);
         }
 
-        internal bool HasAttributeLower(string nameLower) => _attributes.HasAttributeLower(nameLower);
+        internal bool HasAttributeLower(string nameLower)
+            => _attributes.HasAttributeLower(nameLower);
 
         /// <summary>
         /// Gets the value of an attribute.

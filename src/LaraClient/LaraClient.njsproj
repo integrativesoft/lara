@@ -40,6 +40,9 @@
     <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\Autocomplete.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\Blocker.ts" />
     <TypeScriptCompile Include="src\ContentInterfaces.ts" />
     <TypeScriptCompile Include="src\custom.d.ts" />

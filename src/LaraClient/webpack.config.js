@@ -35,6 +35,18 @@ module.exports = {
             {
                 use: 'ts-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                loaders: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(jpe?g|png|gif)$/i,
+                loader: "file-loader",
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'assets/images/'
+                }
             }
         ]
     },

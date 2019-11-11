@@ -10,6 +10,9 @@ This file is the client runtime for Lara.
 https://laraui.com
 */
 
+//#region Framework
+
+import { AutocompleteCommand, autocompleteStart, autocompleteStop } from "./Autocomplete";
 import { block, unblock } from "./Blocker";
 import { EventResult, EventResultType } from "./DeltaInterfaces";
 import { clean } from "./Initializer";
@@ -80,12 +83,16 @@ export class EventParameters {
 }
 
 export function plugEvent(el: EventTarget, ev: Event, options: PlugOptions): void {
+    stopPropagation(ev, options);
+    plug(el, options);
+}
+
+function stopPropagation(ev: Event, options: PlugOptions): void {
     if (options.Propagation == PropagationType.StopImmediatePropagation) {
         ev.stopImmediatePropagation();
     } else if (options.Propagation != PropagationType.AllowAll) {
         ev.stopPropagation();
     }
-    plug(el, options);
 }
 
 export function plug(el: EventTarget, options: PlugOptions): void {
@@ -253,3 +260,17 @@ export function listenServerEvents(): void {
         IgnoreSequence: true
     });
 }
+
+//#endregion
+
+//#region Built-in web components
+
+export function autocompleteApply(payload: string): void {
+    autocompleteStart(payload);
+}
+
+export function autocompleteDestroy(id: string): void {
+    autocompleteStop(id);
+}
+
+//#endregion

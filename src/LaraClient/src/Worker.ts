@@ -5,15 +5,12 @@ Author: Pablo Carbonell
 */
 
 import { ContentArrayNode, ContentElementNode, ContentNode, ContentNodeType, ContentTextNode } from "./ContentInterfaces";
-import {
-    AttributeEditedDelta, AttributeRemovedDelta, BaseDelta, ClearChildrenDelta, DeltaType, ElementLocator,
-    FocusDelta, NodeAddedDelta, NodeInsertedDelta, NodeRemovedDelta, ReplaceDelta, SetCheckedDelta,
-    SetIdDelta, SetValueDelta, SubmitJsDelta, SubscribeDelta, SwapChildrenDelta, TextModifiedDelta, UnsubscribeDelta
-} from "./DeltaInterfaces";
+import * as Delta from "./DeltaInterfaces";
 import { listenServerEvents } from "./index";
 import { subscribe, unsubscribe } from "./RegisteredEvents";
+import { autocompleteStart } from "./Autocomplete";
 
-export function processResult(steps: BaseDelta[]): void {
+export function processResult(steps: Delta.BaseDelta[]): void {
     for (var step of steps) {
         if (!processStepCatch(step)) {
             return;
@@ -21,7 +18,7 @@ export function processResult(steps: BaseDelta[]): void {
     }
 }
 
-function processStepCatch(step: BaseDelta): boolean {
+function processStepCatch(step: Delta.BaseDelta): boolean {
     try {
         processStep(step);
         return true;
@@ -33,66 +30,65 @@ function processStepCatch(step: BaseDelta): boolean {
     }
 }
 
-function processStep(step: BaseDelta): void {
+function processStep(step: Delta.BaseDelta): void {
     switch (step.Type) {
-        case DeltaType.Append:
-            append(step as NodeAddedDelta);
+        case Delta.DeltaType.Append:
+            append(step as Delta.NodeAddedDelta);
             break;
-        case DeltaType.Insert:
-            insert(step as NodeInsertedDelta);
+        case Delta.DeltaType.Insert:
+            insert(step as Delta.NodeInsertedDelta);
             break;
-        case DeltaType.TextModified:
-            textModified(step as TextModifiedDelta);
+        case Delta.DeltaType.TextModified:
+            textModified(step as Delta.TextModifiedDelta);
             break;
-        case DeltaType.Remove:
-            remove(step as NodeRemovedDelta);
+        case Delta.DeltaType.Remove:
+            remove(step as Delta.NodeRemovedDelta);
             break;
-        case DeltaType.EditAttribute:
-            editAttribute(step as AttributeEditedDelta);
+        case Delta.DeltaType.EditAttribute:
+            editAttribute(step as Delta.AttributeEditedDelta);
             break;
-        case DeltaType.RemoveAttribute:
-            removeAttribute(step as AttributeRemovedDelta);
+        case Delta.DeltaType.RemoveAttribute:
+            removeAttribute(step as Delta.AttributeRemovedDelta);
             break;
-        case DeltaType.Focus:
-            focus(step as FocusDelta);
+        case Delta.DeltaType.Focus:
+            focus(step as Delta.FocusDelta);
             break;
-        case DeltaType.SetId:
-            setId(step as SetIdDelta);
+        case Delta.DeltaType.SetId:
+            setId(step as Delta.SetIdDelta);
             break;
-        case DeltaType.SetValue:
-            setValue(step as SetValueDelta);
+        case Delta.DeltaType.SetValue:
+            setValue(step as Delta.SetValueDelta);
             break;
-        case DeltaType.SubmitJS:
-            submitJS(step as SubmitJsDelta);
+        case Delta.DeltaType.SubmitJS:
+            submitJS(step as Delta.SubmitJsDelta);
             break;
-        case DeltaType.SetChecked:
-            setChecked(step as SetCheckedDelta);
+        case Delta.DeltaType.SetChecked:
+            setChecked(step as Delta.SetCheckedDelta);
             break;
-        case DeltaType.ClearChildren:
-            clearChildren(step as ClearChildrenDelta);
+        case Delta.DeltaType.ClearChildren:
+            clearChildren(step as Delta.ClearChildrenDelta);
             break;
-        case DeltaType.Replace:
-            replaceLocation(step as ReplaceDelta);
+        case Delta.DeltaType.Replace:
+            replaceLocation(step as Delta.ReplaceDelta);
             break;
-        case DeltaType.ServerEvents:
+        case Delta.DeltaType.ServerEvents:
             listenServerEvents();
             break;
-        case DeltaType.SwapChildren:
-            swapChildren(step as SwapChildrenDelta);
+        case Delta.DeltaType.SwapChildren:
+            swapChildren(step as Delta.SwapChildrenDelta);
             break;
-        case DeltaType.Subscribe:
-            subscribe(step as SubscribeDelta);
+        case Delta.DeltaType.Subscribe:
+            subscribe(step as Delta.SubscribeDelta);
             break;
-        case DeltaType.Unsubscribe:
-            unsubscribe(step as UnsubscribeDelta);
+        case Delta.DeltaType.Unsubscribe:
+            unsubscribe(step as Delta.UnsubscribeDelta);
             break;
-
         default:
             console.log("Error processing event response. Unknown step type: " + step.Type);
     }
 }
 
-function append(delta: NodeAddedDelta): void {
+function append(delta: Delta.NodeAddedDelta): void {
     let el = document.getElementById(delta.ParentId);
     let children = createNodes(delta.Node);
     appendChildren(el, children);
@@ -104,7 +100,7 @@ function appendChildren(el: Element, children: Node[]): void {
     }
 }
 
-function insert(delta: NodeInsertedDelta): void {
+function insert(delta: Delta.NodeInsertedDelta): void {
     let el = document.getElementById(delta.ParentElementId);
     let children = createNodes(delta.ContentNode);
     if (delta.Index < el.childNodes.length) {
@@ -193,19 +189,19 @@ function createRootNode(node: ContentElementNode): Element {
     }
 }
 
-function textModified(delta: TextModifiedDelta): void {
+function textModified(delta: Delta.TextModifiedDelta): void {
     let el = document.getElementById(delta.ParentElementId);
     let child = el.childNodes[delta.ChildNodeIndex];
     child.textContent = delta.Text;
 }
 
-function remove(delta: NodeRemovedDelta): void {
+function remove(delta: Delta.NodeRemovedDelta): void {
     let parent = document.getElementById(delta.ParentId);
     let child = parent.childNodes[delta.ChildIndex];
     child.remove();
 }
 
-function editAttribute(delta: AttributeEditedDelta): void {
+function editAttribute(delta: Delta.AttributeEditedDelta): void {
     let el = document.getElementById(delta.ElementId);
     if (el.tagName == "OPTION" && delta.Attribute == "selected") {
         let option = el as HTMLOptionElement;
@@ -215,7 +211,7 @@ function editAttribute(delta: AttributeEditedDelta): void {
     }
 }
 
-function removeAttribute(delta: AttributeRemovedDelta): void {
+function removeAttribute(delta: Delta.AttributeRemovedDelta): void {
     let el = document.getElementById(delta.ElementId);
     if (el.tagName == "OPTION" && delta.Attribute == "selected") {
         let option = el as HTMLOptionElement;
@@ -225,17 +221,17 @@ function removeAttribute(delta: AttributeRemovedDelta): void {
     }
 }
 
-function focus(delta: FocusDelta): void {
+function focus(delta: Delta.FocusDelta): void {
     let el = document.getElementById(delta.ElementId);
     el.focus();
 }
 
-function setId(delta: SetIdDelta): void {
+function setId(delta: Delta.SetIdDelta): void {
     var el = resolveElement(delta.Locator);
     el.id = delta.NewId;
 }
 
-function resolveElement(locator: ElementLocator): HTMLElement {
+function resolveElement(locator: Delta.ElementLocator): HTMLElement {
     let el = document.getElementById(locator.StartingId);
     for (let index = locator.Steps.length - 1; index >= 0; index--) {
         let step = locator.Steps[index];
@@ -244,12 +240,12 @@ function resolveElement(locator: ElementLocator): HTMLElement {
     return el;
 }
 
-function setValue(delta: SetValueDelta): void {
+function setValue(delta: Delta.SetValueDelta): void {
     let input = document.getElementById(delta.ElementId) as HTMLInputElement;
     input.value = delta.Value;
 }
 
-function submitJS(context: SubmitJsDelta): void {
+function submitJS(context: Delta.SubmitJsDelta): void {
     try {
         eval(context.Code);
     } catch (e) {
@@ -257,23 +253,23 @@ function submitJS(context: SubmitJsDelta): void {
     }
 }
 
-function setChecked(delta: SetCheckedDelta): void {
+function setChecked(delta: Delta.SetCheckedDelta): void {
     let input = document.getElementById(delta.ElementId) as HTMLInputElement;
     input.checked = delta.Checked;
 }
 
-function clearChildren(delta: ClearChildrenDelta): void {
+function clearChildren(delta: Delta.ClearChildrenDelta): void {
     let parent = document.getElementById(delta.ElementId);
     while (parent.lastChild) {
         parent.removeChild(parent.lastChild);
     }
 }
 
-function replaceLocation(delta: ReplaceDelta): void {
+function replaceLocation(delta: Delta.ReplaceDelta): void {
     location.replace(delta.Location);
 }
 
-function swapChildren(step: SwapChildrenDelta): void {
+function swapChildren(step: Delta.SwapChildrenDelta): void {
     let el = document.getElementById(step.ParentId);
     let node1 = el.childNodes[step.Index1];
     let node2 = el.childNodes[step.Index2];

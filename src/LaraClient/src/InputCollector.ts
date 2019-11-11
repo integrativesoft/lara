@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-type SimpleValueElement = HTMLButtonElement | HTMLSelectElement | HTMLTextAreaElement;
-
 export class ElementEventValue {
     ElementId: string;
     Value: string;
@@ -49,16 +47,25 @@ function collectType(tagName: string,
 
 function collectInput(el: Element, entry: ElementEventValue): void {
     let input = el as HTMLInputElement;
-    entry.Value = input.value;
+    entry.Value = getValue(input);
     entry.Checked = input.checked;
 }
 
 function collectSimpleValue(el: Element, entry: ElementEventValue): void {
-    let input = el as SimpleValueElement;
-    entry.Value = input.value;
+    entry.Value = getValue(el);
 }
 
 function collectOption(el: Element, entry: ElementEventValue): void {
     let option = el as HTMLOptionElement;
     entry.Checked = option.selected;
+}
+
+function getValue(el: Element): string {
+    if (el.hasAttribute('data-lara-value')) {
+        return el.getAttribute('data-lara-value');
+    } else if ('value' in el) {
+        return el['value'];
+    } else {
+        return '';
+    }
 }

@@ -85,6 +85,12 @@ namespace SampleProject
                             .AppendText("Web component example 3")
                         .Pop()
                     .Pop()
+                    .Push("div", "mt-2")
+                        .Push("a")
+                            .Attribute("href", AutocompletePage.Address)
+                            .AppendText("Autocomplete example")
+                        .Pop()
+                    .Pop()
                 .Pop()
             .Pop();
 

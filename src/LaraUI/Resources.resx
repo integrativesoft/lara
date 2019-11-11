@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AutocompleteNullProvider" xml:space="preserve">
+    <value>The Provider propery cannot be null.</value>
+  </data>
+  <data name="AutocompleteOrphan" xml:space="preserve">
+    <value>Autocomplete requieres an input element that is already connected to a document.</value>
+  </data>
   <data name="BadRequest" xml:space="preserve">
     <value>Bad request</value>
   </data>
@@ -143,6 +149,9 @@
   </data>
   <data name="Http403" xml:space="preserve">
     <value>HTTP 403: Forbidden.</value>
+  </data>
+  <data name="InputElementNull" xml:space="preserve">
+    <value>Input element cannot be null.</value>
   </data>
   <data name="InvalidBindingExpression" xml:space="preserve">
     <value>Invalid expression for binding. Expecting a member expression.</value>

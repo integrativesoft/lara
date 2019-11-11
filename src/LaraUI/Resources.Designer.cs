@@ -61,6 +61,24 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Provider propery cannot be null..
+        /// </summary>
+        internal static string AutocompleteNullProvider {
+            get {
+                return ResourceManager.GetString("AutocompleteNullProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autocomplete requieres an input element that is already connected to a document..
+        /// </summary>
+        internal static string AutocompleteOrphan {
+            get {
+                return ResourceManager.GetString("AutocompleteOrphan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bad request.
         /// </summary>
         internal static string BadRequest {
@@ -138,6 +156,15 @@ namespace Integrative.Lara {
         internal static string Http403 {
             get {
                 return ResourceManager.GetString("Http403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input element cannot be null..
+        /// </summary>
+        internal static string InputElementNull {
+            get {
+                return ResourceManager.GetString("InputElementNull", resourceCulture);
             }
         }
         

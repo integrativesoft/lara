@@ -126,6 +126,9 @@ namespace Integrative.Lara
             _messageRegistry = new MessageRegistry(this);
         }
 
+        internal string VirtualIdString =>
+            VirtualId.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
+
         /// <summary>
         /// Creates an HTML element.
         /// </summary>

@@ -113,6 +113,24 @@ namespace Integrative.Lara
         /// </summary>
         public static IWebServiceContext Service => InternalContext.Value as IWebServiceContext;
 
+        /// <summary>
+        /// Returns the current document (same as Page.Document)
+        /// </summary>
+        public static Document Document
+        {
+            get
+            {
+                if (Page == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return Page.Document;
+                }
+            }
+        }
+
         #endregion
 
         #region Tools
