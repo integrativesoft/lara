@@ -59,12 +59,13 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public void TimerInterval()
         {
-            var c = new Connections();
-            using var x = new StaleConnectionsCollector(c)
+            using var x = new Connections
             {
-                TimerInterval = 200
+                StaleCollectionInterval = 100,
+                StaleExpirationInterval = 200
             };
-            Assert.Equal(200, x.TimerInterval);
+            Assert.Equal(100, x.StaleCollectionInterval);
+            Assert.Equal(200, x.StaleExpirationInterval);
         }
     }
 }
