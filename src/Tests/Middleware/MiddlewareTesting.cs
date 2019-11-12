@@ -599,5 +599,71 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(BrowserAppController.DefaultKeepAliveInterval, app.KeepAliveInterval);
             Assert.True(app.AllowLocalhostOnly);
         }
+
+        [Fact]
+        public async void LocalhostFilterPass()
+        {
+            var http = new Mock<HttpContext>();
+            var cnx = new Mock<ConnectionInfo>();
+            http.Setup(x => x.Connection).Returns(cnx.Object);
+            cnx.Setup(x => x.RemoteIpAddress).Returns(IPAddress.Loopback);
+            var next = new Mock<RequestDelegate>();
+            var logger = new Mock<ILogger<LocalhostFilter>>();
+            var filter = new LocalhostFilter(next.Object, logger.Object);
+            await filter.Invoke(http.Object);
+            next.Verify(x => x.Invoke(http.Object), Times.Once);
+        }
+
+        [Fact]
+        public void StartServerOptionsSettings()
+        {
+            var x = new StartServerOptions
+            {
+                Port = 12345,
+                IPAddress = IPAddress.Loopback
+            };
+            Assert.Equal(12345, x.Port);
+            Assert.Equal(IPAddress.Loopback, x.IPAddress);
+        }
+
+        readonly static object _myLock = new object();
+
+        [Fact]
+        public void LaraUiDefaultStatic()
+        {
+            lock (_myLock)
+            {
+                LaraUI.Publish("/a", new StaticContent(Encoding.UTF8.GetBytes("hello"), "text"));
+                Assert.True(LaraUI.DefaultApplication.TryGetNode("/a", out _));
+            }
+        }
+
+        [Fact]
+        public void LaraUiDefaultPage()
+        {
+            lock (_myLock)
+            {
+                LaraUI.Publish("/b", () => new MyPage());
+                Assert.True(LaraUI.DefaultApplication.TryGetNode("/b", out _));
+                LaraUI.UnPublish("/b");
+                Assert.False(LaraUI.DefaultApplication.TryGetNode("/b", out _));
+            }
+        }
+
+        [Fact]
+        public void LaraUiDefaultService()
+        {
+            lock (_myLock)
+            {
+                LaraUI.Publish(new WebComponentOptions
+                {
+                    ComponentTagName = "lala-lala",
+                    ComponentType = typeof(RemovableComponent)
+                });
+                Assert.True(LaraUI.DefaultApplication.TryGetComponent("lala-lala", out _));
+                LaraUI.UnPublishWebComponent("lala-lala");
+                Assert.False(LaraUI.DefaultApplication.TryGetComponent("lala-lala", out _));
+            }
+        }
     }
 }

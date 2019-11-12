@@ -4,7 +4,6 @@ Created: 7/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -87,7 +87,10 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJPEG();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            await _context.Application.Start();
+            await _context.Application.Start(new StartServerOptions
+            {
+                AllowLocalhostOnly = true
+            });
             string address = LaraUI.GetFirstURL(_context.Application.Host);
             _context.Application.PublishFile("/", content);
 
@@ -145,6 +148,15 @@ namespace Integrative.Lara.Tests.Main
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
             Assert.Equal(content.ETag, values.FirstOrDefault());
             Assert.Equal(bytes, downloaded);
+        }
+
+        [Fact]
+        public async void ContentNotFound()
+        {
+            await _context.Application.Start();
+            var address = LaraUI.GetFirstURL(_context.Application.Host);
+            using var response = await _client.GetAsync(address + "/lalala");
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

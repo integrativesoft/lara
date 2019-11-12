@@ -38,10 +38,10 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="context">The HttpContext.</param>
         /// <returns></returns>
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             var page = _app.ErrorPages.GetPage(HttpStatusCode.NotFound);
-            await page.Run(_app, context, _options);
+            return page.Run(_app, context, _options);
         }
     }
 }

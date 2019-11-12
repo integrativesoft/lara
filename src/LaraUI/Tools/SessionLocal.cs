@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Tools;
-using System;
 using System.Collections.Generic;
 
 namespace Integrative.Lara
@@ -79,7 +78,7 @@ namespace Integrative.Lara
             }
             else
             {
-                throw new InvalidOperationException(Resources.NoCurrentSession);
+                throw new NoCurrentSessionException(Resources.NoCurrentSession);
             }            
         }
 

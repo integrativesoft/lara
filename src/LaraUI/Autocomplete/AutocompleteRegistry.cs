@@ -55,5 +55,7 @@ namespace Integrative.Lara.Autocomplete
                 _map.Value?.Remove(key);
             }
         }
+
+        public int Count => _map.Value.Count;
     }
 }

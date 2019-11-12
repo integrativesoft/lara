@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Delta;
 using Integrative.Lara.Tests.DOM;
+using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using Xunit;
 
@@ -107,7 +108,8 @@ namespace Integrative.Lara.Tests.Delta
                 EventName = "click",
                 LongRunning = true,
                 Propagation = PropagationType.StopImmediatePropagation,
-                DebounceInterval = 400
+                DebounceInterval = 400,
+                EvalFilter = "true"
             };
             var client = ClientEventSettings.CreateFrom(x);
             client.ExtraData = "xx";
@@ -118,7 +120,31 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Equal(x.EventName, client.EventName);
             Assert.Equal(x.LongRunning, client.LongRunning);
             Assert.Equal(x.Propagation, client.Propagation);
+            Assert.Equal("true", x.EvalFilter);
             Assert.Equal("xx", client.ExtraData);
         }
+
+        [Fact]
+        public void SubscribeDocumentEventEnqueues()
+        {
+            var doc = new Document(new MyPage(), 100);
+            var settings = new EventSettings();
+            Assert.True(doc.CanDiscard);
+            SubscribeDelta.Enqueue(doc, settings);
+            Assert.False(doc.CanDiscard);
+            var q = doc.GetQueue();
+            Assert.NotEmpty(q);
+        }
+
+        [Fact]
+        public void DeltaPayload()
+        {
+            var x = new SubmitJsDelta
+            {
+                Payload = "abc"
+            };
+            Assert.Equal("abc", x.Payload);
+        }
+
     }
 }

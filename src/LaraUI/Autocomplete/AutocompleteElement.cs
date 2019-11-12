@@ -88,7 +88,7 @@ namespace Integrative.Lara
         internal string AutocompleteId { get; set; }
 
         private void SubmitAutocomplete()
-        {
+        { 
             AutocompleteId = GetAutocompleteKey();
             AutocompleteService.Register(AutocompleteId, this);
             _applied = true;

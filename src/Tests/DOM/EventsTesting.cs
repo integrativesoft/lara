@@ -4,9 +4,12 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
+using Integrative.Lara.Main;
+using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using Moq;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -187,6 +190,33 @@ namespace Integrative.Lara.Tests.DOM
             ev.Unsubscribe(myMethod);
             await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void DocumentEvent()
+        {
+            int counter = 0;
+            var x = new Document(new MyPage(), 100);
+            x.On("keyup", () =>
+            {
+                counter++;
+                return Task.CompletedTask;
+            });
+            x.NotifyEvent("keyup");
+            Assert.Equal(1, counter);
+            x.NotifyEvent("keyup");
+            Assert.Equal(2, counter);
+            x.On("keyup", null);
+            x.NotifyEvent("keyup");
+            Assert.Equal(2, counter);
+        }
+
+        [Fact]
+        public void DocumentGuidToString()
+        {
+            var x = new Document(new MyPage(), 100);
+            var text = x.VirtualId.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
+            Assert.Equal(text, x.VirtualIdString);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Integrative.Lara
         /// Invokes this middleware
         /// </summary>
         /// <param name="context">The HttpContext.</param>
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             context = context ?? throw new ArgumentNullException(nameof(context));
             var remote = context.Connection.RemoteIpAddress;
@@ -44,11 +44,11 @@ namespace Integrative.Lara
             {
                 string msg = $"Forbidden request from {remote}";
                 _logger.LogInformation(msg);
-                await MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
+                return MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
             }
             else
             {
-                await _next.Invoke(context);
+                return _next.Invoke(context);
             }
         }
     }

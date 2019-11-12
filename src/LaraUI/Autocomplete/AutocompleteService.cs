@@ -37,7 +37,7 @@ namespace Integrative.Lara.Autocomplete
             var options = element.GetOptions();
             var response = await options.Provider.GetAutocompleteList(request.Term);
             return LaraUI.JSON.Stringify(response);
-        }
+        }        
 
         public static void Register(string key, AutocompleteElement element)
         {
@@ -48,5 +48,7 @@ namespace Integrative.Lara.Autocomplete
         {
             _map.Remove(key);
         }
+
+        public static int RegisteredCount => _map.Count;
     }
 }

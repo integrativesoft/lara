@@ -15,6 +15,23 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
+    class RemovablePage : IPage
+    {
+        public Task OnGet() => Task.CompletedTask;
+    }
+
+    class RemovableComponent : WebComponent
+    {
+        public RemovableComponent() : base("x-removable")
+        {
+        }
+    }
+
+    class RemovableService : IWebService
+    {
+        public Task<string> Execute() => Task.FromResult(string.Empty);
+    }
+
     public class WebServicesTesting : DummyContextTesting
     {
         [Fact]
@@ -256,23 +273,6 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(found, app.TryGetNode(_fileName, out _));
             Assert.Equal(found, app.TryGetNode(_serviceName, out _));
             Assert.Equal(found, app.TryGetComponent(_componentName, out _));
-        }
-
-        class RemovablePage : IPage
-        {
-            public Task OnGet() => Task.CompletedTask;
-        }
-
-        class RemovableComponent : WebComponent
-        {
-            public RemovableComponent() : base("x-removable")
-            {
-            }
-        }
-
-        class RemovableService : IWebService
-        {
-            public Task<string> Execute() => Task.FromResult(string.Empty);
         }
     }
 }
