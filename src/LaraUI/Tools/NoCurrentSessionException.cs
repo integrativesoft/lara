@@ -29,5 +29,12 @@ namespace Integrative.Lara.Tools
         public NoCurrentSessionException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NoCurrentSessionException()
+        {
+        }
     }
 }
