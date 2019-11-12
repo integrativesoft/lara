@@ -230,5 +230,32 @@ namespace Integrative.Lara.Tests.Components
             Assert.Equal("R", item.Code);
         }
 
+        [Fact]
+        public void RegistryReplacesEntries()
+        {
+            LaraUI.InternalContext.Value = _context;
+            var x = new AutocompleteRegistry();
+            var auto1 = new AutocompleteElement();
+            var auto2 = new AutocompleteElement();
+            x.Set("a", auto1);
+            x.Set("a", auto2);
+            Assert.True(x.TryGet("a", out var autoX));
+            Assert.Same(auto2, autoX);
+        }
+
+        [Fact]
+        public async void ExecuteNotFoundReturnsEmpty()
+        {
+            var x = new AutocompleteService();
+            var request = new AutocompleteRequest
+            {
+                Key = "a",
+                Term = ""
+            };
+            var json = LaraUI.JSON.Stringify(request);
+            var result = await x.Execute(json);
+            Assert.Equal(string.Empty, result);
+        }
+
     }
 }

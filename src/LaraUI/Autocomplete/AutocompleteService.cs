@@ -26,9 +26,13 @@ namespace Integrative.Lara.Autocomplete
 
         readonly static AutocompleteRegistry _map = new AutocompleteRegistry();
 
-        public async Task<string> Execute()
+        public Task<string> Execute()
         {
-            var json = LaraUI.Service.RequestBody;
+            return Execute(LaraUI.Service.RequestBody);
+        }
+
+        internal async Task<string> Execute(string json)
+        {
             var request = LaraUI.JSON.Parse<AutocompleteRequest>(json);
             if (!_map.TryGet(request.Key, out var element))
             {
@@ -37,7 +41,7 @@ namespace Integrative.Lara.Autocomplete
             var options = element.GetOptions();
             var response = await options.Provider.GetAutocompleteList(request.Term);
             return LaraUI.JSON.Stringify(response);
-        }        
+        }
 
         public static void Register(string key, AutocompleteElement element)
         {

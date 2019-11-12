@@ -55,5 +55,16 @@ namespace Integrative.Lara.Tests.Main
             await collector.CleanupExpiredHandler();
             Assert.True(connections.TryGetConnection(cnx.Id, out _));
         }
+
+        [Fact]
+        public void TimerInterval()
+        {
+            var c = new Connections();
+            using var x = new StaleConnectionsCollector(c)
+            {
+                TimerInterval = 200
+            };
+            Assert.Equal(200, x.TimerInterval);
+        }
     }
 }
