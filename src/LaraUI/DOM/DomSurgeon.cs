@@ -376,10 +376,16 @@ namespace Integrative.Lara.DOM
         private void AddImmediateId(Node child)
         {
             if (child is Element element
-                && _parent.TagName == "body")
+                && ParentRequiresId())
             {
                 element.EnsureElementId();
             }
+        }
+
+        private bool ParentRequiresId()
+        {
+            return !_parent.IsPrintable
+                || _parent.TagName == "body";
         }
 
         private static void GenerateRequiredIds(Node node)
