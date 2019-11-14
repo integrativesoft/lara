@@ -1100,7 +1100,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
-        public virtual void BindInput<T>(BindInputOptions<T> options)
+        public void BindInput<T>(BindInputOptions<T> options)
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
