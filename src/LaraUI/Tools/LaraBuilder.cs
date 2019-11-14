@@ -412,6 +412,17 @@ namespace Integrative.Lara
             return this;
         }
 
+        /// <summary>
+        /// Listens to an event, only purpose to flush data from the client to the server.
+        /// This forces the server to read input values on the client on the given event name.
+        /// </summary>
+        /// <param name="eventName">event to listen</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder FlushEvent(string eventName)
+        {
+            return On(eventName, () => Task.CompletedTask);
+        }
+
         #endregion
 
         #region Current element bindings
