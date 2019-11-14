@@ -34,6 +34,10 @@ namespace Integrative.Lara
         {
             PropertyChanged?.Invoke(this, e);
         }
+
+        internal virtual void Collect(Element element)
+        {
+        }
     }
 
     /// <summary>
@@ -248,8 +252,6 @@ namespace Integrative.Lara
             var action = set.Compile();
             return action;
         }
-
-        internal abstract void Collect(Element element);
     }
 
     /// <summary>

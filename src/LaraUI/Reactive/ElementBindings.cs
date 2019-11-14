@@ -54,6 +54,14 @@ namespace Integrative.Lara.Reactive
             UnbindChildren();
         }
 
+        public void NotifyAttributeChanged(string attribute)
+        {
+            if(_attributeBindings.TryGetValue(attribute, out var binding))
+            {
+                binding.Collect(_parent);
+            }
+        }
+
         #endregion
 
         #region Generic handler

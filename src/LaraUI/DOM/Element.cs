@@ -352,8 +352,8 @@ namespace Integrative.Lara
         /// </value>
         public string AccessKey
         {
-            get => _attributes.GetAttributeLower("accesskey");
-            set { _attributes.SetAttributeLower("accesskey", value); }
+            get => GetAttributeLower("accesskey");
+            set { SetAttributeLower("accesskey", value); }
         }
 
         /// <summary>
@@ -364,8 +364,8 @@ namespace Integrative.Lara
         /// </value>
         public string AutoCapitalize
         {
-            get => _attributes.GetAttributeLower("autocapitalize");
-            set { _attributes.SetAttributeLower("autocapitalize", value); }
+            get => GetAttributeLower("autocapitalize");
+            set { SetAttributeLower("autocapitalize", value); }
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace Integrative.Lara
         /// </value>
         public string Class
         {
-            get => _attributes.GetAttributeLower("class");
-            set { _attributes.SetAttributeLower("class", value); }
+            get => GetAttributeLower("class");
+            set { SetAttributeLower("class", value); }
         }
 
         /// <summary>
@@ -388,8 +388,8 @@ namespace Integrative.Lara
         /// </value>
         public string ContentEditable
         {
-            get => _attributes.GetAttributeLower("contenteditable");
-            set { _attributes.SetAttributeLower("contenteditable", value); }
+            get => GetAttributeLower("contenteditable");
+            set { SetAttributeLower("contenteditable", value); }
         }
 
         /// <summary>
@@ -400,8 +400,8 @@ namespace Integrative.Lara
         /// </value>
         public string ContextMenu
         {
-            get => _attributes.GetAttributeLower("contextmenu");
-            set { _attributes.SetAttributeLower("contextmenu", value); }
+            get => GetAttributeLower("contextmenu");
+            set { SetAttributeLower("contextmenu", value); }
         }
 
         /// <summary>
@@ -412,8 +412,8 @@ namespace Integrative.Lara
         /// </value>
         public string Dir
         {
-            get => _attributes.GetAttributeLower("dir");
-            set { _attributes.SetAttributeLower("dir", value); }
+            get => GetAttributeLower("dir");
+            set { SetAttributeLower("dir", value); }
         }
 
         /// <summary>
@@ -424,8 +424,8 @@ namespace Integrative.Lara
         /// </value>
         public string Draggable
         {
-            get => _attributes.GetAttributeLower("draggable");
-            set { _attributes.SetAttributeLower("draggable", value); }
+            get => GetAttributeLower("draggable");
+            set { SetAttributeLower("draggable", value); }
         }
 
         /// <summary>
@@ -436,8 +436,8 @@ namespace Integrative.Lara
         /// </value>
         public string DropZone
         {
-            get => _attributes.GetAttributeLower("dropzone");
-            set { _attributes.SetAttributeLower("dropzone", value); }
+            get => GetAttributeLower("dropzone");
+            set { SetAttributeLower("dropzone", value); }
         }
 
         /// <summary>
@@ -448,8 +448,8 @@ namespace Integrative.Lara
         /// </value>
         public bool Hidden
         {
-            get => _attributes.HasAttributeLower("hidden");
-            set { _attributes.SetFlagAttributeLower("hidden", value); }
+            get => HasAttributeLower("hidden");
+            set { SetFlagAttributeLower("hidden", value); }
         }
 
         /// <summary>
@@ -460,8 +460,8 @@ namespace Integrative.Lara
         /// </value>
         public bool InputMode
         {
-            get => _attributes.HasAttributeLower("inputmode");
-            set { _attributes.SetFlagAttributeLower("inputmode", value); }
+            get => HasAttributeLower("inputmode");
+            set { SetFlagAttributeLower("inputmode", value); }
         }
 
         /// <summary>
@@ -472,8 +472,8 @@ namespace Integrative.Lara
         /// </value>
         public string Lang
         {
-            get => _attributes.GetAttributeLower("lang");
-            set { _attributes.SetAttributeLower("lang", value); }
+            get => GetAttributeLower("lang");
+            set { SetAttributeLower("lang", value); }
         }
 
         /// <summary>
@@ -484,8 +484,8 @@ namespace Integrative.Lara
         /// </value>
         public string Spellcheck
         {
-            get => _attributes.GetAttributeLower("spellcheck");
-            set { _attributes.SetAttributeLower("spellcheck", value); }
+            get => GetAttributeLower("spellcheck");
+            set { SetAttributeLower("spellcheck", value); }
         }
 
         /// <summary>
@@ -496,8 +496,8 @@ namespace Integrative.Lara
         /// </value>
         public string Style
         {
-            get => _attributes.GetAttributeLower("style");
-            set { _attributes.SetAttributeLower("style", value); }
+            get => GetAttributeLower("style");
+            set { SetAttributeLower("style", value); }
         }
 
         /// <summary>
@@ -508,8 +508,8 @@ namespace Integrative.Lara
         /// </value>
         public string TabIndex
         {
-            get => _attributes.GetAttributeLower("tabindex");
-            set { _attributes.SetAttributeLower("tabindex", value); }
+            get => GetAttributeLower("tabindex");
+            set { SetAttributeLower("tabindex", value); }
         }
 
         /// <summary>
@@ -520,8 +520,8 @@ namespace Integrative.Lara
         /// </value>
         public string Title
         {
-            get => _attributes.GetAttributeLower("title");
-            set { _attributes.SetAttributeLower("title", value); }
+            get => GetAttributeLower("title");
+            set { SetAttributeLower("title", value); }
         }
 
         /// <summary>
@@ -532,8 +532,8 @@ namespace Integrative.Lara
         /// </value>
         public string Translate
         {
-            get => _attributes.GetAttributeLower("translate");
-            set { _attributes.SetAttributeLower("translate", value); }
+            get => GetAttributeLower("translate");
+            set { SetAttributeLower("translate", value); }
         }
 
         #endregion
@@ -1100,7 +1100,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
-        public void BindInput<T>(BindInputOptions<T> options)
+        public virtual void BindInput<T>(BindInputOptions<T> options)
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
@@ -1113,7 +1113,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
-        public void BindFlagInput<T>(BindFlagInputOptions<T> options)
+        public virtual void BindFlagInput<T>(BindFlagInputOptions<T> options)
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
@@ -1299,6 +1299,7 @@ namespace Integrative.Lara
 
         internal virtual void AttributeChanged(string attribute, string value)
         {
+            _bindings?.NotifyAttributeChanged(attribute);
         }
 
         internal bool QueueOpen =>

@@ -669,26 +669,26 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
+        /// Adds a two-way binding for an attribute (e.g. 'value' attribute)
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
-        /// <param name="attribure">Attribute</param>
+        /// <param name="attribute">Attribute</param>
         /// <param name="data">Data source</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindInput<T>(string attribure, T data, Expression<Func<T, string>> property)
+        public LaraBuilder BindInput<T>(string attribute, T data, Expression<Func<T, string>> property)
             where T : INotifyPropertyChanged
         {
             return BindInput<T>(new BindInputOptions<T>
             {
-                Attribute = attribure,
+                Attribute = attribute,
                 BindObject = data,
                 Property = property
             });
         }
 
         /// <summary>
-        /// Adds a two-way binding for an attribute (e.g. 'value' attribute)
+        /// Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="options">Binding options</param>
@@ -704,16 +704,16 @@ namespace Integrative.Lara
         /// Adds a two-way binding for a flag attribute (e.g. 'checked' attribute)
         /// </summary>
         /// <typeparam name="T">Type of data source</typeparam>
-        /// <param name="attribure">Attribute</param>
+        /// <param name="attribute">Attribute</param>
         /// <param name="data">Data source</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindFlagInput<T>(string attribure, T data, Expression<Func<T, bool>> property)
+        public LaraBuilder BindFlagInput<T>(string attribute, T data, Expression<Func<T, bool>> property)
             where T : INotifyPropertyChanged
         {
             return BindFlagInput<T>(new BindFlagInputOptions<T>
             {
-                Attribute = attribure,
+                Attribute = attribute,
                 BindObject = data,
                 Property = property
             });

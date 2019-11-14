@@ -7,7 +7,6 @@ Author: Pablo Carbonell
 using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Collections.ObjectModel;
-using System.Web;
 using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
@@ -526,5 +525,36 @@ namespace Integrative.Lara.Tests.DOM
                 });
             });
         }
+
+        [Fact]
+        public void InputBindingCollects()
+        {
+            var input = new InputElement();
+            var data = new MyInputData();
+            input.BindInput(new BindInputOptions<MyInputData>
+            {
+                BindObject = data,
+                Attribute = "value",
+                Property = x => x.MyValue
+            });
+            input.Value = "hello";
+            Assert.Equal("hello", data.MyValue);
+        }
+
+        [Fact]
+        public void InputBindingCollectsFlag()
+        {
+            var input = new InputElement();
+            var data = new MyInputData();
+            input.BindFlagInput(new BindFlagInputOptions<MyInputData>
+            {
+                BindObject = data,
+                Attribute = "checked",
+                Property = x => x.MyChecked
+            });
+            input.Checked = true;
+            Assert.True(data.MyChecked);
+        }
+
     }
 }

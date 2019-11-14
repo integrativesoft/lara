@@ -204,5 +204,11 @@ namespace Integrative.Lara
             return (child is Slot slot && slot.MatchesName(slotName))
                 || (child is Element element && IsSlotActive(element, slotName));
         }
+
+        /// <summary>
+        /// Triggers a custom event
+        /// </summary>
+        /// <param name="eventName">Event's name</param>
+        public void TriggerEvent(string eventName) => NotifyEvent(eventName);
     }
 }
