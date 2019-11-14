@@ -67,6 +67,7 @@
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>0.7.1 adds:
+- bug fixes
 - support to run client code that filters events
 - built-in autocomplete functionality</PackageReleaseNotes>
   </PropertyGroup>
