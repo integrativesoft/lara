@@ -1,6 +1,7 @@
 ﻿new version checklist:
 - edit NuGet documentation with what's new in version
-- compile Release
+- compile Release C#
+- compile Release NPM
 - upload XML documentation to CDN with Filezilla
 - pack.bat nuget package
 - update wiki link to to latest CDN link
