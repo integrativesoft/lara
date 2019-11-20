@@ -18,7 +18,6 @@ namespace Integrative.Lara
     /// <summary>
     /// Static content to publish on the web server
     /// </summary>
-    /// <seealso cref="IPublishedItem" />
     public class StaticContent : IPublishedItem
     {
         const float RequiredCompressionFactor = 0.9f;
@@ -28,7 +27,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Returns the byte array that is sent to clients
         /// </summary>
-        /// <returns></returns>
+        /// <returns>byte array</returns>
         public byte[] GetBytes() => _bytes;
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace Integrative.Lara
         /// <param name="app">Lara application</param>
         /// <param name="http">Http context</param>
         /// <param name="options">Lara options</param>
-        /// <returns></returns>
+        /// <returns>Task</returns>
         public async Task Run(Application app, HttpContext http, LaraOptions options)
         {
             http = http ?? throw new ArgumentNullException(nameof(http));

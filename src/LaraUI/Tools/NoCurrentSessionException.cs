@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
     /// <summary>
     /// The operation requested requires a current session and there isn't one

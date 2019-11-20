@@ -17,6 +17,7 @@ namespace Integrative.Lara
         /// Method that provides autocomplete suggestions
         /// </summary>
         /// <param name="term">Search term typed</param>
+        /// <returns>Autocomplete response</returns>
         Task<AutocompleteResponse> GetAutocompleteList(string term);
     }
 }

@@ -568,7 +568,7 @@ namespace Integrative.Lara
         /// <param name="className">Class name</param>
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
-        /// <returns></returns>
+        /// <returns>This instance</returns>
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<T, bool> property)
             where T : INotifyPropertyChanged
         {

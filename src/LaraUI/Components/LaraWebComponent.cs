@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Constructor with custom tag name
         /// </summary>
-        /// <param name="customTagName"></param>
+        /// <param name="customTagName">Tag name of the web component</param>
         public LaraWebComponentAttribute(string customTagName)
         {
             ComponentTagName = customTagName;

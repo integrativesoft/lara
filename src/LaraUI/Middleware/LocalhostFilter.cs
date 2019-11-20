@@ -22,10 +22,10 @@ namespace Integrative.Lara
         readonly ILogger<LocalhostFilter> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalhostFilter"/> class.
+        /// Constructor
         /// </summary>
-        /// <param name="next">The next request delegate.</param>
-        /// <param name="logger">The logger instance.</param>
+        /// <param name="next">Next middleware delegate</param>
+        /// <param name="logger">Logger</param>
         public LocalhostFilter(RequestDelegate next, ILogger<LocalhostFilter> logger)
         {
             _next = next;
@@ -35,7 +35,8 @@ namespace Integrative.Lara
         /// <summary>
         /// Invokes this middleware
         /// </summary>
-        /// <param name="context">The HttpContext.</param>
+        /// <param name="context">The HttpContext</param>
+        /// <returns>Task</returns>
         public Task Invoke(HttpContext context)
         {
             context = context ?? throw new ArgumentNullException(nameof(context));

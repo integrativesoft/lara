@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// Constructor
         /// </summary>
         /// <param name="status">Status code </param>
-        /// <param name="message"></param>
+        /// <param name="message">Message</param>
         public StatusCodeException(HttpStatusCode status, string message)
             : base(message)
         {

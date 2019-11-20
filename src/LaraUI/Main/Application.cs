@@ -138,7 +138,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Registers a specific web component
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Web component publish options</param>
         public void PublishComponent(WebComponentOptions options)
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
@@ -148,7 +148,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Unregisters a specific web component
         /// </summary>
-        /// <param name="tagName"></param>
+        /// <param name="tagName">Tag name to unpublish</param>
         public void UnPublishWebComponent(string tagName)
             => _published.UnPublishWebComponent(tagName);
 
@@ -162,6 +162,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Starts the web server
         /// </summary>
+        /// <returns>Task</returns>
         public Task Start()
             => Start(new StartServerOptions());
 
@@ -169,6 +170,7 @@ namespace Integrative.Lara
         /// Starts the web server. Use with 'await'.
         /// </summary>
         /// <param name="options">The server options.</param>
+        /// <returns>Task</returns>
         public async Task Start(StartServerOptions options)
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
@@ -189,12 +191,14 @@ namespace Integrative.Lara
         /// Stops the web server gracefully
         /// </summary>
         /// <param name="token">Token to indicate when the stop should not be graceful anymore</param>
+        /// <returns>Task</returns>
         public Task Stop(CancellationToken token = default) => Host.StopAsync(token);
 
         /// <summary>
         /// Returns a task that is completed when the server stops
         /// </summary>
         /// <param name="token">Token to trigger shutdown</param>
+        /// <returns>Task</returns>
         public Task WaitForShutdown(CancellationToken token = default) => Host.WaitForShutdownAsync(token);
 
         #endregion

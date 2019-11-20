@@ -103,6 +103,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Makes the client stop listening for ServerEventFlush() notifications.
         /// </summary>
+        /// <returns>Task</returns>
         Task ServerEventsOff();
     }
 }

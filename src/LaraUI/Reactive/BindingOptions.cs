@@ -43,7 +43,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Base class for property-changed based bindings of source type T
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of data source</typeparam>
     public abstract class BindPropertyOptions<T> : BindPropertyOptions
         where T : INotifyPropertyChanged
     {
@@ -196,6 +196,8 @@ namespace Integrative.Lara
     /// <summary>
     /// Base class for two-way binding
     /// </summary>
+    /// <typeparam name="TData">Type of data source</typeparam>
+    /// <typeparam name="TValue">Type of data property</typeparam>
     public abstract class BindInputOptions<TData, TValue> : BindPropertyOptions<TData>
         where TData : INotifyPropertyChanged
     {

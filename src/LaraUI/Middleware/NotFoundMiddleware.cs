@@ -37,7 +37,7 @@ namespace Integrative.Lara
         /// Invokes this middleware
         /// </summary>
         /// <param name="context">The HttpContext.</param>
-        /// <returns></returns>
+        /// <returns>Task</returns>
         public Task Invoke(HttpContext context)
         {
             var page = _app.ErrorPages.GetPage(HttpStatusCode.NotFound);

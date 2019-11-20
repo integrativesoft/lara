@@ -12,7 +12,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Represents ambient data that is local to a given session
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of data to store</typeparam>
     public class SessionLocal<T>
     {
         readonly Dictionary<Session, T> _storage;

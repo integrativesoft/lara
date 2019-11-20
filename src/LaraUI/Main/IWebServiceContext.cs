@@ -26,8 +26,8 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets a Session object when available
         /// </summary>
-        /// <param name="session"></param>
-        /// <returns></returns>
+        /// <param name="session">Session object</param>
+        /// <returns>true when found</returns>
         bool TryGetSession(out Session session);
     }
 }

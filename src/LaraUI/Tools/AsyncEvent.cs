@@ -13,10 +13,10 @@ namespace Integrative.Lara
     /// <summary>
     /// Delegate for asynchronous events
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of event arguments</typeparam>
+    /// <param name="sender">Sender of event</param>
+    /// <param name="args">Event arguments</param>
+    /// <returns>Task</returns>
     public delegate Task AsyncEventHandler<T>(object sender, T args) where T : EventArgs;
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Generic asynchronous event source
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of event arguments</typeparam>
     public class AsyncEvent<T> where T : EventArgs
     {
         private readonly HashSet<AsyncEventHandler<T>> _handlers;

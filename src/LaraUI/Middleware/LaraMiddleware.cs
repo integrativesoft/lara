@@ -38,6 +38,7 @@ namespace Integrative.Lara
         /// Invokes this middleware.
         /// </summary>
         /// <param name="http">The HttpContext.</param>
+        /// <returns>Task</returns>
         public async Task Invoke(HttpContext http)
         {
             await _next.Invoke(http);

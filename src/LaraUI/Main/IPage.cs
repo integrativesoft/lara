@@ -16,6 +16,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Called when replying to the initial HTTP GET request.
         /// </summary>
+        /// <returns>Task</returns>
         Task OnGet();
     }
 }

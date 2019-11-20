@@ -81,14 +81,14 @@ namespace Integrative.Lara
         /// <summary>
         /// Registers a specific web component
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Web component publush options</param>
         public static void Publish(WebComponentOptions options)
             => DefaultApplication.PublishComponent(options);
 
         /// <summary>
         /// Unregisters a specific web component
         /// </summary>
-        /// <param name="tagName"></param>
+        /// <param name="tagName">Tag name to unpublish</param>
         public static void UnPublishWebComponent(string tagName)
             => DefaultApplication.UnPublishWebComponent(tagName);
 
@@ -138,6 +138,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Starts the web server. Use with 'await'.
         /// </summary>
+        /// <returns>Task</returns>
         public static Task<IWebHost> StartServer()
             => StartServer(new StartServerOptions());
 
@@ -145,6 +146,7 @@ namespace Integrative.Lara
         /// Starts the web server. Use with 'await'.
         /// </summary>
         /// <param name="options">The server options.</param>
+        /// <returns>Task</returns>
         public static async Task<IWebHost> StartServer(StartServerOptions options)
         {
             await DefaultApplication.Start(options);
@@ -169,7 +171,7 @@ namespace Integrative.Lara
         /// Gets the first URL associated with the given host.
         /// </summary>
         /// <param name="host">The host.</param>
-        /// <returns></returns>
+        /// <returns>string with URL</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "Source of information is string")]
         public static string GetFirstURL(IWebHost host)
         {

@@ -66,7 +66,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Type of class</typeparam>
         /// <param name="instance">Instance to serialize</param>
-        /// <returns>JSON string with serialized class</returns>
+        /// <returns>JSON string</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public string Stringify<T>(T instance) => LaraTools.Serialize<T>(instance);
 
@@ -75,7 +75,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="instance">Instance to serialize</param>
         /// <param name="type">Type of class</param>
-        /// <returns></returns>
+        /// <returns>JSON string</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public string Stringify(object instance, Type type) => LaraTools.Serialize(instance, type);
 

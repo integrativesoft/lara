@@ -29,7 +29,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Flushes partial changes made to the document. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Task</returns>
         public Task FlushPartialChanges()
         {
             VerifyNotDisposed();

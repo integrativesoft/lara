@@ -20,7 +20,7 @@ namespace Integrative.Lara
         /// <param name="app">The application.</param>
         /// <param name="laraApp">Lara application</param>
         /// <param name="options">The options.</param>
-        /// <returns></returns>
+        /// <returns>app in parameters</returns>
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, Application laraApp, LaraOptions options)
         {
             app = app ?? throw new ArgumentNullException(nameof(app));
@@ -48,7 +48,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="app">The application.</param>
         /// <param name="options">The options.</param>
-        /// <returns></returns>
+        /// <returns>app in parameters</returns>
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
             => UseLara(app, LaraUI.DefaultApplication, options);
 
@@ -56,7 +56,7 @@ namespace Integrative.Lara
         /// Use the Lara Web Engine.
         /// </summary>
         /// <param name="app">The application.</param>
-        /// <returns></returns>
+        /// <returns>app in parameters</returns>
         public static IApplicationBuilder UseLara(this IApplicationBuilder app)
         {
             return UseLara(app, new LaraOptions());

@@ -42,6 +42,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Enables the autocomplete functionality
         /// </summary>
+        /// <param name="options">Autocomplete options</param>
         public void Start(AutocompleteOptions options)
         {
             _options = options;
