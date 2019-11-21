@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.7.1</Version>
+    <Version>0.7.2</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -66,10 +66,8 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.7.1 adds:
-- bug fixes
-- support to run client code that filters events
-- built-in autocomplete functionality</PackageReleaseNotes>
+    <PackageReleaseNotes>0.7.2 adds:
+- support to override Focus method in web components</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
