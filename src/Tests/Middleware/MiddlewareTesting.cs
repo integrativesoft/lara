@@ -665,5 +665,21 @@ namespace Integrative.Lara.Tests.Middleware
                 Assert.False(LaraUI.DefaultApplication.TryGetComponent("lala-lala", out _));
             }
         }
+
+        [Fact]
+        public void NoCurrentSessionParameters()
+        {
+            var inner = new InvalidOperationException("x");
+            var x = new NoCurrentSessionException("a", inner);
+            Assert.Same(inner, x.InnerException);
+            Assert.Equal("a", x.Message);
+        }
+
+        [Fact]
+        public void NoCurrentSessionBase()
+        {
+            var x = new NoCurrentSessionException();
+            Assert.Null(x.InnerException);
+        }
     }
 }

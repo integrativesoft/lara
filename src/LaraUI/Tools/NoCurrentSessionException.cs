@@ -33,7 +33,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Constructor
         /// </summary>
-        public NoCurrentSessionException()
+        public NoCurrentSessionException() : base()
         {
         }
     }
