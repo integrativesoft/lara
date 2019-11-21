@@ -1318,7 +1318,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Focuses this element.
         /// </summary>
-        public void Focus()
+        public virtual void Focus()
         {
             if (Document == null)
             {
