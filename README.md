@@ -79,11 +79,15 @@ Whenever the browser triggers a registered event (e.g. click on a button), it se
 
 ## Getting started
 
-Create a new project, add the NuGet package `Integrative.Lara`, and copy and paste the [sample application](https://github.com/integrativesoft/lara/wiki/Sample-Application).
+There's no need to download this repository to use Lara, instead, there's a [NuGet package](https://www.nuget.org/packages/Integrative.Lara/).
+
+To start, create a new project and add the NuGet package `Integrative.Lara`. In Visual Studio go to Tools -> NuGet Package Manager -> Manage NuGet packages for Solution, then search for the package 'Integrative.Lara'.
+
+In your project, copy and paste the [sample application](https://github.com/integrativesoft/lara/wiki/Sample-Application).
 
 This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
-The [wiki](https://github.com/integrativesoft/lara/wiki) contains the documentation for using Lara.
+The [wiki](https://github.com/integrativesoft/lara/wiki) has the documentation for using Lara.
 
 ## How to contribute
 
