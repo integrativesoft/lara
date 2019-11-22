@@ -91,6 +91,12 @@ namespace SampleProject
                             .AppendText("Autocomplete example")
                         .Pop()
                     .Pop()
+                    .Push("div", "mt-2")
+                        .Push("a")
+                            .Attribute("href", UploadFilePage.Address)
+                            .AppendText("File upload example")
+                        .Pop()
+                    .Pop()
                 .Pop()
             .Pop();
 

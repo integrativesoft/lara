@@ -12,6 +12,8 @@ namespace Integrative.Lara.Main
         public const string GuidFormat = "N";
         public const string WindowUnload = "_window_unload";
         public const string ServerSideEvent = "_server_event";
+        public const string MessageKey = "_message";
+        public const string FilePrefix = "file/";
 
 #if DEBUG
         public const string LibraryAddress = "/LaraUI-v{0}-debug.js";

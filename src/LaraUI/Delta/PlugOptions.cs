@@ -27,11 +27,14 @@ namespace Integrative.Lara.Delta
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool LongRunning { get; set; }
 
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public bool UploadFiles { get; set; }
+
         public PlugOptions()
         {
         }
 
-        public PlugOptions(Lara.EventSettings settings)
+        public PlugOptions(EventSettings settings)
         {
             Block = settings.Block;
             if (settings.BlockOptions != null)
@@ -41,6 +44,7 @@ namespace Integrative.Lara.Delta
                 BlockShownId = settings.BlockOptions.ShowElementId;
             }
             LongRunning = settings.LongRunning;
+            UploadFiles = settings.UploadFiles;
         }
 
         public string ToJSON() => LaraTools.Serialize(this);

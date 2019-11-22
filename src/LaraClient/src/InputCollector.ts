@@ -4,6 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+import { PlugOptions } from "./index";
+
 export class ElementEventValue {
     ElementId: string;
     Value: string;
@@ -19,9 +21,22 @@ export class ClientEventMessage {
     }
 }
 
-export function collectValues(): ClientEventMessage {
+export function collectValues(plug: PlugOptions): FormData {
+    let data = new FormData();
+    var message = collectMessage(plug);
+    let fileCount = collectFiles(plug, data);
+    if (message.isEmpty() && fileCount == 0) {
+        return undefined;
+    } else {
+        data.append('_message', JSON.stringify(message));
+        return data;
+    }
+}
+
+export function collectMessage(plug: PlugOptions): ClientEventMessage {
     var message = new ClientEventMessage();
     message.Values = [];
+    message.ExtraData = plug.ExtraData;
     collectType("input", message, collectInput);
     collectType("textarea", message, collectSimpleValue);
     collectType("button", message, collectSimpleValue);
@@ -68,4 +83,30 @@ function getValue(el: Element): string {
     } else {
         return '';
     }
+}
+
+function collectFiles(plug: PlugOptions, data: FormData): number {
+    if (!plug.UploadFiles) {
+        return 0;
+    }
+    let count = 0;
+    let list = document.getElementsByTagName("input");
+    for (let index = 0; index < list.length; index++) {
+        let input = list[index] as HTMLInputElement;
+        count += collectFilesInput(input, data);
+    }
+    return count;
+}
+
+function collectFilesInput(input: HTMLInputElement, data: FormData): number {
+    if (!input.id || input.type != 'file') {
+        return 0;
+    }
+    let files = input.files;
+    let key = 'file/' + input.id;
+    for (let index = 0; index < files.length; index++) {
+        let file = files[index];
+        data.append(key, file, file.name);
+    }
+    return files.length;
 }

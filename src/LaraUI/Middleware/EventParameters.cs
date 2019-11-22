@@ -34,6 +34,8 @@ namespace Integrative.Lara.Middleware
         [DataMember]
         public ClientEventMessage Message { get; set; }
 
+        public IFormFileCollection Files { get; set; }
+
         public static bool TryParse(IQueryCollection query, out EventParameters parameters)
         {
             if (MiddlewareCommon.TryGetParameter(query, "doc", out var documentText)
@@ -59,10 +61,18 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        public async Task ReadMessage(HttpContext http)
+        public async Task ReadAjaxMessage(HttpContext http)
         {
-            string body = await MiddlewareCommon.ReadBody(http);
-            Message = LaraTools.Deserialize<ClientEventMessage>(body);
+            if (!http.Request.HasFormContentType)
+            {
+                return;
+            }
+            var form = await http.Request.ReadFormAsync();  // TODO: cancellation token for shutdown
+            if (form.TryGetValue(GlobalConstants.MessageKey, out var values))
+            {
+                Message = LaraTools.Deserialize<ClientEventMessage>(values);
+            }
+            Files = form.Files;
         }
     }
 }

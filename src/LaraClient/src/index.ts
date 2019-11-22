@@ -12,13 +12,13 @@ https://laraui.com
 
 //#region Framework
 
-import { AutocompleteCommand, autocompleteStart, autocompleteStop } from "./Autocomplete";
+import { autocompleteStart, autocompleteStop } from "./Autocomplete";
 import { block, unblock } from "./Blocker";
 import { EventResult, EventResultType } from "./DeltaInterfaces";
 import { clean } from "./Initializer";
-import { ClientEventMessage, collectValues } from "./InputCollector";
-import { processResult } from "./Worker";
+import { ClientEventMessage, collectValues, collectMessage } from "./InputCollector";
 import { Sequencer } from "./Sequencer";
+import { processResult } from "./Worker";
 
 let documentId: string;
 let lastEventNumber: number;
@@ -72,9 +72,10 @@ export interface PlugOptions {
     LongRunning?: boolean;
     IgnoreSequence?: boolean;
     Propagation?: PropagationType;
+    UploadFiles?: boolean;
 }
 
-export class EventParameters {
+class EventParameters {
     DocumentId: string;
     ElementId: string;
     EventName: string;
@@ -144,8 +145,7 @@ function buildEventParameters(el: EventTarget, plug: PlugOptions): EventParamete
     params.DocumentId = documentId;
     params.ElementId = getTargetId(el);
     params.EventName = plug.EventName;
-    params.Message = collectValues();
-    params.Message.ExtraData = plug.ExtraData;
+    params.Message = collectMessage(plug);
     return params;
 }
 
@@ -179,13 +179,12 @@ function plugAjax(el: EventTarget, plug: PlugOptions): void {
             unblock(plug);
         }
     };
-    let message = collectValues();
-    message.ExtraData = plug.ExtraData;
+    let data = collectValues(plug);
     ajax.open("POST", url, true);
-    if (message.isEmpty()) {
-        ajax.send();
+    if (data) {
+        ajax.send(data);
     } else {
-        ajax.send(JSON.stringify(message));
+        ajax.send();
     }
 }
 

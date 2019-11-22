@@ -116,18 +116,17 @@ namespace Integrative.Lara
         /// <summary>
         /// Returns the current document (same as Page.Document)
         /// </summary>
-        public static Document Document
+        public static Document Document => GetContextDocument(Page);
+
+        internal static Document GetContextDocument(IPageContext context)
         {
-            get
+            if (context == null)
             {
-                if (Page == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return Page.Document;
-                }
+                return null;
+            }
+            else
+            {
+                return context.Document;
             }
         }
 

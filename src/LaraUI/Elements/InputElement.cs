@@ -5,6 +5,8 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Delta;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
@@ -26,6 +28,7 @@ namespace Integrative.Lara
             base.NotifyValue(entry);
             NotifyValue(entry.Value);
             NotifyChecked(entry.Checked);
+            ClearFiles();
         }
 
         /// <summary>
@@ -243,5 +246,14 @@ namespace Integrative.Lara
             get => GetIntAttribute("width");
             set { SetIntAttribute("width", value); }
         }
+
+        readonly List<IFormFile> _files = new List<IFormFile>();
+        private void ClearFiles() => _files.Clear();
+        internal void AddFile(IFormFile file) => _files.Add(file);
+
+        /// <summary>
+        /// Collection of uploaded files for input elements with type='file'
+        /// </summary>
+        public IReadOnlyList<IFormFile> Files => _files;
     }
 }

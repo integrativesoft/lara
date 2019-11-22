@@ -66,19 +66,13 @@ namespace Integrative.Lara.Middleware
                 Socket = socket,
                 Parameters = result.Item2
             };
-            bool ok = result.Item1;
-            await ProcessWebSocketMessage(ok, context);
-        }
-
-        internal static Task ProcessWebSocketMessage(bool ok, PostEventContext context)
-        {
-            if (ok)
+            if (result.Item1)
             {
-                return ProcessRequest(context);
+                await ProcessRequest(context);
             }
             else
             {
-                return context.Socket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
+                await context.Socket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
                     "Bad request", CancellationToken.None);
             }
         }
@@ -87,7 +81,7 @@ namespace Integrative.Lara.Middleware
         {
             if (EventParameters.TryParse(http.Request.Query, out var parameters))
             {
-                await parameters.ReadMessage(http);
+                await parameters.ReadAjaxMessage(http);
                 var post = new PostEventContext
                 {
                     Http = http,
@@ -189,15 +183,19 @@ namespace Integrative.Lara.Middleware
         internal static void ProcessMessageIfNeeded(PageContext context, EventParameters parameters)
         {
             var message = parameters.Message;
-            if (message == null)
+            if (message != null)
             {
-                return;
+                context.SetExtraData(message.ExtraData);
+                if (message.Values != null)
+                {
+                    ProcessMessage(context.Document, message);
+                }
             }
-            if (message.Values != null)
+            var files = parameters.Files;
+            if (files != null)
             {
-                ProcessMessage(context.Document, message);
+                ProcessFiles(context.Document, files);
             }
-            context.SetExtraData(message.ExtraData);
         }
 
         private static void ProcessMessage(Document document, ClientEventMessage message)
@@ -210,6 +208,41 @@ namespace Integrative.Lara.Middleware
                 {
                     element.NotifyValue(row);
                 }
+            }
+        }
+
+        private static void ProcessFiles(Document document, IFormFileCollection files)
+        {
+            foreach (var file in files)
+            {
+                ProcessFile(document, file);
+            }
+        }
+
+        private static void ProcessFile(Document document, IFormFile file)
+        {
+            var name = file.Name;
+            if (TryParsePrefix(name, GlobalConstants.FilePrefix, out var id))
+            {
+                if (document.TryGetElementById(id, out var element)
+                    && element is InputElement input)
+                {
+                    input.AddFile(file);
+                }
+            }
+        }
+
+        private static bool TryParsePrefix(string name, string prefix, out string elementId)
+        {
+            if (name.StartsWith(prefix, StringComparison.InvariantCulture))
+            {
+                elementId = name.Substring(prefix.Length);
+                return true;
+            }
+            else
+            {
+                elementId = default;
+                return false;
             }
         }
 

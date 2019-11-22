@@ -67,7 +67,8 @@
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>0.7.2 adds:
-- support to override Focus method in web components</PackageReleaseNotes>
+- allow overriding Focus method in web components to pass focus to specific elements
+- built-in support to upload files through EventSettings class</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

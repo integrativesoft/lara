@@ -159,6 +159,9 @@
   <data name="InvalidTagName" xml:space="preserve">
     <value>Invalid tag name.</value>
   </data>
+  <data name="LongRunningNoFiles" xml:space="preserve">
+    <value>The UploadFiles and LongRunning options cannot be used together.</value>
+  </data>
   <data name="MustInherit" xml:space="preserve">
     <value>Component types must inherit from the Component class.</value>
   </data>

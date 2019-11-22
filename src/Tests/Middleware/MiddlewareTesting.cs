@@ -402,22 +402,6 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
-        public async void HandlesBadSocketRequest()
-        {
-            var socket = new Mock<WebSocket>();
-            var post = new PostEventContext
-            {
-                Socket = socket.Object
-            };
-            socket.Setup(x
-                => x.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
-                "Bad request", CancellationToken.None)).Returns(Task.CompletedTask);
-            await PostEventHandler.ProcessWebSocketMessage(false, post);
-            socket.Verify(x => x.CloseAsync(WebSocketCloseStatus.InvalidPayloadData,
-                "Bad request", CancellationToken.None));
-        }
-
-        [Fact]
         public async void ProcessAjaxBadParameters()
         {
             var http = new Mock<HttpContext>();
@@ -680,6 +664,30 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var x = new NoCurrentSessionException();
             Assert.Null(x.InnerException);
+        }
+
+        [Fact]
+        public void LaraUiDocument()
+        {
+            var x = new Mock<IPageContext>();
+            var doc = new Document(new MyPage(), 100);
+            x.Setup(x => x.Document).Returns(doc);
+            LaraUI.InternalContext.Value = x.Object;
+            Assert.Same(doc, LaraUI.Document);
+            Assert.Null(LaraUI.GetContextDocument(null));
+        }
+
+        [Fact]
+        public void SetExtraData()
+        {
+            var app = new Application();
+            var http = new Mock<HttpContext>();
+            using var connections = new Connections();
+            var connection = connections.CreateConnection(IPAddress.Loopback);
+            var x = new PageContext(app, http.Object, connection);
+            x.SetExtraData("abc");
+            Assert.Equal("abc", x.JSBridge.EventData);
+            Assert.Same(connection.Session, x.Session);
         }
     }
 }

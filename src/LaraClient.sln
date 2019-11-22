@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29503.13
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "LaraClient", "LaraClient\LaraClient.njsproj", "{6F0BEE5A-5C72-4DCB-9173-BD17BA95A76F}"
 EndProject
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {89E2D59C-8935-45BD-B710-7970BD5BB03F}
+		SolutionGuid = {3770CCA5-4282-46C3-9C5D-65FC0534FF93}
 	EndGlobalSection
 EndGlobal

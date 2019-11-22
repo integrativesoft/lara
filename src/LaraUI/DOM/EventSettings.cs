@@ -87,6 +87,11 @@ namespace Integrative.Lara
         public bool LongRunning { get; set; }
 
         /// <summary>
+        /// When set to true, the client will send the files from input elements of type 'file'
+        /// </summary>
+        public bool UploadFiles { get; set; }
+
+        /// <summary>
         /// Defines JavaScript code to execute in order to determine if the event should trigger.
         /// When this property is set, the event is trigger only if the expression evaluates to true.
         /// </summary>
@@ -102,6 +107,10 @@ namespace Integrative.Lara
             if (string.IsNullOrEmpty(EventName))
             {
                 throw new ArgumentException(Resources.EventNameNull);
+            }
+            else if (LongRunning && UploadFiles)
+            {
+                throw new InvalidOperationException(Resources.LongRunningNoFiles);
             }
         }
     }

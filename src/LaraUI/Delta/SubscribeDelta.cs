@@ -82,6 +82,9 @@ namespace Integrative.Lara.Delta
         [DataMember(EmitDefaultValue = false)]
         public PropagationType Propagation { get; set; }
 
+        [DataMember(EmitDefaultValue = false)]
+        public bool UploadFiles { get; set; }
+
         public static ClientEventSettings CreateFrom(EventSettings settings)
         {
             var client = new ClientEventSettings
@@ -89,7 +92,8 @@ namespace Integrative.Lara.Delta
                 Block = settings.Block,
                 EventName = settings.EventName,
                 LongRunning = settings.LongRunning,
-                Propagation = settings.Propagation
+                Propagation = settings.Propagation,
+                UploadFiles = settings.UploadFiles
             };
             if (settings.BlockOptions != null)
             {
