@@ -85,12 +85,27 @@ namespace Integrative.Lara
                 _bytes = compressed;
                 Compressed = true;
             }
-            ETag = GetETag(bytes);
+            ETag = ComputeETag(bytes);
         }
 
-        private static string GetETag(byte[] bytes)
+        /// <summary>
+        /// Calculates an ETag value based on the given array of bytes
+        /// </summary>
+        /// <param name="bytes">Array of bytes</param>
+        /// <returns>Calculated ETag</returns>
+        public static string ComputeETag(byte[] bytes)
         {
             var hash = ComputeHash(bytes);
+            return "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
+        }
+
+        /// <summary>
+        /// Formats a hash value in the eTag format
+        /// </summary>
+        /// <param name="hash">Hash value</param>
+        /// <returns>Formatted hash value in eTag format</returns>
+        public static string FormatETag(int hash)
+        {
             return "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
         }
 

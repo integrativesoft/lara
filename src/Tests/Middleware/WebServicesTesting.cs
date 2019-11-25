@@ -231,7 +231,7 @@ namespace Integrative.Lara.Tests.Middleware
             bool found = false;
             try
             {
-                AssembliesReader.VerifyType(typeof(MyPage), typeof(Element));
+                AssembliesReader.VerifyType(typeof(MyPage), "a", typeof(Element));
             }
             catch (InvalidOperationException)
             {

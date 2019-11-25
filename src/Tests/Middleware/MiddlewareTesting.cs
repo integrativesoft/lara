@@ -39,10 +39,13 @@ namespace Integrative.Lara.Tests.Middleware
 
     class MyCustomErrorPage : IPage
     {
+        public const string Text = "Custom error page";
+
         public int Counter { get; private set; }
 
         public Task OnGet()
         {
+            LaraUI.Document.Body.AppendText(Text);
             Counter++;
             return Task.CompletedTask;
         }
@@ -768,6 +771,12 @@ namespace Integrative.Lara.Tests.Middleware
             var ok = await PagePublished.RunPage(_context.Application, http.Object, page, new LaraOptions());
             Assert.False(ok);
             Assert.Equal((int)HttpStatusCode.Unauthorized, http.Object.Response.StatusCode);
+        }
+
+        [Fact]
+        public void CustomErrorPageReturned()
+        {
+
         }
     }
 }

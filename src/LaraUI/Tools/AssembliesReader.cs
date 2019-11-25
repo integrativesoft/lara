@@ -48,6 +48,7 @@ namespace Integrative.Lara.Tools
                 foreach (var type in types)
                 {
                     LoadWebServices(app, type);
+                    LoadBinaryServices(app, type);
                     LoadPages(app, type);
                     LoadComponents(app, type);
                 }
@@ -62,7 +63,7 @@ namespace Integrative.Lara.Tools
             var services = type.GetCustomAttributes(typeof(LaraWebServiceAttribute), true);
             foreach (LaraWebServiceAttribute entry in services)
             {
-                VerifyType(type, typeof(IWebService));
+                VerifyType(type, "LaraWebService", typeof(IWebService));
                 app.PublishService(new WebServiceContent
                 {
                     Address = entry.Address,
@@ -73,12 +74,28 @@ namespace Integrative.Lara.Tools
             }
         }
 
-        internal static void VerifyType(Type assemblyType, Type requiredType)
+        internal static void VerifyType(Type assemblyType, string attribute, Type requiredType)
         {
             if (!requiredType.IsAssignableFrom(assemblyType))
             {
-                var message = $"The class {assemblyType.FullName} marked as [LaraWebService] needs to implement/inherit [{requiredType.Name}].";
+                var message = $"The class {assemblyType.FullName} marked as [{attribute}] needs to implement/inherit [{requiredType.Name}].";
                 throw new InvalidOperationException(message);
+            }
+        }
+
+        private static void LoadBinaryServices(Application app, Type type)
+        {
+            var services = type.GetCustomAttributes(typeof(LaraBinaryServiceAttribute), true);
+            foreach (LaraWebServiceAttribute entry in services)
+            {
+                VerifyType(type, "LaraBinaryService", typeof(IBinaryService));
+                app.PublishService(new WebServiceContent
+                {
+                    Address = entry.Address,
+                    ContentType = entry.ContentType,
+                    Factory = () => (IWebService)Activator.CreateInstance(type),
+                    Method = entry.Method
+                });
             }
         }
 
@@ -87,7 +104,7 @@ namespace Integrative.Lara.Tools
             var pages = type.GetCustomAttributes(typeof(LaraPageAttribute), true);
             foreach (LaraPageAttribute entry in pages)
             {
-                VerifyType(type, typeof(IPage));
+                VerifyType(type, "LaraPage", typeof(IPage));
                 app.PublishPage(entry.Address, () => (IPage)Activator.CreateInstance(type));
             }
         }
@@ -97,7 +114,7 @@ namespace Integrative.Lara.Tools
             var components = type.GetCustomAttributes(typeof(LaraWebComponentAttribute), true);
             foreach (LaraWebComponentAttribute entry in components)
             {
-                VerifyType(type, typeof(WebComponent));
+                VerifyType(type, "LaraWebComponent", typeof(WebComponent));
                 app.PublishComponent(new WebComponentOptions
                 {
                     ComponentTagName = entry.ComponentTagName,
