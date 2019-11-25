@@ -68,7 +68,8 @@
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>0.7.2 adds:
 - allow overriding Focus method in web components to pass focus to specific elements
-- built-in support to upload files through EventSettings class</PackageReleaseNotes>
+- built-in support to upload files through EventSettings class
+- built-in support for web services with binary response</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

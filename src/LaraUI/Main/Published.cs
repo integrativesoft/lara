@@ -51,11 +51,23 @@ namespace Integrative.Lara.Main
 
         public void Publish(WebServiceContent content)
         {
-            ValidateAddress(content.Address);
-            ValidateMethod(content.Method);
-            var combined = CombinePathMethod(content.Address, content.Method.ToUpperInvariant());
+            var combined = CombineAddress(content.Address, content.Method);
             _published.Remove(combined);
             _published.Add(combined, new WebServicePublished(content));
+        }
+
+        public void Publish(BinaryServiceContent content)
+        {
+            var combined = CombineAddress(content.Address, content.Method);
+            _published.Remove(combined);
+            _published.Add(combined, new BinaryServicePublished(content));
+        }
+
+        private static string CombineAddress(string address, string method)
+        {
+            ValidateAddress(address);
+            ValidateMethod(method);
+            return CombinePathMethod(address, method.ToUpperInvariant());
         }
 
         public static string CombinePathMethod(string path, string method)

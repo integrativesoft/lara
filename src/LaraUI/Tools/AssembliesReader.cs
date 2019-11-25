@@ -86,14 +86,14 @@ namespace Integrative.Lara.Tools
         private static void LoadBinaryServices(Application app, Type type)
         {
             var services = type.GetCustomAttributes(typeof(LaraBinaryServiceAttribute), true);
-            foreach (LaraWebServiceAttribute entry in services)
+            foreach (LaraBinaryServiceAttribute entry in services)
             {
                 VerifyType(type, "LaraBinaryService", typeof(IBinaryService));
-                app.PublishService(new WebServiceContent
+                app.PublishService(new BinaryServiceContent
                 {
                     Address = entry.Address,
                     ContentType = entry.ContentType,
-                    Factory = () => (IWebService)Activator.CreateInstance(type),
+                    Factory = () => (IBinaryService)Activator.CreateInstance(type),
                     Method = entry.Method
                 });
             }

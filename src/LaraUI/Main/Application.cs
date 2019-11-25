@@ -93,6 +93,16 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Publishes a web service
+        /// </summary>
+        /// <param name="content">Binary web service settings</param>
+        public void PublishService(BinaryServiceContent content)
+        {
+            content = content ?? throw new ArgumentNullException(nameof(content));
+            _published.Publish(content);
+        }
+
+        /// <summary>
         /// Unpublishes an address and its associated content.
         /// </summary>
         /// <param name="path">The path.</param>
