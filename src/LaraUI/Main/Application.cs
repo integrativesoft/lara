@@ -210,5 +210,14 @@ namespace Integrative.Lara
         internal bool AllowLocalhostOnly => _modeController.LocalhostOnly;
 
         #endregion
+
+        #region Testing methods
+
+        internal void SetHost(IWebHost host)
+        {
+            Host = host;
+        }
+
+        #endregion
     }
 }

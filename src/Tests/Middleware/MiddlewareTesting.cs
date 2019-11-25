@@ -10,6 +10,7 @@ using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -17,6 +18,7 @@ using Moq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
@@ -27,6 +29,25 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
+    class MyStatusPage : IPage
+    {
+        public Task OnGet()
+        {
+            throw new StatusCodeException(HttpStatusCode.Unauthorized);
+        }
+    }
+
+    class MyCustomErrorPage : IPage
+    {
+        public int Counter { get; private set; }
+
+        public Task OnGet()
+        {
+            Counter++;
+            return Task.CompletedTask;
+        }
+    }
+
     public class MiddlewareTesting : DummyContextTesting
     {
         [Fact]
@@ -688,6 +709,65 @@ namespace Integrative.Lara.Tests.Middleware
             x.SetExtraData("abc");
             Assert.Equal("abc", x.JSBridge.EventData);
             Assert.Same(connection.Session, x.Session);
+        }
+
+        [Fact]
+        public void ComputeHashRequiresReference()
+        {
+            Assert.ThrowsAny<ArgumentNullException>(() => StaticContent.ComputeHash(null));
+        }
+
+        [Fact]
+        public async void StopStops()
+        {
+            int counter = 0;
+            using var x = new Application();
+            var host = new Mock<IWebHost>();
+            x.SetHost(host.Object);
+            var token = CancellationToken.None;
+            host.Setup(x => x.StopAsync(token)).Callback(() => counter++);
+
+            await x.Stop();
+            Assert.Equal(1, counter);
+        }
+
+        [Fact]
+        public void ReuseConnection()
+        {
+            var app = _context.Application;
+            var http = new Mock<HttpContext>();
+            var request = new Mock<HttpRequest>();
+            var cookies = new Mock<IRequestCookieCollection>();
+            http.Setup(x => x.Request).Returns(request.Object);
+            request.Setup(x => x.Cookies).Returns(cookies.Object);
+            var info = new Mock<ConnectionInfo>();
+            http.Setup(x => x.Connection).Returns(info.Object);
+            info.Setup(x => x.RemoteIpAddress).Returns(IPAddress.Loopback);
+
+            app.CreateModeController(ApplicationMode.Default);
+            var current = app.CreateConnection(IPAddress.Loopback);
+            var id = current.Id.ToString(GlobalConstants.GuidFormat, CultureInfo.InvariantCulture);
+            cookies.Setup(x => x.TryGetValue(GlobalConstants.CookieSessionId, out id)).Returns(true);
+            
+            var connection = PagePublished.GetConnection(app, http.Object);
+            Assert.Equal(current, connection);
+        }
+
+        [Fact]
+        public async void PageStatusCodeReturned()
+        {
+            var page = new MyStatusPage();
+            var http = new Mock<HttpContext>();
+            var response = new Mock<HttpResponse>();
+            var headers = new Mock<IHeaderDictionary>();
+            var body = new Mock<Stream>();
+            response.Setup(x => x.Headers).Returns(headers.Object);
+            http.Setup(x => x.Response).Returns(response.Object);
+            response.SetupProperty(x => x.StatusCode);
+            response.Setup(x => x.Body).Returns(body.Object);
+            var ok = await PagePublished.RunPage(_context.Application, http.Object, page, new LaraOptions());
+            Assert.False(ok);
+            Assert.Equal((int)HttpStatusCode.Unauthorized, http.Object.Response.StatusCode);
         }
     }
 }

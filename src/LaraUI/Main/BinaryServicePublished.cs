@@ -1,6 +1,6 @@
 ﻿/*
 Copyright (c) 2019 Integrative Software LLC
-Created: 6/2019
+Created: 11/2019
 Author: Pablo Carbonell
 */
 
@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara.Main
 {
-    sealed class WebServicePublished : IPublishedItem
+    sealed class BinaryServicePublished : IPublishedItem
     {
-        public Func<IWebService> Factory { get; }
+        public Func<IBinaryService> Factory { get; }
         public string ContentType { get; }
 
-        public WebServicePublished(WebServiceContent content)
+        public BinaryServicePublished(BinaryServiceContent content)
         {
             Factory = content.Factory;
             ContentType = content.ContentType;
@@ -29,7 +29,7 @@ namespace Integrative.Lara.Main
                 RequestBody = await MiddlewareCommon.ReadBody(http).ConfigureAwait(false)
             };
             var handler = Factory();
-            var data = string.Empty;
+            var data = Array.Empty<byte>();
             if (await MiddlewareCommon.RunHandler(http, async () =>
             {
                 data = await handler.Execute();
@@ -39,21 +39,10 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private async Task SendReply(WebServiceContext context, string data)
+        private async Task SendReply(WebServiceContext context, byte[] data)
         {
-            SendHeader(context, ContentType);
-            await MiddlewareCommon.WriteUtf8Buffer(context.Http, data);
-        }
-
-        internal static void SendHeader(WebServiceContext context, string contentType)
-        {
-            var http = context.Http;
-            MiddlewareCommon.SetStatusCode(http, context.StatusCode);
-            var headers = http.Response.Headers;
-            if (!string.IsNullOrEmpty(contentType))
-            {
-                headers.Add("Content-Type", contentType);
-            }
+            WebServicePublished.SendHeader(context, ContentType);
+            await MiddlewareCommon.WriteBuffer(context.Http, data);
         }
     }
 }

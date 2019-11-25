@@ -189,5 +189,16 @@ namespace Integrative.Lara.Tests.Middleware
             string x2 = null;
             Assert.True(LaraTools.SameValue(x1, x2));
         }
+
+        [Fact]
+        public void LaraFlushEvent()
+        {
+            var x = new InputElement();
+            var builder = new LaraBuilder(x);
+            builder.FlushEvent("click");
+            x.NotifyEvent("click");
+            Assert.True(x.Events.TryGetValue("click", out var ev));
+            Assert.Equal("click", ev.EventName);
+        }
     }
 }

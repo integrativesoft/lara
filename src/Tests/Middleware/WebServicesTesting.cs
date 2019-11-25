@@ -32,6 +32,14 @@ namespace Integrative.Lara.Tests.Middleware
         public Task<string> Execute() => Task.FromResult(string.Empty);
     }
 
+    class MyBinary : IBinaryService
+    {
+        public Task<byte[]> Execute()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class WebServicesTesting : DummyContextTesting
     {
         [Fact]
@@ -274,5 +282,23 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(found, app.TryGetNode(_serviceName, out _));
             Assert.Equal(found, app.TryGetComponent(_componentName, out _));
         }
+
+        [Fact]
+        public void BinaryServiceContentProperties()
+        {
+            var x = new BinaryServiceContent
+            {
+                Address = "a",
+                ContentType = "b",
+                Method = "c",
+                Factory = () => new MyBinary()
+            };
+            Assert.Equal("a", x.Address);
+            Assert.Equal("b", x.ContentType);
+            Assert.Equal("c", x.Method);
+            var result = x.Factory() as MyBinary;
+            Assert.NotNull(result);
+        }
+
     }
 }

@@ -8,6 +8,7 @@ using Integrative.Lara.Delta;
 using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
+using System;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta
@@ -109,7 +110,8 @@ namespace Integrative.Lara.Tests.Delta
                 LongRunning = true,
                 Propagation = PropagationType.StopImmediatePropagation,
                 DebounceInterval = 400,
-                EvalFilter = "true"
+                EvalFilter = "true",
+                UploadFiles = true
             };
             var client = ClientEventSettings.CreateFrom(x);
             client.ExtraData = "xx";
@@ -120,6 +122,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Equal(x.EventName, client.EventName);
             Assert.Equal(x.LongRunning, client.LongRunning);
             Assert.Equal(x.Propagation, client.Propagation);
+            Assert.Equal(x.UploadFiles, client.UploadFiles);
             Assert.Equal("true", x.EvalFilter);
             Assert.Equal("xx", client.ExtraData);
         }
@@ -146,5 +149,16 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Equal("abc", x.Payload);
         }
 
+        [Fact]
+        public void CannotUploadFilesWebsocket()
+        {
+            var x = new EventSettings
+            {
+                EventName = "click",
+                LongRunning = true,
+                UploadFiles = true
+            };
+            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
+        }
     }
 }

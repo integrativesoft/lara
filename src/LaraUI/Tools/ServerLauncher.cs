@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tools
@@ -22,7 +23,7 @@ namespace Integrative.Lara.Tools
             {
                 app.PublishAssemblies();
             }
-            await host.StartAsync();
+            await host.StartAsync(CancellationToken.None);
             return host;
         }
 

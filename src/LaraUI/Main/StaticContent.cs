@@ -94,8 +94,17 @@ namespace Integrative.Lara
             return "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
         }
 
-        private static int ComputeHash(params byte[] data)
+        /// <summary>
+        /// Computes a hash value for an array of bytes.
+        /// </summary>
+        /// <param name="data">Array of bytes</param>
+        /// <returns>Calculated hash</returns>
+        public static int ComputeHash(params byte[] data)
         {
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
             unchecked
             {
                 const int p = 16777619;

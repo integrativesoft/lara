@@ -10,6 +10,8 @@ using Integrative.Lara.Front.Tools;
 using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
+using Microsoft.AspNetCore.Http;
+using Moq;
 using System;
 using System.Text;
 using Xunit;
@@ -251,6 +253,21 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(string.Empty, x.InnerText);
             x.InnerText = "<<";
             Assert.Equal("<<", x.InnerText);
+        }
+
+        [Fact]
+        public void InputFilesAdd()
+        {
+            var file = new Mock<IFormFile>();
+            file.Setup(x => x.Name).Returns("abc");
+            var x = new InputElement
+            {
+                Type = "file"
+            };
+            x.AddFile(file.Object);
+            Assert.Single(x.Files);
+            var found = x.Files[0];
+            Assert.Equal("abc", found.Name);
         }
     }
 }

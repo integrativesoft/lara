@@ -540,5 +540,20 @@ namespace Integrative.Lara.Tests.Components
             };
             Assert.True(x.MatchesName("red"));
         }
+
+        [Fact]
+        public void TriggerEventRuns()
+        {
+            int counter = 0;
+            var x = new MyDummyComponent();
+            x.On("click", () =>
+            {
+                counter++;
+                return Task.CompletedTask;
+            });
+            x.TriggerEvent("click");
+            x.TriggerEvent("lala");
+            Assert.Equal(1, counter);
+        }
     }
 }

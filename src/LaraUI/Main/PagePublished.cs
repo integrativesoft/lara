@@ -48,7 +48,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private static async Task<bool> RunPage(Application app, HttpContext http, IPage page, LaraOptions options)
+        internal static async Task<bool> RunPage(Application app, HttpContext http, IPage page, LaraOptions options)
         {
             try
             {
@@ -62,9 +62,9 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private static async Task ReplyStatusCodeError(Application app, HttpContext http, StatusCodeException status, LaraOptions options)
+        internal static async Task ReplyStatusCodeError(Application app, HttpContext http, StatusCodeException status, LaraOptions options)
         {
-            if (LaraUI.ErrorPages.TryGetPage(status.StatusCode, out var page))
+            if (app.ErrorPages.TryGetPage(status.StatusCode, out var page))
             {
                 await page.Run(app, http, options);
             }
@@ -90,7 +90,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        private static Connection GetConnection(Application app, HttpContext http)
+        internal static Connection GetConnection(Application app, HttpContext http)
         {
             if (MiddlewareCommon.TryFindConnection(app, http, out var connection))
             {
