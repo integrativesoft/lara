@@ -180,6 +180,7 @@ namespace Integrative.Lara
             MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
             var headers = http.Response.Headers;
             headers.Add("Content-Type", ContentType);
+            headers.Add("Cache-Control", "no-cache");
             headers.Add("ETag", ETag);
             if (Compressed)
             {
