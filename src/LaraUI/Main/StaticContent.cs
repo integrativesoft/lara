@@ -177,7 +177,6 @@ namespace Integrative.Lara
 
         private async Task SendContent(HttpContext http)
         {
-            MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
             var headers = http.Response.Headers;
             headers.Add("Content-Type", ContentType);
             headers.Add("Cache-Control", "no-cache");

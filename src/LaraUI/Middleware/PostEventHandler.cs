@@ -307,7 +307,6 @@ namespace Integrative.Lara.Middleware
 
         private static async Task SendAjaxReply(HttpContext http, string json)
         {
-            MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
             MiddlewareCommon.AddHeaderJSON(http);
             await MiddlewareCommon.WriteUtf8Buffer(http, json);
         }

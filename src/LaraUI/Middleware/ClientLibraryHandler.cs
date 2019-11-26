@@ -87,7 +87,6 @@ namespace Integrative.Lara.Middleware
 
         private async Task SendLibrary(HttpContext http)
         {
-            MiddlewareCommon.SetStatusCode(http, HttpStatusCode.OK);
 #if DEBUG
             MiddlewareCommon.AddHeaderPreventCaching(http);
 #else

@@ -48,7 +48,6 @@ namespace Integrative.Lara.Main
         internal static void SendHeader(WebServiceContext context, string contentType)
         {
             var http = context.Http;
-            MiddlewareCommon.SetStatusCode(http, context.StatusCode);
             var headers = http.Response.Headers;
             if (!string.IsNullOrEmpty(contentType))
             {
