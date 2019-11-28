@@ -376,23 +376,23 @@ namespace Integrative.Lara
         /// <summary>
         /// Associates an event handler with the current element.
         /// </summary>
-        /// <param name="eventName">Name of the event.</param>
-        /// <param name="handler">The handler.</param>
+        /// <param name="settings">The settings.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder On(string eventName, Func<Task> handler)
+        public LaraBuilder On(EventSettings settings)
         {
-            _stack.Peek().On(eventName, handler);
+            _stack.Peek().On(settings);
             return this;
         }
 
         /// <summary>
         /// Associates an event handler with the current element.
         /// </summary>
-        /// <param name="settings">The settings.</param>
+        /// <param name="eventName">Name of the event.</param>
+        /// <param name="handler">The handler.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder On(EventSettings settings)
+        public LaraBuilder On(string eventName, Func<Task> handler)
         {
-            _stack.Peek().On(settings);
+            _stack.Peek().On(eventName, handler);
             return this;
         }
 
