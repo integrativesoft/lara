@@ -18,9 +18,15 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class BindOptions
     {
+        internal abstract void Verify();
         internal abstract void Subscribe();
         internal abstract void Unsubscribe();
         internal abstract void Apply(Element element);
+
+        internal static string MissingMemberText(string member)
+        {
+            return $"Missing binding member: {member}";
+        }
     }
 
     /// <summary>
@@ -103,6 +109,14 @@ namespace Integrative.Lara
                 throw new InvalidOperationException(Resources.BindingCycleDetected);
             }
         }
+
+        internal override void Verify()
+        {
+            if (ModifiedHandler == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(ModifiedHandler)));
+            }
+        }
     }
 
     /// <summary>
@@ -120,6 +134,14 @@ namespace Integrative.Lara
 
         internal TValue GetCurrentValue()
             => Property(BindObject);
+
+        internal override void Verify()
+        {
+            if (Property == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(Property)));
+            }
+        }
     }
 
     /// <summary>
@@ -254,6 +276,18 @@ namespace Integrative.Lara
             var action = set.Compile();
             return action;
         }
+
+        internal override void Verify()
+        {
+            if (string.IsNullOrEmpty(_attribute))
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(_attribute)));
+            }
+            else if (Property == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(Property)));
+            }
+        }
     }
 
     /// <summary>
@@ -321,6 +355,18 @@ namespace Integrative.Lara
         /// Method for creating elements
         /// </summary>
         public Func<T, Element> CreateCallback { get; set; }
+
+        internal override void Verify()
+        {
+            if (Collection == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(Collection)));
+            }
+            else if (CreateCallback == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(CreateCallback)));
+            }
+        }
 
         /// <summary>
         /// Constructor

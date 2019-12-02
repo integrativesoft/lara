@@ -1065,6 +1065,7 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindAttribute<T>(options);
         }
@@ -1074,10 +1075,23 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
+        [Obsolete("Use BindToggleAttribute() instead.")]
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            BindToggleAttribute(options);
+        }
+
+        /// <summary>
+        /// Binds a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        public void BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindFlagAttribute<T>(options);
         }
@@ -1091,6 +1105,7 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindToggleClass<T>(options);
         }
@@ -1104,6 +1119,7 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindInput(options);
         }
@@ -1117,6 +1133,7 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindInput(options);
         }
@@ -1175,6 +1192,7 @@ namespace Integrative.Lara
             where T : INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindChildren(options);
         }

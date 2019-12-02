@@ -365,6 +365,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete]
         public void BindFlagAttributeBinds()
         {
             var div = Element.Create("div");
@@ -397,6 +398,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete]
         public void LaraFlagBinding()
         {
             var div = Element.Create("div");

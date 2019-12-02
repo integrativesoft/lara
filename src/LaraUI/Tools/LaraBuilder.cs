@@ -457,7 +457,21 @@ namespace Integrative.Lara
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<bool> property)
             where T : INotifyPropertyChanged
         {
-            return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
+            return BindToggleAttribute(attribute, instance, property);
+        }
+
+        /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
@@ -503,10 +517,23 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use BindToggleAttribute() instead.")]
         public LaraBuilder BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : INotifyPropertyChanged
         {
-            _stack.Peek().BindFlagAttribute<T>(options);
+            return BindToggleAttribute(options);
+        }
+
+        /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="options">Binding options</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
+            where T : INotifyPropertyChanged
+        {
+            _stack.Peek().BindToggleAttribute<T>(options);
             return this;
         }
 
@@ -550,10 +577,25 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use instad the BindToggleAttribute() method.")]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<T, bool> property)
             where T : INotifyPropertyChanged
         {
-            return BindFlagAttribute<T>(new BindFlagAttributeOptions<T>
+            return BindToggleAttribute(attribute, instance, property);
+        }
+
+        /// <summary>
+        /// Adds bindings for a flag attribute
+        /// </summary>
+        /// <typeparam name="T">Data type for data source instance</typeparam>
+        /// <param name="attribute">Attribute</param>
+        /// <param name="instance">Data source instance</param>
+        /// <param name="property">Data source property</param>
+        /// <returns>This instance</returns>
+        public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<T, bool> property)
+            where T : INotifyPropertyChanged
+        {
+            return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
