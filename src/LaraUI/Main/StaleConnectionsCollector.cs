@@ -40,7 +40,7 @@ namespace Integrative.Lara.Main
             {
                 Interval = timerInterval
             };
-            _timer.Elapsed += async (sender, args) => await CleanupExpiredHandler();
+            _timer.Elapsed += TimerElapsedHandler;
             _timer.Start();
         }
 
@@ -56,14 +56,24 @@ namespace Integrative.Lara.Main
             }
         }
 
+        private async void TimerElapsedHandler(object sender, ElapsedEventArgs e)
+        {
+            await CleanupExpiredHandler();
+        }
+
+        bool _cleaning;
+
         internal async Task CleanupExpiredHandler()
         {
-            if (!_disposed)
+            if (_disposed || _cleaning)
             {
-                _timer.Enabled = false;
-                await CleanupNonDisposed();
-                _timer.Enabled = true;
+                return;
             }
+            _cleaning = true;
+            _timer.Enabled = false;
+            await CleanupNonDisposed();
+            _timer.Enabled = true;
+            _cleaning = false;
         }
 
         private async Task CleanupNonDisposed()
