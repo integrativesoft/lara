@@ -58,17 +58,16 @@ namespace Integrative.Lara.Main
 
         private async void TimerElapsedHandler(object sender, ElapsedEventArgs e)
         {
-            await CleanupExpiredHandler();
+            if (!_disposed && !_cleaning)
+            {
+                await CleanupExpiredHandler();
+            }
         }
 
         bool _cleaning;
 
         internal async Task CleanupExpiredHandler()
         {
-            if (_disposed || _cleaning)
-            {
-                return;
-            }
             _cleaning = true;
             _timer.Enabled = false;
             await CleanupNonDisposed();

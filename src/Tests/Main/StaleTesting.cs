@@ -46,17 +46,6 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [Fact]
-        public async void DisposedCollectorWontExecute()
-        {
-            var connections = new Connections();
-            var cnx = connections.CreateConnection(IPAddress.Loopback);
-            var collector = new StaleConnectionsCollector(connections);
-            collector.Dispose();
-            await collector.CleanupExpiredHandler();
-            Assert.True(connections.TryGetConnection(cnx.Id, out _));
-        }
-
-        [Fact]
         public void TimerInterval()
         {
             using var x = new Connections
