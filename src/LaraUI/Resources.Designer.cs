@@ -187,15 +187,6 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The UploadFiles and LongRunning options cannot be used together..
-        /// </summary>
-        internal static string LongRunningNoFiles {
-            get {
-                return ResourceManager.GetString("LongRunningNoFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Component types must inherit from the Component class..
         /// </summary>
         internal static string MustInherit {

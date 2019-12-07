@@ -108,10 +108,6 @@ namespace Integrative.Lara
             {
                 throw new ArgumentException(Resources.EventNameNull);
             }
-            else if (LongRunning && UploadFiles)
-            {
-                throw new InvalidOperationException(Resources.LongRunningNoFiles);
-            }
         }
     }
 }

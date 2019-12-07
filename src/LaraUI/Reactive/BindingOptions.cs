@@ -73,6 +73,14 @@ namespace Integrative.Lara
             OnPropertyChanged(e);
         }
 
+        internal override void Verify()
+        {
+            if (BindObject == null)
+            {
+                throw new InvalidOperationException(MissingMemberText(nameof(BindObject)));
+            }
+        }
+
     }
 
     /// <summary>
@@ -112,6 +120,7 @@ namespace Integrative.Lara
 
         internal override void Verify()
         {
+            base.Verify();
             if (ModifiedHandler == null)
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(ModifiedHandler)));
@@ -137,6 +146,7 @@ namespace Integrative.Lara
 
         internal override void Verify()
         {
+            base.Verify();
             if (Property == null)
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(Property)));
@@ -279,6 +289,7 @@ namespace Integrative.Lara
 
         internal override void Verify()
         {
+            base.Verify();
             if (string.IsNullOrEmpty(_attribute))
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(_attribute)));

@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;  
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Integrative.Lara.Middleware
 {
     [DataContract]
-    sealed class EventParameters
+    class EventParameters
     {
         [DataMember]
         public Guid DocumentId { get; set; }
@@ -31,10 +31,10 @@ namespace Integrative.Lara.Middleware
         [DataMember]
         public long EventNumber { get; set; }
 
-        [DataMember]
+        [DataMember(IsRequired = false)]
         public ClientEventMessage Message { get; set; }
 
-        public IFormFileCollection Files { get; set; }
+        public virtual IFormFileCollection Files { get; set; }
 
         public static bool TryParse(IQueryCollection query, out EventParameters parameters)
         {
@@ -74,5 +74,14 @@ namespace Integrative.Lara.Middleware
             }
             Files = form.Files;
         }
+    }
+
+    [DataContract]
+    class SocketEventParameters : EventParameters
+    {
+        [DataMember(IsRequired = false)]
+        public FormFileCollection SocketFiles { get; set; }
+
+        public override IFormFileCollection Files => SocketFiles;
     }
 }

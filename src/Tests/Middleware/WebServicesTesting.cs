@@ -199,6 +199,30 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        public void PublishAssembliesBinaryService()
+        {
+            const string Address = "/mydummy2";
+            using var app = new Application();
+            app.PublishService(new BinaryServiceContent
+            {
+                Address = Address,
+                Method = "POST",
+                Factory = () => new DummyBinaryWS()
+            });
+            var combined = Published.CombinePathMethod(Address, "POST");
+            var found = app.TryGetNode(combined, out var item);
+            Assert.True(found);
+            var service = item as BinaryServicePublished;
+            Assert.NotNull(service);
+            Assert.NotNull(service.Factory());
+        }
+
+        class DummyBinaryWS : IBinaryService
+        {
+            public Task<byte[]> Execute() => Task.FromResult(Array.Empty<byte>());
+        }
+
+        [Fact]
         public void PublishAssembliesPage()
         {
             const string Address = "/mypapapapa";
@@ -300,5 +324,18 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void BinaryServiceAttribute()
+        {
+            var x = new LaraBinaryServiceAttribute
+            {
+                Address = "a",
+                ContentType = "b",
+                Method = "c"
+            };
+            Assert.Equal("a", x.Address);
+            Assert.Equal("b", x.ContentType);
+            Assert.Equal("c", x.Method);
+        }
     }
 }

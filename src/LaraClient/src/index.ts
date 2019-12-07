@@ -19,6 +19,7 @@ import { clean } from "./Initializer";
 import { ClientEventMessage, collectValues, collectMessage } from "./InputCollector";
 import { Sequencer } from "./Sequencer";
 import { processResult } from "./Worker";
+import { SocketEventParameters, loadFiles, EventParameters } from "./SocketEvents";
 
 let documentId: string;
 let lastEventNumber: number;
@@ -75,14 +76,6 @@ export interface PlugOptions {
     UploadFiles?: boolean;
 }
 
-class EventParameters {
-    DocumentId: string;
-    ElementId: string;
-    EventName: string;
-    EventNumber: number;
-    Message: ClientEventMessage;
-}
-
 export function plugEvent(el: EventTarget, ev: Event, options: PlugOptions): void {
     stopPropagation(ev, options);
     plug(el, options);
@@ -106,9 +99,18 @@ export function plug(el: EventTarget, options: PlugOptions): void {
 
 function plugWebSocket(el: EventTarget, plug: PlugOptions): void {
     block(plug);
+    let promise = buildSocketParameters(el, plug);
+    promise.then((params) => {
+        plugWebSocketStart(plug, params);
+    }, reason => {
+        console.log(reason);
+        location.reload();
+    });
+}
+
+function plugWebSocketStart(plug: PlugOptions, params: SocketEventParameters): void {
     let url = getSocketUrl('/_event');
     let socket = new WebSocket(url);
-    let params = buildEventParameters(el, plug);
     socket.onopen = function (_event) {
         socket.onmessage = async function (e1) {
             await onSocketMessage(e1.data, params.EventNumber);
@@ -135,8 +137,14 @@ function getSocketUrl(name: string): string {
     return url + window.location.host + name;
 }
 
-function buildEventParameters(el: EventTarget, plug: PlugOptions): EventParameters {
-    let params = new EventParameters();
+async function buildSocketParameters(el: EventTarget, plug: PlugOptions): Promise<SocketEventParameters> {
+    let params = createSocketParameters(el, plug);
+    params.SocketFiles = await loadFiles(plug);
+    return params;
+}
+
+function createSocketParameters(el: EventTarget, plug: PlugOptions): SocketEventParameters {
+    let params = new SocketEventParameters();
     if (plug.IgnoreSequence) {
         params.EventNumber = 0;
     } else {

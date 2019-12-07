@@ -29,12 +29,24 @@ namespace SampleProject.Other
             .Pop()
             .Push("div")
                 .Push("button")
-                    .InnerText("Upload")
+                    .InnerText("Upload via Ajax")
                     .On(new EventSettings
                     {
                         EventName = "click",
                         UploadFiles = true,
                         Handler = ClickHandler
+                    })
+                .Pop()
+            .Pop()
+            .Push("div")
+                .Push("button")
+                    .InnerText("Upload via WebSocket")
+                    .On(new EventSettings
+                    {
+                        EventName = "click",
+                        UploadFiles = true,
+                        Handler = ClickHandler,
+                        LongRunning = true
                     })
                 .Pop()
             .Pop()

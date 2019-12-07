@@ -148,17 +148,5 @@ namespace Integrative.Lara.Tests.Delta
             };
             Assert.Equal("abc", x.Payload);
         }
-
-        [Fact]
-        public void CannotUploadFilesWebsocket()
-        {
-            var x = new EventSettings
-            {
-                EventName = "click",
-                LongRunning = true,
-                UploadFiles = true
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
     }
 }

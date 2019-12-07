@@ -58,7 +58,7 @@ namespace Integrative.Lara.Middleware
         private static async Task ProcessWebSocketEvent(Application app, HttpContext http)
         {
             var socket = await http.WebSockets.AcceptWebSocketAsync();
-            var result = await MiddlewareCommon.ReadWebSocketMessage<EventParameters>(socket, MaxSizeBytes);
+            var result = await MiddlewareCommon.ReadWebSocketMessage<SocketEventParameters>(socket, MaxSizeBytes);
             var context = new PostEventContext
             {
                 Application = app,

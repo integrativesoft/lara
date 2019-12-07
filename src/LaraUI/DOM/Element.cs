@@ -1052,6 +1052,8 @@ namespace Integrative.Lara
         public void Bind<T>(BindHandlerOptions<T> options)
             where T : INotifyPropertyChanged
         {
+            options = options ?? throw new ArgumentNullException(nameof(options));
+            options.Verify();
             EnsureBindings();
             _bindings.BindHandler(options);
         }

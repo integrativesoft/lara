@@ -454,6 +454,7 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use BindToggleAttribute() instead.")]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<bool> property)
             where T : INotifyPropertyChanged
         {

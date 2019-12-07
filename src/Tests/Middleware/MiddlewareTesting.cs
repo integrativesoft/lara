@@ -773,11 +773,14 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.False(ok);
             Assert.Equal((int)HttpStatusCode.Unauthorized, http.Object.Response.StatusCode);
         }
-
+        
         [Fact]
-        public void CustomErrorPageReturned()
+        public void ETagFormatCorrect()
         {
-
+            var hash = 12345;
+            var expected = "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
+            var etag = StaticContent.FormatETag(hash);
+            Assert.Equal(expected, etag);
         }
     }
 }
