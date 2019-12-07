@@ -5,7 +5,7 @@ Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apa
  
 **Lara**'s gives you full control of the HTML DOM tree from the server in C#.
 
-The server keeps a virtual copy of the page and flushes deltas to the browser. The client runs a thin Lara runtime client that interprets server deltas.
+The server keeps a virtual copy of the page and flushes deltas to the browser. The client runs a thin Lara runtime that interprets server deltas.
 
 Support:
 
