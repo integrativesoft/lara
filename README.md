@@ -13,7 +13,7 @@ Support:
 | .NET Core | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:
 | .NET Framework | :heavy_check_mark: | | 
 
-**Lara** can be used to develop either websites or desktop apps with an HTML5 frontend.
+**Lara** can be used to develop either websites or web desktop apps.
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
