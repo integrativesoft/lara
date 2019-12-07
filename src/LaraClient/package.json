@@ -18,7 +18,8 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.3",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "terser-webpack-plugin": "2.2.2"
   },
   "dependencies": {
     "@types/debounce": "^1.2.0",
