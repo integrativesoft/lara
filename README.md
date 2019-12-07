@@ -13,7 +13,7 @@ Support:
 | .NET Core | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:
 | .NET Framework | :heavy_check_mark: | | 
 
-**Lara** can be used to develop either websites and web desktop apps.
+**Lara** can be used to develop websites and web desktop apps.
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
