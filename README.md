@@ -5,16 +5,6 @@ Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apa
  
 **Lara** is a library for developing web user interfaces and web services. Lara gives you full control of the client's HTML Document Object Model (DOM) from the server in C#.
 
-Support:
-
-| Framework | Windows | Linux | MacOS
-| --- | --- | --- | --- |
-| .NET Standard | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:
-| .NET Core | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark:
-| .NET Framework | :heavy_check_mark: | | 
-
-**Lara** can be used to develop websites and web desktop apps.
-
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
 ## Sample application
