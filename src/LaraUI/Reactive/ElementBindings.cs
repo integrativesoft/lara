@@ -15,9 +15,9 @@ namespace Integrative.Lara.Reactive
         private readonly Element _parent;
 
         private readonly Dictionary<string, BindPropertyOptions> _attributeBindings;
-        private BindPropertyOptions _innerTextBinding;
-        private BindChildrenOptions _childrenBinding;
-        private BindPropertyOptions _genericHandler;
+        private BindPropertyOptions? _innerTextBinding;
+        private BindChildrenOptions? _childrenBinding;
+        private BindPropertyOptions? _genericHandler;
 
         public ElementBindings(Element parent)
         {
@@ -67,7 +67,7 @@ namespace Integrative.Lara.Reactive
         #region Generic handler
 
         public void BindHandler<T>(BindHandlerOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             UnbindHandler();
             BindOptions(options);
@@ -88,28 +88,27 @@ namespace Integrative.Lara.Reactive
         #region Attributes
 
         public void BindAttribute<T>(BindAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             StoreBinding(options.Attribute, options);
         }
 
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             StoreBinding(options.Attribute, options);
         }
 
         public void BindToggleClass<T>(BindToggleClassOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             var key = "class~" + options.ClassName;
             StoreBinding(key, options);
         }
 
         public void BindInput<TData, TValue>(BindInputOptions<TData, TValue> options)
-            where TData : INotifyPropertyChanged
+            where TData : class, INotifyPropertyChanged
         {
-            options.Compile();
             StoreBinding(options.Attribute, options);
         }
 
@@ -143,7 +142,7 @@ namespace Integrative.Lara.Reactive
         #region Inner text
 
         public void BindInnerText<T>(BindPropertyOptions<T, string> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             UnbindInnerText();
             BindOptions(options);
@@ -164,7 +163,7 @@ namespace Integrative.Lara.Reactive
         #region Children
 
         public void BindChildren<T>(BindChildrenOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             UnbindChildren();
             options.Apply(_parent);

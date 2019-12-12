@@ -18,9 +18,9 @@ namespace Integrative.Lara
         /// <summary>
         /// Body of message sent from JavaScript
         /// </summary>
-        public string Body { get; }
+        public string? Body { get; }
 
-        internal MessageEventArgs(string body)
+        internal MessageEventArgs(string? body)
         {
             Body = body;
         }

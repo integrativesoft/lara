@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'alt' HTML5 attribute.
         /// </summary>
-        public string Alt
+        public string? Alt
         {
             get => GetAttributeLower("alt");
             set { SetAttributeLower("alt", value); }
@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'crossorigin' HTML5 attribute.
         /// </summary>
-        public string CrossOrigin
+        public string? CrossOrigin
         {
             get => GetAttributeLower("crossorigin");
             set { SetAttributeLower("crossorigin", value); }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'longdesc' HTML5 attribute.
         /// </summary>
-        public string LongDesc
+        public string? LongDesc
         {
             get => GetAttributeLower("longdesc");
             set { SetAttributeLower("longdesc", value); }
@@ -67,7 +67,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'src' HTML5 attribute.
         /// </summary>
-        public string Src
+        public string? Src
         {
             get => GetAttributeLower("src");
             set { SetAttributeLower("src", value); }
@@ -76,7 +76,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'srcset' HTML5 attribute.
         /// </summary>
-        public string SrcSet
+        public string? SrcSet
         {
             get => GetAttributeLower("srcset");
             set { SetAttributeLower("srcset", value); }
@@ -85,7 +85,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'usemap' HTML5 attribute.
         /// </summary>
-        public string UseMap
+        public string? UseMap
         {
             get => GetAttributeLower("usemap");
             set { SetAttributeLower("usemap", value); }

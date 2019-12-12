@@ -48,7 +48,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'dirname' HTML5 attribute.
         /// </summary>
-        public string Dirname
+        public string? Dirname
         {
             get => GetAttributeLower("dirname");
             set { SetAttributeLower("dirname", value); }
@@ -75,7 +75,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'name' HTML5 attribute.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get => GetAttributeLower("name");
             set { SetAttributeLower("name", value); }
@@ -84,7 +84,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'placeholder' HTML5 attribute.
         /// </summary>
-        public string Placeholder
+        public string? Placeholder
         {
             get => GetAttributeLower("placeholder");
             set { SetAttributeLower("placeholder", value); }
@@ -120,7 +120,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'value' property.
         /// </summary>
-        public string Value
+        public string? Value
         {
             get => GetAttributeLower("value");
             set { SetAttributeLower("value", value); }
@@ -129,7 +129,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'wrap' HTML5 attribute.
         /// </summary>
-        public string Wrap
+        public string? Wrap
         {
             get => GetAttributeLower("wrap");
             set { SetAttributeLower("wrap", value); }

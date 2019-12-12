@@ -67,7 +67,8 @@ namespace Integrative.Lara.Tests.Middleware
         public async void LocalhostFilterTesting()
         {
             var logger = new Mock<ILogger<LocalhostFilter>>();
-            var filter = new LocalhostFilter(null, logger.Object);
+            var next = new Mock<RequestDelegate>();
+            var filter = new LocalhostFilter(next.Object, logger.Object);
 
             var connectionInfo = new Mock<ConnectionInfo>();
             connectionInfo.Setup(x => x.RemoteIpAddress).Returns(IPAddress.Parse("172.217.4.206"));
@@ -113,8 +114,8 @@ namespace Integrative.Lara.Tests.Middleware
         public void ProcessMessageSkipsEmptyMessage()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            var context = new PageContext(_context.Application, http.Object, null, document);
+            var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var context = new PageContext(_context.Application, http.Object, cx);
             var parameters = new EventParameters();
             PostEventHandler.ProcessMessageIfNeeded(context, parameters);
         }
@@ -143,7 +144,8 @@ namespace Integrative.Lara.Tests.Middleware
             query.Add("doc", "EF2FF98720E34A2EA29E619977A5F04A");
             query.Add("el", "lala");
             query.Add("ev", "lala");
-            var handler = new PostEventHandler(_context.Application, null);
+            var next = new Mock<RequestDelegate>();
+            var handler = new PostEventHandler(_context.Application, next.Object);
             bool result = await handler.ProcessRequest(http.Object);
             Assert.True(result);
         }
@@ -202,8 +204,8 @@ namespace Integrative.Lara.Tests.Middleware
         public void PageContextSocket()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            var page = new PageContext(_context.Application, http.Object, null, document);
+            var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var page = new PageContext(_context.Application, http.Object, cx);
             var socket = new Mock<WebSocket>();
             page.Socket = socket.Object;
             Assert.Same(socket.Object, page.Socket);
@@ -213,8 +215,8 @@ namespace Integrative.Lara.Tests.Middleware
         public async void CannotFlushAjax()
         {
             var http = new Mock<HttpContext>();
-            var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            var page = new PageContext(_context.Application, http.Object, null, document);
+            var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var page = new PageContext(_context.Application, http.Object, cx);
             await DomOperationsTesting.ThrowsAsync<InvalidOperationException>(async ()
                 => await page.Navigation.FlushPartialChanges());
         }
@@ -225,9 +227,11 @@ namespace Integrative.Lara.Tests.Middleware
             var http = new Mock<HttpContext>();
             var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var socket = new Mock<WebSocket>();
-            var page = new PageContext(_context.Application, http.Object, null, document)
+            var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var page = new PageContext(_context.Application, http.Object, cx)
             {
-                Socket = socket.Object
+                Socket = socket.Object,
+                DocumentInternal = document
             };
             var button = new Button();
             document.OpenEventQueue();
@@ -263,11 +267,13 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void UnpublishMethod()
         {
+            var service = new Mock<IWebService>();
             using var x = new Published();
             x.Publish(new WebServiceContent
             {
                 Address = "/myws",
-                Method = "PUT"
+                Method = "PUT",
+                Factory = () => service.Object
             });
             var combined = Published.CombinePathMethod("/myws", "PUT");
             Assert.True(x.TryGetNode(combined, out _));
@@ -304,7 +310,8 @@ namespace Integrative.Lara.Tests.Middleware
         public async void PostEventHandlerSkipsRequests()
         {
             var http = new Mock<HttpContext>();
-            var post = new PostEventHandler(_context.Application, null);
+            var next = new Mock<RequestDelegate>();
+            var post = new PostEventHandler(_context.Application, next.Object);
             var request = new Mock<HttpRequest>();
             http.Setup(x => x.Request).Returns(request.Object);
             request.Setup(x => x.Path).Returns(PostEventHandler.EventPrefix);
@@ -320,10 +327,9 @@ namespace Integrative.Lara.Tests.Middleware
             var http = new Mock<HttpContext>();
             var page = new MyPage();
             var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
-            var context = new PostEventContext
+            var context = new PostEventContext(_context.Application, http.Object)
             {
                 Document = document,
-                Http = http.Object,
                 Parameters = new EventParameters
                 {
                     ElementId = "aaa"
@@ -349,7 +355,7 @@ namespace Integrative.Lara.Tests.Middleware
             var page = new MyPage();
             var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             document.ServerEventsOn();
-            var post = new Mock<PostEventContext>();
+            var post = new Mock<PostEventContext>(_context.Application, _context.Http);
             post.Object.Document = document;
             var parameters = new EventParameters
             {
@@ -377,7 +383,8 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var element = Element.Create("div");
             element.On("click", () => throw new StatusCodeException(HttpStatusCode.Forbidden));
-            var post = new PostEventContext
+            var http = new Mock<HttpContext>();
+            var post = new PostEventContext(_context.Application, http.Object)
             {
                 Element = element,
                 Parameters = new EventParameters
@@ -385,7 +392,6 @@ namespace Integrative.Lara.Tests.Middleware
                     EventName = "click"
                 }
             };
-            var http = new Mock<HttpContext>();
             var response = new Mock<HttpResponse>();
             response.SetupProperty(x => x.StatusCode);
             http.Setup(x => x.Response).Returns(response.Object);
@@ -452,7 +458,7 @@ namespace Integrative.Lara.Tests.Middleware
             var page = new MyPage();
             var document = new Mock<Document>(page, 200);
             var socket = new Mock<WebSocket>();
-            var post = new PostEventContext
+            var post = new PostEventContext(_context.Application, _context.Http)
             {
                 Document = document.Object,
                 Socket = socket.Object
@@ -484,7 +490,7 @@ namespace Integrative.Lara.Tests.Middleware
             session.Close();
         }
 
-        private void Session_Closing(object sender, EventArgs e)
+        private void Session_Closing(object? sender, EventArgs e)
         {
             throw new InvalidOperationException();
         }
@@ -713,12 +719,6 @@ namespace Integrative.Lara.Tests.Middleware
             x.SetExtraData("abc");
             Assert.Equal("abc", x.JSBridge.EventData);
             Assert.Same(connection.Session, x.Session);
-        }
-
-        [Fact]
-        public void ComputeHashRequiresReference()
-        {
-            Assert.ThrowsAny<ArgumentNullException>(() => StaticContent.ComputeHash(null));
         }
 
         [Fact]

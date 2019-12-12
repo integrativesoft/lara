@@ -12,9 +12,9 @@ namespace Integrative.Lara.Delta
     sealed class ContentAttribute
     {
         [DataMember]
-        public string Attribute { get; set; }
+        public string Attribute { get; set; } = string.Empty;
 
         [DataMember]
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
     }
 }

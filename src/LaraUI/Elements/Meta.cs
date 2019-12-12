@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'content' HTML5 attribute.
         /// </summary>
-        public string Content
+        public string? Content
         {
             get => GetAttributeLower("content");
             set { SetAttributeLower("content", value); }
@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'httpequiv' HTML5 attribute.
         /// </summary>
-        public string HttpEquiv
+        public string? HttpEquiv
         {
             get => GetAttributeLower("http-equiv");
             set { SetAttributeLower("http-equiv", value); }
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'name' HTML5 attribute.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get => GetAttributeLower("name");
             set { SetAttributeLower("name", value); }

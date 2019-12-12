@@ -11,6 +11,7 @@ using Integrative.Lara.Reactive;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace Integrative.Lara
 
         internal Dictionary<string, EventSettings> Events { get; }
 
-        private string _id;
+        private string? _id;
 
         /// <summary>
         /// Element's tag name
@@ -137,7 +138,7 @@ namespace Integrative.Lara
         /// <value>
         /// The identifier.
         /// </value>
-        public string Id
+        public string? Id
         {
             get => _id;
             set
@@ -165,18 +166,23 @@ namespace Integrative.Lara
         /// <returns>Element's ID</returns>
         public string EnsureElementId()
         {
-            if (string.IsNullOrEmpty(_id))
+            if (string.IsNullOrEmpty(Id))
             {
-                if (Document == null)
-                {
-                    Id = GlobalSerializer.GenerateElementId();
-                }
-                else
-                {
-                    Id = Document.GenerateElementId();
-                }
+                Id = GenerateElementId();
             }
             return Id;
+        }
+
+        private string GenerateElementId()
+        {
+            if (Document == null)
+            {
+                return GlobalSerializer.GenerateElementId();
+            }
+            else
+            {
+                return Document.GenerateElementId();
+            }
         }
 
         /// <summary>
@@ -184,14 +190,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
         /// <param name="attributeValue">The value of the attribute.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
-        public void SetAttribute(string attributeName, string attributeValue)
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        public void SetAttribute(string attributeName, string? attributeValue)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
             SetAttributeLower(attributeName.ToLowerInvariant(), attributeValue);
         }
 
-        internal void SetAttributeLower(string nameLower, string value)
+        internal void SetAttributeLower(string nameLower, string? value)
         {
             if (nameLower == "id")
             {
@@ -224,13 +230,13 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">The name of the attribute</param>
         /// <returns>Value of the attribute</returns>
-        public string GetAttribute(string attributeName)
+        public string? GetAttribute(string attributeName)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
             return _attributes.GetAttribute(attributeName);
         }
 
-        internal string GetAttributeLower(string nameLower)
+        internal string? GetAttributeLower(string nameLower)
             => _attributes.GetAttributeLower(nameLower);
 
         /// <summary>
@@ -326,7 +332,8 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="className">Name of the class.</param>
         /// <param name="value">true to add the class, false to remove.</param>
-        public void ToggleClass(string className, bool value) => Class = ClassEditor.ToggleClass(Class, className, value);
+        public void ToggleClass(string className, bool value)
+            => Class = ClassEditor.ToggleClass(Class, className, value);
 
         /// <summary>
         /// Toggles (adds or removes) the class passed in parameters
@@ -350,7 +357,7 @@ namespace Integrative.Lara
         /// <value>
         /// The access key.
         /// </value>
-        public string AccessKey
+        public string? AccessKey
         {
             get => GetAttributeLower("accesskey");
             set { SetAttributeLower("accesskey", value); }
@@ -362,7 +369,7 @@ namespace Integrative.Lara
         /// <value>
         /// The automatic capitalize.
         /// </value>
-        public string AutoCapitalize
+        public string? AutoCapitalize
         {
             get => GetAttributeLower("autocapitalize");
             set { SetAttributeLower("autocapitalize", value); }
@@ -374,7 +381,7 @@ namespace Integrative.Lara
         /// <value>
         /// The class.
         /// </value>
-        public string Class
+        public string? Class
         {
             get => GetAttributeLower("class");
             set { SetAttributeLower("class", value); }
@@ -386,7 +393,7 @@ namespace Integrative.Lara
         /// <value>
         /// The content editable.
         /// </value>
-        public string ContentEditable
+        public string? ContentEditable
         {
             get => GetAttributeLower("contenteditable");
             set { SetAttributeLower("contenteditable", value); }
@@ -398,7 +405,7 @@ namespace Integrative.Lara
         /// <value>
         /// The context menu.
         /// </value>
-        public string ContextMenu
+        public string? ContextMenu
         {
             get => GetAttributeLower("contextmenu");
             set { SetAttributeLower("contextmenu", value); }
@@ -410,7 +417,7 @@ namespace Integrative.Lara
         /// <value>
         /// The dir.
         /// </value>
-        public string Dir
+        public string? Dir
         {
             get => GetAttributeLower("dir");
             set { SetAttributeLower("dir", value); }
@@ -422,7 +429,7 @@ namespace Integrative.Lara
         /// <value>
         /// The draggable.
         /// </value>
-        public string Draggable
+        public string? Draggable
         {
             get => GetAttributeLower("draggable");
             set { SetAttributeLower("draggable", value); }
@@ -434,7 +441,7 @@ namespace Integrative.Lara
         /// <value>
         /// The drop zone.
         /// </value>
-        public string DropZone
+        public string? DropZone
         {
             get => GetAttributeLower("dropzone");
             set { SetAttributeLower("dropzone", value); }
@@ -470,7 +477,7 @@ namespace Integrative.Lara
         /// <value>
         /// The language.
         /// </value>
-        public string Lang
+        public string? Lang
         {
             get => GetAttributeLower("lang");
             set { SetAttributeLower("lang", value); }
@@ -482,7 +489,7 @@ namespace Integrative.Lara
         /// <value>
         /// The spellcheck.
         /// </value>
-        public string Spellcheck
+        public string? Spellcheck
         {
             get => GetAttributeLower("spellcheck");
             set { SetAttributeLower("spellcheck", value); }
@@ -494,7 +501,7 @@ namespace Integrative.Lara
         /// <value>
         /// The style.
         /// </value>
-        public string Style
+        public string? Style
         {
             get => GetAttributeLower("style");
             set { SetAttributeLower("style", value); }
@@ -506,7 +513,7 @@ namespace Integrative.Lara
         /// <value>
         /// The index of the tab.
         /// </value>
-        public string TabIndex
+        public string? TabIndex
         {
             get => GetAttributeLower("tabindex");
             set { SetAttributeLower("tabindex", value); }
@@ -518,7 +525,7 @@ namespace Integrative.Lara
         /// <value>
         /// The title.
         /// </value>
-        public string Title
+        public string? Title
         {
             get => GetAttributeLower("title");
             set { SetAttributeLower("title", value); }
@@ -530,7 +537,7 @@ namespace Integrative.Lara
         /// <value>
         /// The translate.
         /// </value>
-        public string Translate
+        public string? Translate
         {
             get => GetAttributeLower("translate");
             set { SetAttributeLower("translate", value); }
@@ -691,7 +698,7 @@ namespace Integrative.Lara
             AppendEncode(data, false);
         }
 
-        internal void AppendEncode(string data, bool encode)
+        internal void AppendEncode(string? data, bool encode)
         {
             var count = _children.Count;
             if (count > 0 && _children[count - 1] is TextNode node)
@@ -944,7 +951,8 @@ namespace Integrative.Lara
 
         internal Task NotifyEvent(string eventName)
         {
-            if (Events.TryGetValue(eventName, out var settings))
+            if (Events.TryGetValue(eventName, out var settings)
+                && settings.Handler != null)
             {
                 return settings.Handler();
             }
@@ -972,7 +980,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="eventName">Name of the event.</param>
         /// <param name="handler">The handler to execute.</param>
-        public void On(string eventName, Func<Task> handler)
+        public void On(string eventName, Func<Task>? handler)
         {
             eventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
             if (handler == null)
@@ -1017,14 +1025,15 @@ namespace Integrative.Lara
 
         #region Binding
 
-        private ElementBindings _bindings;
+        private ElementBindings? _bindings;
 
-        private void EnsureBindings()
+        private ElementBindings EnsureBindings()
         {
             if (_bindings == null)
             {
                 _bindings = new ElementBindings(this);
             }
+            return _bindings;
         }
 
         /// <summary>
@@ -1034,10 +1043,9 @@ namespace Integrative.Lara
         /// <param name="instance">Source data instance</param>
         /// <param name="handler">Action to execute when source data is modified</param>
         public void Bind<T>(T instance, Action<T, Element> handler)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
-            EnsureBindings();
-            _bindings.BindHandler(new BindHandlerOptions<T>
+            EnsureBindings().BindHandler(new BindHandlerOptions<T>
             {
                 BindObject = instance,
                 ModifiedHandler = handler
@@ -1050,12 +1058,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of the source data</typeparam>
         /// <param name="options">Binding options</param>
         public void Bind<T>(BindHandlerOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindHandler(options);
+            EnsureBindings().BindHandler(options);
         }
 
         /// <summary>
@@ -1064,12 +1071,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Attribute binding options</param>
         public void BindAttribute<T>(BindAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindAttribute<T>(options);
+            EnsureBindings().BindAttribute<T>(options);
         }
 
         /// <summary>
@@ -1079,7 +1085,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         [Obsolete("Use BindToggleAttribute() instead.")]
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             BindToggleAttribute(options);
         }
@@ -1090,12 +1096,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         public void BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindFlagAttribute<T>(options);
+            EnsureBindings().BindFlagAttribute<T>(options);
         }
 
         /// <summary>
@@ -1104,12 +1109,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         public void BindToggleClass<T>(BindToggleClassOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindToggleClass<T>(options);
+            EnsureBindings().BindToggleClass<T>(options);
         }
 
         /// <summary>
@@ -1118,12 +1122,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
         public void BindInput<T>(BindInputOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindInput(options);
+            EnsureBindings().BindInput(options);
         }
 
         /// <summary>
@@ -1132,12 +1135,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
         public virtual void BindFlagInput<T>(BindFlagInputOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindInput(options);
+            EnsureBindings().BindInput(options);
         }
 
         /// <summary>
@@ -1155,10 +1157,9 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of source data</typeparam>
         /// <param name="options">Inner text binding options</param>
         public void BindInnerText<T>(BindInnerTextOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
-            EnsureBindings();
-            _bindings.BindInnerText(options);
+            EnsureBindings().BindInnerText(options);
         }
 
         /// <summary>
@@ -1166,7 +1167,7 @@ namespace Integrative.Lara
         /// </summary>
         public void UnbindInnerText()
         {
-            _bindings?.UnbindInnerText();
+            EnsureBindings().UnbindInnerText();
         }
 
         /// <summary>
@@ -1191,12 +1192,11 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type for items in the collection</typeparam>
         /// <param name="options">Children binding options</param>
         public void BindChildren<T>(BindChildrenOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings();
-            _bindings.BindChildren(options);
+            EnsureBindings().BindChildren(options);
         }
 
         /// <summary>
@@ -1234,7 +1234,7 @@ namespace Integrative.Lara
             SetInnerEncode(data, false);
         }
 
-        internal void SetInnerEncode(string value, bool encode)
+        internal void SetInnerEncode(string? value, bool encode)
         {
             if (_children.Count == 1 && _children[0] is TextNode node)
             {
@@ -1254,7 +1254,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal override string GetNodeInnerText()
+        internal override string? GetNodeInnerText()
         {
             if (ChildCount == 0)
             {
@@ -1280,7 +1280,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal override void SetNodeInnerText(string value)
+        internal override void SetNodeInnerText(string? value)
         {
             SetInnerEncode(value, true);
         }
@@ -1317,19 +1317,35 @@ namespace Integrative.Lara
             return Children;
         }
 
-        internal virtual void AttributeChanged(string attribute, string value)
+        internal virtual void AttributeChanged(string attribute, string? value)
         {
             _bindings?.NotifyAttributeChanged(attribute);
         }
 
-        internal bool QueueOpen =>
+        /*internal bool QueueOpen =>
             AcceptsEvents
-            && Document.QueueingEvents;
+            && Document.QueueingEvents;*/
 
-        internal bool AcceptsEvents =>
+        internal bool TryGetQueue([NotNullWhen(true)] out Document? document)
+        {
+            return TryGetEvents(out document)
+                && Document != null
+                && Document.QueueingEvents;
+        }
+
+        internal bool TryGetEvents([NotNullWhen(true)] out Document? document)
+        {
+            document = Document;
+            return IsSlotted
+                && IsPrintable
+                && Document != null;
+        }
+
+        /*internal bool AcceptsEvents =>
             IsSlotted
             && IsPrintable
-            && Document != null;
+            && Document != null;*/
+
 
         #endregion
 

@@ -49,8 +49,8 @@ namespace Integrative.Lara.Components
         private static bool IsValidTagName(string tagName)
         {
             return !string.IsNullOrEmpty(tagName)
-                && !tagName.Contains(" ")
-                && tagName.Contains("-");
+                && !tagName.Contains(" ", StringComparison.InvariantCulture)
+                && tagName.Contains("-", StringComparison.InvariantCulture);
         }
 
         public bool TryGetComponent(string name, out Type type)

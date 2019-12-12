@@ -46,7 +46,7 @@ namespace Integrative.Lara.Middleware
         private static string BuildLibraryAddress(string version)
         {
             version = version.Replace('.', '-');
-            return GlobalConstants.LibraryAddress.Replace("{0}", version);
+            return GlobalConstants.LibraryAddress.Replace("{0}", version, System.StringComparison.InvariantCulture);
         }
 
         public static string GetLibraryPath()

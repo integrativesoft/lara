@@ -12,16 +12,16 @@ namespace Integrative.Lara.Delta
     class SubscribeDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public ClientEventSettings Settings { get; set; }
+        public ClientEventSettings? Settings { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public int DebounceInterval { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string EvalFilter { get; set; }
+        public string? EvalFilter { get; set; }
 
         public SubscribeDelta() : base(DeltaType.Subscribe)
         {
@@ -29,9 +29,8 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element, EventSettings settings)
         {
-            if (element.AcceptsEvents)
+            if (element.TryGetEvents(out var document))
             {
-                var document = element.Document;
                 document.NotifyHasEvent();
                 document.Enqueue(CreateDelta(element.EnsureElementId(), settings));
             }
@@ -59,22 +58,22 @@ namespace Integrative.Lara.Delta
     class ClientEventSettings
     {
         [DataMember]
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
 
         [DataMember(EmitDefaultValue = false)]
         public bool Block { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string BlockElementId { get; set; }
+        public string? BlockElementId { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string BlockHTML { get; set; }
+        public string? BlockHTML { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string BlockShownId { get; set; }
+        public string? BlockShownId { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
-        public string ExtraData { get; set; }
+        public string? ExtraData { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
         public bool LongRunning { get; set; }

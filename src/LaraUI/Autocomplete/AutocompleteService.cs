@@ -13,10 +13,10 @@ namespace Integrative.Lara.Autocomplete
     class AutocompleteRequest
     {
         [DataMember]
-        public string Key { get; set; }
+        public string Key { get; set; } = string.Empty;
 
         [DataMember]
-        public string Term { get; set; }
+        public string Term { get; set; } = string.Empty;
     }
 
     [LaraWebService(Address = Address)]
@@ -39,8 +39,15 @@ namespace Integrative.Lara.Autocomplete
                 return string.Empty;
             }
             var options = element.GetOptions();
-            var response = await options.Provider.GetAutocompleteList(request.Term);
-            return LaraUI.JSON.Stringify(response);
+            if (options == null || options.Provider == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                var response = await options.Provider.GetAutocompleteList(request.Term);
+                return LaraUI.JSON.Stringify(response);
+            }
         }
 
         public static void Register(string key, AutocompleteElement element)

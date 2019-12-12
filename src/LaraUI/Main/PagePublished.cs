@@ -37,7 +37,7 @@ namespace Integrative.Lara.Main
             var execution = new PageContext(app, http, connection);
             var page = CreateInstance();
             var document = connection.CreateDocument(page, app.KeepAliveInterval);
-            execution.Document = document;
+            execution.DocumentInternal = document;
             if (await RunPage(app, http, page, options).ConfigureAwait(false))
             {
                 await ProcessGetResult(http, document, execution, StatusCode);

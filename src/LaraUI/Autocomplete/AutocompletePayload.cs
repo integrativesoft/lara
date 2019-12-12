@@ -12,7 +12,7 @@ namespace Integrative.Lara.Autocomplete
     class AutocompletePayload
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
         public bool AutoFocus { get; set; }

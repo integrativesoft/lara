@@ -25,7 +25,7 @@ namespace Integrative.Lara.Delta
         public EventResultType ResultType { get; set; }
 
         [DataMember]
-        public List<BaseDelta> List { get; set; }
+        public List<BaseDelta>? List { get; set; }
 
         public EventResult()
         {

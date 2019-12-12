@@ -14,14 +14,14 @@ namespace Integrative.Lara.Main
     {
         readonly PageContext _parent;
 
-        public string EventData { get; internal set; }
+        public string? EventData { get; internal set; } = string.Empty;
 
         public JSBridge(PageContext parent)
         {
             _parent = parent;
         }
 
-        public void Submit(string javaScriptCode, string payload = null)
+        public void Submit(string javaScriptCode, string? payload = null)
         {
             _parent.Document.Enqueue(new SubmitJsDelta
             {

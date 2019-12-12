@@ -14,6 +14,7 @@ namespace SampleProject
         static async Task Main()
         {
             using var app = new Application();
+            KitchenSinkForm.PublishImages(app);
             await app.Start(new StartServerOptions
             {
                 Mode = ApplicationMode.BrowserApp,   // launches web browser and terminates when closed

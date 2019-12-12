@@ -18,7 +18,7 @@ namespace Integrative.Lara.Middleware
 
         public new const double DefaultKeepAliveInterval = DefaultExpireInterval / 2.5;
 
-        Connection _connection;
+        Connection? _connection;
 
         public BrowserAppController(Application app)
             : base(app, ApplicationMode.BrowserApp)

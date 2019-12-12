@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class ReplaceDelta : BaseDelta
     {
         [DataMember]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
         public ReplaceDelta() : base(DeltaType.Replace)
         {

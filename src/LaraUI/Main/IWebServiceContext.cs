@@ -4,6 +4,7 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace Integrative.Lara
@@ -28,6 +29,6 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="session">Session object</param>
         /// <returns>true when found</returns>
-        bool TryGetSession(out Session session);
+        bool TryGetSession([NotNullWhen(true)] out Session? session);
     }
 }

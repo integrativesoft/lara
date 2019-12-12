@@ -12,10 +12,10 @@ namespace Integrative.Lara.Delta
     sealed class NodeAddedDelta : BaseDelta
     {
         [DataMember]
-        public string ParentId { get; set; }
+        public string ParentId { get; set; } = string.Empty;
 
         [DataMember]
-        public ContentNode Node { get; set; }
+        public ContentNode? Node { get; set; }
 
         public NodeAddedDelta() : base(DeltaType.Append)
         {
@@ -23,11 +23,12 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Node node)
         {
-            if (node.ParentElement.QueueOpen)
+            var parent = node.ParentElement;
+            if (parent != null && parent.TryGetQueue(out var document))
             {
-                var parentId = node.ParentElement.EnsureElementId();
+                var parentId = parent.EnsureElementId();
                 var content = node.GetContentNode();
-                node.Document.Enqueue(new NodeAddedDelta
+                document.Enqueue(new NodeAddedDelta
                 {
                     ParentId = parentId,
                     Node = content,

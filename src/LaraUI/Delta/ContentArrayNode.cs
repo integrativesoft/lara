@@ -13,7 +13,7 @@ namespace Integrative.Lara.Delta
     sealed class ContentArrayNode : ContentNode
     {
         [DataMember]
-        public List<ContentNode> Nodes { get; set; }
+        public List<ContentNode>? Nodes { get; set; }
 
         public ContentArrayNode() : base(ContentNodeType.Array)
         {

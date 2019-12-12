@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using Integrative.Lara.DOM;
 using Integrative.Lara.Middleware;
+using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System.Collections;
 using System.Collections.Generic;
@@ -149,7 +150,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal("div", ce.TagName);
             Assert.Single(ce.Children);
             Assert.Single(ce.Attributes);
-            var att = ce.Attributes[0];
+            var att = ce.Attributes![0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
         }
@@ -157,7 +158,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InlineChildElementsPrintedInline()
         {
-            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
+            var doc = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var b = Element.Create("span");
             doc.Body.AppendChild(b);
             doc.Body.AppendChild(new TextNode("hello"));
@@ -180,7 +181,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void CheckedFalseFlushed()
         {
-            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
+            var doc = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var x = new InputElement
             {
                 Id = "x"
@@ -193,14 +194,14 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var top = queue.Peek() as SetCheckedDelta;
             Assert.NotNull(top);
-            Assert.Equal(x.Id, top.ElementId);
+            Assert.Equal(x.Id, top!.ElementId);
             Assert.False(top.Checked);
         }
 
         [Fact]
         public void CheckedTrueFlushed()
         {
-            var doc = new Document(null, BaseModeController.DefaultKeepAliveInterval);
+            var doc = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             var x = new InputElement
             {
                 Id = "x"
@@ -212,7 +213,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var top = queue.Peek() as SetCheckedDelta;
             Assert.NotNull(top);
-            Assert.Equal(x.Id, top.ElementId);
+            Assert.Equal(x.Id, top!.ElementId);
             Assert.True(top.Checked);
         }
 

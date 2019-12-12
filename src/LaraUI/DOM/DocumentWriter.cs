@@ -15,7 +15,7 @@ namespace Integrative.Lara.DOM
     {
         public const int MaxLevelDeep = 500;
 
-        readonly Document _document;
+        readonly Document? _document;
         readonly StringBuilder _builder;
 
         public DocumentWriter(Document document)
@@ -31,6 +31,10 @@ namespace Integrative.Lara.DOM
 
         public void Print()
         {
+            if (_document == null)
+            {
+                return;
+            }
             _builder.AppendLine("<!doctype html>");
             _builder.AppendLine("<!-- Rendered with Lara Web Engine. https://laraui.com -->");
             _builder.Append("<html");

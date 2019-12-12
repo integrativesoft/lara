@@ -18,7 +18,7 @@ namespace Integrative.Lara.Main
 
         public WebServicePublished(WebServiceContent content)
         {
-            Factory = content.Factory;
+            Factory = content.GetFactory();
             ContentType = content.ContentType;
         }
 

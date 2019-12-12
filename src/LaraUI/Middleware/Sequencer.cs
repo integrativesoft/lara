@@ -31,7 +31,7 @@ namespace Integrative.Lara.Middleware
             {
                 return TaskProceed;
             }
-            TaskCompletionSource<bool> completion = null;
+            TaskCompletionSource<bool>? completion = null;
             lock (_lock)
             {
                 if (turnNumber == _next)

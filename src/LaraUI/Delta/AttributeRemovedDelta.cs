@@ -12,10 +12,10 @@ namespace Integrative.Lara.Delta
     sealed class AttributeRemovedDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string Attribute { get; set; }
+        public string Attribute { get; set; } = string.Empty;
 
         public AttributeRemovedDelta() : base(DeltaType.RemoveAttribute)
         {
@@ -23,9 +23,9 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element, string attribute)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
-                element.Document.Enqueue(new AttributeRemovedDelta
+                document.Enqueue(new AttributeRemovedDelta
                 {
                     ElementId = element.EnsureElementId(),
                     Attribute = attribute

@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class ContentTextNode : ContentNode
     {
         [DataMember]
-        public string Data { get; set; }
+        public string? Data { get; set; }
 
         public ContentTextNode() : base(ContentNodeType.Text)
         {            

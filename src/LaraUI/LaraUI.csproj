@@ -13,6 +13,7 @@
     <Description>Lara Web Engine is a lightweight C# Web UI framework for server-side DOM rendering.</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup>

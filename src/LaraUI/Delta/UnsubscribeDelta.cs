@@ -12,10 +12,10 @@ namespace Integrative.Lara.Delta
     class UnsubscribeDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
 
         public UnsubscribeDelta() : base(DeltaType.Unsubscribe)
         {

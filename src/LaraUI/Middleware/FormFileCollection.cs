@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -15,7 +16,7 @@ namespace Integrative.Lara.Middleware
     class FormFileCollection : IFormFileCollection
     {
         [DataMember]
-        public List<FormFile> InnerList { get; set; }
+        public List<FormFile>? InnerList { get; set; }
 
         public int Count => GetCount();
 
@@ -31,9 +32,14 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        public IFormFile this[string name] => InnerList.Find(x => x.Name == name);
+        public IFormFile this[string name] => GetInnerList().Find(x => x.Name == name);
 
-        IFormFile IReadOnlyList<IFormFile>.this[int index] => InnerList[index];
+        IFormFile IReadOnlyList<IFormFile>.this[int index] => GetInnerList()[index];
+
+        private List<FormFile> GetInnerList()
+        {
+            return InnerList ?? throw new MissingMemberException(nameof(FormFileCollection), nameof(InnerList));
+        }
 
         public IFormFile GetFile(string name)
         {
@@ -42,7 +48,7 @@ namespace Integrative.Lara.Middleware
 
         public IReadOnlyList<IFormFile> GetFiles(string name)
         {
-            return InnerList.FindAll(x => x.Name == name);
+            return GetInnerList().FindAll(x => x.Name == name);
         }
 
         IEnumerator<IFormFile> IEnumerable<IFormFile>.GetEnumerator()

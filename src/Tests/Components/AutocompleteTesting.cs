@@ -224,7 +224,7 @@ namespace Integrative.Lara.Tests.Components
             _context.RequestBody = LaraUI.JSON.Stringify(request);
             var text = await service.Execute();
             var response = LaraUI.JSON.Parse<AutocompleteResponse>(text);
-            Assert.Equal(3, response.Suggestions.Count);
+            Assert.Equal(3, response.Suggestions!.Count);
             var item = response.Suggestions[0];
             Assert.Equal("Red", item.Label);
             Assert.Equal("R", item.Code);

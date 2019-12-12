@@ -68,8 +68,12 @@ namespace Integrative.Lara.Tools
             return Serialize(instance, typeof(T));
         }
 
-        public static string Serialize(object instance, Type type)
+        public static string Serialize(object? instance, Type type)
         {
+            if (instance == null)
+            {
+                return string.Empty;
+            }
             var stream = new MemoryStream();
             using var reader = new StreamReader(stream);
             var serializer = new DataContractJsonSerializer(type, _jsonSettings);
@@ -78,17 +82,13 @@ namespace Integrative.Lara.Tools
             return reader.ReadToEnd();
         }
 
-        public static T Deserialize<T>(string json) where T : class
+        public static T? Deserialize<T>(string json) where T : class
         {
-            if (string.IsNullOrEmpty(json))
-            {
-                return default;
-            }
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
             return Deserialize<T>(stream);
         }
 
-        public static T Deserialize<T>(Stream stream) where T : class
+        public static T? Deserialize<T>(Stream stream) where T : class
         {
             var serializer = new DataContractJsonSerializer(typeof(T));
             return serializer.ReadObject(stream) as T;

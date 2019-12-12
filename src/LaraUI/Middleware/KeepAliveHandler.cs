@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara.Middleware
@@ -43,7 +44,7 @@ namespace Integrative.Lara.Middleware
                 && http.Request.Method == AjaxMethod;
         }
 
-        private bool TryGetDocument(HttpContext http, out Document document)
+        private bool TryGetDocument(HttpContext http, [NotNullWhen(true)] out Document? document)
         {
             document = default;
             return MiddlewareCommon.TryGetParameter(http.Request.Query, "doc", out var text)

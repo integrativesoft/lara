@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'charset' HTML5 attribute.
         /// </summary>
-        public string Charset
+        public string? Charset
         {
             get => GetAttributeLower("charset");
             set { SetAttributeLower("charset", value); }
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'src' HTML5 attribute.
         /// </summary>
-        public string Src
+        public string? Src
         {
             get => GetAttributeLower("src");
             set { SetAttributeLower("src", value); }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'type' HTML5 attribute.
         /// </summary>
-        public string Type
+        public string? Type
         {
             get => GetAttributeLower("type");
             set { SetAttributeLower("type", value); }

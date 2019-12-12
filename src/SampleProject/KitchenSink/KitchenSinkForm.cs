@@ -13,17 +13,12 @@ namespace SampleProject
     [LaraPage(Address = "/")]
     sealed class KitchenSinkForm : IPage
     {
-        static KitchenSinkForm()  // static constructor
+        public static void PublishImages(Application app)
         {
             // publish static image file of coffee mug
             var assembly = typeof(KitchenSinkForm).Assembly;
             var bytes = Tools.LoadEmbeddedResource(assembly, "SampleProject.Assets.Coffee.svg");
-            var app = LaraUI.Context.Application;
             app.PublishFile("/Coffee.svg", new StaticContent(bytes, "image/svg+xml"));
-        }
-
-        public KitchenSinkForm()  // instance constructor
-        {
         }
 
         public Task OnGet()  // OnGet method from interface IPage

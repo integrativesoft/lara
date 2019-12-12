@@ -29,7 +29,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(root.Children);
             var first = root.Children.FirstOrDefault() as Button;
             Assert.NotNull(first);
-            Assert.Equal("red", first.Class);
+            Assert.Equal("red", first!.Class);
             Assert.Equal("mybutton", first.Id);
         }
 
@@ -60,7 +60,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.AppendText("&lt;");
             var node = root.Children.FirstOrDefault() as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("&amp;lt;", node.Data);
+            Assert.Equal("&amp;lt;", node!.Data);
         }
 
         [Fact]
@@ -138,10 +138,11 @@ namespace Integrative.Lara.Tests.DOM
                     return Task.CompletedTask;
                 }
             });
+            var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
             var context = new PageContext(_context.Application,
-                http.Object, null, new Document(page.Object, BaseModeController.DefaultKeepAliveInterval));
+                http.Object, connection);
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -159,8 +160,8 @@ namespace Integrative.Lara.Tests.DOM
             });
             var http = new Mock<HttpContext>();
             var page = new Mock<IPage>();
-            var context = new PageContext(_context.Application, http.Object, null,
-                new Document(page.Object, BaseModeController.DefaultKeepAliveInterval));
+            var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var context = new PageContext(_context.Application, http.Object, connection);
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -174,7 +175,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(root.Children);
             var child = root.Children.FirstOrDefault() as Element;
             Assert.NotNull(child);
-            Assert.Equal("red", child.Class);
+            Assert.Equal("red", child!.Class);
         }
 
         [Fact]
@@ -186,7 +187,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(root.Children);
             var child = root.Children.FirstOrDefault() as Element;
             Assert.NotNull(child);
-            Assert.Equal("abc", child.GetAttribute("xlmns"));
+            Assert.Equal("abc", child!.GetAttribute("xlmns"));
         }
 
         [Fact]

@@ -16,13 +16,13 @@ namespace Integrative.Lara.Delta
         public bool Block { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string BlockElementId { get; set; }
+        public string? BlockElementId { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string BlockHTML { get; set; }
+        public string? BlockHTML { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
-        public string BlockShownId { get; set; }
+        public string? BlockShownId { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool LongRunning { get; set; }

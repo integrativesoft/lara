@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara.Autocomplete;
+using System;
 
 namespace Integrative.Lara
 {
@@ -35,9 +36,9 @@ namespace Integrative.Lara
 
         bool _pending, _applied;
 
-        AutocompleteOptions _options;
+        AutocompleteOptions? _options;
 
-        internal AutocompleteOptions GetOptions() => _options;
+        internal AutocompleteOptions? GetOptions() => _options;
 
         /// <summary>
         /// Enables the autocomplete functionality
@@ -45,7 +46,7 @@ namespace Integrative.Lara
         /// <param name="options">Autocomplete options</param>
         public void Start(AutocompleteOptions options)
         {
-            _options = options;
+            _options = options ?? throw new ArgumentNullException(nameof(options));
             if (Document == null)
             {
                 _pending = true;
@@ -53,7 +54,7 @@ namespace Integrative.Lara
             else
             {
                 DestroyAutocomplete();
-                SubmitAutocomplete();
+                SubmitAutocomplete(Document, options);
             }
         }
 
@@ -74,7 +75,10 @@ namespace Integrative.Lara
             {
                 _pending = false;
                 DestroyAutocomplete();
-                SubmitAutocomplete();
+                if (Document != null && _options != null)
+                {
+                    SubmitAutocomplete(Document, _options);
+                }
             }
         }
 
@@ -86,29 +90,29 @@ namespace Integrative.Lara
             DestroyAutocomplete();
         }
 
-        internal string AutocompleteId { get; set; }
+        internal string AutocompleteId { get; set; } = string.Empty;
 
-        private void SubmitAutocomplete()
-        { 
-            AutocompleteId = GetAutocompleteKey();
+        private void SubmitAutocomplete(Document document, AutocompleteOptions options)
+        {
+            AutocompleteId = GetAutocompleteKey(document);
             AutocompleteService.Register(AutocompleteId, this);
             _applied = true;
             _pending = false;
             var payload = new AutocompletePayload
             {
-                AutoFocus = _options.AutoFocus,
+                AutoFocus = options.AutoFocus,
                 ElementId = InnerInput.EnsureElementId(),
-                MinLength = _options.MinLength,
-                Strict = _options.Strict
+                MinLength = options.MinLength,
+                Strict = options.Strict
             };
             var json = LaraUI.JSON.Stringify(payload);
             var code = $"LaraUI.autocompleteApply(context.Payload);";
             LaraUI.Page.JSBridge.Submit(code, json);
         }
 
-        private string GetAutocompleteKey()
+        private string GetAutocompleteKey(Document document)
         {
-            return InnerInput.EnsureElementId() + " " + Document.VirtualIdString;
+            return InnerInput.EnsureElementId() + " " + document.VirtualIdString;
         }
 
         private void DestroyAutocomplete()
@@ -125,7 +129,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Value property
         /// </summary>
-        public string Value
+        public string? Value
         {
             get => InnerInput.Value;
             set => InnerInput.Value = value;

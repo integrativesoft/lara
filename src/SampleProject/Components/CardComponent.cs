@@ -38,9 +38,9 @@ namespace SampleProject
             .Pop();
         }
 
-        string _title;
+        string? _title;
 
-        public string Heading
+        public string? Heading
         {
             get => _title;
             set
@@ -50,9 +50,9 @@ namespace SampleProject
             }
         }
 
-        string _subtitle;
+        string? _subtitle;
 
-        public string Subtitle
+        public string? Subtitle
         {
             get => _subtitle;
             set

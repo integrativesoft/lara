@@ -29,6 +29,6 @@ namespace Integrative.Lara
         /// <summary>
         /// Autocomplete suggestions provider
         /// </summary>
-        public IAutocompleteProvider Provider { get; set; }
+        public IAutocompleteProvider? Provider { get; set; }
     }
 }

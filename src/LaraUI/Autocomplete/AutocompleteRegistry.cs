@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara.Autocomplete
 {
@@ -18,7 +19,7 @@ namespace Integrative.Lara.Autocomplete
             _map = new SessionLocal<Dictionary<string, AutocompleteElement>>();
         }
 
-        public bool TryGet(string key, out AutocompleteElement element)
+        public bool TryGet(string key, [NotNullWhen(true)] out AutocompleteElement? element)
         {
             element = default;
             lock (_mapLock)
@@ -56,6 +57,19 @@ namespace Integrative.Lara.Autocomplete
             }
         }
 
-        public int Count => _map.Value.Count;
+        public int Count => GetCount();
+
+        private int GetCount()
+        {
+            var value = _map.Value;
+            if (value == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return value.Count;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
@@ -101,24 +102,28 @@ namespace Integrative.Lara
         /// <summary>
         /// Returns the context associated with the current task. See also 'Page' and 'Service'.
         /// </summary>
-        public static ILaraContext Context => InternalContext.Value;
+        public static ILaraContext Context
+            => InternalContext.Value ?? throw new InvalidOperationException(Resources.NoCurrentContext);
 
         /// <summary>
         /// Returns the Page context associated the current task, when executing Page events
         /// </summary>
-        public static IPageContext Page => InternalContext.Value as IPageContext;
+        public static IPageContext Page
+            => InternalContext.Value as IPageContext ?? throw new InvalidOperationException(Resources.NoCurrentPage);
 
         /// <summary>
         /// Returns the WebService context associated with the current task, when executing web services
         /// </summary>
-        public static IWebServiceContext Service => InternalContext.Value as IWebServiceContext;
+        public static IWebServiceContext Service
+            => InternalContext.Value as IWebServiceContext ?? throw new InvalidOperationException(Resources.NoCurrentService);
 
         /// <summary>
         /// Returns the current document (same as Page.Document)
         /// </summary>
-        public static Document Document => GetContextDocument(Page);
+        public static Document Document
+            => GetContextDocument(Page) ?? throw new InvalidOperationException(Resources.NoCurrentDocument);
 
-        internal static Document GetContextDocument(IPageContext context)
+        internal static Document? GetContextDocument(IPageContext? context)
         {
             if (context == null)
             {
@@ -149,7 +154,7 @@ namespace Integrative.Lara
         public static async Task<IWebHost> StartServer(StartServerOptions options)
         {
             await DefaultApplication.Start(options);
-            return DefaultApplication.Host;
+            return DefaultApplication.GetHost();
         }
         
         /// <summary>
@@ -187,8 +192,19 @@ namespace Integrative.Lara
 
         #region Internal tools
 
-        internal static bool TryGetComponent(string tagName, out Type type)
-            =>   Context.Application.TryGetComponent(tagName, out type);
+        internal static bool TryGetComponent(string tagName, [NotNullWhen(true)] out Type? type)
+        {
+            var context = InternalContext.Value;
+            if (context != null && context.Application != null)
+            {
+                return Context.Application.TryGetComponent(tagName, out type);
+            }
+            else
+            {
+                type = default;
+                return false;
+            }
+        }
 
         #endregion
     }

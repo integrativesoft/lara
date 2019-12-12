@@ -10,7 +10,7 @@ using System.ComponentModel;
 namespace Integrative.Lara.Reactive
 {
     class CollectionUpdater<T>
-        where T : INotifyPropertyChanged
+        where T : class, INotifyPropertyChanged
     {
         readonly BindChildrenOptions<T> _options;
         readonly Element _element;
@@ -51,8 +51,12 @@ namespace Integrative.Lara.Reactive
         private void CollectionAdd()
         {
             var item = (T)_args.NewItems[0];
-            var childElement = _options.CreateCallback(item);
-            _element.AppendChild(childElement);
+            var callback = _options.CreateCallback;
+            if (callback != null)
+            {
+                var childElement = callback(item);
+                _element.AppendChild(childElement);
+            }
         }
 
         private void CollectionMove()
@@ -72,9 +76,13 @@ namespace Integrative.Lara.Reactive
         {
             var value = (T)_args.NewItems[0];
             var index = _args.OldStartingIndex;
-            var childElement = _options.CreateCallback(value);
-            RemoveAt(index);
-            InsertAt(index, childElement);
+            var callback = _options.CreateCallback;
+            if (callback != null)
+            {
+                var childElement = callback(value);
+                RemoveAt(index);
+                InsertAt(index, childElement);
+            }
         }
 
         private void RemoveAt(int index)
@@ -114,8 +122,12 @@ namespace Integrative.Lara.Reactive
             CollectionReset(element);
             foreach (var item in options.Collection)
             {
-                var child = options.CreateCallback(item);
-                element.AppendChild(child);
+                var callback = options.CreateCallback;
+                if (callback != null)
+                {
+                    var child = callback(item);
+                    element.AppendChild(child);
+                }
             }
         }
     }

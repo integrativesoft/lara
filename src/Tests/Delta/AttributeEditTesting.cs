@@ -27,7 +27,7 @@ namespace Integrative.Lara.Tests.Delta
             var queue = doc.GetQueue();
             Assert.Single(queue);
             var step = queue.Peek() as AttributeEditedDelta;
-            Assert.Equal("data-test", step.Attribute);
+            Assert.Equal("data-test", step!.Attribute);
             Assert.Equal("x", step.Value);
             Assert.Equal("mydiv", step.ElementId);
         }
@@ -43,7 +43,7 @@ namespace Integrative.Lara.Tests.Delta
             var queue = doc.GetQueue();
             Assert.Single(queue);
             var step = queue.Peek() as AttributeRemovedDelta;
-            Assert.Equal("id", step.Attribute);
+            Assert.Equal("id", step!.Attribute);
             Assert.Equal("mydiv", step.ElementId);
         }
 
@@ -71,7 +71,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.NotEmpty(queue);
             var step = queue.Peek() as SetValueDelta;
             Assert.NotNull(step);
-            Assert.Equal("mydiv", step.ElementId);
+            Assert.Equal("mydiv", step!.ElementId);
             Assert.Equal("x", step.Value);
         }
 
@@ -87,7 +87,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.NotEmpty(queue);
             var step = queue.Peek() as AttributeRemovedDelta;
             Assert.NotNull(step);
-            Assert.Equal("mydiv", step.ElementId);
+            Assert.Equal("mydiv", step!.ElementId);
             Assert.Equal("id", step.Attribute);
         }
 

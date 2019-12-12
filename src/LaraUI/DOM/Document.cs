@@ -65,14 +65,14 @@ namespace Integrative.Lara
         /// <summary>
         /// Occurs when the document is unloaded
         /// </summary>
-        public event EventHandler OnUnload;
+        public event EventHandler? OnUnload;
 
         /// <summary>
         /// Asynchronous unload event
         /// </summary>
         public AsyncEvent OnUnloadAsync { get; } = new AsyncEvent();
 
-        internal event EventHandler AfterUnload;
+        internal event EventHandler? AfterUnload;
 
         /// <summary>
         /// Gets or sets the language. See 'lang' property for HTML5 documents.
@@ -80,7 +80,7 @@ namespace Integrative.Lara
         /// <value>
         /// The language.
         /// </value>
-        public string Lang { get; set; }
+        public string? Lang { get; set; }
 
         /// <summary>
         /// The document's Head element.
@@ -88,7 +88,7 @@ namespace Integrative.Lara
         /// <value>
         /// The head.
         /// </value>
-        public Element Head { get; }
+        public HeadElement Head { get; }
 
         /// <summary>
         /// The document's Body element.
@@ -96,7 +96,7 @@ namespace Integrative.Lara
         /// <value>
         /// The body.
         /// </value>
-        public Element Body { get; }
+        public BodyElement Body { get; }
 
         internal DateTime LastUTC { get; private set; }
 
@@ -114,12 +114,16 @@ namespace Integrative.Lara
             _map = new DocumentIdMap();
             _queue = new Queue<BaseDelta>();
             Semaphore = new SemaphoreSlim(1);
-            Head = Element.Create("head");
-            Head.Document = this;
-            Head.IsSlotted = true;
-            Body = Element.Create("body");
-            Body.Document = this;
-            Body.IsSlotted = true;
+            Head = new HeadElement
+            {
+                Document = this,
+                IsSlotted = true
+            };
+            Body = new BodyElement
+            {
+                Document = this,
+                IsSlotted = true
+            };
             UpdateTimestamp();
             TemplateBuilder.Build(this, keepAliveInterval);
             _serverEvents = new ServerEventsController(this);
@@ -165,7 +169,7 @@ namespace Integrative.Lara
         internal void OnElementRemoved(Element element)
             => _map.NotifyRemoved(element);
 
-        internal void NotifyChangeId(Element element, string before, string after)
+        internal void NotifyChangeId(Element element, string? before, string? after)
             => _map.NotifyChangeId(element, before, after);
 
         internal bool QueueingEvents { get; private set; }
@@ -292,7 +296,8 @@ namespace Integrative.Lara
 
         internal Task NotifyEvent(string eventName)
         {
-            if (Events.TryGetValue(eventName, out var settings))
+            if (Events.TryGetValue(eventName, out var settings)
+                && settings.Handler != null)
             {
                 return settings.Handler();
             }
@@ -317,7 +322,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="eventName">Name of the event.</param>
         /// <param name="handler">The handler to execute.</param>
-        public void On(string eventName, Func<Task> handler)
+        public void On(string eventName, Func<Task>? handler)
         {
             eventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
             if (handler == null)

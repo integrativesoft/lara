@@ -4,6 +4,7 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Reflection;
 
 namespace SampleProject.Other
@@ -13,6 +14,7 @@ namespace SampleProject.Other
         public static byte[] LoadEmbeddedResource(Assembly assembly, string resourceName)
         {
             using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) throw new InvalidOperationException($"Resource not found: {resourceName}");
             var bytes = new byte[stream.Length];
             stream.Read(bytes, 0, bytes.Length);
             return bytes;

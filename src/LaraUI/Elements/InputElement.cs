@@ -34,7 +34,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'accept' HTML5 attribute.
         /// </summary>
-        public string Accept
+        public string? Accept
         {
             get => GetAttributeLower("accept");
             set { SetAttributeLower("accept", value); }
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'alt' HTML5 attribute.
         /// </summary>
-        public string Alt
+        public string? Alt
         {
             get => GetAttributeLower("alt");
             set { SetAttributeLower("alt", value); }
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'autocomplete' HTML5 attribute.
         /// </summary>
-        public string Autocomplete
+        public string? Autocomplete
         {
             get => GetAttributeLower("autocomplete");
             set { SetAttributeLower("autocomplete", value); }
@@ -79,7 +79,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'dirname' HTML5 attribute.
         /// </summary>
-        public string Dirname
+        public string? Dirname
         {
             get => GetAttributeLower("dirname");
             set { SetAttributeLower("dirname", value); }
@@ -106,7 +106,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'list' HTML5 attribute.
         /// </summary>
-        public string List
+        public string? List
         {
             get => GetAttributeLower("list");
             set { SetAttributeLower("list", value); }
@@ -115,7 +115,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'max' HTML5 attribute.
         /// </summary>
-        public string Max
+        public string? Max
         {
             get => GetAttributeLower("max");
             set { SetAttributeLower("max", value); }
@@ -133,7 +133,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'min' HTML5 attribute.
         /// </summary>
-        public string Min
+        public string? Min
         {
             get => GetAttributeLower("min");
             set { SetAttributeLower("min", value); }
@@ -151,7 +151,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'name' HTML5 attribute.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get => GetAttributeLower("name");
             set { SetAttributeLower("name", value); }
@@ -160,7 +160,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'pattern' HTML5 attribute.
         /// </summary>
-        public string Pattern
+        public string? Pattern
         {
             get => GetAttributeLower("pattern");
             set { SetAttributeLower("pattern", value); }
@@ -169,7 +169,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'placeholder' HTML5 attribute.
         /// </summary>
-        public string Placeholder
+        public string? Placeholder
         {
             get => GetAttributeLower("placeholder");
             set { SetAttributeLower("placeholder", value); }
@@ -205,7 +205,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'src' HTML5 attribute.
         /// </summary>
-        public string Src
+        public string? Src
         {
             get => GetAttributeLower("src");
             set { SetAttributeLower("src", value); }
@@ -214,7 +214,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'step' HTML5 attribute.
         /// </summary>
-        public string Step
+        public string? Step
         {
             get => GetAttributeLower("step");
             set { SetAttributeLower("step", value); }
@@ -223,7 +223,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'type' HTML5 attribute.
         /// </summary>
-        public string Type
+        public string? Type
         {
             get => GetAttributeLower("type");
             set { SetAttributeLower("type", value); }
@@ -232,7 +232,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'value' HTML5 attribute.
         /// </summary>
-        public string Value
+        public string? Value
         {
             get => GetAttributeLower("value");
             set { SetAttributeLower("value", value); }

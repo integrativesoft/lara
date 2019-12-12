@@ -237,7 +237,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var step = queue.Peek() as NodeRemovedDelta;
             Assert.NotNull(step);
-            Assert.Equal(doc.Body.Id, step.ParentId);
+            Assert.Equal(doc.Body.Id, step!.ParentId);
             Assert.Equal(1, step.ChildIndex);
         }
 
@@ -252,12 +252,12 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var step = queue.Peek() as NodeAddedDelta;
             Assert.NotNull(step);
-            Assert.Equal(doc.Body.Id, step.ParentId);
+            Assert.Equal(doc.Body.Id, step!.ParentId);
             var content = step.Node as ContentElementNode;
             Assert.NotNull(content);
-            Assert.Equal("div", content.TagName);
+            Assert.Equal("div", content!.TagName);
             Assert.NotEmpty(content.Attributes);
-            var att = content.Attributes[0];
+            var att = content.Attributes![0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
         }
@@ -275,13 +275,13 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var step = queue.Peek() as NodeInsertedDelta;
             Assert.NotNull(step);
-            Assert.Equal(doc.Body.Id, step.ParentElementId);
+            Assert.Equal(doc.Body.Id, step!.ParentElementId);
             Assert.Equal(1, step.Index);
             var content = step.Node as ContentElementNode;
             Assert.NotNull(content);
-            Assert.Equal("div", content.TagName);
+            Assert.Equal("div", content!.TagName);
             Assert.NotEmpty(content.Attributes);
-            var att = content.Attributes[0];
+            var att = content.Attributes![0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
         }
@@ -300,7 +300,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var step = queue.Peek() as SetIdDelta;
             Assert.NotNull(step);
-            Assert.Equal(div1.Id, step.Locator.StartingId);
+            Assert.Equal(div1.Id, step!.Locator!.StartingId);
             Assert.Equal(div2.Id, step.NewId);
         }
 
@@ -434,7 +434,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.NotEmpty(queue);
             var first = queue.Peek() as SwapChildrenDelta;
             Assert.NotNull(first);
-            Assert.Equal(div.Id, first.ParentId);
+            Assert.Equal(div.Id, first!.ParentId);
             Assert.NotNull(div.Id);
             Assert.Equal(0, first.Index1);
             Assert.Equal(2, first.Index2);
@@ -483,7 +483,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, div.ChildCount);
             var child = div.GetChildAt(0) as TextNode;
             Assert.NotNull(child);
-            Assert.Equal("@@", child.Data);
+            Assert.Equal("@@", child!.Data);
         }
 
         class DummyAdoptable : WebComponent
@@ -527,7 +527,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, div.ChildCount);
             var child = div.GetChildAt(0) as TextNode;
             Assert.NotNull(child);
-            Assert.Equal("@@", child.Data);
+            Assert.Equal("@@", child!.Data);
         }
 
         [Fact]
@@ -539,7 +539,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, div.ChildCount);
             var child = div.GetChildAt(0) as TextNode;
             Assert.NotNull(child);
-            Assert.Equal("a&lt;a", child.Data);
+            Assert.Equal("a&lt;a", child!.Data);
         }
 
         [Fact]
@@ -551,7 +551,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, div.ChildCount);
             var child = div.GetChildAt(0) as TextNode;
             Assert.NotNull(child);
-            Assert.Equal("@@", child.Data);
+            Assert.Equal("@@", child!.Data);
         }
 
         [Fact]
@@ -575,7 +575,7 @@ namespace Integrative.Lara.Tests.DOM
             var queue = doc.GetQueue();
             Assert.Single(queue);
             var first = queue.Peek() as UnsubscribeDelta;
-            Assert.Equal(div.Id, first.ElementId);
+            Assert.Equal(div.Id, first!.ElementId);
             Assert.Equal("click", first.EventName);
         }
 
@@ -598,7 +598,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Single(q);
             var first = q.Peek() as FocusDelta;
             Assert.NotNull(first);
-            Assert.Equal(div.EnsureElementId(), first.ElementId);
+            Assert.Equal(div.EnsureElementId(), first!.ElementId);
         }
 
         [Fact]

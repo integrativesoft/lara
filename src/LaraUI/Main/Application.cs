@@ -22,12 +22,12 @@ namespace Integrative.Lara
     {
         readonly Published _published;
         
-        IModeController _modeController;
+        IModeController? _modeController;
 
         /// <summary>
         /// Web host instance created after calling the Start() method
         /// </summary>
-        public IWebHost Host { get; private set; }
+        public IWebHost? Host { get; private set; }
 
         /// <summary>
         /// Defines default error pages
@@ -136,10 +136,15 @@ namespace Integrative.Lara
             => _published.Connections.TryGetConnection(guid, out connection);
 
         internal Connection CreateConnection(IPAddress remoteIp)
-            => _modeController.CreateConnection(remoteIp);
+            => GetController().CreateConnection(remoteIp);
 
         internal Task ClearEmptyConnection(Connection connection)
             => _published.Connections.ClearEmptyConnection(connection);
+
+        private IModeController GetController()
+        {
+            return _modeController ?? throw new MissingMemberException(nameof(Application), nameof(_modeController));
+        }
 
         #endregion
 
@@ -186,7 +191,7 @@ namespace Integrative.Lara
             options = options ?? throw new ArgumentNullException(nameof(options));
             Host?.Dispose();
             CreateModeController(options.Mode);
-            Host = await _modeController.Start(this, options);
+            Host = await GetController().Start(this, options);
         }
 
         internal void CreateModeController(ApplicationMode mode)
@@ -202,7 +207,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="token">Token to indicate when the stop should not be graceful anymore</param>
         /// <returns>Task</returns>
-        public Task Stop(CancellationToken token = default) => Host.StopAsync(token);
+        public Task Stop(CancellationToken token = default) => GetHost().StopAsync(token);
 
         /// <summary>
         /// Returns a task that is completed when the server stops
@@ -211,13 +216,18 @@ namespace Integrative.Lara
         /// <returns>Task</returns>
         public Task WaitForShutdown(CancellationToken token = default) => Host.WaitForShutdownAsync(token);
 
+        internal IWebHost GetHost()
+        {
+            return Host ?? throw new MissingMemberException(nameof(Application), nameof(Host));
+        }
+
         #endregion
 
         #region Application behavior modes
 
-        internal double KeepAliveInterval => _modeController.KeepAliveInterval;
+        internal double KeepAliveInterval => GetController().KeepAliveInterval;
 
-        internal bool AllowLocalhostOnly => _modeController.LocalhostOnly;
+        internal bool AllowLocalhostOnly => GetController().LocalhostOnly;
 
         #endregion
 

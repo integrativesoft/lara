@@ -73,7 +73,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'name' HTML5 attribute.
         /// </summary>
-        public string Name
+        public string? Name
         {
             get => GetAttributeLower("name");
             set { SetAttributeLower("name", value); }
@@ -100,13 +100,13 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'value' HTML5 attribute.
         /// </summary>
-        public string Value
+        public string? Value
         {
             get => GetAttributeLower("value");
             set { SetAttributeLower("value", value); }
         }
 
-        internal override void AttributeChanged(string attribute, string value)
+        internal override void AttributeChanged(string attribute, string? value)
         {
             if (attribute == "value")
             {
@@ -114,7 +114,7 @@ namespace Integrative.Lara
             }
         }
 
-        private void UpdateChildOptions(string value)
+        private void UpdateChildOptions(string? value)
         {
             if (Multiple)
             {
@@ -126,7 +126,7 @@ namespace Integrative.Lara
             }
         }
 
-        private void SelectNonExclusiveOption(string value)
+        private void SelectNonExclusiveOption(string? value)
         {
             foreach (var option in GetOptions())
             {
@@ -137,7 +137,7 @@ namespace Integrative.Lara
             }
         }
 
-        private void SelectOnlyOption(string value)
+        private void SelectOnlyOption(string? value)
         {
             foreach (var option in GetOptions())
             {
@@ -147,7 +147,7 @@ namespace Integrative.Lara
 
         internal override void OnChildAdded(Node child)
         {
-            string value = Value;
+            var value = Value;
             if (string.IsNullOrEmpty(value))
             {
                 return;

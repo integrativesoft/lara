@@ -33,7 +33,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'label' HTML5 attribute.
         /// </summary>
-        public string Label
+        public string? Label
         {
             get => GetAttributeLower("label");
             set { SetAttributeLower("label", value); }

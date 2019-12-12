@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'value' property.
         /// </summary>
-        public string Value
+        public string? Value
         {
             get => GetAttributeLower("value");
             set { SetAttributeLower("value", value); }

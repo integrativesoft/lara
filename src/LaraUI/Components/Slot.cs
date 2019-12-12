@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Components;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Integrative.Lara
@@ -18,7 +19,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The slot's name
         /// </summary>
-        public string Name
+        public string? Name
         {
             get => GetAttribute("name");
             set { SetAttributeLower("name", value); }
@@ -31,7 +32,7 @@ namespace Integrative.Lara
         {
         }
 
-        internal bool MatchesName(string slotName)
+        internal bool MatchesName(string? slotName)
         {
             var name = Name;
             if (string.IsNullOrEmpty(name))
@@ -56,7 +57,7 @@ namespace Integrative.Lara
             }
         }
 
-        private static bool TryFindParentComponent(Element element, out WebComponent component)
+        private static bool TryFindParentComponent(Element element, [NotNullWhen(true)] out WebComponent? component)
         {
             var parent = element.ParentElement;
             if (parent is null)

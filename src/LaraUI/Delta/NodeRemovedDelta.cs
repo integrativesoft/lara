@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class NodeRemovedDelta : BaseDelta
     {
         [DataMember]
-        public string ParentId { get; set; }
+        public string ParentId { get; set; } = string.Empty;
 
         [DataMember]
         public int ChildIndex { get; set; }
@@ -23,9 +23,9 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element parent, int index)
         {
-            if (parent.QueueOpen)
+            if (parent.TryGetQueue(out var document))
             {
-                parent.Document.Enqueue(new NodeRemovedDelta
+                document.Enqueue(new NodeRemovedDelta
                 {
                     ParentId = parent.EnsureElementId(),
                     ChildIndex = index,

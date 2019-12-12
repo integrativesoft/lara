@@ -18,7 +18,7 @@ namespace Integrative.Lara.Main
 
         public BinaryServicePublished(BinaryServiceContent content)
         {
-            Factory = content.Factory;
+            Factory = content.GetFactory();
             ContentType = content.ContentType;
         }
 

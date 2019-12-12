@@ -12,10 +12,10 @@ namespace Integrative.Lara.Delta
     sealed class ElementEventValue
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
 
         [DataMember]
         public bool Checked { get; set; }

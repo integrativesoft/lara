@@ -24,7 +24,7 @@ namespace Integrative.Lara
         /// </value>
         public override sealed NodeType NodeType => NodeType.Text;
 
-        string _data;
+        string? _data;
 
         /// <summary>
         /// Gets or sets the data of the node. This property gets and sets the raw (unencoded) HTML text for the node.
@@ -32,7 +32,7 @@ namespace Integrative.Lara
         /// <value>
         /// The data.
         /// </value>
-        public string Data
+        public string? Data
         {
             get => _data;
             set
@@ -65,7 +65,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="encode">if set to <c>true</c> encode.</param>
-        public TextNode(string data, bool encode)
+        public TextNode(string? data, bool encode)
         {
             if (encode)
             {
@@ -95,7 +95,7 @@ namespace Integrative.Lara
             AppendEncode(data, false);
         }
 
-        internal void AppendEncode(string text, bool encode)
+        internal void AppendEncode(string? text, bool encode)
         {
             if (encode)
             {
@@ -123,7 +123,7 @@ namespace Integrative.Lara
         /// Sets text for the node.
         /// </summary>
         /// <param name="unencoded">The unencoded text to encode.</param>
-        public void SetEncodedText(string unencoded)
+        public void SetEncodedText(string? unencoded)
         {
             Data = HttpUtility.HtmlEncode(unencoded);
         }
@@ -140,7 +140,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal override void SetNodeInnerText(string value)
+        internal override void SetNodeInnerText(string? value)
         {
             SetEncodedText(value);
         }

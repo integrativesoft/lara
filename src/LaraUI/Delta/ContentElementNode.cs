@@ -13,16 +13,16 @@ namespace Integrative.Lara.Delta
     sealed class ContentElementNode : ContentNode
     {
         [DataMember]
-        public string TagName { get; set; }
+        public string TagName { get; set; } = string.Empty;
 
         [DataMember]
-        public string NS { get; set; }
+        public string? NS { get; set; }
 
         [DataMember]
-        public List<ContentAttribute> Attributes { get; set; }
+        public List<ContentAttribute>? Attributes { get; set; }
 
         [DataMember]
-        public List<ContentNode> Children { get; set; }
+        public List<ContentNode>? Children { get; set; }
 
         public ContentElementNode() : base(ContentNodeType.Element)
         {            

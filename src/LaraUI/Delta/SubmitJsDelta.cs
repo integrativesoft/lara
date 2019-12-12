@@ -12,10 +12,10 @@ namespace Integrative.Lara.Delta
     sealed class SubmitJsDelta : BaseDelta
     {
         [DataMember]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [DataMember(EmitDefaultValue = false)]
-        public string Payload { get; set; }
+        public string? Payload { get; set; }
 
         public SubmitJsDelta() : base(DeltaType.SubmitJS)
         {

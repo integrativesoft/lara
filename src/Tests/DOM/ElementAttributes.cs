@@ -8,6 +8,7 @@ using Integrative.Lara.Tests.Middleware;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -47,13 +48,13 @@ namespace Integrative.Lara.Tests.DOM
         public void ElementNeedsTag()
         {
             DomOperationsTesting.Throws<ArgumentException>(() => Element.Create(""));
-            DomOperationsTesting.Throws<ArgumentException>(() => Element.Create(null));
         }
 
         private void TestElement<T>(string tagName) where T : Element
         {
-            var instance = (Element)Activator.CreateInstance(typeof(T));
-            Assert.Equal(tagName, instance.TagName);
+            var instance = Activator.CreateInstance(typeof(T)) as Element;
+            Assert.NotNull(instance);
+            Assert.Equal(tagName, instance!.TagName);
             TestProperties(instance);
         }
 
@@ -81,7 +82,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(value, result);
         }
 
-        private bool GetTestValue(Type type, out object value)
+        private bool GetTestValue(Type type, [NotNullWhen(true)] out object? value)
         {
             _counter++;
             if (type == typeof(bool))
@@ -382,7 +383,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal("myvalue", option.Value);
             var text = option.Children.FirstOrDefault() as TextNode;
             Assert.NotNull(text);
-            Assert.Equal("this is the text", text.Data);
+            Assert.Equal("this is the text", text!.Data);
         }
 
         [Fact]
@@ -513,7 +514,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, x.ChildCount);
             var node = x.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("hi bye", node.Data);
+            Assert.Equal("hi bye", node!.Data);
         }
     }
 }

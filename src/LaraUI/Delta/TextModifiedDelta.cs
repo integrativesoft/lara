@@ -13,13 +13,13 @@ namespace Integrative.Lara.Delta
     sealed class TextModifiedDelta : BaseDelta
     {
         [DataMember]
-        public string ParentElementId { get; set; }
+        public string ParentElementId { get; set; } = string.Empty;
 
         [DataMember]
         public int ChildNodeIndex { get; set; }
 
         [DataMember]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         public TextModifiedDelta() : base(DeltaType.TextModified)
         {
@@ -28,12 +28,12 @@ namespace Integrative.Lara.Delta
         public static void Enqueue(TextNode node)
         {
             var parent = node.ParentElement;
-            if (parent != null && parent.QueueOpen)
+            if (parent != null && parent.TryGetQueue(out var document))
             {
-                int index = node.ParentElement.GetChildNodePosition(node);
-                node.Document.Enqueue(new TextModifiedDelta
+                int index = parent.GetChildNodePosition(node);
+                document.Enqueue(new TextModifiedDelta
                 {
-                    ParentElementId = node.ParentElement.EnsureElementId(),
+                    ParentElementId = parent.EnsureElementId(),
                     ChildNodeIndex = index,
                     Text = node.Data
                 });

@@ -22,14 +22,14 @@ namespace Integrative.Lara.Middleware
         }
 
         private bool _serverEventsEnabled;
-        private WebSocket _serverEventsSocket;
-        private TaskCompletionSource<bool> _completion;
+        private WebSocket? _serverEventsSocket;
+        private TaskCompletionSource<bool>? _completion;
         private bool _flushPending;
 
         public ServerEventsStatus ServerEventsStatus
             => CalculateServerEventsStatus(_serverEventsEnabled, _serverEventsSocket);
 
-        internal static ServerEventsStatus CalculateServerEventsStatus(bool enabled, WebSocket socket)
+        internal static ServerEventsStatus CalculateServerEventsStatus(bool enabled, WebSocket? socket)
         {
             if (!enabled)
             {
@@ -66,7 +66,7 @@ namespace Integrative.Lara.Middleware
         {
             if (_serverEventsSocket != null)
             {
-                _completion.SetResult(true);
+                _completion?.SetResult(true);
                 await PostEventHandler.CloseSocket(_serverEventsSocket);
                 _serverEventsSocket = null;
             }
@@ -83,7 +83,10 @@ namespace Integrative.Lara.Middleware
             if (PrepareFlush())
             {
                 var json = _document.FlushQueue();
-                await PostEventHandler.FlushMessage(_serverEventsSocket, json);
+                if (_serverEventsSocket != null)
+                {
+                    await PostEventHandler.FlushMessage(_serverEventsSocket, json);
+                }
             }
         }
 

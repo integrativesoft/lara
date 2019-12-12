@@ -16,7 +16,7 @@ namespace Integrative.Lara.Delta
         }
 
         [DataMember]
-        public string ParentId { get; set; }
+        public string ParentId { get; set; } = string.Empty;
 
         [DataMember]
         public int Index1 { get; set; }
@@ -26,9 +26,9 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element parent, int index1, int index2)
         {
-            if (parent.QueueOpen)
+            if (parent.TryGetQueue(out var document))
             {
-                parent.Document.Enqueue(new SwapChildrenDelta
+                document.Enqueue(new SwapChildrenDelta
                 {
                     ParentId = parent.EnsureElementId(),
                     Index1 = index1,

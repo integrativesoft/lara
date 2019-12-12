@@ -25,7 +25,7 @@ namespace Integrative.Lara
 
         internal Shadow GetShadow() => _shadow;
 
-        private HashSet<string> _observedAttributes;
+        private HashSet<string>? _observedAttributes;
 
         /// <summary>
         /// Constructor
@@ -123,7 +123,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="slotName">Slot name</param>
         /// <returns>IEnumerable of nodes</returns>
-        public IEnumerable<Node> GetSlottedElements(string slotName)
+        public IEnumerable<Node> GetSlottedElements(string? slotName)
         {
             foreach (var node in Children)
             {
@@ -134,13 +134,13 @@ namespace Integrative.Lara
             }
         }
 
-        private static bool NodeMatchesSlot(Node node, string slotName)
+        private static bool NodeMatchesSlot(Node node, string? slotName)
         {
             return node is Element element
                 && ElementMatchesSlot(element, slotName);
         }
 
-        private static bool ElementMatchesSlot(Element element, string slotName)
+        private static bool ElementMatchesSlot(Element element, string? slotName)
         {
             var slot = element.GetAttributeLower("slot");
             if (string.IsNullOrEmpty(slotName))
@@ -153,11 +153,11 @@ namespace Integrative.Lara
             }
         }
 
-        internal override void AttributeChanged(string attribute, string value)
+        internal override void AttributeChanged(string attribute, string? value)
         {
             base.AttributeChanged(attribute, value);
             InitializeObservedAttributes();
-            if (_observedAttributes.Contains(attribute))
+            if (_observedAttributes != null && _observedAttributes.Contains(attribute))
             {
                 OnAttributeChanged(attribute);
             }
@@ -182,12 +182,12 @@ namespace Integrative.Lara
 
         internal override bool IsPrintable => false;
 
-        internal bool IsSlotActive(string slotName)
+        internal bool IsSlotActive(string? slotName)
         {
             return IsSlotActive(ShadowRoot, slotName);
         }
 
-        private static bool IsSlotActive(Element parent, string slotName)
+        private static bool IsSlotActive(Element parent, string? slotName)
         {
             foreach (var child in parent.Children)
             {
@@ -199,7 +199,7 @@ namespace Integrative.Lara
             return false;
         }
 
-        private static bool IsSlotChildActive(Node child, string slotName)
+        private static bool IsSlotChildActive(Node child, string? slotName)
         {
             return (child is Slot slot && slot.MatchesName(slotName))
                 || (child is Element element && IsSlotActive(element, slotName));

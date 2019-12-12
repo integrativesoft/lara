@@ -35,7 +35,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Single(q);
             var first = q.Peek() as ReplaceDelta;
             Assert.NotNull(first);
-            Assert.Equal("test", first.Location);
+            Assert.Equal("test", first!.Location);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Integrative.Lara.Tests.Delta
             Assert.Single(q);
             var first = q.Peek() as TextModifiedDelta;
             Assert.NotNull(first);
-            Assert.Equal("test", first.Text);
+            Assert.Equal("test", first!.Text);
             Assert.Equal(span.EnsureElementId(), first.ParentElementId);
             Assert.Equal(0, first.ChildNodeIndex);
         }

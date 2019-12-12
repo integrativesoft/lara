@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'for' HTML5 attribute.
         /// </summary>
-        public string For
+        public string? For
         {
             get => GetAttributeLower("for");
             set { SetAttributeLower("for", value); }

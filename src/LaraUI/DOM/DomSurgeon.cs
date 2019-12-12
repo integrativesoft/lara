@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Delta;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara.DOM
 {
@@ -83,12 +84,12 @@ namespace Integrative.Lara.DOM
 
         #region Connect and disconnect
 
-        private static Element BeforeOperation(Node child)
+        private static Element? BeforeOperation(Node child)
         {
             return child.ParentElement;
         }
 
-        private static void AfterOperation(Node node, Element previousParent)
+        private static void AfterOperation(Node node, Element? previousParent)
         {
             if (node is Element child)
             {
@@ -96,7 +97,7 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private static void AfterOperation(Element child, Element previousParent)
+        private static void AfterOperation(Element child, Element? previousParent)
         {
             var previousDocument = GetPreviousDocument(previousParent);
             if (previousDocument == child.Document)
@@ -120,7 +121,7 @@ namespace Integrative.Lara.DOM
             }            
         }
 
-        private static Document GetPreviousDocument(Element previousParent)
+        private static Document? GetPreviousDocument(Element? previousParent)
         {
             if (previousParent == null)
             {
@@ -241,32 +242,33 @@ namespace Integrative.Lara.DOM
 
         private void UpdateDocumentMappings(Node child)
         {
-            bool newToDocument = NewToDocument(child);
-            bool leavingPrevious = LeavingPrevious(child);
+            bool newToDocument = NewToDocument(child, out var newDocument);
+            bool leavingPrevious = LeavingPrevious(child, out var previous);
             if (newToDocument || leavingPrevious)
             {
-                var previous = child.Document;
                 var list = CollectNodes(child);
                 if (leavingPrevious)
                 {
-                    RemoveFromPreviousDocument(list, previous);
+                    RemoveFromPreviousDocument(list, previous!);
                 }
                 if (newToDocument)
                 {
                     PreventDuplicateIds(list);
-                    AddToDocument(list);
+                    AddToDocument(list, newDocument!);
                 }
             }
         }
 
-        private bool NewToDocument(Node child)
+        private bool NewToDocument(Node child, [NotNullWhen(true)] out Document? newDocument)
         {
+            newDocument = _parent.Document;
             return _parent.Document != null
                 && child.Document != _parent.Document;
         }
 
-        private bool LeavingPrevious(Node child)
+        private bool LeavingPrevious(Node child, [NotNullWhen(true)] out Document? previousDocument)
         {
+            previousDocument = child.Document;
             return child.Document != null
                 && child.Document != _parent.Document;
         }
@@ -300,7 +302,7 @@ namespace Integrative.Lara.DOM
                     && !string.IsNullOrEmpty(element.Id))
                 {
                     string id = element.Id;
-                    if (hash.Contains(id) || document.TryGetElementById(id, out _))
+                    if (hash.Contains(id) || DuplicateIdInDocument(document, id))
                     {
                         throw DuplicateElementIdException.Create(id);
                     }
@@ -309,9 +311,14 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private void AddToDocument(List<Node> list)
+        private static bool DuplicateIdInDocument(Document? document, string id)
         {
-            var document = _parent.Document;
+            return document != null
+                && document.TryGetElementById(id, out _);
+        }
+
+        private static void AddToDocument(List<Node> list, Document document)
+        {
             foreach (var node in list)
             {
                 node.Document = document;

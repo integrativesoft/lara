@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Components;
 using Integrative.Lara.Delta;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Integrative.Lara
@@ -44,7 +45,7 @@ namespace Integrative.Lara
         /// <value>
         /// The parent element.
         /// </value>
-        public Element ParentElement { get; internal set; }
+        public Element? ParentElement { get; internal set; }
 
         /// <summary>
         /// The node's document. This property returns null when the node is not attached to a document.
@@ -52,7 +53,7 @@ namespace Integrative.Lara
         /// <value>
         /// The document.
         /// </value>
-        public Document Document { get; internal set; }
+        public Document? Document { get; internal set; }
 
         /// <summary>
         /// Gets the type of the node.
@@ -81,15 +82,15 @@ namespace Integrative.Lara
         /// When setting the property, all descendants are replaced with a text node and the given text content.
         /// When getting the property, it retrieves the text of all descendants.
         /// </summary>
-        public string InnerText
+        public string? InnerText
         {
             get => GetNodeInnerText();
             set => SetNodeInnerText(value);
         }
 
-        internal abstract string GetNodeInnerText();
+        internal abstract string? GetNodeInnerText();
 
-        internal abstract void SetNodeInnerText(string value);
+        internal abstract void SetNodeInnerText(string? value);
 
         internal abstract void AppendNodeInnerText(StringBuilder builder);
     }

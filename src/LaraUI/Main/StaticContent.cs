@@ -36,7 +36,7 @@ namespace Integrative.Lara
         /// <value>
         /// The 'content-type' value for the content.
         /// </value>
-        public string ContentType { get; }
+        public string ContentType { get; } = string.Empty;
 
         /// <summary>
         /// Gets the e-Tag value for the content.
@@ -116,10 +116,7 @@ namespace Integrative.Lara
         /// <returns>Calculated hash</returns>
         public static int ComputeHash(params byte[] data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            data = data ?? throw new ArgumentNullException(nameof(data));
             unchecked
             {
                 const int p = 16777619;

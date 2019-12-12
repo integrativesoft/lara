@@ -82,7 +82,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        internal static void ValidateMethod(string method)
+        internal static void ValidateMethod(string? method)
         {
             if (string.IsNullOrEmpty(method))
             {
@@ -90,7 +90,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        internal static void ValidateAddress(string path)
+        internal static void ValidateAddress(string? path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -116,7 +116,7 @@ namespace Integrative.Lara.Main
 
         public void Publish(WebComponentOptions options)
         {
-            _components.Register(options.ComponentTagName, options.ComponentType);
+            _components.Register(options.ComponentTagName, options.GetComponentType());
         }
 
         public void UnPublishWebComponent(string componentTagName)

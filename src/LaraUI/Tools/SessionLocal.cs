@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Tools;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara
 {
@@ -28,26 +29,21 @@ namespace Integrative.Lara
         /// <summary>
         /// Value
         /// </summary>
+        [MaybeNull]
         public T Value
         {
             get => GetValue();
             set => SetValue(value);
         }
-
+        
         private T GetValue()
         {
             var session = GetSession();
-            if (_storage.TryGetValue(session, out var value))
-            {
-                return value;
-            }
-            else
-            {
-                return default;
-            }
+            _storage.TryGetValue(session, out var value);
+            return value;
         }
 
-        private void SetValue(T value)
+        private void SetValue([AllowNull] T value)
         {
             var session = GetSession();
             if (_storage.TryGetValue(session, out var previous))
@@ -57,22 +53,31 @@ namespace Integrative.Lara
                     return;
                 }
                 _storage.Remove(session);
-                _storage.Add(session, value);
+                Store(value, session);
             }
             else
             {
-                _storage.Add(session, value);
+                Store(value, session);
                 session.AfterClose += (sender, args) => _storage.Remove(session);
+            }
+        }
+
+        private void Store([AllowNull] T value, Session session)
+        {
+            if (value != null)
+            {
+                _storage.Add(session, value);
             }
         }
 
         private static Session GetSession()
         {
-            if (LaraUI.Page != null)
+            if (LaraUI.Context is IPageContext page)
             {
-                return LaraUI.Page.Session;
+                return page.Session;
             }
-            else if (LaraUI.Service != null && LaraUI.Service.TryGetSession(out var session))
+            else if (LaraUI.Context is IWebServiceContext service
+                && service.TryGetSession(out var session))
             {
                 return session;
             }

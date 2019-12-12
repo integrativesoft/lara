@@ -5,13 +5,17 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Net.WebSockets;
 
 namespace Integrative.Lara.Main
 {
     sealed class PageContext : BaseContext, IPageContext
     {
-        public Document Document { get; internal set; }
+        public Document? DocumentInternal { get; internal set; }
+
+        public Document Document
+            => DocumentInternal ?? throw new MissingMemberException(nameof(PageContext), nameof(Document));
 
         readonly JSBridge _bridge;
         readonly Navigation _navigation;
@@ -25,21 +29,15 @@ namespace Integrative.Lara.Main
             _connection = connection;
         }
 
-        public PageContext(Application app, HttpContext http, Connection connection, Document document)
-            : this(app, http, connection)
-        {
-            Document = document;
-        }
-
         public Session Session => _connection.Session;
 
-        internal WebSocket Socket { get; set; }
+        internal WebSocket? Socket { get; set; }
 
         public IJSBridge JSBridge => _bridge;
         public INavigation Navigation => _navigation;
 
-        public string RedirectLocation => _navigation.RedirectLocation;
+        public string? RedirectLocation => _navigation.RedirectLocation;
 
-        internal void SetExtraData(string data) => _bridge.EventData = data;
+        internal void SetExtraData(string? data) => _bridge.EventData = data;
     }
 }

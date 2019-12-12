@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'type' HTML5 attribute.
         /// </summary>
-        public string Type
+        public string? Type
         {
             get => GetAttributeLower("type");
             set { SetAttributeLower("type", value); }

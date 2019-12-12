@@ -16,7 +16,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The URL of the web service (e.g. '/MyService')
         /// </summary>
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         /// <summary>
         /// The HTTP method (e.g. 'POST')
@@ -26,11 +26,16 @@ namespace Integrative.Lara
         /// <summary>
         /// The web service's reponse content-type (e.g. 'image/gif')
         /// </summary>
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } = string.Empty;
 
         /// <summary>
         /// The method for creating instances of the web service class
         /// </summary>
-        public Func<IBinaryService> Factory { get; set; }
+        public Func<IBinaryService>? Factory { get; set; }
+
+        internal Func<IBinaryService> GetFactory()
+        {
+            return Factory ?? throw new MissingMemberException(nameof(BinaryServiceContent), nameof(Factory));
+        }
     }
 }

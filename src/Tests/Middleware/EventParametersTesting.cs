@@ -112,9 +112,10 @@ namespace Integrative.Lara.Tests.Middleware
             list.InnerList.Add(f1);
             list.InnerList.Add(f2);
             var other = new List<FormFile>();
-            foreach (FormFile f in list)
+            foreach (FormFile? f in list)
             {
-                other.Add(f);
+                Assert.NotNull(f);
+                other.Add(f!);
             }
             Assert.Equal(2, other.Count);
             Assert.Same(f1, other[0]);

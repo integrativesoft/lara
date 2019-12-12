@@ -9,6 +9,7 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Integrative.Lara.Middleware
         public const string AjaxMethod = "POST";
         public const int MaxSizeBytes = 1024000;
 
-        public static event EventHandler EventComplete;
+        public static event EventHandler? EventComplete;
         private static readonly EventArgs _eventArgs = new EventArgs();
 
         readonly Application _app;
@@ -59,9 +60,8 @@ namespace Integrative.Lara.Middleware
         {
             var socket = await http.WebSockets.AcceptWebSocketAsync();
             var result = await MiddlewareCommon.ReadWebSocketMessage<SocketEventParameters>(socket, MaxSizeBytes);
-            var context = new PostEventContext
+            var context = new PostEventContext(app, http)
             {
-                Application = app,
                 Http = http,
                 Socket = socket,
                 Parameters = result.Item2
@@ -82,11 +82,9 @@ namespace Integrative.Lara.Middleware
             if (EventParameters.TryParse(http.Request.Query, out var parameters))
             {
                 await parameters.ReadAjaxMessage(http);
-                var post = new PostEventContext
+                var post = new PostEventContext(app, http)
                 {
-                    Http = http,
-                    Parameters = parameters,
-                    Application = app
+                    Parameters = parameters
                 };
                 await ProcessRequest(post);
             }
@@ -99,6 +97,7 @@ namespace Integrative.Lara.Middleware
         private static async Task ProcessRequest(PostEventContext context)
         {
             if (MiddlewareCommon.TryFindConnection(context.Application, context.Http, out var connection)
+                && context.Parameters != null
                 && connection.TryGetDocument(context.Parameters.DocumentId, out var document))
             {
                 context.Connection = connection;
@@ -113,17 +112,18 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task ProcessRequestDocument(PostEventContext context)
         {
-            var document = context.Document;
-            var proceed = await document.WaitForTurn(context.Parameters.EventNumber);
+            var document = context.GetDocument();
+            var parameters = context.GetParameters();
+            var proceed = await document.WaitForTurn(parameters.EventNumber);
             if (!proceed)
             {
                 await SendEvent(context, EventResultType.OutOfSequence);
             }
-            else if (string.IsNullOrEmpty(context.Parameters.ElementId))
+            else if (string.IsNullOrEmpty(parameters.ElementId))
             {
                 await ProcessRequestDocument(context, document);
             }
-            else if (document.TryGetElementById(context.Parameters.ElementId, out var element))
+            else if (document.TryGetElementById(parameters.ElementId, out var element))
             {
                 context.Element = element;
                 await ProcessRequestDocument(context, document);
@@ -146,9 +146,12 @@ namespace Integrative.Lara.Middleware
 
         internal static async Task<Task> RunEvent(PostEventContext post)
         {
-            var context = new PageContext(post.Application, post.Http, post.Connection, post.Document)
+            var connection = post.GetConnection();
+            var document = post.GetDocument();
+            var context = new PageContext(post.Application, post.Http, connection)
             {
-                Socket = post.Socket
+                Socket = post.Socket,
+                DocumentInternal = document
             };
             ProcessMessageIfNeeded(context, post.Parameters);
             return await RunEventHandler(post);
@@ -159,7 +162,8 @@ namespace Integrative.Lara.Middleware
             if (await MiddlewareCommon.RunHandler(post.Http,
                 () => NotifyEventHandler(post)))
             {
-                string queue = post.Document.FlushQueue();
+                var document = post.GetDocument();
+                string queue = document.FlushQueue();
                 return await SendReply(post, queue);
             }
             else
@@ -170,18 +174,24 @@ namespace Integrative.Lara.Middleware
 
         private static Task NotifyEventHandler(PostEventContext post)
         {
+            var parameters = post.GetParameters();
             if (post.Element == null)
             {
-                return post.Document.NotifyEvent(post.Parameters.EventName);
+                var document = post.GetDocument();
+                return document.NotifyEvent(parameters.EventName);
             }
             else
             {
-                return post.Element.NotifyEvent(post.Parameters.EventName);
+                return post.Element.NotifyEvent(parameters.EventName);
             }
         }
 
-        internal static void ProcessMessageIfNeeded(PageContext context, EventParameters parameters)
+        internal static void ProcessMessageIfNeeded(PageContext context, EventParameters? parameters)
         {
+            if (parameters == null)
+            {
+                return;
+            }
             var message = parameters.Message;
             if (message != null)
             {
@@ -202,11 +212,14 @@ namespace Integrative.Lara.Middleware
         {
             document = document ?? throw new ArgumentNullException(nameof(document));
             message = message ?? throw new ArgumentNullException(nameof(message));
-            foreach (var row in message.Values)
+            if (message.Values != null)
             {
-                if (document.TryGetElementById(row.ElementId, out var element))
+                foreach (var row in message.Values)
                 {
-                    element.NotifyValue(row);
+                    if (document.TryGetElementById(row.ElementId, out var element))
+                    {
+                        element.NotifyValue(row);
+                    }
                 }
             }
         }
@@ -232,7 +245,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        private static bool TryParsePrefix(string name, string prefix, out string elementId)
+        private static bool TryParsePrefix(string name, string prefix, [NotNullWhen(true)] out string? elementId)
         {
             if (name.StartsWith(prefix, StringComparison.InvariantCulture))
             {
@@ -271,8 +284,9 @@ namespace Integrative.Lara.Middleware
 
         private static async Task SendSocketReply(PostEventContext post, string json)
         {
-            await FlushMessage(post.Socket, json);
-            await CloseSocket(post.Socket);
+            var socket = post.GetSocket();
+            await FlushMessage(socket, json);
+            await CloseSocket(socket);
         }
 
         public static Task CloseSocket(WebSocket socket)

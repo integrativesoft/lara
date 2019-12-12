@@ -12,23 +12,23 @@ namespace Integrative.Lara.Delta
     sealed class AttributeEditedDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string Attribute { get; set; }
+        public string Attribute { get; set; } = string.Empty;
 
         [DataMember]
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
 
         public AttributeEditedDelta() : base(DeltaType.EditAttribute)
         {
         }
 
-        public static void Enqueue(Element element, string attribute, string value)
+        public static void Enqueue(Element element, string attribute, string? value)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
-                element.Document.Enqueue(new AttributeEditedDelta
+                document.Enqueue(new AttributeEditedDelta
                 {
                     Attribute = attribute,
                     ElementId = element.EnsureElementId(),

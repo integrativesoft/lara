@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'abbr' HTML5 attribute.
         /// </summary>
-        public string Abbr
+        public string? Abbr
         {
             get => GetAttributeLower("abbr");
             set { SetAttributeLower("abbr", value); }
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'headers' HTML5 attribute.
         /// </summary>
-        public string Headers
+        public string? Headers
         {
             get => GetAttributeLower("headers");
             set { SetAttributeLower("headers", value); }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'scope' HTML5 attribute.
         /// </summary>
-        public string Scope
+        public string? Scope
         {
             get => GetAttributeLower("scope");
             set { SetAttributeLower("scope", value); }
@@ -67,7 +67,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'sorted' HTML5 attribute.
         /// </summary>
-        public string Sorted
+        public string? Sorted
         {
             get => GetAttributeLower("sorted");
             set { SetAttributeLower("sorted", value); }

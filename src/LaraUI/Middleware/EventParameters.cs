@@ -8,6 +8,7 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;  
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -23,20 +24,20 @@ namespace Integrative.Lara.Middleware
         public Guid DocumentId { get; set; }
 
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
 
         [DataMember]
         public long EventNumber { get; set; }
 
         [DataMember(IsRequired = false)]
-        public ClientEventMessage Message { get; set; }
+        public ClientEventMessage? Message { get; set; }
 
-        public virtual IFormFileCollection Files { get; set; }
+        public virtual IFormFileCollection? Files { get; set; }
 
-        public static bool TryParse(IQueryCollection query, out EventParameters parameters)
+        public static bool TryParse(IQueryCollection query, [NotNullWhen(true)] out EventParameters? parameters)
         {
             if (MiddlewareCommon.TryGetParameter(query, "doc", out var documentText)
                 && MiddlewareCommon.TryGetParameter(query, "el", out var elementId)
@@ -80,8 +81,8 @@ namespace Integrative.Lara.Middleware
     class SocketEventParameters : EventParameters
     {
         [DataMember(IsRequired = false)]
-        public FormFileCollection SocketFiles { get; set; }
+        public FormFileCollection? SocketFiles { get; set; }
 
-        public override IFormFileCollection Files => SocketFiles;
+        public override IFormFileCollection? Files => SocketFiles;
     }
 }

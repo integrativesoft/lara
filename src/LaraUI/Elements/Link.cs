@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'crossorigin' HTML5 attribute.
         /// </summary>
-        public string CrossOrigin
+        public string? CrossOrigin
         {
             get => GetAttributeLower("crossorigin");
             set { SetAttributeLower("crossorigin", value); }
@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'href' HTML5 attribute.
         /// </summary>
-        public string HRef
+        public string? HRef
         {
             get => GetAttributeLower("href");
             set { SetAttributeLower("href", value); }
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'hreflang' HTML5 attribute.
         /// </summary>
-        public string HRefLang
+        public string? HRefLang
         {
             get => GetAttributeLower("hreflang");
             set { SetAttributeLower("hreflang", value); }
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'media' HTML5 attribute.
         /// </summary>
-        public string Media
+        public string? Media
         {
             get => GetAttributeLower("media");
             set { SetAttributeLower("media", value); }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'rel' HTML5 attribute.
         /// </summary>
-        public string Rel
+        public string? Rel
         {
             get => GetAttributeLower("rel");
             set { SetAttributeLower("rel", value); }
@@ -67,7 +67,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'sizes' HTML5 attribute.
         /// </summary>
-        public string Sizes
+        public string? Sizes
         {
             get => GetAttributeLower("sizes");
             set { SetAttributeLower("sizes", value); }
@@ -76,7 +76,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'type' HTML5 attribute.
         /// </summary>
-        public string Type
+        public string? Type
         {
             get => GetAttributeLower("type");
             set { SetAttributeLower("type", value); }

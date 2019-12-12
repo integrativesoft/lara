@@ -23,9 +23,12 @@ namespace Integrative.Lara.Tests.Middleware
             var guid = Connections.CreateCryptographicallySecureGuid();
             var cnx = new Connection(guid, IPAddress.Loopback);
             Session = new Session(cnx);
+            JSBridge = _bridge.Object;
         }
 
         public Document Document => throw new NotImplementedException();
+
+        readonly Mock<IJSBridge> _bridge = new Mock<IJSBridge>();
 
         public IJSBridge JSBridge { get; set; }
 
@@ -33,7 +36,7 @@ namespace Integrative.Lara.Tests.Middleware
 
         public Session Session { get; }
 
-        public string RequestBody { get; set; }
+        public string RequestBody { get; set; } = string.Empty;
 
         public HttpStatusCode StatusCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

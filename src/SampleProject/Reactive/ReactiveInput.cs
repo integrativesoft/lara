@@ -11,8 +11,8 @@ namespace SampleProject.Reactive
 {
     class ReactiveInputData : BindableBase
     {
-        string _text;
-        public string Text
+        string? _text;
+        public string? Text
         {
             get => _text;
             set => SetProperty(ref _text, value);

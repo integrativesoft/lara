@@ -21,7 +21,7 @@ namespace Integrative.Lara.Tests.Main
 
         int counter = 0;
 
-        public string LastPath { get; private set; }
+        public string? LastPath { get; private set; }
 
         public Task OnGet()
         {

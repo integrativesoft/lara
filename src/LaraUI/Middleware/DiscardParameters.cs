@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara.Middleware
 {
@@ -14,13 +15,13 @@ namespace Integrative.Lara.Middleware
     {
         public Guid DocumentId { get; set; }
 
-        public static bool TryParse(HttpContext context, out DiscardParameters parameters)
+        public static bool TryParse(HttpContext context, [NotNullWhen(true)] out DiscardParameters? parameters)
         {
             var query = context.Request.Query;
             return TryParse(query, out parameters);
         }
 
-        public static bool TryParse(IQueryCollection query, out DiscardParameters parameters)
+        public static bool TryParse(IQueryCollection query, [NotNullWhen(true)] out DiscardParameters? parameters)
         {
             if (MiddlewareCommon.TryGetParameter(query, "doc", out var documentText)
                 && Guid.TryParseExact(documentText, GlobalConstants.GuidFormat, out var documentId))

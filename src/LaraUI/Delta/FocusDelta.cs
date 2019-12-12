@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class FocusDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         public FocusDelta() : base(DeltaType.Focus)
         {

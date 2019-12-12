@@ -45,9 +45,9 @@ namespace SampleProject
             set => _checkbox.Checked = value;
         }
 
-        string _labelText;
+        string? _labelText;
 
-        public string Label
+        public string? Label
         {
             get => _labelText;
             set
@@ -75,9 +75,12 @@ namespace SampleProject
             else if (attribute == "class")
             {
                 var root = _checkbox.ParentElement;
-                root.Class = GetAttribute("class");
-                root.AddClass("form-group");
-                root.AddClass("form-check");
+                if (root != null)
+                {
+                    root.Class = GetAttribute("class");
+                    root.AddClass("form-group");
+                    root.AddClass("form-check");
+                }
             }
         }
     }

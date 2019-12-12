@@ -196,11 +196,38 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LaraUI.Context not available.
+        /// </summary>
+        internal static string NoCurrentContext {
+            get {
+                return ResourceManager.GetString("NoCurrentContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no current document..
         /// </summary>
         internal static string NoCurrentDocument {
             get {
                 return ResourceManager.GetString("NoCurrentDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No page context available..
+        /// </summary>
+        internal static string NoCurrentPage {
+            get {
+                return ResourceManager.GetString("NoCurrentPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No service context available..
+        /// </summary>
+        internal static string NoCurrentService {
+            get {
+                return ResourceManager.GetString("NoCurrentService", resourceCulture);
             }
         }
         

@@ -17,7 +17,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Web Service's address (e.g. '/myWS')
         /// </summary>
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         /// <summary>
         /// Web Service's method (e.g. 'POST')

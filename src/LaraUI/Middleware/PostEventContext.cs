@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
@@ -15,19 +16,51 @@ namespace Integrative.Lara.Middleware
     {
         public Application Application { get; set; }
         public HttpContext Http { get; set; }
-        public WebSocket Socket { get; set; }
-        public EventParameters Parameters { get; set; }
-        public Connection Connection { get; set; }
-        public Document Document { get; set; }
-        public Element Element { get; set; }
+
+        public EventParameters? Parameters { get; set; }
+        public WebSocket? Socket { get; set; }
+        public Connection? Connection { get; set; }
+        public Document? Document { get; set; } 
+        public Element? Element { get; set; }
+
+        public PostEventContext(Application app, HttpContext http)
+        {
+            Application = app;
+            Http = http;
+        }
 
         public bool SocketRemainsOpen()
-            => Document.SocketRemainsOpen(Parameters.EventName);
+            => Document != null
+            && Parameters != null
+            && Document.SocketRemainsOpen(Parameters.EventName);
 
         public bool IsWebSocketRequest =>
             Http.WebSockets.IsWebSocketRequest;
 
         public virtual Task<TaskCompletionSource<bool>> GetSocketCompletion()
-            => Document.GetSocketCompletion(Socket);
+        {
+            var socket = Socket ?? throw new MissingMemberException(nameof(PostEventContext), nameof(Socket));
+            return GetDocument().GetSocketCompletion(socket);
+        }
+
+        public Document GetDocument()
+        {
+            return Document ?? throw new MissingMemberException(nameof(PostEventContext), nameof(Document));
+        }
+
+        public Connection GetConnection()
+        {
+            return Connection ?? throw new MissingMemberException(nameof(PostEventContext), nameof(Connection));
+        }
+
+        public WebSocket GetSocket()
+        {
+            return Socket ?? throw new MissingMemberException(nameof(PostEventContext), nameof(Socket));
+        }
+
+        public EventParameters GetParameters()
+        {
+            return Parameters ?? throw new MissingMemberException(nameof(PostEventContext), nameof(EventParameters));
+        }
     }
 }

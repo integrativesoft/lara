@@ -14,24 +14,24 @@ namespace Integrative.Lara.DOM
     sealed class Attributes : IEnumerable<KeyValuePair<string, string>>
     {
         readonly Element _element;
-        readonly Dictionary<string, string> _values;
+        readonly Dictionary<string, string?> _values;
 
         public Attributes(Element element)
         {
             _element = element;
-            _values = new Dictionary<string, string>();
+            _values = new Dictionary<string, string?>();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public bool HasAttribute(string name) => HasAttributeLower(name.ToLowerInvariant());
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
-        public string GetAttribute(string name) => GetAttributeLower(name.ToLowerInvariant());
+        public string? GetAttribute(string name) => GetAttributeLower(name.ToLowerInvariant());
 
         internal bool HasAttributeLower(string nameLower)
             => _values.ContainsKey(nameLower);
 
-        internal void SetAttributeLower(string nameLower, string value)
+        internal void SetAttributeLower(string nameLower, string? value)
         {
             if (nameLower == "slot" && _element.ParentElement != null)
             {
@@ -146,7 +146,7 @@ namespace Integrative.Lara.DOM
             _element.AttributeChanged(nameLower, string.Empty);
         }
 
-        internal string GetAttributeLower(string nameLower)
+        internal string? GetAttributeLower(string nameLower)
         {
             if (_values.TryGetValue(nameLower, out var result))
             {

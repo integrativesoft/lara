@@ -8,6 +8,7 @@ using Integrative.Lara.Main;
 using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Net.WebSockets;
@@ -63,7 +64,7 @@ namespace Integrative.Lara.Middleware
             http.Response.Headers.Add("Content-Type", "application/json");
         }
 
-        public static bool TryFindConnection(Application app, HttpContext http, out Connection connection)
+        public static bool TryFindConnection(Application app, HttpContext http, [NotNullWhen(true)] out Connection? connection)
         {
             connection = null;
             return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out string value)
@@ -72,7 +73,7 @@ namespace Integrative.Lara.Middleware
                 && connection.RemoteIP.Equals(http.Connection.RemoteIpAddress);
         }
 
-        public static bool TryGetParameter(IQueryCollection query, string name, out string value)
+        public static bool TryGetParameter(IQueryCollection query, string name, [NotNullWhen(true)] out string? value)
         {
             if (query.TryGetValue(name, out var values)
                 && values.Count > 0)
@@ -87,7 +88,7 @@ namespace Integrative.Lara.Middleware
             }
         }
 
-        public static async Task<(bool, T)>
+        public static async Task<(bool, T?)>
             ReadWebSocketMessage<T>(WebSocket socket, int maxSize) where T : class
         {
             var buffer = new ArraySegment<byte>(new byte[8192]);
@@ -102,8 +103,8 @@ namespace Integrative.Lara.Middleware
             return ProcessWebSocketMessage<T>(maxSize, ms, result);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
-        internal static (bool, T) ProcessWebSocketMessage<T>(int maxSize,
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Cannot crash")]
+        internal static (bool, T?) ProcessWebSocketMessage<T>(int maxSize,
             MemoryStream ms, WebSocketReceiveResult result) where T : class
         {
             ms.Seek(0, SeekOrigin.Begin);

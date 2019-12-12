@@ -52,7 +52,8 @@ namespace Integrative.Lara.Tests.Middleware
             };
             var json = tool.Stringify(data, typeof(MyData));
             var back = tool.Parse<MyData>(json);
-            Assert.Equal(data.Counter, back.Counter);
+            Assert.NotNull(back);
+            Assert.Equal(data.Counter, back!.Counter);
         }
 
         [DataContract]
@@ -190,7 +191,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.True(found);
             var service = item as WebServicePublished;
             Assert.NotNull(service);
-            Assert.NotNull(service.Factory());
+            Assert.NotNull(service!.Factory());
         }
 
         class DummyWS : IWebService
@@ -214,7 +215,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.True(found);
             var service = item as BinaryServicePublished;
             Assert.NotNull(service);
-            Assert.NotNull(service.Factory());
+            Assert.NotNull(service!.Factory());
         }
 
         class DummyBinaryWS : IBinaryService
@@ -231,7 +232,7 @@ namespace Integrative.Lara.Tests.Middleware
             bool found = app.TryGetNode(Address, out var item);
             Assert.True(found);
             var page = item as PagePublished;
-            Assert.NotNull(page.CreateInstance());
+            Assert.NotNull(page!.CreateInstance());
         }
 
         [Fact]

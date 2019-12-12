@@ -12,21 +12,21 @@ namespace Integrative.Lara.Delta
     sealed class SetIdDelta : BaseDelta
     {
         [DataMember]
-        public ElementLocator Locator { get; set; }
+        public ElementLocator? Locator { get; set; }
 
         [DataMember]
-        public string NewId { get; set; }
+        public string? NewId { get; set; }
 
         public SetIdDelta() : base(DeltaType.SetId)
         {
         }
 
-        public static void Enqueue(Element element, string newValue)
+        public static void Enqueue(Element element, string? newValue)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
                 var locator = ElementLocator.FromElement(element);
-                element.Document.Enqueue(new SetIdDelta
+                document.Enqueue(new SetIdDelta
                 {
                     Locator = locator,
                     NewId = newValue

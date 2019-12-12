@@ -46,7 +46,7 @@ namespace Integrative.Lara
         /// <value>
         /// The name of the event.
         /// </value>
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
 
         /// <summary>
         /// Specifies an interval in millisenconds to postpone and hold an event while it gets triggered repeatedly.
@@ -68,7 +68,7 @@ namespace Integrative.Lara
         /// <value>
         /// The block options.
         /// </value>
-        public BlockOptions BlockOptions { get; set; }
+        public BlockOptions? BlockOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the code to execute for the event.
@@ -76,7 +76,7 @@ namespace Integrative.Lara
         /// <value>
         /// The handler.
         /// </value>
-        public Func<Task> Handler { get; set; }
+        public Func<Task>? Handler { get; set; }
 
         /// <summary>
         /// Long-running events use websockets and can flush partial progress to the client.
@@ -95,7 +95,7 @@ namespace Integrative.Lara
         /// Defines JavaScript code to execute in order to determine if the event should trigger.
         /// When this property is set, the event is trigger only if the expression evaluates to true.
         /// </summary>
-        public string EvalFilter { get; set; }
+        public string? EvalFilter { get; set; }
 
         /// <summary>
         /// Specifies propagation options for client events

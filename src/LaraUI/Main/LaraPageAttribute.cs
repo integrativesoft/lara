@@ -17,7 +17,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Page's address (e.g. '/myPage')
         /// </summary>
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         /// <summary>
         /// Default constructor

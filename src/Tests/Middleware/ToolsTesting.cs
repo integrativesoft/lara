@@ -20,7 +20,9 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DocumentLocalException()
         {
-            LaraUI.InternalContext.Value = null;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            LaraUI.InternalContext.Value = null;  // on purpose for testing purposes
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             bool error = false;
             try
             {
@@ -39,7 +41,9 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void SessionLocalException()
         {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             LaraUI.InternalContext.Value = null;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             bool error = false;
             try
             {
@@ -173,7 +177,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var context = new Mock<IWebServiceContext>();
             var connection = new Connection(Guid.Parse("{B064124D-154D-4F49-89CF-CFC117509807}"), IPAddress.Loopback);
-            var session = new Session(connection);
+            Session? session = new Session(connection);
             context.Setup(x => x.TryGetSession(out session)).Returns(true);
             LaraUI.InternalContext.Value = context.Object;
             var local = new SessionLocal<int>();
@@ -185,8 +189,8 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void SmaValueNullTrue()
         {
-            string x1 = null;
-            string x2 = null;
+            string? x1 = null;
+            string? x2 = null;
             Assert.True(LaraTools.SameValue(x1, x2));
         }
 
@@ -198,7 +202,7 @@ namespace Integrative.Lara.Tests.Middleware
             builder.FlushEvent("click");
             x.NotifyEvent("click");
             Assert.True(x.Events.TryGetValue("click", out var ev));
-            Assert.Equal("click", ev.EventName);
+            Assert.Equal("click", ev!.EventName);
         }
     }
 }

@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -13,10 +14,10 @@ namespace Integrative.Lara.Delta
     sealed class ElementLocator
     {
         [DataMember]
-        public string StartingId { get; set; }
+        public string? StartingId { get; set; }
 
         [DataMember]
-        public List<int> Steps { get; set; }
+        public List<int>? Steps { get; set; }
 
         public static ElementLocator FromElement(Element element)
         {
@@ -36,7 +37,7 @@ namespace Integrative.Lara.Delta
                 if (parent != null)
                 {
                     int index = parent.GetChildElementPosition(element);
-                    locator.Steps.Add(index);
+                    locator.GetSteps().Add(index);
                     Build(locator, parent);
                 }
             }
@@ -44,6 +45,10 @@ namespace Integrative.Lara.Delta
             {
                 locator.StartingId = element.Id;
             }
+        }
+        private List<int> GetSteps()
+        {
+            return Steps ?? throw new MissingMemberException(nameof(ElementLocator), nameof(Steps));
         }
     }
 }

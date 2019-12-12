@@ -22,7 +22,7 @@ namespace Integrative.Lara.DOM
             return _map.TryGetValue(id, out element);
         }
 
-        public void NotifyChangeId(Element element, string before, string after)
+        public void NotifyChangeId(Element element, string? before, string? after)
         {
             if (before != after)
             {

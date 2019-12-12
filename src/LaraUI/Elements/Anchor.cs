@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'href' HTML5 attribute.
         /// </summary>
-        public string HRef
+        public string? HRef
         {
             get => GetAttribute("href");
             set { SetAttributeLower("href", value); }
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'hreflang' HTML5 attribute.
         /// </summary>
-        public string HRefLang
+        public string? HRefLang
         {
             get => GetAttribute("hreflang");
             set { SetAttributeLower("hreflang", value); }
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'media' HTML5 attribute.
         /// </summary>
-        public string Media
+        public string? Media
         {
             get => GetAttribute("media");
             set { SetAttributeLower("media", value); }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'ping' HTML5 attribute.
         /// </summary>
-        public string Ping
+        public string? Ping
         {
             get => GetAttribute("ping");
             set { SetAttributeLower("ping", value); }
@@ -67,7 +67,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'referrerpolicy' HTML5 attribute.
         /// </summary>
-        public string ReferrerPolicy
+        public string? ReferrerPolicy
         {
             get => GetAttribute("referrerpolicy");
             set { SetAttributeLower("referrerpolicy", value); }
@@ -76,7 +76,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'rel' HTML5 attribute.
         /// </summary>
-        public string Rel
+        public string? Rel
         {
             get => GetAttribute("rel");
             set { SetAttributeLower("rel", value); }
@@ -85,7 +85,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'target' HTML5 attribute.
         /// </summary>
-        public string Target
+        public string? Target
         {
             get => GetAttributeLower("target");
             set { SetAttributeLower("target", value); }
@@ -94,7 +94,7 @@ namespace Integrative.Lara
         /// <summary>
         /// The 'type' HTML5 attribute.
         /// </summary>
-        public string Type
+        public string? Type
         {
             get => GetAttributeLower("type");
             set { SetAttributeLower("type", value); }

@@ -31,7 +31,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'headers' HTML5 attribute.
         /// </summary>
-        public string Headers
+        public string? Headers
         {
             get => GetAttributeLower("headers");
             set { SetAttributeLower("headers", value); }

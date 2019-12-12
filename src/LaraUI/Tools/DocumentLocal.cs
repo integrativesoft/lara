@@ -38,14 +38,8 @@ namespace Integrative.Lara
         private T GetValue()
         {
             var document = GetDocument();
-            if (_storage.TryGetValue(document, out var value))
-            {
-                return value;
-            }
-            else
-            {
-                return default;
-            }
+            _storage.TryGetValue(document, out var value);
+            return value;
         }
 
         private void SetValue(T value)

@@ -42,7 +42,8 @@ namespace Integrative.Lara.Tests.Main
             request.Setup(x => x.Method).Returns("GET");
             var page = new MyRedirectPage();
             var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
-            var context = new PageContext(_context.Application, http.Object, null, document);
+            var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            var context = new PageContext(_context.Application, http.Object, cx);
             await page.OnGet();
             await PagePublished.ProcessGetResult(http.Object, document, context, HttpStatusCode.OK);
             response.Verify(x => x.Redirect("https://www.google.com"));
@@ -79,7 +80,7 @@ namespace Integrative.Lara.Tests.Main
             string json = LaraUI.JSON.Stringify(start);
             bool ok = LaraUI.JSON.TryParse<MyClass>(json, out var result);
             Assert.True(ok);
-            Assert.Equal(start.Value, result.Value);
+            Assert.Equal(start.Value, result!.Value);
         }
 
         [DataContract]

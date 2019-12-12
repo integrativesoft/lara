@@ -45,7 +45,7 @@ namespace Integrative.Lara
         /// <param name="className">Element's class name</param>
         /// <param name="id">element's identifier.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder Push(string tagName, string className = null, string id = null)
+        public LaraBuilder Push(string tagName, string? className = null, string? id = null)
         {
             return Push(tagName, className, id, out _);
         }
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         /// <param name="id">The identifier.</param>
         /// <param name="added">The element added.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder Push(string tagName, string className, string id, out Element added)
+        public LaraBuilder Push(string tagName, string? className, string? id, out Element added)
         {
             added = Element.Create(tagName);
             if (!string.IsNullOrEmpty(id))
@@ -102,7 +102,7 @@ namespace Integrative.Lara
         /// <param name="element">The element to add.</param>
         /// <param name="className">Name of the class.</param>
         /// <returns>This instance</returns>
-        public LaraBuilder Push(Element element, string className)
+        public LaraBuilder Push(Element element, string? className)
         {
             className = className ?? throw new ArgumentNullException(nameof(className));
             Push(element);
@@ -436,7 +436,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<string> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindAttribute<T>(new BindAttributeOptions<T>
             {
@@ -456,7 +456,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         [Obsolete("Use BindToggleAttribute() instead.")]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleAttribute(attribute, instance, property);
         }
@@ -470,7 +470,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
             {
@@ -489,7 +489,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleClass<T>(new BindToggleClassOptions<T>
             {
@@ -506,7 +506,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindAttribute<T>(options);
             return this;
@@ -520,7 +520,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         [Obsolete("Use BindToggleAttribute() instead.")]
         public LaraBuilder BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleAttribute(options);
         }
@@ -532,7 +532,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindToggleAttribute<T>(options);
             return this;
@@ -545,7 +545,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleClass<T>(BindToggleClassOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindToggleClass<T>(options);
             return this;
@@ -560,7 +560,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<T, string> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindAttribute<T>(new BindAttributeOptions<T>
             {
@@ -580,7 +580,7 @@ namespace Integrative.Lara
         /// <returns>This instance</returns>
         [Obsolete("Use instad the BindToggleAttribute() method.")]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<T, bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleAttribute(attribute, instance, property);
         }
@@ -594,7 +594,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<T, bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
             {
@@ -613,7 +613,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<T, bool> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindToggleClass<T>(new BindToggleClassOptions<T>
             {
@@ -631,7 +631,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindInnerText<T>(T instance, Func<string> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindInnerText(new BindInnerTextOptions<T>
             {
@@ -648,7 +648,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindInnerText<T>(T instance, Func<T, string> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindInnerText(new BindInnerTextOptions<T>
             {
@@ -664,7 +664,7 @@ namespace Integrative.Lara
         /// <param name="options">Inner tetx binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindInnerText(options);
             return this;
@@ -678,7 +678,7 @@ namespace Integrative.Lara
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindChildren(new BindChildrenOptions<T>(collection, creator));
         }
@@ -691,7 +691,7 @@ namespace Integrative.Lara
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindChildren<T>(new BindChildrenOptions<T>(collection, x => creator()));
         }
@@ -703,7 +703,7 @@ namespace Integrative.Lara
         /// <param name="options">Children bindings options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(BindChildrenOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindChildren(options);
             return this;
@@ -716,7 +716,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindInput<T>(BindInputOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindInput(options);
             return this;
@@ -730,8 +730,8 @@ namespace Integrative.Lara
         /// <param name="data">Data source</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindInput<T>(string attribute, T data, Expression<Func<T, string>> property)
-            where T : INotifyPropertyChanged
+        public LaraBuilder BindInput<T>(string attribute, T data, Expression<Func<T, string?>> property)
+            where T : class, INotifyPropertyChanged
         {
             return BindInput<T>(new BindInputOptions<T>
             {
@@ -748,7 +748,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindFlagInput<T>(BindFlagInputOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindFlagInput(options);
             return this;
@@ -763,7 +763,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindFlagInput<T>(string attribute, T data, Expression<Func<T, bool>> property)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return BindFlagInput<T>(new BindFlagInputOptions<T>
             {
@@ -781,7 +781,7 @@ namespace Integrative.Lara
         /// <param name="action">Action to update the element</param>
         /// <returns>This instance</returns>
         public LaraBuilder Bind<T>(T instance, Action action)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return Bind(new BindHandlerOptions<T>
             {
@@ -798,7 +798,7 @@ namespace Integrative.Lara
         /// <param name="action">Action to update the element</param>
         /// <returns>This instance</returns>
         public LaraBuilder Bind<T>(T instance, Action<T, Element> action)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             return Bind(new BindHandlerOptions<T>
             {
@@ -814,7 +814,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         public LaraBuilder Bind<T>(BindHandlerOptions<T> options)
-            where T : INotifyPropertyChanged
+            where T : class, INotifyPropertyChanged
         {
             _stack.Peek().Bind(options);
             return this;

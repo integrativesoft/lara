@@ -62,7 +62,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="javaScriptCode">The JavaScript code to execute.</param>
         /// <param name="payload">Optional payload to send to the client</param>
-        void Submit(string javaScriptCode, string payload = null);
+        void Submit(string javaScriptCode, string? payload = null);
 
         /// <summary>
         /// Register a custom event that can be called from JavaScript code
@@ -92,7 +92,7 @@ namespace Integrative.Lara
         /// <value>
         /// The event data.
         /// </value>
-        string EventData { get; }
+        string? EventData { get; }
 
         /// <summary>
         /// Makes the client start listening for ServerEventFlush() notifications.

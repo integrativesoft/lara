@@ -6,6 +6,8 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Tools;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Runtime.Serialization;
 
 namespace Integrative.Lara
@@ -22,8 +24,8 @@ namespace Integrative.Lara
         /// <param name="json">Source JSON string</param>
         /// <param name="result">Class instance created</param>
         /// <returns>true when successful, false otherwise</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
-        public bool TryParse<T>(string json, out T result) where T : class
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
+        public bool TryParse<T>(string json, [NotNullWhen(true)] out T? result) where T : class
         {
             try
             {
@@ -44,21 +46,27 @@ namespace Integrative.Lara
         /// <typeparam name="T">Class type</typeparam>
         /// <param name="json">JSON source text</param>
         /// <returns>Instance of deserialized class</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public T Parse<T>(string json) where T : class
         {
+            T? result;
             try
             {
-                return LaraTools.Deserialize<T>(json);
+                result = LaraTools.Deserialize<T>(json);
             }
             catch (Exception e)
             {
                 var outer = new StatusCodeException(Resources.BadRequest, e)
                 {
-                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                    StatusCode = HttpStatusCode.BadRequest
                 };
                 throw outer;
             }
+            if (result == null)
+            {
+                throw new StatusCodeException(HttpStatusCode.BadRequest, Resources.BadRequest);
+            }
+            return result;
         }
 
         /// <summary>

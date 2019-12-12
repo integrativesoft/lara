@@ -14,13 +14,15 @@ namespace Integrative.Lara.DOM
     {
         private static readonly Dictionary<string, Type> _map;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
+        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static ElementFactory()
         {
             _map = new Dictionary<string, Type>();
             Register<Anchor>("a");
+            Register<BodyElement>("body");
             Register<Button>("button");
             Register<ColGroup>("colgroup");
+            Register<HeadElement>("head");
             Register<Image>("img");
             Register<InputElement>("input");
             Register<Label>("label");
@@ -48,12 +50,11 @@ namespace Integrative.Lara.DOM
         [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public static Element CreateElement(string tagName)
         {
-            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             if (string.IsNullOrEmpty(tagName))
             {
                 throw new ArgumentException(Resources.InvalidTagName);
             }
-            else if (tagName.IndexOf(' ') >= 0)
+            else if (tagName.IndexOf(' ', StringComparison.InvariantCulture) >= 0)
             {
                 throw new ArgumentException(Resources.TagNameSpaces);
             }
@@ -61,7 +62,7 @@ namespace Integrative.Lara.DOM
             {
                 tagName = tagName.ToLowerInvariant();
             }
-            if (FindTagName(tagName, out Type type))
+            if (FindTagName(tagName, out var type))
             {
                 return (Element)Activator.CreateInstance(type);
             }
@@ -71,7 +72,7 @@ namespace Integrative.Lara.DOM
             }
         }
 
-        private static bool FindTagName(string tagName, out Type type)
+        private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)
         {
             return _map.TryGetValue(tagName, out type)
                 || LaraUI.TryGetComponent(tagName, out type);

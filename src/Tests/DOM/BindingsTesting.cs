@@ -13,8 +13,8 @@ namespace Integrative.Lara.Tests.DOM
 {
     class MyInputData : BindableBase
     {
-        string _myvalue;
-        public string MyValue
+        string? _myvalue;
+        public string? MyValue
         {
             get => _myvalue;
             set => SetProperty(ref _myvalue, value);
@@ -43,7 +43,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var node = element.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal(data, node.Data);
+            Assert.Equal(data, node!.Data);
         }
 
         [Fact]
@@ -486,7 +486,7 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = x => x.MyValue
             };
-            binding.Compile();
+            binding.Verify();
             input.Value = "bye";
             binding.Collect(input);
             Assert.Equal("bye", data.MyValue);
@@ -506,7 +506,7 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = x => x.MyChecked
             };
-            binding.Compile();
+            binding.Verify();
             input.Checked = false;
             binding.Collect(input);
             Assert.False(data.MyChecked);
@@ -562,22 +562,7 @@ namespace Integrative.Lara.Tests.DOM
         public void MissingMemberText()
         {
             var text = BindOptions.MissingMemberText("lala");
-            Assert.Equal("Missing binding member: lala", text);
-        }
-
-        [Fact]
-        public void BindOptionsChildrenMissingCollection()
-        {
-            var x = new BindChildrenOptions<MyInputData>(null)
-            {
-                CreateCallback = DumyCallback
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        private Element DumyCallback(MyInputData arg)
-        {
-            return Element.Create("div");
+            Assert.Equal("Missing binding options member: lala", text);
         }
 
         [Fact]

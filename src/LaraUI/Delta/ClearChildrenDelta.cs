@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class ClearChildrenDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         public ClearChildrenDelta() : base(DeltaType.ClearChildren)
         {
@@ -20,9 +20,9 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
-                element.Document.Enqueue(new ClearChildrenDelta
+                document.Enqueue(new ClearChildrenDelta
                 {
                     ElementId = element.EnsureElementId(),
                 });

@@ -15,7 +15,7 @@ namespace Integrative.Lara.Main
     {
         readonly PageContext _context;
 
-        public string RedirectLocation { get; private set; }
+        public string? RedirectLocation { get; private set; }
 
         public Navigation(PageContext context)
         {

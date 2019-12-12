@@ -19,6 +19,6 @@ namespace Integrative.Lara
         /// List of autocomplete entries
         /// </summary>
         [DataMember]
-        public List<AutocompleteEntry> Suggestions { get; set; }
+        public List<AutocompleteEntry>? Suggestions { get; set; }
     }
 }

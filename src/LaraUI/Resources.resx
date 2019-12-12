@@ -162,8 +162,17 @@
   <data name="MustInherit" xml:space="preserve">
     <value>Component types must inherit from the Component class.</value>
   </data>
+  <data name="NoCurrentContext" xml:space="preserve">
+    <value>LaraUI.Context not available</value>
+  </data>
   <data name="NoCurrentDocument" xml:space="preserve">
     <value>There is no current document.</value>
+  </data>
+  <data name="NoCurrentPage" xml:space="preserve">
+    <value>No page context available.</value>
+  </data>
+  <data name="NoCurrentService" xml:space="preserve">
+    <value>No service context available.</value>
   </data>
   <data name="NoCurrentSession" xml:space="preserve">
     <value>There is no current session.</value>

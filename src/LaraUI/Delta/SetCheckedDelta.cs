@@ -12,7 +12,7 @@ namespace Integrative.Lara.Delta
     sealed class SetCheckedDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
         public bool Checked { get; set; }
@@ -23,9 +23,9 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element, bool value)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
-                element.Document.Enqueue(new SetCheckedDelta
+                document.Enqueue(new SetCheckedDelta
                 {
                     ElementId = element.EnsureElementId(),
                     Checked = value

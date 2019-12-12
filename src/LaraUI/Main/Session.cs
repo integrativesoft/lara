@@ -19,9 +19,9 @@ namespace Integrative.Lara
         /// <summary>
         /// Occurs when the user closes all browser tabs
         /// </summary>
-        public event EventHandler Closing;
+        public event EventHandler? Closing;
 
-        internal event EventHandler AfterClose;
+        internal event EventHandler? AfterClose;
 
         internal Session(Connection parent)
         {

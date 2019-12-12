@@ -16,11 +16,16 @@ namespace Integrative.Lara
         /// <summary>
         /// Custom tag name for the component. Needs to include the '-' character.
         /// </summary>
-        public string ComponentTagName { get; set; }
+        public string ComponentTagName { get; set; } = string.Empty;
 
         /// <summary>
         /// Type of the component. Needs to inherit from WebComponent. Example: 'typeof(MyComponent)'
         /// </summary>
-        public Type ComponentType { get; set; }
+        public Type? ComponentType { get; set; }
+
+        internal Type GetComponentType()
+        {
+            return ComponentType ?? throw new MissingMemberException(nameof(WebComponentOptions), nameof(ComponentType));
+        }
     }
 }

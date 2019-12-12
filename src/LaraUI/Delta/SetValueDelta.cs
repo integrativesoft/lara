@@ -12,20 +12,20 @@ namespace Integrative.Lara.Delta
     sealed class SetValueDelta : BaseDelta
     {
         [DataMember]
-        public string ElementId { get; set; }
+        public string ElementId { get; set; } = string.Empty;
 
         [DataMember]
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         public SetValueDelta() : base(DeltaType.SetValue)
         {
         }
 
-        public static void Enqueue(Element element, string value)
+        public static void Enqueue(Element element, string? value)
         {
-            if (element.QueueOpen)
+            if (element.TryGetQueue(out var document))
             {
-                element.Document.Enqueue(new SetValueDelta
+                document.Enqueue(new SetValueDelta
                 {
                     ElementId = element.EnsureElementId(),
                     Value = value

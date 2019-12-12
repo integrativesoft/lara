@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Http;
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -16,22 +17,22 @@ namespace Integrative.Lara.Middleware
     class FormFile : IFormFile
     {
         [DataMember]
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } = string.Empty;
 
         [DataMember]
-        public string ContentDisposition { get; set; }
+        public string ContentDisposition { get; set; } = string.Empty;
 
         [DataMember]
         public long Length { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [DataMember]
-        public string FileName { get; set; }
+        public string FileName { get; set; } = string.Empty;
 
         [DataMember]
-        public byte[] Bytes { get; set; }
+        public byte[] Bytes { get; set; } = Array.Empty<byte>();
 
         readonly HeaderDictionary _headers = new HeaderDictionary();
         public IHeaderDictionary Headers => _headers;
