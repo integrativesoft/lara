@@ -85,7 +85,7 @@ The [wiki](https://github.com/integrativesoft/lara/wiki) has the documentation f
 
 ## How to contribute
 
-Please send feedback! Issues, questions, suggestions, requests for features, and success stories. Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!
+**Please send feedback!** Issues, questions, suggestions, requests for features, and success stories. Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!
 
 **If you like Lara, please give it a star - it helps!**
 
