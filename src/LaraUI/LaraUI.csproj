@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.8.0</Version>
+    <Version>0.8.1</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -67,12 +67,8 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.8.0 adds:
-- upgraded to NET Standard 2.1
-- bug fixes
-- allow overriding Focus method in web components to pass focus to specific elements
-- built-in support to upload files through EventSettings class
-- built-in support for web services with binary response</PackageReleaseNotes>
+    <PackageReleaseNotes>0.8.1 adds:
+- fixed bug with file uploads when using websockets</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
