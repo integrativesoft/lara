@@ -53,19 +53,17 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void RoundTripFile()
         {
-            var bytes = Encoding.UTF8.GetBytes("hello");
             var x = new FormFile
             {
-                Bytes = bytes,
+                Content = "hello",
                 ContentDisposition = "a",
                 ContentType = "b",
                 FileName = "c",
-                Length = 2,
                 Name = "d"
             };
             var json = LaraUI.JSON.Stringify(x);
             var result = LaraUI.JSON.Parse<FormFile>(json);
-            Assert.Equal(x.Bytes, result.Bytes);
+            Assert.Equal(x.Content, result.Content);
             Assert.Equal(x.ContentDisposition, result.ContentDisposition);
             Assert.Equal(x.ContentType, result.ContentType);
             Assert.Equal(x.FileName, result.FileName);
@@ -76,17 +74,18 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void SerializeBytes()
         {
+            var bytes = BuildBytes();
             var x = new FormFile
             {
-                Bytes = BuildBytes()
+                Content = Convert.ToBase64String(bytes)
             };
             var json = LaraUI.JSON.Stringify(x);
             var result = LaraUI.JSON.Parse<FormFile>(json);
-            var bytes = result.Bytes;
+            var output = Convert.FromBase64String(result.Content);
             Assert.Equal(256, bytes.Length);
             for (int index = 0; index < 256; index++)
             {
-                Assert.Equal(index, bytes[index]);
+                Assert.Equal(index, output[index]);
             }
         }
 

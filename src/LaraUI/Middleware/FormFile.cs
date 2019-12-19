@@ -23,33 +23,40 @@ namespace Integrative.Lara.Middleware
         public string ContentDisposition { get; set; } = string.Empty;
 
         [DataMember]
-        public long Length { get; set; }
-
-        [DataMember]
         public string Name { get; set; } = string.Empty;
 
         [DataMember]
         public string FileName { get; set; } = string.Empty;
 
         [DataMember]
-        public byte[] Bytes { get; set; } = Array.Empty<byte>();
+        public string Content { get; set; } = string.Empty;
 
         readonly HeaderDictionary _headers = new HeaderDictionary();
         public IHeaderDictionary Headers => _headers;
 
+        public long Length => Content.Length;
+
         public void CopyTo(Stream target)
         {
-            target.Write(Bytes, 0, Bytes.Length);
+            var bytes = GetBytes();
+            target.Write(bytes, 0, bytes.Length);
         }
 
         public Task CopyToAsync(Stream target, CancellationToken cancellationToken = default)
         {
-            return target.WriteAsync(Bytes, 0, Bytes.Length, cancellationToken);
+            var bytes = GetBytes();
+            return target.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
         }
 
         public Stream OpenReadStream()
         {
-            return new MemoryStream(Bytes);
+            var bytes = GetBytes();
+            return new MemoryStream(bytes);
+        }
+
+        private byte[] GetBytes()
+        {
+            return Convert.FromBase64String(Content);
         }
     }
 }

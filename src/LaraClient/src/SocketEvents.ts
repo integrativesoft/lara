@@ -30,10 +30,9 @@ class FormFileCollection {
 class FormFile {
     ContentType: string;
     ContentDisposition: string;
-    Length: number;
     Name: string;
     FileName: string;
-    Bytes: ArrayBuffer;
+    Content: string;
 }
 
 export async function loadFiles(plug: PlugOptions): Promise<FormFileCollection> {
@@ -64,13 +63,23 @@ async function collectFilesInput(input: HTMLInputElement, data: FormFileCollecti
 }
 
 async function copyFile(file: File, name: string): Promise<FormFile> {
+    let bytes = await readFile(file);
     let copy = new FormFile();
     copy.ContentType = file.type;
-    copy.Bytes = await readFile(file);
+    copy.Content = bufferToBase64(bytes);
     copy.Name = name;
     copy.FileName = file.name;
-    copy.Length = copy.Bytes.byteLength;
     return copy;
+}
+
+function bufferToBase64(buffer: ArrayBuffer): string {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (let index = 0; index < len; index++) {
+        binary += String.fromCharCode(bytes[index]);
+    }
+    return window.btoa(binary);
 }
 
 async function readFile(file: File): Promise<ArrayBuffer> {
