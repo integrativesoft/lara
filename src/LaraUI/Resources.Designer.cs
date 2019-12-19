@@ -97,6 +97,15 @@ namespace Integrative.Lara {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lara applications running in BrowserApp mode are secured to allow only 1 connection..
+        /// </summary>
+        internal static string BrowserAppConnectionRejected {
+            get {
+                return ResourceManager.GetString("BrowserAppConnectionRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot add an element inside itself..
         /// </summary>
         internal static string CannotAddInsideItself {

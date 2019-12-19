@@ -129,6 +129,9 @@
   <data name="BindingCycleDetected" xml:space="preserve">
     <value>Cycle detected: modification handlers should not modify the source data.</value>
   </data>
+  <data name="BrowserAppConnectionRejected" xml:space="preserve">
+    <value>Lara applications running in BrowserApp mode are secured to allow only 1 connection.</value>
+  </data>
   <data name="CannotAddInsideItself" xml:space="preserve">
     <value>Cannot add an element inside itself.</value>
   </data>

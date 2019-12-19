@@ -41,7 +41,7 @@ namespace Integrative.Lara.Middleware
         {
             if (!AcceptConnection(remoteIp))
             {
-                throw new StatusForbiddenException();
+                throw new StatusForbiddenException(Resources.BrowserAppConnectionRejected);
             }
             _connection = base.CreateConnection(remoteIp);
             _connection.Closing.Subscribe(() => _app.Stop());
