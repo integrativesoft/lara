@@ -26,8 +26,11 @@ namespace SampleProject
             using var app = new Application();
             await app.Start(new StartServerOptions
             {
-                Mode = ApplicationMode.BrowserApp,  // launches web browser and terminates when closed
-                PublishAssembliesOnStart = true,    // searches for classes with 'Lara' attributes
+                // launches user's default web browser and terminates when closed
+                Mode = ApplicationMode.BrowserApp,
+                
+                // search for classes decorated with Lara attributes and load them
+                PublishAssembliesOnStart = true
             });
             await app.WaitForShutdown();
         }
