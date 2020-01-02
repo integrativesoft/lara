@@ -3,7 +3,11 @@ Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apa
 
 >*"It is similar to server-side Blazor, but is much more lightweight and easier to install. For example, while any type of Blazor requires a whole SDK, Lara is just a NuGet package."* [ScientificProgrammer.net](https://scientificprogrammer.net/2019/08/18/pros-and-cons-of-blazor-for-web-development/?pagename=pros-and-cons-of-blazor)
  
-**Lara** is a library for developing web user interfaces and web services. Lara gives you full control of the client's HTML Document Object Model (DOM) from the server in C#.
+**Lara** is a library for developing web user interfaces with server-side rendering. Lara gives you full control of the client's HTML Document Object Model (DOM) from the server in C#.
+
+## How does Lara work?
+
+Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
 The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
@@ -66,10 +70,6 @@ public void Configure(IApplicationBuilder app)
     });
 } 
 ```
-
-## How does Lara work?
-
-Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
 
 ## Getting started
 
