@@ -12,6 +12,8 @@
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
 
+import { setTimeout } from "timers";
+
 ; (function () {
     /*jshint eqeqeq:false curly:false latedef:false */
     "use strict";
@@ -199,6 +201,9 @@
             // fadeIn time in millis; set to 0 to disable fadeIn on block
             fadeIn: 200,
 
+            // fadeIn delay in millis
+            fadeInDelay: 100,
+
             // fadeOut time in millis; set to 0 to disable fadeOut on unblock
             fadeOut: 400,
 
@@ -246,6 +251,7 @@
 
         var pageBlock = null;
         var pageBlockEls = [];
+        var blocking = false;
 
         function install(el, opts) {
             var css, themedCSS;
@@ -267,6 +273,8 @@
             // remove the current block (if there is one)
             if (full && pageBlock)
                 remove(window, { fadeOut: 0 });
+
+            blocking = true;
 
             // if an existing element is being used as the blocking content then we capture
             // its current place in the DOM (and current display style) so we can restore
@@ -415,10 +423,12 @@
                 var cb = opts.onBlock ? opts.onBlock : noOp;
                 var cb1 = (opts.showOverlay && !msg) ? cb : noOp;
                 var cb2 = msg ? cb : noOp;
-                if (opts.showOverlay)
-                    lyr2._fadeIn(opts.fadeIn, cb1);
-                if (msg)
-                    lyr3._fadeIn(opts.fadeIn, cb2);
+                if (opts.showOverlay) {
+                    showFade(lyr2, opts, cb1);
+                }
+                if (msg) {
+                    showFade(lyr3, opts, cb2);
+                }
             }
             else {
                 if (opts.showOverlay)
@@ -455,6 +465,7 @@
 
         // remove the block
         function remove(el, opts) {
+            blocking = false;
             var count;
             var full = (el == window);
             var $el = $(el);
@@ -498,6 +509,14 @@
             }
             else
                 reset(els, data, opts, el);
+        }
+
+        function showFade(lyr, opts, cb) {
+            setTimeout(function () {
+                if (blocking) {
+                    lyr._fadeIn(opts.fadeIn, cb);
+                }
+            }, opts.fadeInDelay);
         }
 
         // move blocking element back into the DOM where it started
