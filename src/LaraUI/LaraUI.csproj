@@ -20,7 +20,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/integrativesoft/lara</PackageProjectUrl>
     <RepositoryUrl>https://github.com/integrativesoft/lara</RepositoryUrl>
-    <PackageIconUrl>https://integrative.b-cdn.net/Integrative.ico</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <PackageTags>lara, web, html, html5, desktop, gui, cross, framework, mac, osx, platform, ui, blazor, razor</PackageTags>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
@@ -30,6 +30,10 @@
 
   <ItemGroup>
     <None Remove="Assets\Error.svg" />
+    <None Include="..\..\Assets\Integrative.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
@@ -69,6 +73,7 @@
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>0.8.1 adds:
 - improved visual transitions on blocking events to remove unnecessary blinking</PackageReleaseNotes>
+    <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 
 </Project>
