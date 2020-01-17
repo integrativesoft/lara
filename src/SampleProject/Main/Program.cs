@@ -4,14 +4,15 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.KitchenSink;
 
-namespace SampleProject
+namespace SampleProject.Main
 {
-    class Program
+    internal class Program
     {
-        static async Task Main()
+        private static async Task Main()
         {
             using var app = new Application();
             KitchenSinkForm.PublishImages(app);

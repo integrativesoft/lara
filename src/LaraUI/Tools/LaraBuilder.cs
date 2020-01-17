@@ -20,7 +20,7 @@ namespace Integrative.Lara
     {
         #region Constructor
 
-        readonly Stack<Element> _stack;
+        private readonly Stack<Element> _stack;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LaraBuilder"/> class.
@@ -78,6 +78,7 @@ namespace Integrative.Lara
         /// <param name="ns">The namespace of the element.</param>
         /// <param name="tagName">The element's tag name</param>
         /// <returns>This instance</returns>
+        // ReSharper disable once InconsistentNaming
         public LaraBuilder PushNS(string ns, string tagName)
         {
             var added = Element.CreateNS(ns, tagName);
@@ -438,7 +439,7 @@ namespace Integrative.Lara
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<string> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindAttribute<T>(new BindAttributeOptions<T>
+            return BindAttribute(new BindAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
@@ -472,7 +473,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<bool> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
+            return BindToggleAttribute(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
@@ -491,7 +492,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<bool> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindToggleClass<T>(new BindToggleClassOptions<T>
+            return BindToggleClass(new BindToggleClassOptions<T>
             {
                 ClassName = className,
                 BindObject = instance,
@@ -508,7 +509,7 @@ namespace Integrative.Lara
         public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            _stack.Peek().BindAttribute<T>(options);
+            _stack.Peek().BindAttribute(options);
             return this;
         }
 
@@ -534,7 +535,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            _stack.Peek().BindToggleAttribute<T>(options);
+            _stack.Peek().BindToggleAttribute(options);
             return this;
         }
 
@@ -547,7 +548,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleClass<T>(BindToggleClassOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            _stack.Peek().BindToggleClass<T>(options);
+            _stack.Peek().BindToggleClass(options);
             return this;
         }
 
@@ -562,7 +563,7 @@ namespace Integrative.Lara
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<T, string> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindAttribute<T>(new BindAttributeOptions<T>
+            return BindAttribute(new BindAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
@@ -596,7 +597,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<T, bool> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindToggleAttribute<T>(new BindFlagAttributeOptions<T>
+            return BindToggleAttribute(new BindFlagAttributeOptions<T>
             {
                 Attribute = attribute,
                 BindObject = instance,
@@ -615,7 +616,7 @@ namespace Integrative.Lara
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<T, bool> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindToggleClass<T>(new BindToggleClassOptions<T>
+            return BindToggleClass(new BindToggleClassOptions<T>
             {
                 ClassName = className,
                 BindObject = instance,
@@ -693,7 +694,7 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : class, INotifyPropertyChanged
         {
-            return BindChildren<T>(new BindChildrenOptions<T>(collection, x => creator()));
+            return BindChildren(new BindChildrenOptions<T>(collection, x => creator()));
         }
 
         /// <summary>
@@ -733,7 +734,7 @@ namespace Integrative.Lara
         public LaraBuilder BindInput<T>(string attribute, T data, Expression<Func<T, string?>> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindInput<T>(new BindInputOptions<T>
+            return BindInput(new BindInputOptions<T>
             {
                 Attribute = attribute,
                 BindObject = data,
@@ -765,7 +766,7 @@ namespace Integrative.Lara
         public LaraBuilder BindFlagInput<T>(string attribute, T data, Expression<Func<T, bool>> property)
             where T : class, INotifyPropertyChanged
         {
-            return BindFlagInput<T>(new BindFlagInputOptions<T>
+            return BindFlagInput(new BindFlagInputOptions<T>
             {
                 Attribute = attribute,
                 BindObject = data,

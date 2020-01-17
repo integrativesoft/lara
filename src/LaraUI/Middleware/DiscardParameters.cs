@@ -4,14 +4,13 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    sealed class DiscardParameters
+    internal sealed class DiscardParameters
     {
         public Guid DocumentId { get; set; }
 

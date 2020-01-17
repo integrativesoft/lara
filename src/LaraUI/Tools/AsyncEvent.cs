@@ -24,12 +24,6 @@ namespace Integrative.Lara
     /// </summary>
     public class AsyncEvent : AsyncEvent<EventArgs>
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public AsyncEvent() : base()
-        {
-        }
     }
 
     /// <summary>

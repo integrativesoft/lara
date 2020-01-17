@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    class SubscribeDelta : BaseDelta
+    internal class SubscribeDelta : BaseDelta
     {
         [DataMember]
         public string ElementId { get; set; } = string.Empty;
@@ -55,7 +55,7 @@ namespace Integrative.Lara.Delta
     }
 
     [DataContract]
-    class ClientEventSettings
+    internal class ClientEventSettings
     {
         [DataMember]
         public string EventName { get; set; } = string.Empty;
@@ -67,6 +67,7 @@ namespace Integrative.Lara.Delta
         public string? BlockElementId { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
+        // ReSharper disable once InconsistentNaming
         public string? BlockHTML { get; set; }
 
         [DataMember(EmitDefaultValue = false)]

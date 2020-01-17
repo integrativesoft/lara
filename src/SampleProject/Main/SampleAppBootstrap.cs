@@ -6,9 +6,9 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.Main
 {
-    static class SampleAppBootstrap
+    internal static class SampleAppBootstrap
     {
         public static void AppendTo(Element head)
         {

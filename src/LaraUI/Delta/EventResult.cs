@@ -4,13 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
-    enum EventResultType
+    internal enum EventResultType
     {
         Success = 0,
         NoSession = 1,
@@ -19,7 +18,7 @@ namespace Integrative.Lara.Delta
     }
 
     [DataContract]
-    sealed class EventResult
+    internal sealed class EventResult
     {
         [DataMember]
         public EventResultType ResultType { get; set; }
@@ -36,6 +35,7 @@ namespace Integrative.Lara.Delta
             List = list;
         }
 
+        // ReSharper disable once InconsistentNaming
         public string ToJSON()
         {
             return LaraTools.Serialize(this);

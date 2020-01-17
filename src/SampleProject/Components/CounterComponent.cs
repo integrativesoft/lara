@@ -4,30 +4,29 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Collections.Generic;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.Components
 {
     [LaraWebComponent(MyCounter)]
-    class CounterComponent : WebComponent
+    internal class CounterComponent : WebComponent
     {
-        public const string MyCounter = "my-counter";
+        private const string MyCounter = "my-counter";
 
-        readonly Element _div;
-        readonly CounterData _data;
+        private readonly Element _div;
 
         public CounterComponent() : base(MyCounter)
         {
             _div = Create("div");
-            _data = new CounterData();
+            var data = new CounterData();
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push(_div, Class)
                 .Push("span")
-                    .BindInnerText(_data, x => x.Counter.ToString())
+                    .BindInnerText(data, x => x.Counter.ToString())
                 .Pop()
                 .Push("button", "btn btn-primary ml-2")
-                    .On("click", () => _data.Counter++)
+                    .On("click", () => data.Counter++)
                     .AppendText("increase")
                 .Pop()
             .Pop();
@@ -35,7 +34,7 @@ namespace SampleProject
 
         protected override IEnumerable<string> GetObservedAttributes()
         {
-            return new string[] { "class" };
+            return new[] { "class" };
         }
 
         protected override void OnAttributeChanged(string attribute)
@@ -47,9 +46,9 @@ namespace SampleProject
         }
     }
 
-    class CounterData : BindableBase
+    internal class CounterData : BindableBase
     {
-        int _counter;
+        private int _counter;
 
         public int Counter
         {

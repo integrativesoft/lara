@@ -9,14 +9,14 @@ using System.Globalization;
 using System.Text;
 using System.Web;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    sealed class DocumentWriter
+    internal sealed class DocumentWriter
     {
         public const int MaxLevelDeep = 500;
 
-        readonly Document? _document;
-        readonly StringBuilder _builder;
+        private readonly Document? _document;
+        private readonly StringBuilder _builder;
 
         public DocumentWriter(Document document)
             : this()

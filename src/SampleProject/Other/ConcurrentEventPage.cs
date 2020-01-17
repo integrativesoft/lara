@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace SampleProject.Other
 {
     [LaraPage("/async")]
-    class ConcurrentEventPage : IPage
+    internal class ConcurrentEventPage : IPage
     {
-        readonly Element _lines = Element.Create("div");
-        readonly Random _random = new Random();
+        private readonly Element _lines = Element.Create("div");
+        private readonly Random _random = new Random();
 
-        int _counter;
+        private int _counter;
 
         public Task OnGet()
         {

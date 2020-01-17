@@ -4,22 +4,22 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.WebSockets;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class PageContext : BaseContext, IPageContext
+    internal sealed class PageContext : BaseContext, IPageContext
     {
         public Document? DocumentInternal { get; internal set; }
 
         public Document Document
             => DocumentInternal ?? throw new MissingMemberException(nameof(PageContext), nameof(Document));
 
-        readonly JSBridge _bridge;
-        readonly Navigation _navigation;
-        readonly Connection _connection;
+        private readonly JSBridge _bridge;
+        private readonly Navigation _navigation;
+        private readonly Connection _connection;
 
         public PageContext(Application app, HttpContext http, Connection connection)
             : base(app, http)

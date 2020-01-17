@@ -4,7 +4,6 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -12,7 +11,7 @@ using System.Net;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    class DummyContext : BaseContext, IPageContext, IWebServiceContext
+    internal class DummyContext : BaseContext, IPageContext, IWebServiceContext
     {
         private DummyContext(Application app, Mock<HttpContext> http)
             : base(app, http.Object)
@@ -28,7 +27,7 @@ namespace Integrative.Lara.Tests.Middleware
 
         public Document Document => throw new NotImplementedException();
 
-        readonly Mock<IJSBridge> _bridge = new Mock<IJSBridge>();
+        private readonly Mock<IJSBridge> _bridge = new Mock<IJSBridge>();
 
         public IJSBridge JSBridge { get; set; }
 
@@ -52,7 +51,7 @@ namespace Integrative.Lara.Tests.Middleware
             Application.Dispose();
         }
 
-        public bool TryGetSession(out Session session)
+        public bool TryGetSession(out Session? session)
         {
             throw new NotImplementedException();
         }

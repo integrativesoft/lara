@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class FocusDelta : BaseDelta
+    internal sealed class FocusDelta : BaseDelta
     {
         [DataMember]
         public string ElementId { get; set; } = string.Empty;
@@ -20,13 +20,10 @@ namespace Integrative.Lara.Delta
 
         public static void Enqueue(Element element)
         {
-            if (element.Document != null)
+            element.Document?.Enqueue(new FocusDelta
             {
-                element.Document.Enqueue(new FocusDelta
-                {
-                    ElementId = element.EnsureElementId(),
-                });
-            }
+                ElementId = element.EnsureElementId(),
+            });
         }
     }
 }

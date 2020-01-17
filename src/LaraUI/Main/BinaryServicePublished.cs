@@ -4,14 +4,13 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class BinaryServicePublished : IPublishedItem
+    internal sealed class BinaryServicePublished : IPublishedItem
     {
         public Func<IBinaryService> Factory { get; }
         public string ContentType { get; }

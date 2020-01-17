@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class SubmitJsDelta : BaseDelta
+    internal sealed class SubmitJsDelta : BaseDelta
     {
         [DataMember]
         public string Code { get; set; } = string.Empty;
@@ -17,7 +17,7 @@ namespace Integrative.Lara.Delta
         [DataMember(EmitDefaultValue = false)]
         public string? Payload { get; set; }
 
-        public SubmitJsDelta() : base(DeltaType.SubmitJS)
+        public SubmitJsDelta() : base(DeltaType.SubmitJs)
         {
         }
     }

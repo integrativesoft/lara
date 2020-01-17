@@ -4,8 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Tools;
 using System;
 using System.Net;
 using System.Runtime.Serialization;
@@ -15,24 +13,24 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    class RemovablePage : IPage
+    internal class RemovablePage : IPage
     {
         public Task OnGet() => Task.CompletedTask;
     }
 
-    class RemovableComponent : WebComponent
+    internal class RemovableComponent : WebComponent
     {
         public RemovableComponent() : base("x-removable")
         {
         }
     }
 
-    class RemovableService : IWebService
+    internal class RemovableService : IWebService
     {
         public Task<string> Execute() => Task.FromResult(string.Empty);
     }
 
-    class MyBinary : IBinaryService
+    internal class MyBinary : IBinaryService
     {
         public Task<byte[]> Execute()
         {
@@ -57,7 +55,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [DataContract]
-        class MyData
+        private class MyData
         {
             [DataMember]
             public int Counter { get; set; }
@@ -158,7 +156,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [LaraWebServiceAttribute(Address = "/myWS")]
-        class MyWebService : IWebService
+        private class MyWebService : IWebService
         {
             public Task<string> Execute()
             {
@@ -167,7 +165,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [LaraPageAttribute("/myPage")]
-        class MyPage : IPage
+        private class MyPage : IPage
         {
             public Task OnGet()
             {
@@ -178,15 +176,15 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesService()
         {
-            const string Address = "/mydummy1";
+            const string address = "/mydummy1";
             using var app = new Application();
             app.PublishService(new WebServiceContent
             {
-                Address = Address,
+                Address = address,
                 Method = "POST",
-                Factory = () => new DummyWS()
+                Factory = () => new DummyWs()
             });
-            var combined = Published.CombinePathMethod(Address, "POST");
+            var combined = Published.CombinePathMethod(address, "POST");
             var found = app.TryGetNode(combined, out var item);
             Assert.True(found);
             var service = item as WebServicePublished;
@@ -194,7 +192,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.NotNull(service!.Factory());
         }
 
-        class DummyWS : IWebService
+        private class DummyWs : IWebService
         {
             public Task<string> Execute() => Task.FromResult(string.Empty);
         }
@@ -202,15 +200,15 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesBinaryService()
         {
-            const string Address = "/mydummy2";
+            const string address = "/mydummy2";
             using var app = new Application();
             app.PublishService(new BinaryServiceContent
             {
-                Address = Address,
+                Address = address,
                 Method = "POST",
-                Factory = () => new DummyBinaryWS()
+                Factory = () => new DummyBinaryWs()
             });
-            var combined = Published.CombinePathMethod(Address, "POST");
+            var combined = Published.CombinePathMethod(address, "POST");
             var found = app.TryGetNode(combined, out var item);
             Assert.True(found);
             var service = item as BinaryServicePublished;
@@ -218,7 +216,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.NotNull(service!.Factory());
         }
 
-        class DummyBinaryWS : IBinaryService
+        private class DummyBinaryWs : IBinaryService
         {
             public Task<byte[]> Execute() => Task.FromResult(Array.Empty<byte>());
         }
@@ -226,34 +224,35 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void PublishAssembliesPage()
         {
-            const string Address = "/mypapapapa";
+            const string address = "/mypapapapa";
             using var app = new Application();
-            app.PublishPage(Address, () => new MyPage());
-            bool found = app.TryGetNode(Address, out var item);
+            app.PublishPage(address, () => new MyPage());
+            bool found = app.TryGetNode(address, out var item);
             Assert.True(found);
             var page = item as PagePublished;
+            Assert.NotNull(page);
             Assert.NotNull(page!.CreateInstance());
         }
 
         [Fact]
         public void UnpublishWebservice()
         {
-            const string Address = "/mylalala";
+            const string address = "/mylalala";
             using var app = new Application();
             LaraUI.Publish(new WebServiceContent
             {
-                Address = Address,
+                Address = address,
                 Factory = () => new MyWebService()
             });
             LaraUI.UnPublish("/mylalala", "POST");
-            var combined = Published.CombinePathMethod(Address, "POST");
+            var combined = Published.CombinePathMethod(address, "POST");
             Assert.False(app.TryGetNode(combined, out _));
         }
 
         [Fact]
         public void VerifyTypeException()
         {
-            bool found = false;
+            var found = false;
             try
             {
                 AssembliesReader.VerifyType(typeof(MyPage), "a", typeof(Element));
@@ -289,17 +288,18 @@ namespace Integrative.Lara.Tests.Middleware
             app.PublishAssemblies();
         }
 
-        readonly string _serviceName = "/removableService" + GetRandom();
-        readonly string _componentName = "x-removable" + GetRandom();
-        readonly string _pageName = "/removablePage" + GetRandom();
-        readonly string _fileName = "/removableFile" + GetRandom();
+        private readonly string _serviceName = "/removableService" + GetRandom();
+        private readonly string _componentName = "x-removable" + GetRandom();
+        private readonly string _pageName = "/removablePage" + GetRandom();
+        private readonly string _fileName = "/removableFile" + GetRandom();
 
-        static string GetRandom()
+        private static string GetRandom()
         {
             var random = new Random();
             return random.Next(0, int.MaxValue).ToString();
         }
 
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private void VerifyFound(Application app, bool found)
         {
             Assert.Equal(found, app.TryGetNode(_pageName, out _));

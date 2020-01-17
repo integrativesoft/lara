@@ -4,12 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    interface IPublishedItem
+    internal interface IPublishedItem
     {
         Task Run(Application app, HttpContext http, LaraOptions options);
     }

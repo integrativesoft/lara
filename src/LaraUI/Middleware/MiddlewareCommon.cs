@@ -4,9 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -15,10 +12,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    static class MiddlewareCommon
+    internal static class MiddlewareCommon
     {
         public static async Task SendStatusReply(HttpContext context, HttpStatusCode code, string text)
         {
@@ -59,6 +57,7 @@ namespace Integrative.Lara.Middleware
             http.Response.Headers.Add("Content-Type", "text/html; charset=utf-8");
         }
 
+        // ReSharper disable once InconsistentNaming
         public static void AddHeaderJSON(HttpContext http)
         {
             http.Response.Headers.Add("Content-Type", "application/json");
@@ -70,7 +69,7 @@ namespace Integrative.Lara.Middleware
             return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out string value)
                 && Guid.TryParseExact(value, GlobalConstants.GuidFormat, out var guid)
                 && app.TryGetConnection(guid, out connection)
-                && connection.RemoteIP.Equals(http.Connection.RemoteIpAddress);
+                && connection.RemoteIp.Equals(http.Connection.RemoteIpAddress);
         }
 
         public static bool TryGetParameter(IQueryCollection query, string name, [NotNullWhen(true)] out string? value)

@@ -11,12 +11,12 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class Connections : IDisposable
+    internal sealed class Connections : IDisposable
     {
-        readonly ConcurrentDictionary<Guid, Connection> _connections;
-        readonly StaleConnectionsCollector _collector;
+        private readonly ConcurrentDictionary<Guid, Connection> _connections;
+        private readonly StaleConnectionsCollector _collector;
 
         public Connections()
             : this(StaleConnectionsCollector.DefaultTimerInterval, StaleConnectionsCollector.DefaultExpireInterval)
@@ -86,7 +86,7 @@ namespace Integrative.Lara.Main
 
         public IEnumerable<KeyValuePair<Guid, Connection>> GetConnections() => _connections;
 
-        bool _disposed;
+        private bool _disposed;
 
         public void Dispose()
         {

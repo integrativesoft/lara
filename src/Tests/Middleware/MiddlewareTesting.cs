@@ -4,11 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
-using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,7 +26,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware
 {
-    class MyStatusPage : IPage
+    internal class MyStatusPage : IPage
     {
         public Task OnGet()
         {
@@ -37,7 +34,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
     }
 
-    class MyCustomErrorPage : IPage
+    internal class MyCustomErrorPage : IPage
     {
         public const string Text = "Custom error page";
 
@@ -150,9 +147,9 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.True(result);
         }
 
-        class MyQueryCollection : IQueryCollection
+        private class MyQueryCollection : IQueryCollection
         {
-            readonly Dictionary<string, StringValues> _map = new Dictionary<string, StringValues>();
+            private readonly Dictionary<string, StringValues> _map = new Dictionary<string, StringValues>();
 
             public StringValues this[string key] => _map[key];
 
@@ -641,7 +638,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(IPAddress.Loopback, x.IPAddress);
         }
 
-        readonly static object _myLock = new object();
+        private static readonly object _myLock = new object();
 
         [Fact]
         public void LaraUiDefaultStatic()
@@ -702,7 +699,7 @@ namespace Integrative.Lara.Tests.Middleware
         {
             var x = new Mock<IPageContext>();
             var doc = new Document(new MyPage(), 100);
-            x.Setup(x => x.Document).Returns(doc);
+            x.Setup(x1 => x1.Document).Returns(doc);
             LaraUI.InternalContext.Value = x.Object;
             Assert.Same(doc, LaraUI.Document);
             Assert.Null(LaraUI.GetContextDocument(null));
@@ -729,7 +726,7 @@ namespace Integrative.Lara.Tests.Middleware
             var host = new Mock<IWebHost>();
             x.SetHost(host.Object);
             var token = CancellationToken.None;
-            host.Setup(x => x.StopAsync(token)).Callback(() => counter++);
+            host.Setup(x1 => x1.StopAsync(token)).Callback(() => counter++);
 
             await x.Stop();
             Assert.Equal(1, counter);

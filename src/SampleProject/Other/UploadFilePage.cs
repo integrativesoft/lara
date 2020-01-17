@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace SampleProject.Other
 {
     [LaraPage(Address)]
-    class UploadFilePage : IPage
+    internal class UploadFilePage : IPage
     {
         public const string Address = "/upload";
 
-        readonly InputElement _file = new InputElement();
-        readonly Element _span = Element.Create("span");
+        private readonly InputElement _file = new InputElement();
+        private readonly Element _span = Element.Create("span");
 
         public Task OnGet()
         {

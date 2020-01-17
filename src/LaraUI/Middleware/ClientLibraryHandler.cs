@@ -4,23 +4,21 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    sealed class ClientLibraryHandler : BaseHandler
+    internal sealed class ClientLibraryHandler : BaseHandler
     {
-        const string ResourceName = "Integrative.Lara.lara-client.js";
+        private const string ResourceName = "Integrative.Lara.lara-client.js";
 
-        readonly string _address;
-        readonly byte[] _library;
+        private readonly string _address;
+        private readonly byte[] _library;
 
         public ClientLibraryHandler(RequestDelegate next) : base(next)
         {

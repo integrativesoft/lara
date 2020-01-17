@@ -7,11 +7,11 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Integrative.Lara.Components
+namespace Integrative.Lara
 {
-    sealed class Shadow : Element
+    internal sealed class Shadow : Element
     {
-        public const string ShadowTagName = "__shadow";
+        private const string ShadowTagName = "__shadow";
 
         public Shadow(WebComponent parent) : base(ShadowTagName)
         {

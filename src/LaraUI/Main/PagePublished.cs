@@ -4,21 +4,19 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
-using Integrative.Lara.Middleware;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class PagePublished : IPublishedItem
+    internal sealed class PagePublished : IPublishedItem
     {
-        readonly Func<IPage> _factory;
+        private readonly Func<IPage> _factory;
 
-        public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
+        private HttpStatusCode StatusCode { get; } = HttpStatusCode.OK;
 
         public PagePublished(Func<IPage> factory)
         {

@@ -6,9 +6,9 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
-    enum ContentNodeType
+    internal enum ContentNodeType
     {
         Element = 1,
         Text = 2,
@@ -19,7 +19,7 @@ namespace Integrative.Lara.Delta
     [KnownType(typeof(ContentTextNode))]
     [KnownType(typeof(ContentElementNode))]
     [KnownType(typeof(ContentArrayNode))]
-    abstract class ContentNode
+    internal abstract class ContentNode
     {
         [DataMember]
         public ContentNodeType Type { get; set; }

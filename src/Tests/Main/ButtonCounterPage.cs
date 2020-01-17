@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tests.Main
 {
-    class ButtonCounterPage : IPage
+    internal class ButtonCounterPage : IPage
     {
-        public const string ButtonId = "MyCounterButton";
+        private const string ButtonId = "MyCounterButton";
 
-        readonly bool _useSockets;
+        private readonly bool _useSockets;
 
         public ButtonCounterPage(bool useSockets)
         {
             _useSockets = useSockets;
         }
 
-        int counter = 0;
-
-        public string? LastPath { get; private set; }
+        private int _counter;
 
         public Task OnGet()
         {
@@ -38,9 +36,8 @@ namespace Integrative.Lara.Tests.Main
                 LongRunning = _useSockets,
                 Handler = () =>
                 {
-                    counter++;
-                    text.Data = $"Clicked {counter} times";
-                    LastPath = LaraUI.Context.Http.Request.Path;
+                    _counter++;
+                    text.Data = $"Clicked {_counter} times";
                     return Task.CompletedTask;
                 }
             });

@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class NodeAddedDelta : BaseDelta
+    internal sealed class NodeAddedDelta : BaseDelta
     {
         [DataMember]
         public string ParentId { get; set; } = string.Empty;
@@ -24,16 +24,14 @@ namespace Integrative.Lara.Delta
         public static void Enqueue(Node node)
         {
             var parent = node.ParentElement;
-            if (parent != null && parent.TryGetQueue(out var document))
+            if (parent == null || !parent.TryGetQueue(out var document)) return;
+            var parentId = parent.EnsureElementId();
+            var content = node.GetContentNode();
+            document.Enqueue(new NodeAddedDelta
             {
-                var parentId = parent.EnsureElementId();
-                var content = node.GetContentNode();
-                document.Enqueue(new NodeAddedDelta
-                {
-                    ParentId = parentId,
-                    Node = content,
-                });
-            }
+                ParentId = parentId,
+                Node = content,
+            });
         }
     }
 }

@@ -6,11 +6,11 @@ Author: Pablo Carbonell
 
 using System.Collections.Generic;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    sealed class DocumentIdMap
+    internal sealed class DocumentIdMap
     {
-        readonly Dictionary<string, Element> _map;
+        private readonly Dictionary<string, Element> _map;
 
         public DocumentIdMap()
         {

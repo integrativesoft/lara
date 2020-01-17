@@ -4,13 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.DOM;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class TextModifiedDelta : BaseDelta
+    internal sealed class TextModifiedDelta : BaseDelta
     {
         [DataMember]
         public string ParentElementId { get; set; } = string.Empty;
@@ -28,16 +27,14 @@ namespace Integrative.Lara.Delta
         public static void Enqueue(TextNode node)
         {
             var parent = node.ParentElement;
-            if (parent != null && parent.TryGetQueue(out var document))
+            if (parent == null || !parent.TryGetQueue(out var document)) return;
+            var index = parent.GetChildNodePosition(node);
+            document.Enqueue(new TextModifiedDelta
             {
-                int index = parent.GetChildNodePosition(node);
-                document.Enqueue(new TextModifiedDelta
-                {
-                    ParentElementId = parent.EnsureElementId(),
-                    ChildNodeIndex = index,
-                    Text = node.Data
-                });
-            }
+                ParentElementId = parent.EnsureElementId(),
+                ChildNodeIndex = index,
+                Text = node.Data
+            });
         }
     }
 }

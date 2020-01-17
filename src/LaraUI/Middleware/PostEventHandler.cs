@@ -4,10 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.Main;
-using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -15,10 +11,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    sealed class PostEventHandler : BaseHandler
+    internal sealed class PostEventHandler : BaseHandler
     {
         public const string EventPrefix = "/_event";
         public const string AjaxMethod = "POST";
@@ -27,7 +24,7 @@ namespace Integrative.Lara.Middleware
         public static event EventHandler? EventComplete;
         private static readonly EventArgs _eventArgs = new EventArgs();
 
-        readonly Application _app;
+        private readonly Application _app;
 
         public PostEventHandler(Application app, RequestDelegate next) : base(next)
         {
@@ -137,14 +134,14 @@ namespace Integrative.Lara.Middleware
         private static async Task ProcessRequestDocument(PostEventContext context, Document document)
         {
             Task release;
-            using (var access = await document.Semaphore.UseWaitAsync())
+            using (await document.Semaphore.UseWaitAsync())
             {
                 release = await RunEvent(context);
             }
             await release;
         }
 
-        internal static async Task<Task> RunEvent(PostEventContext post)
+        private static async Task<Task> RunEvent(PostEventContext post)
         {
             var connection = post.GetConnection();
             var document = post.GetDocument();

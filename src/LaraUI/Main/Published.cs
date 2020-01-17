@@ -4,16 +4,15 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
 using System;
 using System.Collections.Generic;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class Published : IDisposable
+    internal sealed class Published : IDisposable
     {
-        readonly Dictionary<string, IPublishedItem> _published;
-        readonly ComponentRegistry _components;
+        private readonly Dictionary<string, IPublishedItem> _published;
+        private readonly ComponentRegistry _components;
         
         public Connections Connections { get; }
 
@@ -31,7 +30,7 @@ namespace Integrative.Lara.Main
             Connections.Clear();
         }
 
-        bool _disposed;
+        private bool _disposed;
 
         public void Dispose()
         {

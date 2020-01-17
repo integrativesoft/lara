@@ -4,9 +4,6 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
-using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Net;
@@ -20,9 +17,9 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class Application : IDisposable
     {
-        readonly Published _published;
-        
-        IModeController? _modeController;
+        private readonly Published _published;
+
+        private IModeController? _modeController;
 
         /// <summary>
         /// Web host instance created after calling the Start() method

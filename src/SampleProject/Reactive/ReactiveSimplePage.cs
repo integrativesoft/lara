@@ -4,17 +4,18 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Main;
 
-namespace SampleProject
+namespace SampleProject.Reactive
 {
     [LaraPage(Address = PageAddress)]
-    class ReactiveSimplePage : IPage
+    internal class ReactiveSimplePage : IPage
     {
         public const string PageAddress = "/reactor1";
 
-        readonly SimpleData _data = new SimpleData();
+        private readonly SimpleData _data = new SimpleData();
 
         public Task OnGet()
         {
@@ -36,9 +37,9 @@ namespace SampleProject
         }
     }
 
-    class SimpleData : BindableBase
+    internal class SimpleData : BindableBase
     {
-        int _counter;
+        private int _counter;
 
         public int Counter
         {

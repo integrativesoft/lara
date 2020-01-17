@@ -4,7 +4,6 @@ Created: 4/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,8 +17,8 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class LocalhostFilter
     {
-        readonly RequestDelegate _next;
-        readonly ILogger<LocalhostFilter> _logger;
+        private readonly RequestDelegate _next;
+        private readonly ILogger<LocalhostFilter> _logger;
 
         /// <summary>
         /// Constructor

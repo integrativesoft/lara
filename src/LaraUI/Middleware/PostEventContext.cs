@@ -4,15 +4,14 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class PostEventContext
+    internal class PostEventContext
     {
         public Application Application { get; set; }
         public HttpContext Http { get; set; }

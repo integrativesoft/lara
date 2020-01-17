@@ -4,10 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -54,13 +50,13 @@ namespace Integrative.Lara
         private readonly Queue<BaseDelta> _queue;
         internal SemaphoreSlim Semaphore { get; }
 
-        readonly ServerEventsController _serverEvents;
-        readonly MessageRegistry _messageRegistry;
-        readonly Sequencer _sequencer = new Sequencer();
+        private readonly ServerEventsController _serverEvents;
+        private readonly MessageRegistry _messageRegistry;
+        private readonly Sequencer _sequencer = new Sequencer();
 
         internal Dictionary<string, EventSettings> Events { get; } = new Dictionary<string, EventSettings>();
 
-        int _serializer;
+        private int _serializer;
 
         /// <summary>
         /// Occurs when the document is unloaded
@@ -98,7 +94,7 @@ namespace Integrative.Lara
         /// </value>
         public BodyElement Body { get; }
 
-        internal DateTime LastUTC { get; private set; }
+        internal DateTime LastUtc { get; private set; }
 
         internal Queue<BaseDelta> GetQueue() => _queue;
 
@@ -149,12 +145,12 @@ namespace Integrative.Lara
 
         internal void UpdateTimestamp()
         {
-            LastUTC = DateTime.UtcNow;
+            LastUtc = DateTime.UtcNow;
         }
 
         internal void ModifyLastUtcForTesting(DateTime value)
         {
-            LastUTC = value;
+            LastUtc = value;
         }
 
         internal string GenerateElementId()

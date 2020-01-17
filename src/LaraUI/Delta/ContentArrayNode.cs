@@ -7,10 +7,10 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class ContentArrayNode : ContentNode
+    internal sealed class ContentArrayNode : ContentNode
     {
         [DataMember]
         public List<ContentNode>? Nodes { get; set; }

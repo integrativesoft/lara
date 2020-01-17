@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace SampleProject.Other
 {
-    class Tools
+    internal class Tools
     {
         public static byte[] LoadEmbeddedResource(Assembly assembly, string resourceName)
         {

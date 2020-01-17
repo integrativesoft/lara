@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -16,13 +14,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 [assembly: InternalsVisibleTo("Tests")]
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
-    static class LaraTools
+    internal static class LaraTools
     {
-        readonly static DataContractJsonSerializerSettings _jsonSettings;
+        private static readonly DataContractJsonSerializerSettings _jsonSettings;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static LaraTools()

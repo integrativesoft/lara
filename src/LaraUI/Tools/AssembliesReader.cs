@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
-    static class AssembliesReader
+    internal static class AssembliesReader
     {
         public static void LoadAssemblies(Application app)
         {

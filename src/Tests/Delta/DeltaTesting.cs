@@ -4,11 +4,9 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using Integrative.Lara.Tests.DOM;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
-using System;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Delta

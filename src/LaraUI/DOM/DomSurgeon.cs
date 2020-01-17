@@ -4,16 +4,15 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    sealed class DomSurgeon
+    internal sealed class DomSurgeon
     {
-        readonly Element _parent;
+        private readonly Element _parent;
 
         public DomSurgeon(Element parent)
         {

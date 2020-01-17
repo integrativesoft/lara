@@ -4,21 +4,20 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class BrowserAppController : BaseModeController
+    internal class BrowserAppController : BaseModeController
     {
         private const double DefaultTimerInterval = 20 * 1000;          // 20 seconds to trigger updates
         private const double DefaultExpireInterval = 60 * 1000;         // 60 seconds to expire
 
         public new const double DefaultKeepAliveInterval = DefaultExpireInterval / 2.5;
 
-        Connection? _connection;
+        private Connection? _connection;
 
         public BrowserAppController(Application app)
             : base(app, ApplicationMode.BrowserApp)

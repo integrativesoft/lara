@@ -7,15 +7,15 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.Components
 {
     [LaraWebComponent(MyCheckbox)]
-    class CheckboxComponent : WebComponent
+    internal class CheckboxComponent : WebComponent
     {
         public const string MyCheckbox = "my-checkbox";
 
-        readonly InputElement _checkbox;
-        readonly Element _label;
+        private readonly InputElement _checkbox;
+        private readonly Element _label;
 
         public CheckboxComponent() : base(MyCheckbox)
         {
@@ -45,7 +45,7 @@ namespace SampleProject
             set => _checkbox.Checked = value;
         }
 
-        string? _labelText;
+        private string? _labelText;
 
         public string? Label
         {
@@ -59,7 +59,7 @@ namespace SampleProject
 
         protected override IEnumerable<string> GetObservedAttributes()
         {
-            return new string[] { "checked", "label", "class" };
+            return new[] { "checked", "label", "class" };
         }
 
         protected override void OnAttributeChanged(string attribute)

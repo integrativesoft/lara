@@ -7,14 +7,14 @@ Author: Pablo Carbonell
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Integrative.Lara.Reactive
+namespace Integrative.Lara
 {
-    class CollectionUpdater<T>
+    internal class CollectionUpdater<T>
         where T : class, INotifyPropertyChanged
     {
-        readonly BindChildrenOptions<T> _options;
-        readonly Element _element;
-        readonly NotifyCollectionChangedEventArgs _args;
+        private readonly BindChildrenOptions<T> _options;
+        private readonly Element _element;
+        private readonly NotifyCollectionChangedEventArgs _args;
 
         public CollectionUpdater(BindChildrenOptions<T> options,
             Element element,
@@ -41,7 +41,6 @@ namespace Integrative.Lara.Reactive
                 case NotifyCollectionChangedAction.Replace:
                     CollectionReplace();
                     break;
-                case NotifyCollectionChangedAction.Reset:
                 default:
                     CollectionReset(_element);
                     break;

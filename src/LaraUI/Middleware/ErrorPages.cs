@@ -4,9 +4,6 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
-using Integrative.Lara.Tools;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -18,9 +15,9 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class ErrorPages
     {
-        readonly Dictionary<HttpStatusCode, PagePublished> _map;
-        readonly Dictionary<HttpStatusCode, PagePublished> _defaults;
-        readonly Published _published;
+        private readonly Dictionary<HttpStatusCode, PagePublished> _map;
+        private readonly Dictionary<HttpStatusCode, PagePublished> _defaults;
+        private readonly Published _published;
 
         internal ErrorPages(Published published)
         {

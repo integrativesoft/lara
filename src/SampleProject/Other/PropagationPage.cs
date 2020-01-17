@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace SampleProject.Other
 {
     [LaraPage("/propagation")]
-    class PropagationPage : IPage
+    internal class PropagationPage : IPage
     {
-        readonly Element _divCounter = Element.Create("div");
-        int _counter;
+        private readonly Element _divCounter = Element.Create("div");
+        private int _counter;
 
         public Task OnGet()
         {

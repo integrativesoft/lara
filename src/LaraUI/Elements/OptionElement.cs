@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-
 namespace Integrative.Lara
 {
     /// <summary>

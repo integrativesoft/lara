@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class ElementLocator
+    internal sealed class ElementLocator
     {
         [DataMember]
         public string? StartingId { get; set; }

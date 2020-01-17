@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Net;
@@ -21,8 +19,8 @@ namespace Integrative.Lara.Tests.Main
         {
             using var connections = new Connections();
             var cnx = connections.CreateConnection(IPAddress.Loopback);
-            int count = 0;
-            foreach (var c in connections.GetConnections())
+            var count = 0;
+            foreach (var unused in connections.GetConnections())
             {
                 count++;
             }

@@ -4,9 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System.Collections;

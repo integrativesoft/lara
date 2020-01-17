@@ -4,10 +4,7 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
-using Integrative.Lara.Tools;
 using Moq;
 using System;
 using System.Net;
@@ -23,10 +20,11 @@ namespace Integrative.Lara.Tests.Middleware
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             LaraUI.InternalContext.Value = null;  // on purpose for testing purposes
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-            bool error = false;
+            var error = false;
             try
             {
-                var x = new DocumentLocal<int>
+                // ReSharper disable once ObjectCreationAsStatement
+                new DocumentLocal<int>
                 {
                     Value = 5
                 };
@@ -44,10 +42,11 @@ namespace Integrative.Lara.Tests.Middleware
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             LaraUI.InternalContext.Value = null;
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-            bool error = false;
+            var error = false;
             try
             {
-                var x = new SessionLocal<int>
+                // ReSharper disable once ObjectCreationAsStatement
+                new SessionLocal<int>
                 {
                     Value = 5
                 };

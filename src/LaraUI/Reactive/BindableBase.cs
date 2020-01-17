@@ -84,11 +84,9 @@ namespace Integrative.Lara
         public void EndUpdate()
         {
             _holdCounter--;
-            if (_holdCounter == 0 && _pendingEvents)
-            {
-                _pendingEvents = false;
-                OnPropertyChanged("");
-            }
+            if (_holdCounter != 0 || !_pendingEvents) return;
+            _pendingEvents = false;
+            OnPropertyChanged(string.Empty);
         }
     }
 }

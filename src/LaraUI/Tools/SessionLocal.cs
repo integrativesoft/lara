@@ -4,7 +4,6 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,7 +15,7 @@ namespace Integrative.Lara
     /// <typeparam name="T">Type of data to store</typeparam>
     public class SessionLocal<T>
     {
-        readonly Dictionary<Session, T> _storage;
+        private readonly Dictionary<Session, T> _storage;
 
         /// <summary>
         /// Constructor

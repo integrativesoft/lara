@@ -8,9 +8,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
-    static class SemaphoreSlimExtensions
+    internal static class SemaphoreSlimExtensions
     {
         public static async Task<IDisposable> UseWaitAsync(
             this SemaphoreSlim semaphore,

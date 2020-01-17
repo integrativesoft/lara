@@ -13,8 +13,8 @@ namespace Integrative.Lara.Tests.DOM
 {
     public class LaraBuilderTesting : DummyContextTesting
     {
-        readonly Element _root;
-        readonly LaraBuilder _builder;
+        private readonly Element _root;
+        private readonly LaraBuilder _builder;
 
         public LaraBuilderTesting()
         {
@@ -201,9 +201,9 @@ namespace Integrative.Lara.Tests.DOM
             VerifyInnerText(_root, "14");
         }
 
-        class MyData : BindableBase
+        private class MyData : BindableBase
         {
-            int _counter;
+            private int _counter;
 
             public int Counter
             {

@@ -4,22 +4,23 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System;
 using System.Threading.Tasks;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.KitchenSink
 {
-    class LongRunningSample
+    internal class LongRunningSample
     {
-        readonly Button _button = new Button();
-        readonly Element _card = Element.Create("div");
-        readonly Element _coffeeText = Element.Create("p");
-        readonly Element _counterText = Element.Create("p");
+        private readonly Button _button = new Button();
+        private readonly Element _card = Element.Create("div");
+        private readonly Element _coffeeText = Element.Create("p");
+        private readonly Element _counterText = Element.Create("p");
 
-        readonly string[] _coffees = { "capuccino", "americano", "latte", "mocha" };
-        readonly string[] _sizes = { "small", "medium", "large" };
-        readonly string[] _steps = { "Putting grounds into container",
+        private readonly string[] _coffees = { "capuccino", "americano", "latte", "mocha" };
+        private readonly string[] _sizes = { "small", "medium", "large" };
+
+        private readonly string[] _steps = { "Putting grounds into container",
             "Covering coffee and water mixture",
             "Filtering coffee and water mixture",
             "Serving..."

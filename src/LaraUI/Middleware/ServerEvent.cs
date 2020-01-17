@@ -4,7 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System;
 using System.Threading.Tasks;
 
@@ -15,10 +14,10 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class ServerEvent : IDisposable
     {
-        readonly Document _document;
-        readonly IDisposable _access;
+        private readonly Document _document;
+        private readonly IDisposable _access;
 
-        bool _disposed;
+        private bool _disposed;
 
         internal ServerEvent(Document document)
         {

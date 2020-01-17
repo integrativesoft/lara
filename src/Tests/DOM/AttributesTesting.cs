@@ -4,10 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
-using Integrative.Lara.Front.Tools;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
@@ -173,7 +169,7 @@ namespace Integrative.Lara.Tests.DOM
             bool found = false;
             try
             {
-                var x = Element.Create(" a");
+                Element.Create(" a");
             }
             catch (ArgumentException)
             {
@@ -259,7 +255,7 @@ namespace Integrative.Lara.Tests.DOM
         public void InputFilesAdd()
         {
             var file = new Mock<IFormFile>();
-            file.Setup(x => x.Name).Returns("abc");
+            file.Setup(x1 => x1.Name).Returns("abc");
             var x = new InputElement
             {
                 Type = "file"

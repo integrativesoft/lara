@@ -4,7 +4,6 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using System;
 
 namespace Integrative.Lara
@@ -14,7 +13,7 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class Session
     {
-        readonly Connection _parent;
+        private readonly Connection _parent;
 
         /// <summary>
         /// Occurs when the user closes all browser tabs
@@ -36,6 +35,7 @@ namespace Integrative.Lara
             {
                 Closing?.Invoke(this, args);
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch
             {
             }

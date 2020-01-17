@@ -4,15 +4,14 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
-namespace Integrative.Lara.Tools
+namespace Integrative.Lara
 {
-    static class ServerLauncher
+    internal static class ServerLauncher
     {
         public const string ErrorAddress = "/Error";
 

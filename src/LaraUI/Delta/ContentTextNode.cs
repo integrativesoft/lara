@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class ContentTextNode : ContentNode
+    internal sealed class ContentTextNode : ContentNode
     {
         [DataMember]
         public string? Data { get; set; }

@@ -4,9 +4,9 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-namespace Integrative.Lara.Front.Tools
+namespace Integrative.Lara
 {
-    static class ClassEditor
+    internal static class ClassEditor
     {
         public static string? AddClass(string? previous, string name)
         {

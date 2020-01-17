@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class NodeInsertedDelta : BaseDelta
+    internal sealed class NodeInsertedDelta : BaseDelta
     {
         [DataMember]
         public string ParentElementId { get; set; } = string.Empty;

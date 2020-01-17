@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using System.Text;
 using System.Web;
 
@@ -22,9 +21,9 @@ namespace Integrative.Lara
         /// <value>
         /// The type of the node.
         /// </value>
-        public override sealed NodeType NodeType => NodeType.Text;
+        public override NodeType NodeType => NodeType.Text;
 
-        string? _data;
+        private string? _data;
 
         /// <summary>
         /// Gets or sets the data of the node. This property gets and sets the raw (unencoded) HTML text for the node.
@@ -37,11 +36,9 @@ namespace Integrative.Lara
             get => _data;
             set
             {
-                if (_data != value)
-                {
-                    _data = value;
-                    TextModifiedDelta.Enqueue(this);
-                }
+                if (_data == value) return;
+                _data = value;
+                TextModifiedDelta.Enqueue(this);
             }
         }
 

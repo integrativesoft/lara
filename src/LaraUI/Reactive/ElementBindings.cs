@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Integrative.Lara.Reactive
+namespace Integrative.Lara
 {
-    sealed class ElementBindings
+    internal sealed class ElementBindings
     {
         private readonly Element _parent;
 

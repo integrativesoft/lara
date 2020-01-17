@@ -4,9 +4,9 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    static class GlobalConstants
+    internal static class GlobalConstants
     {
         public const string CookieSessionId = "_Lara_SessionId";
         public const string GuidFormat = "N";

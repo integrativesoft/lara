@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace SampleProject.Reactive
 {
-    class ReactiveInputData : BindableBase
+    internal class ReactiveInputData : BindableBase
     {
-        string? _text;
+        private string? _text;
         public string? Text
         {
             get => _text;
             set => SetProperty(ref _text, value);
         }
 
-        bool _checked;
+        private bool _checked;
         public bool Checked
         {
             get => _checked;
@@ -27,9 +27,9 @@ namespace SampleProject.Reactive
     }
 
     [LaraPage("/reactiveinput")]
-    class ReactiveInput : IPage
+    internal class ReactiveInput : IPage
     {
-        readonly ReactiveInputData _data = new ReactiveInputData();
+        private readonly ReactiveInputData _data = new ReactiveInputData();
 
         public Task OnGet()
         {

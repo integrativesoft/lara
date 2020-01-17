@@ -4,12 +4,11 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class DefaultErrorPage : IPage
+    internal class DefaultErrorPage : IPage
     {
         public string Title { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;

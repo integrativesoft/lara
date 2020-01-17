@@ -4,13 +4,14 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Main;
 
-namespace SampleProject
+namespace SampleProject.Components
 {
     [LaraPage(PageAddress)]
-    class CardPage : IPage
+    internal class CardPage : IPage
     {
         public const string PageAddress = "/card";
 

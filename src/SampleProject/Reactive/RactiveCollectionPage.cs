@@ -4,18 +4,19 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Main;
 
-namespace SampleProject
+namespace SampleProject.Reactive
 {
     [LaraPage(Address = PageAddress)]
-    class RactiveCollectionPage : IPage
+    internal class RactiveCollectionPage : IPage
     {
         public const string PageAddress = "/reactor2";
 
-        readonly MyDataTable _data = new MyDataTable();
+        private readonly MyDataTable _data = new MyDataTable();
 
         public Task OnGet()
         {
@@ -77,7 +78,7 @@ namespace SampleProject
         }
     }
 
-    class MyDataTable : BindableBase
+    internal class MyDataTable : BindableBase
     {
         public ObservableCollection<MyDataRow> Rows { get; } = new ObservableCollection<MyDataRow>();
 
@@ -102,16 +103,16 @@ namespace SampleProject
         }
     }
 
-    class MyDataRow : BindableBase
+    internal class MyDataRow : BindableBase
     {
-        readonly MyDataTable _parent;
+        private readonly MyDataTable _parent;
 
         public MyDataRow(MyDataTable parent)
         {
             _parent = parent;
         }
 
-        int _counter;
+        private int _counter;
         public int Counter
         {
             get => _counter;

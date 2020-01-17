@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class ContentAttribute
+    internal sealed class ContentAttribute
     {
         [DataMember]
         public string Attribute { get; set; } = string.Empty;

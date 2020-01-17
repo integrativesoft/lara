@@ -18,7 +18,7 @@ namespace Integrative.Lara.Tests.DOM
 {
     public class ElementAttributes : DummyContextTesting
     {
-        int _counter;
+        private int _counter;
 
         [Fact]
         public void ElementProperties()
@@ -243,7 +243,7 @@ namespace Integrative.Lara.Tests.DOM
         public void NotifyValueTextArea()
         {
             var x = new TextArea();
-            x.NotifyValue(new Lara.Delta.ElementEventValue
+            x.NotifyValue(new ElementEventValue
             {
                 Value = "lala"
             });
@@ -366,7 +366,7 @@ namespace Integrative.Lara.Tests.DOM
         public void SelectNotifyValue()
         {
             var select = new SelectElement();
-            select.NotifyValue(new Lara.Delta.ElementEventValue
+            select.NotifyValue(new ElementEventValue
             {
                 Value = "lala"
             });

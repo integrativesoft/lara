@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara.Tests.Main
 {
-    class MyPage : IPage, IDisposable
+    internal class MyPage : IPage, IDisposable
     {
         public bool Disposed { get; private set; }
 

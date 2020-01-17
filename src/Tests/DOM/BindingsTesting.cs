@@ -11,16 +11,16 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
-    class MyInputData : BindableBase
+    internal class MyInputData : BindableBase
     {
-        string? _myvalue;
+        private string? _myvalue;
         public string? MyValue
         {
             get => _myvalue;
             set => SetProperty(ref _myvalue, value);
         }
 
-        bool _mychecked;
+        private bool _mychecked;
         public bool MyChecked
         {
             get => _mychecked;
@@ -49,11 +49,11 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InnerTextReplacesPrevious()
         {
-            const string Bye = "<bye";
+            const string bye = "<bye";
             var x = Element.Create("span");
             x.InnerText = "hello";
-            x.InnerText = Bye;
-            Assert.Equal(Bye, x.InnerText);
+            x.InnerText = bye;
+            Assert.Equal(bye, x.InnerText);
             VerifyInnerData(x, "&lt;bye");
         }
 
@@ -290,9 +290,9 @@ namespace Integrative.Lara.Tests.DOM
             return span;
         }
 
-        class MyData : BindableBase
+        private class MyData : BindableBase
         {
-            int _counter;
+            private int _counter;
 
             public MyData()
             {
@@ -523,7 +523,7 @@ namespace Integrative.Lara.Tests.DOM
                 {
                     Attribute = "value",
                     BindObject = data,
-                    Property = x => x.MyValue + "a"
+                    Property = x1 => x1.MyValue + "a"
                 });
             });
         }
@@ -578,7 +578,7 @@ namespace Integrative.Lara.Tests.DOM
             var x = new BindInputOptions<MyInputData>()
             {
                 BindObject = new MyInputData(),
-                Property = x => "lala"
+                Property = x1 => "lala"
             };
             Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
         }
@@ -619,7 +619,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = new BindInnerTextOptions<MyInputData>
             {
-                Property = x => "lala"
+                Property = x1 => "lala"
             };
             Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
         }

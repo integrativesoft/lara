@@ -4,13 +4,14 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Main;
 
-namespace SampleProject
+namespace SampleProject.Components
 {
     [LaraPage(Address = PageAddress)]
-    class CheckboxPage : IPage
+    internal class CheckboxPage : IPage
     {
         public const string PageAddress = "/checkbox";
 

@@ -4,9 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
-using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Globalization;
@@ -20,9 +17,9 @@ namespace Integrative.Lara
     /// </summary>
     public class StaticContent : IPublishedItem
     {
-        const float RequiredCompressionFactor = 0.9f;
+        private const float RequiredCompressionFactor = 0.9f;
 
-        readonly byte[] _bytes;
+        private readonly byte[] _bytes;
 
         /// <summary>
         /// Returns the byte array that is sent to clients

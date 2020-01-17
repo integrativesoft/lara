@@ -4,17 +4,18 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Main;
 
-namespace SampleProject
+namespace SampleProject.Reactive
 {
     [LaraPage(Address = PageAddress)]
-    class ReactiveFeedPage : IPage
+    internal class ReactiveFeedPage : IPage
     {
         public const string PageAddress = "/reactor3";
 
-        readonly ReactiveFeedModel _data = new ReactiveFeedModel();
+        private readonly ReactiveFeedModel _data = new ReactiveFeedModel();
 
         public Task OnGet()
         {
@@ -40,9 +41,9 @@ namespace SampleProject
         }
     }
 
-    class ReactiveFeedModel : BindableBase
+    internal class ReactiveFeedModel : BindableBase
     {
-        bool _checked;
+        private bool _checked;
 
         public bool Checked
         {

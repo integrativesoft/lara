@@ -4,15 +4,15 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Globalization;
 using System.Threading.Tasks;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.KitchenSink
 {
-    sealed class CounterSample
+    internal sealed class CounterSample
     {
-        readonly InputElement _number;
+        private readonly InputElement _number;
         
         public Element Root { get; }
 

@@ -26,9 +26,9 @@ namespace Integrative.Lara
         }
     }
 
-    class MessageTypeRegistry
+    internal class MessageTypeRegistry
     {
-        readonly HashSet<Func<MessageEventArgs, Task>> _registry = new HashSet<Func<MessageEventArgs, Task>>();
+        private readonly HashSet<Func<MessageEventArgs, Task>> _registry = new HashSet<Func<MessageEventArgs, Task>>();
 
         public void Add(Func<MessageEventArgs, Task> handler)
         {
@@ -50,10 +50,10 @@ namespace Integrative.Lara
         }
     }
 
-    class MessageRegistry
+    internal class MessageRegistry
     {
-        readonly Document _parent;
-        readonly Dictionary<string, MessageTypeRegistry> _map;
+        private readonly Document _parent;
+        private readonly Dictionary<string, MessageTypeRegistry> _map;
 
         public MessageRegistry(Document parent)
         {

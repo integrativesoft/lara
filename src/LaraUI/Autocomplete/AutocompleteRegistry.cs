@@ -7,12 +7,12 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Integrative.Lara.Autocomplete
+namespace Integrative.Lara
 {
-    class AutocompleteRegistry
+    internal class AutocompleteRegistry
     {
-        readonly SessionLocal<Dictionary<string, AutocompleteElement>> _map;
-        readonly object _mapLock = new object();
+        private readonly SessionLocal<Dictionary<string, AutocompleteElement>> _map;
+        private readonly object _mapLock = new object();
 
         public AutocompleteRegistry()
         {
@@ -61,14 +61,15 @@ namespace Integrative.Lara.Autocomplete
 
         private int GetCount()
         {
-            var value = _map.Value;
-            if (value == null)
+            var value = GetValue();
+            return value?.Count ?? 0;
+        }
+
+        private Dictionary<string, AutocompleteElement>? GetValue()
+        {
+            lock (_mapLock)
             {
-                return 0;
-            }
-            else
-            {
-                return value.Count;
+                return _map.Value;
             }
         }
     }

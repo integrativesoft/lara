@@ -4,14 +4,17 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
-using SampleProject.Other;
 using System.Threading.Tasks;
+using Integrative.Lara;
+using SampleProject.Components;
+using SampleProject.Main;
+using SampleProject.Other;
+using SampleProject.Reactive;
 
-namespace SampleProject
+namespace SampleProject.KitchenSink
 {
     [LaraPage(Address = "/")]
-    sealed class KitchenSinkForm : IPage
+    internal sealed class KitchenSinkForm : IPage
     {
         public static void PublishImages(Application app)
         {

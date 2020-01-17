@@ -39,6 +39,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Bridge to execute JavaScript on the client
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         IJSBridge JSBridge { get; }
 
         /// <summary>
@@ -55,6 +56,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Bridge to execute JavaScript on the client
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public interface IJSBridge
     {
         /// <summary>

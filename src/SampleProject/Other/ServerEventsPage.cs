@@ -4,15 +4,15 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.Other
 {
     [LaraPage(Address = "/server")]
-    class ServerEventsPage : IPage
+    internal class ServerEventsPage : IPage
     {
-        readonly Button _button;
+        private readonly Button _button;
 
         public ServerEventsPage()
         {

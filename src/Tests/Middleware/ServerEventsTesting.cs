@@ -4,8 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Moq;
 using System;
@@ -18,9 +16,9 @@ namespace Integrative.Lara.Tests.Middleware
 {
     public class ServerEventsTesting : DummyContextTesting
     {
-        readonly Document _document;
-        readonly ServerEventsController _controller;
-        readonly Mock<WebSocket> _socket;
+        private readonly Document _document;
+        private readonly ServerEventsController _controller;
+        private readonly Mock<WebSocket> _socket;
 
         public ServerEventsTesting()
         {
@@ -124,7 +122,7 @@ namespace Integrative.Lara.Tests.Middleware
             _document.OpenEventQueue();
             _controller.ServerEventsOn();
             await _controller.GetSocketCompletion(_socket.Object);
-            using (var access = _document.StartServerEvent())
+            using (_document.StartServerEvent())
             {
                 _document.Body.AppendText("hello");
                 Assert.NotEmpty(_document.GetQueue());

@@ -4,7 +4,6 @@ Created: 9/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +15,7 @@ namespace Integrative.Lara
     /// <typeparam name="T">Value</typeparam>
     public class DocumentLocal<T>
     {
-        readonly Dictionary<Document, T> _storage;
+        private readonly Dictionary<Document, T> _storage;
 
         /// <summary>
         /// Constructor

@@ -4,14 +4,13 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using System.Globalization;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class TemplateBuilder
+    internal sealed class TemplateBuilder
     {
-        static readonly string _libraryUrl;
+        private static readonly string _libraryUrl;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static TemplateBuilder()

@@ -4,7 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +20,7 @@ namespace Integrative.Lara
         /// </summary>
         protected Element ShadowRoot => _shadow;
 
-        readonly Shadow _shadow;
+        private readonly Shadow _shadow;
 
         internal Shadow GetShadow() => _shadow;
 
@@ -33,7 +32,6 @@ namespace Integrative.Lara
         /// <param name="tagName">Component's custom tag name</param>
         protected WebComponent(string tagName) : base(tagName ?? throw new ArgumentNullException(nameof(tagName)))
         {
-            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             VerifyTypeThrow(tagName, GetType());
             _shadow = new Shadow(this);
         }
@@ -46,7 +44,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal static void VerifyTypeThrow(string tagName, Type componentType)
+        private static void VerifyTypeThrow(string tagName, Type componentType)
         {
             if (!VerifyType(tagName, componentType, out string error))
             {
@@ -58,7 +56,7 @@ namespace Integrative.Lara
         {
             if (!LaraUI.TryGetComponent(tagName, out var type))
             {
-                error = $"The tag '{tagName}' is not registered as web component. To register a webcomponent, either (1) decorate it with [LaraWebComponent] and run LaraUI.PublishAssemblies(), or (2) use LaraUI.Publish()."; ;
+                error = $"The tag '{tagName}' is not registered as web component. To register a webcomponent, either (1) decorate it with [LaraWebComponent] and run LaraUI.PublishAssemblies(), or (2) use LaraUI.Publish().";
                 return false;
             }
             else if (type != componentType)

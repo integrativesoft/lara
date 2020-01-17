@@ -4,15 +4,15 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using System;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class JSBridge : IJSBridge
+    // ReSharper disable once InconsistentNaming
+    internal sealed class JSBridge : IJSBridge
     {
-        readonly PageContext _parent;
+        private readonly PageContext _parent;
 
         public string? EventData { get; internal set; } = string.Empty;
 

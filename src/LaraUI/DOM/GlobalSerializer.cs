@@ -7,11 +7,11 @@ Author: Pablo Carbonell
 using System.Globalization;
 using System.Threading;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    static class GlobalSerializer
+    internal static class GlobalSerializer
     {
-        static long _counter = 0;
+        private static long _counter;
 
         public static string GenerateElementId()
         {

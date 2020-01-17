@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    static class ElementFactory
+    internal static class ElementFactory
     {
         private static readonly Dictionary<string, Type> _map;
 
@@ -85,6 +85,7 @@ namespace Integrative.Lara.DOM
             return element;
         }
 
+        // ReSharper disable once InconsistentNaming
         public static Element CreateElementNS(string ns, string tagName)
         {
             var element = CreateElement(tagName);

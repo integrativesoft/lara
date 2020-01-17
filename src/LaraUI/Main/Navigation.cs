@@ -6,14 +6,12 @@ Author: Pablo Carbonell
 
 using System;
 using System.Threading.Tasks;
-using Integrative.Lara.Delta;
-using Integrative.Lara.Middleware;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class Navigation : INavigation
+    internal sealed class Navigation : INavigation
     {
-        readonly PageContext _context;
+        private readonly PageContext _context;
 
         public string? RedirectLocation { get; private set; }
 

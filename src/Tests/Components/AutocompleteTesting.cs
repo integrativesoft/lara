@@ -4,19 +4,16 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Autocomplete;
-using Integrative.Lara.Delta;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Components
 {
-    class MyProvider : IAutocompleteProvider
+    internal class MyProvider : IAutocompleteProvider
     {
         public Task<AutocompleteResponse> GetAutocompleteList(string term)
         {
@@ -111,9 +108,9 @@ namespace Integrative.Lara.Tests.Components
             };
             var json = LaraUI.JSON.Stringify(payload);
 
-            bridge.Setup(x => x.Submit(code, json));
+            bridge.Setup(x1 => x1.Submit(code, json));
             doc.Body.AppendChild(x);
-            bridge.Verify(x => x.Submit(code, json), Times.Once);
+            bridge.Verify(x2 => x2.Submit(code, json), Times.Once);
         }
 
         [Fact]

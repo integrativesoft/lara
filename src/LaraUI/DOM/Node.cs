@@ -4,9 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
-using Integrative.Lara.Delta;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Integrative.Lara
@@ -35,7 +32,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Creates a node
         /// </summary>
-        internal protected Node()
+        protected internal Node()
         {
         }
 

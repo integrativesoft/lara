@@ -4,38 +4,35 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.KitchenSink
 {
-    class MultiselectSample
+    internal class MultiselectSample
     {
-        readonly SelectElement _select;
-        readonly Button _toggle;
-
         public Element Root { get; }
 
         public MultiselectSample()
         {
-            _select = new SelectElement
+            var @select = new SelectElement
             {
                 Id = "mymulti",
                 Class = "form-control",
                 Multiple = true
             };
-            _toggle = new Button
+            var toggle = new Button
             {
                 Class = "btn btn-primary"
             };
-            _toggle.AppendChild(new TextNode("Toggle"));
-            _select.AddOption("N", "North");
-            _select.AddOption("E", "East");
-            _select.AddOption("S", "South");
-            _select.AddOption("W", "West");
-            _toggle.On("click", () =>
+            toggle.AppendChild(new TextNode("Toggle"));
+            @select.AddOption("N", "North");
+            @select.AddOption("E", "East");
+            @select.AddOption("S", "South");
+            @select.AddOption("W", "West");
+            toggle.On("click", () =>
             {
-                foreach (var child in _select.Children)
+                foreach (var child in @select.Children)
                 {
                     if (child is OptionElement option)
                     {
@@ -49,11 +46,11 @@ namespace SampleProject
             var builder = new LaraBuilder(Root);
             builder
             .Push("div", "form-group col-md-2")
-                .Push(_select)
+                .Push(@select)
                 .Pop()
             .Pop()
             .Push("div", "form-group col-md-1")
-                .Push(_toggle)
+                .Push(toggle)
                 .Pop()
             .Pop();
         }

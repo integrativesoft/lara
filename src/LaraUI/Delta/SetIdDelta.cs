@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class SetIdDelta : BaseDelta
+    internal sealed class SetIdDelta : BaseDelta
     {
         [DataMember]
         public ElementLocator? Locator { get; set; }

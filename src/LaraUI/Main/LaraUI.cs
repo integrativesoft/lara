@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +17,7 @@ namespace Integrative.Lara
     /// <summary>
     /// The main Lara static class
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public static class LaraUI
     {
         #region Default application (obsolete)
@@ -176,7 +176,8 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="host">The host.</param>
         /// <returns>string with URL</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "Source of information is string")]
+        [SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "Source of information is string")]
+        // ReSharper disable once InconsistentNaming
         public static string GetFirstURL(IWebHost host)
         {
             host = host ?? throw new ArgumentNullException(nameof(host));
@@ -186,6 +187,7 @@ namespace Integrative.Lara
         /// <summary>
         /// JSON tools
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public static LaraJson JSON { get; } = new LaraJson();
 
         #endregion

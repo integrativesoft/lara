@@ -6,9 +6,9 @@ Author: Pablo Carbonell
 
 using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    abstract class BaseContext : ILaraContext
+    internal abstract class BaseContext : ILaraContext
     {
         public HttpContext Http { get; }
         public Application Application { get; }

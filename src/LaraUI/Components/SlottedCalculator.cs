@@ -4,9 +4,9 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-namespace Integrative.Lara.Components
+namespace Integrative.Lara
 {
-    static class SlottedCalculator
+    internal static class SlottedCalculator
     {
         public static void UpdateSlotted(Node node)
         {

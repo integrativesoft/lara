@@ -4,23 +4,22 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class KeepAliveHandler : BaseHandler
+    internal class KeepAliveHandler : BaseHandler
     {
-        readonly static Task<bool> TaskFalse = Task.FromResult(false);
-        readonly static Task<bool> TaskTrue = Task.FromResult(true);
+        private static readonly Task<bool> _taskFalse = Task.FromResult(false);
+        private static readonly Task<bool> _taskTrue = Task.FromResult(true);
 
-        public const string EventPrefix = "/_keepAlive";
-        public const string AjaxMethod = "POST";
+        private const string EventPrefix = "/_keepAlive";
+        private const string AjaxMethod = "POST";
 
-        readonly Application _app;
+        private readonly Application _app;
 
         public KeepAliveHandler(Application app, RequestDelegate next) : base(next)
         {
@@ -31,10 +30,10 @@ namespace Integrative.Lara.Middleware
         {
             if (!IsMatch(http))
             {
-                return TaskFalse;
+                return _taskFalse;
             }
             TryGetDocument(http, out _);
-            return TaskTrue;
+            return _taskTrue;
         }
 
         private static bool IsMatch(HttpContext http)
@@ -44,6 +43,7 @@ namespace Integrative.Lara.Middleware
                 && http.Request.Method == AjaxMethod;
         }
 
+        // ReSharper disable once UnusedMethodReturnValue.Local
         private bool TryGetDocument(HttpContext http, [NotNullWhen(true)] out Document? document)
         {
             document = default;

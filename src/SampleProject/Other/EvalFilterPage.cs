@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace SampleProject.Other
 {
     [LaraPage("/evalfilter")]
-    class EvalFilterPage : IPage
+    internal class EvalFilterPage : IPage
     {
-        readonly Element _span = Element.Create("span");
-        int _counter;
+        private readonly Element _span = Element.Create("span");
+        private int _counter;
 
         public Task OnGet()
         {

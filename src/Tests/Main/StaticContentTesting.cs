@@ -17,7 +17,7 @@ namespace Integrative.Lara.Tests.Main
 {
     public class StaticContentTesting : DummyContextTesting
     {
-        static readonly HttpClient _client;
+        private static readonly HttpClient _client;
 
         static StaticContentTesting()
         {
@@ -31,7 +31,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public void AreadyCompressedFileDoesNotGetCompressed()
         {
-            var bytes = LoadSampleJPEG();
+            var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
             Assert.Same(bytes, content.GetBytes());
             Assert.Equal(ContentTypes.ImageJpeg, content.ContentType);
@@ -39,12 +39,12 @@ namespace Integrative.Lara.Tests.Main
             Assert.False(string.IsNullOrEmpty(content.ETag));
         }
 
-        private byte[] LoadSampleJPEG()
+        private byte[] LoadSampleJpeg()
         {
             return LoadAsset("pexels-photo-248673.jpeg");
         }
 
-        private byte[] LoadCompressibleBMP()
+        private byte[] LoadCompressibleBmp()
         {
             return LoadAsset("Compressible.bmp");
         }
@@ -67,7 +67,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void RequestWithoutETagReceivesFile()
         {
-            var bytes = LoadSampleJPEG();
+            var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
             await _context.Application.Start();
@@ -84,7 +84,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void RequestWrongETagReceivesFile()
         {
-            var bytes = LoadSampleJPEG();
+            var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
             await _context.Application.Start(new StartServerOptions
@@ -112,7 +112,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void RequestCorrectETagReceivesNotModified()
         {
-            var bytes = LoadSampleJPEG();
+            var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
             await _context.Application.Start();
@@ -136,7 +136,7 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void CompressibleFileIsSentCompressed()
         {
-            var bytes = LoadCompressibleBMP();
+            var bytes = LoadCompressibleBmp();
             var content = new StaticContent(bytes, "image");
 
             await _context.Application.Start();

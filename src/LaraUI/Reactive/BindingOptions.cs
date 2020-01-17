@@ -4,7 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Reactive;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;

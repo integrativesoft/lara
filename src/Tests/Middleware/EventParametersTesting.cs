@@ -4,12 +4,9 @@ Created: 12/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Integrative.Lara.Tests.Middleware

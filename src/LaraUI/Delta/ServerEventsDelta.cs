@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    class ServerEventsDelta : BaseDelta
+    internal class ServerEventsDelta : BaseDelta
     {
         public ServerEventsDelta() : base(DeltaType.ServerEvents)
         {

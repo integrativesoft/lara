@@ -4,21 +4,19 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Http;  
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     [DataContract]
-    class EventParameters
+    internal class EventParameters
     {
         [DataMember]
         public Guid DocumentId { get; set; }
@@ -78,7 +76,7 @@ namespace Integrative.Lara.Middleware
     }
 
     [DataContract]
-    class SocketEventParameters : EventParameters
+    internal class SocketEventParameters : EventParameters
     {
         [DataMember(IsRequired = false)]
         public FormFileCollection? SocketFiles { get; set; }

@@ -4,15 +4,13 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Tools;
-using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    interface IModeController
+    internal interface IModeController
     {
         Task<IWebHost> Start(Application app, StartServerOptions options);
         Connection CreateConnection(IPAddress remoteIp);
@@ -21,7 +19,7 @@ namespace Integrative.Lara.Middleware
         bool LocalhostOnly { get; }
     }
 
-    static class ModeControllerFactory
+    internal static class ModeControllerFactory
     {
         public static IModeController Create(Application app, ApplicationMode mode)
         {
@@ -36,7 +34,7 @@ namespace Integrative.Lara.Middleware
         }
     }
 
-    class BaseModeController : IModeController
+    internal class BaseModeController : IModeController
     {
         public const double DefaultKeepAliveInterval
             = StaleConnectionsCollector.DefaultExpireInterval / 2.5;  // at least 2 message attempts per expire period

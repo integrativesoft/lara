@@ -4,7 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttribute("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
 
         /// <summary>

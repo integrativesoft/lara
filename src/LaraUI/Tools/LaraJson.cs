@@ -4,7 +4,6 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
@@ -75,8 +74,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of class</typeparam>
         /// <param name="instance">Instance to serialize</param>
         /// <returns>JSON string</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
-        public string Stringify<T>(T instance) => LaraTools.Serialize<T>(instance);
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
+        public string Stringify<T>(T instance) => LaraTools.Serialize(instance);
 
         /// <summary>
         /// Serializes a class decorated with DataContract to a JSON string
@@ -84,7 +83,7 @@ namespace Integrative.Lara
         /// <param name="instance">Instance to serialize</param>
         /// <param name="type">Type of class</param>
         /// <returns>JSON string</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public string Stringify(object instance, Type type) => LaraTools.Serialize(instance, type);
 
         internal LaraJson()

@@ -8,8 +8,6 @@ using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
@@ -49,7 +47,7 @@ namespace Integrative.Lara.Tests.Main
             response.Verify(x => x.Redirect("https://www.google.com"));
         }
 
-        class MyRedirectPage : IPage
+        private class MyRedirectPage : IPage
         {
             public Task OnGet()
             {
@@ -84,7 +82,7 @@ namespace Integrative.Lara.Tests.Main
         }
 
         [DataContract]
-        class MyClass
+        private class MyClass
         {
             [DataMember]
             public int Value { get; set; }

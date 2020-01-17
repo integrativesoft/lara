@@ -4,16 +4,16 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    sealed class DiscardHandler : BaseHandler
+    internal sealed class DiscardHandler : BaseHandler
     {
         private const int DiscardDelay = 3000;
 
-        readonly Application _app;
+        private readonly Application _app;
 
         public DiscardHandler(Application app, RequestDelegate next) : base(next)
         {

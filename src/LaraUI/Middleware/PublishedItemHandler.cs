@@ -4,16 +4,15 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    sealed class PublishedItemHandler : BaseHandler
+    internal sealed class PublishedItemHandler : BaseHandler
     {
-        readonly LaraOptions _options;
-        readonly Application _app;
+        private readonly LaraOptions _options;
+        private readonly Application _app;
 
         public PublishedItemHandler(RequestDelegate next, Application app, LaraOptions options) : base(next)
         {

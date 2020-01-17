@@ -7,9 +7,9 @@ Author: Pablo Carbonell
 using System;
 using System.Collections.Generic;
 
-namespace Integrative.Lara.Components
+namespace Integrative.Lara
 {
-    sealed class ComponentRegistry
+    internal sealed class ComponentRegistry
     {
         private readonly Dictionary<string, Type> _components;
 

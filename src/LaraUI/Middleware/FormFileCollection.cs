@@ -4,16 +4,16 @@ Created: 12/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     [DataContract]
-    class FormFileCollection : IFormFileCollection
+    internal class FormFileCollection : IFormFileCollection
     {
         [DataMember]
         public List<FormFile>? InnerList { get; set; }

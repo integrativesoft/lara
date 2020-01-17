@@ -4,7 +4,6 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Autocomplete;
 using System;
 
 namespace Integrative.Lara
@@ -34,9 +33,9 @@ namespace Integrative.Lara
             ShadowRoot.AppendChild(InnerInput);
         }
 
-        bool _pending, _applied;
+        private bool _pending, _applied;
 
-        AutocompleteOptions? _options;
+        private AutocompleteOptions? _options;
 
         internal AutocompleteOptions? GetOptions() => _options;
 

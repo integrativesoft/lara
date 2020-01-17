@@ -83,6 +83,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the IP address where the host is listening. By default, this is the loopback address.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public IPAddress IPAddress { get; set; } = IPAddress.Loopback;
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Initializes a new instance of the <see cref="StartServerOptions"/> class.
         /// </summary>
-        public StartServerOptions() : base()
+        public StartServerOptions()
         {
             ShowExceptions = Debugger.IsAttached;
         }

@@ -4,28 +4,29 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Collections.Generic;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.Components
 {
     [LaraWebComponent(MyCard)]
-    class CardComponent : WebComponent
+    // ReSharper disable once UnusedType.Global
+    internal class CardComponent : WebComponent
     {
-        public const string MyCard = "my-card";
+        private const string MyCard = "my-card";
 
-        readonly Element _div, _spanTitle, _spanSubtitle;
+        private readonly Element _div, _spanSubtitle;
 
         public CardComponent() : base(MyCard)
         {
             _div = Create("div");
-            _spanTitle = Create("span");
+            var spanTitle = Create("span");
             _spanSubtitle = Create("span");
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push(_div, "card")
                 .Push("div", "card-body")
                     .Push("h5", "card-title")
-                        .AddNode(_spanTitle)
+                        .AddNode(spanTitle)
                     .Pop()
                     .Push("h6", "card-subtitle")
                         .AddNode(_spanSubtitle)
@@ -38,7 +39,7 @@ namespace SampleProject
             .Pop();
         }
 
-        string? _title;
+        private string? _title;
 
         public string? Heading
         {
@@ -50,7 +51,7 @@ namespace SampleProject
             }
         }
 
-        string? _subtitle;
+        private string? _subtitle;
 
         public string? Subtitle
         {
@@ -64,7 +65,7 @@ namespace SampleProject
 
         protected override IEnumerable<string> GetObservedAttributes()
         {
-            return new string[] { "class", "heading", "subtitle" };
+            return new[] { "class", "heading", "subtitle" };
         }
 
         protected override void OnAttributeChanged(string attribute)

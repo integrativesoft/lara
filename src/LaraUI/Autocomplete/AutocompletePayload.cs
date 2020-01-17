@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Autocomplete
+namespace Integrative.Lara
 {
     [DataContract]
-    class AutocompletePayload
+    internal class AutocompletePayload
     {
         [DataMember]
         public string ElementId { get; set; } = string.Empty;

@@ -7,10 +7,10 @@ Author: Pablo Carbonell
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Autocomplete
+namespace Integrative.Lara
 {
     [DataContract]
-    class AutocompleteRequest
+    internal class AutocompleteRequest
     {
         [DataMember]
         public string Key { get; set; } = string.Empty;
@@ -20,11 +20,11 @@ namespace Integrative.Lara.Autocomplete
     }
 
     [LaraWebService(Address = Address)]
-    class AutocompleteService : IWebService
+    internal class AutocompleteService : IWebService
     {
-        public const string Address = "/lara_autocomplete";
+        private const string Address = "/lara_autocomplete";
 
-        readonly static AutocompleteRegistry _map = new AutocompleteRegistry();
+        private static readonly AutocompleteRegistry _map = new AutocompleteRegistry();
 
         public Task<string> Execute()
         {

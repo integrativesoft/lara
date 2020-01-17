@@ -4,17 +4,15 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.Main;
 using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class ServerEventsController
+    internal class ServerEventsController
     {
-        readonly Document _document;
+        private readonly Document _document;
 
         public ServerEventsController(Document document)
         {

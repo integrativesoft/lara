@@ -4,17 +4,17 @@ Created: 12/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
     [DataContract]
-    class FormFile : IFormFile
+    internal class FormFile : IFormFile
     {
         [DataMember]
         public string ContentType { get; set; } = string.Empty;
@@ -31,7 +31,7 @@ namespace Integrative.Lara.Middleware
         [DataMember]
         public string Content { get; set; } = string.Empty;
 
-        readonly HeaderDictionary _headers = new HeaderDictionary();
+        private readonly HeaderDictionary _headers = new HeaderDictionary();
         public IHeaderDictionary Headers => _headers;
 
         public long Length => Content.Length;

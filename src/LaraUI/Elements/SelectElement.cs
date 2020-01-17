@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using System.Collections.Generic;
 
 namespace Integrative.Lara

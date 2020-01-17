@@ -6,12 +6,12 @@ Author: Pablo Carbonell
 
 using System.Collections.Generic;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class SessionStorage
+    internal sealed class SessionStorage
     {
-        readonly Dictionary<string, string> _values;
-        readonly object _mylock;
+        private readonly Dictionary<string, string> _values;
+        private readonly object _mylock;
 
         public SessionStorage()
         {

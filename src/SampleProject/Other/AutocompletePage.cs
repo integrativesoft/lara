@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 namespace SampleProject.Other
 {
     [LaraPage(Address)]
-    class AutocompletePage : IPage, IAutocompleteProvider
+    internal class AutocompletePage : IPage, IAutocompleteProvider
     {
         public const string Address = "/autocomplete";
 
-        readonly AutocompleteElement _auto = new AutocompleteElement();
-        readonly Element _span = Element.Create("span");
+        private readonly AutocompleteElement _auto = new AutocompleteElement();
+        private readonly Element _span = Element.Create("span");
 
-        readonly string[] _colors = { "red", "green", "blue", "orange", "yellow" };
+        private readonly string[] _colors = { "red", "green", "blue", "orange", "yellow" };
 
         public Task OnGet()
         {

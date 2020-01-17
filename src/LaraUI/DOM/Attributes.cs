@@ -4,17 +4,16 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Integrative.Lara.DOM
+namespace Integrative.Lara
 {
-    sealed class Attributes : IEnumerable<KeyValuePair<string, string>>
+    internal sealed class Attributes : IEnumerable<KeyValuePair<string, string>>
     {
-        readonly Element _element;
-        readonly Dictionary<string, string?> _values;
+        private readonly Element _element;
+        private readonly Dictionary<string, string?> _values;
 
         public Attributes(Element element)
         {
@@ -105,17 +104,17 @@ namespace Integrative.Lara.DOM
 
         internal void NotifyValue(string value)
         {
-            const string ValueAttribute = "value";
-            if (_values.TryGetValue(ValueAttribute, out var previous))
+            const string valueAttribute = "value";
+            if (_values.TryGetValue(valueAttribute, out var previous))
             {
                 if (previous == value)
                 {
                     return;
                 }
-                _values.Remove(ValueAttribute);
+                _values.Remove(valueAttribute);
             }
-            _values.Add(ValueAttribute, value);
-            _element.AttributeChanged(ValueAttribute, value);
+            _values.Add(valueAttribute, value);
+            _element.AttributeChanged(valueAttribute, value);
         }
 
         internal void NotifyChecked(bool isChecked)

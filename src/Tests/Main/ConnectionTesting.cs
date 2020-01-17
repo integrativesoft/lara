@@ -4,8 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,7 +18,7 @@ namespace Integrative.Lara.Tests.Main
         {
             var guid = Connections.CreateCryptographicallySecureGuid();
             var connection = new Connection(guid, IPAddress.Loopback);
-            Assert.True(IPAddress.Loopback.Equals(connection.RemoteIP));
+            Assert.True(IPAddress.Loopback.Equals(connection.RemoteIp));
             Assert.True(connection.IsEmpty);
             Assert.False(connection.TryGetDocument(guid, out _));
         }

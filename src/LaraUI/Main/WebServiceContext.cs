@@ -6,12 +6,11 @@ Author: Pablo Carbonell
 
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class WebServiceContext : BaseContext, IWebServiceContext
+    internal sealed class WebServiceContext : BaseContext, IWebServiceContext
     {
         public string RequestBody { get; set; } = string.Empty;
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;

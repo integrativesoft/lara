@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    class UnsubscribeDelta : BaseDelta
+    internal class UnsubscribeDelta : BaseDelta
     {
         [DataMember]
         public string ElementId { get; set; } = string.Empty;

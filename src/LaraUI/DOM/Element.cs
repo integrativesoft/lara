@@ -4,10 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
-using Integrative.Lara.Front.Tools;
-using Integrative.Lara.Reactive;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,13 +56,13 @@ namespace Integrative.Lara
         /// <param name="ns">The namespace of the element</param>
         /// <param name="tagName">Element's tag name.</param>
         /// <returns>Element created</returns>
+        // ReSharper disable once InconsistentNaming
         public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         internal Element(string tagName)
-            : base()
         {
-            tagName = tagName ?? throw new ArgumentNullException(tagName);
+            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
             _attributes = new Attributes(this);
             _children = new List<Node>();
             Events = new Dictionary<string, EventSettings>();
@@ -79,7 +75,7 @@ namespace Integrative.Lara
         /// <value>
         /// The type of the node.
         /// </value>
-        public override sealed NodeType NodeType => NodeType.Element;
+        public sealed override NodeType NodeType => NodeType.Element;
 
         internal bool NeedsId => GetNeedsId();
 
@@ -193,7 +189,7 @@ namespace Integrative.Lara
         [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetAttribute(string attributeName, string? attributeValue)
         {
-            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
             SetAttributeLower(attributeName.ToLowerInvariant(), attributeValue);
         }
 
@@ -218,7 +214,7 @@ namespace Integrative.Lara
         /// </returns>
         public bool HasAttribute(string attributeName)
         {
-            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
             return _attributes.HasAttribute(attributeName);
         }
 
@@ -232,7 +228,7 @@ namespace Integrative.Lara
         /// <returns>Value of the attribute</returns>
         public string? GetAttribute(string attributeName)
         {
-            attributeName = attributeName ?? throw new ArgumentNullException(attributeName);
+            attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
             return _attributes.GetAttribute(attributeName);
         }
 
@@ -244,7 +240,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">Attribute's name</param>
         /// <param name="value">true to add, false to remove</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetFlagAttribute(string attributeName, bool value)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
@@ -258,7 +254,7 @@ namespace Integrative.Lara
         /// Removes an attribute.
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
+        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void RemoveAttribute(string attributeName)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
@@ -1075,7 +1071,7 @@ namespace Integrative.Lara
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings().BindAttribute<T>(options);
+            EnsureBindings().BindAttribute(options);
         }
 
         /// <summary>
@@ -1100,7 +1096,7 @@ namespace Integrative.Lara
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings().BindFlagAttribute<T>(options);
+            EnsureBindings().BindFlagAttribute(options);
         }
 
         /// <summary>
@@ -1113,7 +1109,7 @@ namespace Integrative.Lara
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
-            EnsureBindings().BindToggleClass<T>(options);
+            EnsureBindings().BindToggleClass(options);
         }
 
         /// <summary>

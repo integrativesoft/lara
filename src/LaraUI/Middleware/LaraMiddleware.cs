@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ namespace Integrative.Lara
     /// </summary>
     public sealed class LaraMiddleware
     {
-        readonly RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LaraMiddleware"/> class.

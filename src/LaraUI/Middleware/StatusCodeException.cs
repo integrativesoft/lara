@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Constructor
         /// </summary>
-        public StatusCodeException() : base()
+        public StatusCodeException()
         {
         }
 

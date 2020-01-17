@@ -4,7 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
@@ -247,7 +246,7 @@ namespace Integrative.Lara
             set { SetIntAttribute("width", value); }
         }
 
-        readonly List<IFormFile> _files = new List<IFormFile>();
+        private readonly List<IFormFile> _files = new List<IFormFile>();
         private void ClearFiles() => _files.Clear();
         internal void AddFile(IFormFile file) => _files.Add(file);
 

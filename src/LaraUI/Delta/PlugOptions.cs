@@ -4,13 +4,12 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Tools;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class PlugOptions
+    internal sealed class PlugOptions
     {
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
         public bool Block { get; set; }
@@ -19,6 +18,7 @@ namespace Integrative.Lara.Delta
         public string? BlockElementId { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        // ReSharper disable once InconsistentNaming
         public string? BlockHTML { get; set; }
 
         [DataMember(IsRequired = false, EmitDefaultValue = false)]
@@ -47,6 +47,7 @@ namespace Integrative.Lara.Delta
             UploadFiles = settings.UploadFiles;
         }
 
+        // ReSharper disable once InconsistentNaming
         public string ToJSON() => LaraTools.Serialize(this);
     }
 }

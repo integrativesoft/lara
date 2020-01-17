@@ -7,16 +7,16 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    class Sequencer
+    internal class Sequencer
     {
-        readonly static Task<bool> TaskProceed = Task.FromResult(true);
-        readonly static Task<bool> TaskAbort = Task.FromResult(false);
+        private static readonly Task<bool> _taskProceed = Task.FromResult(true);
+        private static readonly Task<bool> _taskAbort = Task.FromResult(false);
 
-        readonly object _lock;
-        readonly Dictionary<long, TaskCompletionSource<bool>> _pending;
-        long _next;
+        private readonly object _lock;
+        private readonly Dictionary<long, TaskCompletionSource<bool>> _pending;
+        private long _next;
 
         public Sequencer()
         {
@@ -29,7 +29,7 @@ namespace Integrative.Lara.Middleware
         {
             if (turnNumber == 0)
             {
-                return TaskProceed;
+                return _taskProceed;
             }
             TaskCompletionSource<bool>? completion = null;
             lock (_lock)
@@ -38,7 +38,7 @@ namespace Integrative.Lara.Middleware
                 {
                     _next++;
                     FlushPending();
-                    return TaskProceed;
+                    return _taskProceed;
                 }
                 else if (turnNumber > _next)
                 {
@@ -47,7 +47,7 @@ namespace Integrative.Lara.Middleware
                 }
                 else
                 {
-                    return TaskAbort;
+                    return _taskAbort;
                 }
             }
             return completion.Task;

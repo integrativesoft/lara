@@ -4,12 +4,12 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Integrative.Lara.Middleware
+namespace Integrative.Lara
 {
-    abstract class BaseHandler
+    internal abstract class BaseHandler
     {
         private readonly RequestDelegate _next;
 

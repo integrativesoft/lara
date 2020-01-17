@@ -7,15 +7,16 @@ Author: Pablo Carbonell
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class ContentElementNode : ContentNode
+    internal sealed class ContentElementNode : ContentNode
     {
         [DataMember]
         public string TagName { get; set; } = string.Empty;
 
         [DataMember]
+        // ReSharper disable once InconsistentNaming
         public string? NS { get; set; }
 
         [DataMember]

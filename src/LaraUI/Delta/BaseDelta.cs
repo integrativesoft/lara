@@ -6,9 +6,9 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
-    enum DeltaType
+    internal enum DeltaType
     {
         Append = 1,
         Insert = 2,
@@ -19,7 +19,7 @@ namespace Integrative.Lara.Delta
         Focus = 7,
         SetId = 8,
         SetValue = 9,
-        SubmitJS = 10,
+        SubmitJs = 10,
         SetChecked = 11,
         ClearChildren = 12,
         Replace = 13,
@@ -47,7 +47,7 @@ namespace Integrative.Lara.Delta
     [KnownType(typeof(SwapChildrenDelta))]
     [KnownType(typeof(SubscribeDelta))]
     [KnownType(typeof(UnsubscribeDelta))]
-    abstract class BaseDelta
+    internal abstract class BaseDelta
     {
         [DataMember]
         public DeltaType Type { get; set; }

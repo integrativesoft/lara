@@ -6,10 +6,10 @@ Author: Pablo Carbonell
 
 using System.Runtime.Serialization;
 
-namespace Integrative.Lara.Delta
+namespace Integrative.Lara
 {
     [DataContract]
-    sealed class SwapChildrenDelta : BaseDelta
+    internal sealed class SwapChildrenDelta : BaseDelta
     {
         public SwapChildrenDelta() : base(DeltaType.SwapChildren)
         {            

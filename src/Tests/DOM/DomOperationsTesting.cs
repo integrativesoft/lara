@@ -4,9 +4,6 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Delta;
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System;
@@ -18,7 +15,7 @@ namespace Integrative.Lara.Tests.DOM
 {
     public class DomOperationsTesting : DummyContextTesting
     {
-        readonly Func<Task> _emptyHandler;
+        private readonly Func<Task> _emptyHandler;
 
         public DomOperationsTesting()
         {
@@ -455,6 +452,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        // ReSharper disable once InconsistentNaming
         public void ElementGetChildPosition2nd()
         {
             var div = Element.Create("div");
@@ -486,7 +484,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal("@@", child!.Data);
         }
 
-        class DummyAdoptable : WebComponent
+        private class DummyAdoptable : WebComponent
         {
             public int AdoptedCount { get; private set; }
 
@@ -559,13 +557,13 @@ namespace Integrative.Lara.Tests.DOM
         {
             var doc = CreateDocument();
             var div = Element.Create("div");
-            int counter = 0;
-            Task handler()
+            var counter = 0;
+            Task Handler()
             {
                 counter++;
                 return Task.CompletedTask;
             }
-            div.On("click", handler);
+            div.On("click", Handler);
             div.NotifyEvent("click");
             doc.Body.AppendChild(div);
             doc.FlushQueue();
@@ -575,6 +573,7 @@ namespace Integrative.Lara.Tests.DOM
             var queue = doc.GetQueue();
             Assert.Single(queue);
             var first = queue.Peek() as UnsubscribeDelta;
+            Assert.NotNull(first);
             Assert.Equal(div.Id, first!.ElementId);
             Assert.Equal("click", first.EventName);
         }

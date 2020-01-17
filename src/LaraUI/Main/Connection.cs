@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class Connection
+    internal sealed class Connection
     {
         public Guid Id { get; }
-        public IPAddress RemoteIP { get; }
-        readonly Dictionary<Guid, Document> _documents;
+        public IPAddress RemoteIp { get; }
+        private readonly Dictionary<Guid, Document> _documents;
 
         public SessionStorage Storage { get; }
         public Session Session { get; }
@@ -25,7 +25,7 @@ namespace Integrative.Lara.Main
         public Connection(Guid id, IPAddress remoteId)
         {
             Id = id;
-            RemoteIP = remoteId;
+            RemoteIp = remoteId;
             _documents = new Dictionary<Guid, Document>();
             Storage = new SessionStorage();
             Session = new Session(this);

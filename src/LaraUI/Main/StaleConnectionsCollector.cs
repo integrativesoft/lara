@@ -9,15 +9,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace Integrative.Lara.Main
+namespace Integrative.Lara
 {
-    sealed class StaleConnectionsCollector : IDisposable
+    internal sealed class StaleConnectionsCollector : IDisposable
     {
         public const double DefaultTimerInterval = 5 * 60 * 1000;      // 5 minutes to trigger updates
         public const double DefaultExpireInterval = 4 * 3600 * 1000;   // 4 hours to expire
 
-        readonly Connections _connections;
-        readonly Timer _timer;
+        private readonly Connections _connections;
+        private readonly Timer _timer;
 
         public double ExpirationInterval { get; set; }
 
@@ -27,12 +27,8 @@ namespace Integrative.Lara.Main
             set => _timer.Interval = value;
         }
 
-        public StaleConnectionsCollector(Connections connections)
-            : this(connections, DefaultTimerInterval, DefaultExpireInterval)
-        {
-        }
-
-        public StaleConnectionsCollector(Connections connections, double timerInterval, double expireInternal)
+        public StaleConnectionsCollector(Connections connections,
+            double timerInterval = DefaultTimerInterval, double expireInternal = DefaultExpireInterval)
         {
             _connections = connections;
             ExpirationInterval = expireInternal;
@@ -44,7 +40,7 @@ namespace Integrative.Lara.Main
             _timer.Start();
         }
 
-        bool _disposed;
+        private bool _disposed;
 
         public void Dispose()
         {
@@ -64,7 +60,7 @@ namespace Integrative.Lara.Main
             }
         }
 
-        bool _cleaning;
+        private bool _cleaning;
 
         internal async Task CleanupExpiredHandler()
         {
@@ -101,14 +97,14 @@ namespace Integrative.Lara.Main
             var list = new List<KeyValuePair<Guid, Document>>();
             foreach (var pair in connection.GetDocuments())
             {
-                if (pair.Value.LastUTC < minRequired)
+                if (pair.Value.LastUtc < minRequired)
                 {
                     list.Add(pair);
                 }
             }
             foreach (var pair in list)
             {
-                if (pair.Value.LastUTC < minRequired)
+                if (pair.Value.LastUtc < minRequired)
                 {
                     await connection.Discard(pair.Key);
                 }

@@ -4,11 +4,6 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Components;
-using Integrative.Lara.Delta;
-using Integrative.Lara.DOM;
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -20,7 +15,7 @@ using Xunit;
 namespace Integrative.Lara.Tests.Components
 {
     [LaraWebComponent("x-dummy")]
-    class MyDummyComponent : WebComponent
+    internal class MyDummyComponent : WebComponent
     {
         public int Moved { get; private set; }
 
@@ -30,7 +25,7 @@ namespace Integrative.Lara.Tests.Components
 
         protected override IEnumerable<string> GetObservedAttributes()
         {
-            return new string[] { "class" };
+            return new[] { "class" };
         }
 
         protected override void OnMove()
@@ -41,9 +36,9 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-com")]
-    class XCOM : WebComponent
+    internal class Xcom : WebComponent
     {
-        public XCOM() : base("x-com")
+        public Xcom() : base("x-com")
         {
             var builder = new LaraBuilder(ShadowRoot);
             builder.Push("div", "", "div1")
@@ -57,7 +52,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-light")]
-    class LightCom : WebComponent
+    internal class LightCom : WebComponent
     {
         public LightCom() : base("x-light")
         {
@@ -65,7 +60,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-slotter")]
-    class MySlotter : WebComponent
+    internal class MySlotter : WebComponent
     {
         public MySlotter() : base("x-slotter")
         {
@@ -77,7 +72,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-twodiv")]
-    class MyTwoDivComponent : WebComponent
+    internal class MyTwoDivComponent : WebComponent
     {
         public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
         {
@@ -90,7 +85,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-obsolete")]
-    class ObsoleteComponent : WebComponent
+    internal class ObsoleteComponent : WebComponent
     {
         public ObsoleteComponent() : base("x-obsolete")
         {
@@ -108,7 +103,7 @@ namespace Integrative.Lara.Tests.Components
 
     public class ComponentTesting : IDisposable
     {
-        readonly Application _app;
+        private readonly Application _app;
 
         public ComponentTesting()
         {
@@ -139,14 +134,14 @@ namespace Integrative.Lara.Tests.Components
             Assert.False(LaraUI.TryGetComponent("x-caca", out _));
         }
 
-        class MyComponent : WebComponent
+        private class MyComponent : WebComponent
         {
             public MyComponent() : base("x-caca")
             {
             }
         }
 
-        class MyPage : IPage
+        private class MyPage : IPage
         {
             public Task OnGet()
             {
@@ -180,7 +175,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void WebComponentListsAllDescendents()
         {
-            var x = new XCOM();
+            var x = new Xcom();
             var div = Element.Create("div");
             div.Id = "lala";
             x.AppendChild(div);
@@ -202,7 +197,7 @@ namespace Integrative.Lara.Tests.Components
         public void FlattenedChildrenIncludesPrintedOnes()
         {
             var container = Element.Create("div");
-            var x = new XCOM();
+            var x = new Xcom();
             var div = Element.Create("div");
             div.Id = "lala";
             x.AppendChild(div);
@@ -275,6 +270,7 @@ namespace Integrative.Lara.Tests.Components
             var list = new List<Node>(x.GetSlottedElements("a"));
             Assert.Single(list);
             var child = list[0] as Element;
+            Assert.NotNull(child);
             Assert.Equal("slot3", child!.Id);
         }
 
@@ -291,7 +287,7 @@ namespace Integrative.Lara.Tests.Components
             Assert.Equal("lolo", x.MyData);
         }
 
-        class MyAttributeSubscriptor : WebComponent
+        private class MyAttributeSubscriptor : WebComponent
         {
             public MyAttributeSubscriptor() : base("x-att")
             {
@@ -301,7 +297,7 @@ namespace Integrative.Lara.Tests.Components
 
             protected override IEnumerable<string> GetObservedAttributes()
             {
-                return new string[] { "data-lala" };
+                return new[] { "data-lala" };
             }
 
             protected override void OnAttributeChanged(string attribute)
@@ -327,7 +323,7 @@ namespace Integrative.Lara.Tests.Components
         public void PublishAssembliesComponent()
         {
             Assert.True(LaraUI.TryGetComponent("x-com", out var type));
-            Assert.Same(typeof(XCOM), type);
+            Assert.Same(typeof(Xcom), type);
         }
 
         [Fact]
@@ -423,9 +419,10 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void VerifyComponentRegistered()
         {
-            bool blown = false;
+            var blown = false;
             try
             {
+                // ReSharper disable once ObjectCreationAsStatement
                 new MyUnregisteredComponent();
             }
             catch (InvalidOperationException)
@@ -435,7 +432,7 @@ namespace Integrative.Lara.Tests.Components
             Assert.True(blown);
         }
 
-        class MyUnregisteredComponent : WebComponent
+        private class MyUnregisteredComponent : WebComponent
         {
             public MyUnregisteredComponent() : base("x-cocos")
             {

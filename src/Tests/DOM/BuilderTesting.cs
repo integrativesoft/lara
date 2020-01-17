@@ -4,11 +4,7 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
-using Integrative.Lara.Middleware;
 using Integrative.Lara.Tests.Middleware;
-using Microsoft.AspNetCore.Http;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,7 +122,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void OnEvent()
         {
-            bool executed = false;
+            var executed = false;
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
             builder.On(new EventSettings
@@ -138,11 +134,11 @@ namespace Integrative.Lara.Tests.DOM
                     return Task.CompletedTask;
                 }
             });
-            var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            /*var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
             var http = new Mock<HttpContext>();
-            var page = new Mock<IPage>();
+            var mock = new Mock<IPage>();
             var context = new PageContext(_context.Application,
-                http.Object, connection);
+                http.Object, connection);*/
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -150,7 +146,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void OnEventSimple()
         {
-            bool executed = false;
+            var executed = false;
             var root = Element.Create("div");
             var builder = new LaraBuilder(root);
             builder.On("click", () =>
@@ -158,10 +154,10 @@ namespace Integrative.Lara.Tests.DOM
                 executed = true;
                 return Task.CompletedTask;
             });
-            var http = new Mock<HttpContext>();
-            var page = new Mock<IPage>();
-            var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
-            var context = new PageContext(_context.Application, http.Object, connection);
+            //var http = new Mock<HttpContext>();
+            //var page = new Mock<IPage>();
+            //var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
+            //var context = new PageContext(_context.Application, http.Object, connection);
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
@@ -179,6 +175,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        // ReSharper disable once InconsistentNaming
         public void PushNS()
         {
             var root = Element.Create("div");

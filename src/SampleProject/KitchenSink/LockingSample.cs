@@ -4,28 +4,26 @@ Created: 6/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara;
 using System.Threading.Tasks;
+using Integrative.Lara;
 
-namespace SampleProject
+namespace SampleProject.KitchenSink
 {
-    class LockingSample
+    internal class LockingSample
     {
-        readonly Button _button;
-
         public Element Root { get; }
 
         public LockingSample()
         {
-            _button = new Button
+            var button = new Button
             {
                 Class = "btn btn-primary my-2"
             };
             Root = Element.Create("div");
             Root.Class = "form-row";
-            Root.AppendChild(_button);
-            _button.AppendChild(new TextNode("Action that locks UI"));
-            _button.On(new EventSettings
+            Root.AppendChild(button);
+            button.AppendChild(new TextNode("Action that locks UI"));
+            button.On(new EventSettings
             {
                 EventName = "click",
                 Block = true,

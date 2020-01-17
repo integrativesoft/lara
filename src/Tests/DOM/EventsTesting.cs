@@ -4,7 +4,6 @@ Created: 10/2019
 Author: Pablo Carbonell
 */
 
-using Integrative.Lara.Main;
 using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using Moq;
@@ -21,18 +20,18 @@ namespace Integrative.Lara.Tests.DOM
         public async void AddRemoveHandler()
         {
             var x = new MessageTypeRegistry();
-            int counter = 0;
-            Task handler(MessageEventArgs args)
+            var counter = 0;
+            Task Handler(MessageEventArgs args1)
             {
-                Assert.Equal("test", args.Body);
+                Assert.Equal("test", args1.Body);
                 counter++;
                 return Task.CompletedTask;
             }
-            x.Add(handler);
+            x.Add(Handler);
             var args = new MessageEventArgs("test");
             await x.RunAll(args);
             Assert.Equal(1, counter);
-            x.Remove(handler);
+            x.Remove(Handler);
             await x.RunAll(args);
             Assert.Equal(1, counter);
         }
@@ -44,21 +43,21 @@ namespace Integrative.Lara.Tests.DOM
 
             var document = DomOperationsTesting.CreateDocument();
             var x = new MessageRegistry(document);
-            int counter = 0;
-            Task handler(MessageEventArgs args)
+            var counter = 0;
+            Task Handler(MessageEventArgs args)
             {
                 counter++;
                 return Task.CompletedTask;
             }
-            x.Add("a", handler);
+            x.Add("a", Handler);
             await document.Head.NotifyEvent("_a");
             Assert.Equal(1, counter);
 
-            x.Remove("b", handler);
+            x.Remove("b", Handler);
             await document.Head.NotifyEvent("_a");
             Assert.Equal(2, counter);
 
-            x.Remove("a", handler);
+            x.Remove("a", Handler);
             await document.Head.NotifyEvent("_a");
             Assert.Equal(2, counter);
         }
@@ -88,16 +87,16 @@ namespace Integrative.Lara.Tests.DOM
         {
             CreateMessageContext();
             var doc = DomOperationsTesting.CreateDocument();
-            int counter = 0;
-            Task handler(MessageEventArgs args)
+            var counter = 0;
+            Task Handler(MessageEventArgs args)
             {
                 counter++;
                 return Task.CompletedTask;
             }
-            doc.AddMessageListener("a", handler);
+            doc.AddMessageListener("a", Handler);
             doc.Head.NotifyEvent("_a");
             Assert.Equal(1, counter);
-            doc.RemoveMessageListener("a", handler);
+            doc.RemoveMessageListener("a", Handler);
             doc.Head.NotifyEvent("_a");
             Assert.Equal(1, counter);
         }
@@ -107,13 +106,13 @@ namespace Integrative.Lara.Tests.DOM
         {
             CreateMessageContext();
             var doc = DomOperationsTesting.CreateDocument();
-            int counter = 0;
-            Task handler()
+            var counter = 0;
+            Task Handler()
             {
                 counter++;
                 return Task.CompletedTask;
             }
-            doc.OnMessage("a", handler);
+            doc.OnMessage("a", Handler);
             doc.Head.NotifyEvent("_a");
             Assert.Equal(1, counter);
         }
@@ -121,18 +120,18 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void AsyncEventDispatches()
         {
-            int counter = 0;
+            var counter = 0;
             var ev = new AsyncEvent();
-            Task myMethod()
+            Task MyMethod()
             {
                 counter++;
                 return Task.CompletedTask;
             }
-            ev.Subscribe(myMethod);
+            ev.Subscribe(MyMethod);
             await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
             
-            ev.Unsubscribe(myMethod);
+            ev.Unsubscribe(MyMethod);
             await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
         }
@@ -160,13 +159,13 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void AsyncEventSubscribeHandler()
         {
-            int counter = 0;
-            Task myMethod(object sender, EventArgs args)
+            var counter = 0;
+            Task MyMethod(object sender, EventArgs args)
             {
                 counter++;
                 return Task.CompletedTask;
-            };
-            var handler = new AsyncEventHandler<EventArgs>(myMethod);
+            }
+            var handler = new AsyncEventHandler<EventArgs>(MyMethod);
             var ev = new AsyncEvent();
             ev.Subscribe(handler);
             await ev.InvokeAsync(this, new EventArgs());
@@ -180,14 +179,14 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void AsyncEventSyncHandler()
         {
-            int counter = 0;
-            void myMethod() => counter++;
+            var counter = 0;
+            void MyMethod() => counter++;
             var ev = new AsyncEvent<EventArgs>();
-            ev.Subscribe(myMethod);
+            ev.Subscribe(MyMethod);
             await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
 
-            ev.Unsubscribe(myMethod);
+            ev.Unsubscribe(MyMethod);
             await ev.InvokeAsync(this, new EventArgs());
             Assert.Equal(1, counter);
         }
