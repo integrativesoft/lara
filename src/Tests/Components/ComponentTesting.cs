@@ -76,11 +76,9 @@ namespace Integrative.Lara.Tests.Components
     {
         public MyTwoDivComponent(bool useShadow) : base("x-twodiv")
         {
-            if (useShadow)
-            {
-                ShadowRoot.AppendChild(Create("div"));
-                ShadowRoot.AppendText("hello");
-            }
+            if (!useShadow) return;
+            ShadowRoot.AppendChild(Create("div"));
+            ShadowRoot.AppendText("hello");
         }
     }
 
@@ -91,7 +89,7 @@ namespace Integrative.Lara.Tests.Components
         {
         }
 
-        public int Counter { get; set; }
+        public int Counter { get; private set; }
 
         [Obsolete]
         public void Test()
@@ -293,7 +291,7 @@ namespace Integrative.Lara.Tests.Components
             {
             }
 
-            public string? MyData { get; set; }
+            public string? MyData { get; private set; }
 
             protected override IEnumerable<string> GetObservedAttributes()
             {
