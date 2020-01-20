@@ -34,7 +34,8 @@ namespace Integrative.Lara
         private readonly HeaderDictionary _headers = new HeaderDictionary();
         public IHeaderDictionary Headers => _headers;
 
-        public long Length => Content.Length;
+        [DataMember]
+        public long Length { get; set; }
 
         public void CopyTo(Stream target)
         {

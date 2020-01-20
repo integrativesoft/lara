@@ -33,6 +33,7 @@ class FormFile {
     Name: string;
     FileName: string;
     Content: string;
+    Length: number;
 }
 
 export async function loadFiles(plug: PlugOptions): Promise<FormFileCollection> {
@@ -69,6 +70,7 @@ async function copyFile(file: File, name: string): Promise<FormFile> {
     copy.Content = bufferToBase64(bytes);
     copy.Name = name;
     copy.FileName = file.name;
+    copy.Length = bytes.byteLength;
     return copy;
 }
 

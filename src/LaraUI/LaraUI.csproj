@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.8.2</Version>
+    <Version>0.8.3</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -20,7 +20,6 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/integrativesoft/lara</PackageProjectUrl>
     <RepositoryUrl>https://github.com/integrativesoft/lara</RepositoryUrl>
-    <PackageIconUrl></PackageIconUrl>
     <PackageTags>lara, web, html, html5, desktop, gui, cross, framework, mac, osx, platform, ui, blazor, razor</PackageTags>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
@@ -71,8 +70,9 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.8.1 adds:
-- improved visual transitions on blocking events to remove unnecessary blinking</PackageReleaseNotes>
+    <PackageReleaseNotes>0.8.3 adds:
+- fixed number of bytes reported when uploading via web sockets
+- rejected connections not showing correct message error</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 
