@@ -56,7 +56,7 @@ namespace Integrative.Lara
             }
         }
 
-        private static bool TryFindParentComponent(Element element, [NotNullWhen(true)] out WebComponent? component)
+        private static bool TryFindParentComponent(Node element, [NotNullWhen(true)] out WebComponent? component)
         {
             var parent = element.ParentElement;
             if (parent is null)
@@ -71,6 +71,7 @@ namespace Integrative.Lara
             }
             else
             {
+                // ReSharper disable once TailRecursiveCall
                 return TryFindParentComponent(parent, out component);
             }
         }
