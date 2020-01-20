@@ -36,7 +36,7 @@ namespace Integrative.Lara
             var name = Name;
             if (string.IsNullOrEmpty(name))
             {
-                return string.IsNullOrEmpty(name);
+                return string.IsNullOrEmpty(slotName);
             }
             else
             {
