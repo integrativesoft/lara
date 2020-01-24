@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public bool Async
         {
             get => HasAttributeLower("async");
-            set { SetFlagAttributeLower("async", value); }
+            set => SetFlagAttributeLower("async", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? Charset
         {
             get => GetAttributeLower("charset");
-            set { SetAttributeLower("charset", value); }
+            set => SetAttributeLower("charset", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public bool Defer
         {
             get => HasAttributeLower("defer");
-            set { SetFlagAttributeLower("defer", value); }
+            set => SetFlagAttributeLower("defer", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public string? Src
         {
             get => GetAttributeLower("src");
-            set { SetAttributeLower("src", value); }
+            set => SetAttributeLower("src", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
     }
 }

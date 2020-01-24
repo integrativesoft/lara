@@ -31,7 +31,7 @@ namespace Integrative.Lara
         public bool Autofocus
         {
             get => HasAttributeLower("autofocus");
-            set { SetFlagAttributeLower("autofocus", value); }
+            set => SetFlagAttributeLower("autofocus", value);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         public int? Cols
         {
             get => GetIntAttribute("cols");
-            set { SetIntAttribute("cols", value); }
+            set => SetIntAttribute("cols", value);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         public string? Dirname
         {
             get => GetAttributeLower("dirname");
-            set { SetAttributeLower("dirname", value); }
+            set => SetAttributeLower("dirname", value);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
-            set { SetFlagAttributeLower("disabled", value); }
+            set => SetFlagAttributeLower("disabled", value);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Integrative.Lara
         public int? MaxLength
         {
             get => GetIntAttribute("maxlength");
-            set { SetIntAttribute("maxlength", value); }
+            set => SetIntAttribute("maxlength", value);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttributeLower("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Integrative.Lara
         public string? Placeholder
         {
             get => GetAttributeLower("placeholder");
-            set { SetAttributeLower("placeholder", value); }
+            set => SetAttributeLower("placeholder", value);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Integrative.Lara
         public bool Readonly
         {
             get => HasAttributeLower("readonly");
-            set { SetFlagAttributeLower("readonly", value); }
+            set => SetFlagAttributeLower("readonly", value);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Integrative.Lara
         public bool Required
         {
             get => HasAttributeLower("required");
-            set { SetFlagAttributeLower("required", value); }
+            set => SetFlagAttributeLower("required", value);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Integrative.Lara
         public int? Rows
         {
             get => GetIntAttribute("rows");
-            set { SetIntAttribute("rows", value); }
+            set => SetIntAttribute("rows", value);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Integrative.Lara
         public string? Wrap
         {
             get => GetAttributeLower("wrap");
-            set { SetAttributeLower("wrap", value); }
+            set => SetAttributeLower("wrap", value);
         }
     }
 }

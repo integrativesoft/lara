@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public int? High
         {
             get => GetIntAttribute("high");
-            set { SetIntAttribute("high", value); }
+            set => SetIntAttribute("high", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public int? Low
         {
             get => GetIntAttribute("low");
-            set { SetIntAttribute("low", value); }
+            set => SetIntAttribute("low", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public int? Max
         {
             get => GetIntAttribute("max");
-            set { SetIntAttribute("max", value); }
+            set => SetIntAttribute("max", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public int? Min
         {
             get => GetIntAttribute("min");
-            set { SetIntAttribute("min", value); }
+            set => SetIntAttribute("min", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public int? Optimum
         {
             get => GetIntAttribute("optimum");
-            set { SetIntAttribute("optimum", value); }
+            set => SetIntAttribute("optimum", value);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public int? Value
         {
             get => GetIntAttribute("value");
-            set { SetIntAttribute("value", value); }
+            set => SetIntAttribute("value", value);
         }
     }
 }

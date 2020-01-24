@@ -31,7 +31,7 @@ namespace Integrative.Lara
             return Execute(LaraUI.Service.RequestBody);
         }
 
-        internal async Task<string> Execute(string json)
+        internal static async Task<string> Execute(string json)
         {
             var request = LaraUI.JSON.Parse<AutocompleteRequest>(json);
             if (!_map.TryGet(request.Key, out var element))
@@ -39,7 +39,7 @@ namespace Integrative.Lara
                 return string.Empty;
             }
             var options = element.GetOptions();
-            if (options == null || options.Provider == null)
+            if (options?.Provider == null)
             {
                 return string.Empty;
             }

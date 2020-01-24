@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public string? Abbr
         {
             get => GetAttributeLower("abbr");
-            set { SetAttributeLower("abbr", value); }
+            set => SetAttributeLower("abbr", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public int? ColSpan
         {
             get => GetIntAttribute("colspan");
-            set { SetIntAttribute("colspan", value); }
+            set => SetIntAttribute("colspan", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public string? Headers
         {
             get => GetAttributeLower("headers");
-            set { SetAttributeLower("headers", value); }
+            set => SetAttributeLower("headers", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public int? RowSpan
         {
             get => GetIntAttribute("rowspan");
-            set { SetIntAttribute("rowspan", value); }
+            set => SetIntAttribute("rowspan", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public string? Scope
         {
             get => GetAttributeLower("scope");
-            set { SetAttributeLower("scope", value); }
+            set => SetAttributeLower("scope", value);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public string? Sorted
         {
             get => GetAttributeLower("sorted");
-            set { SetAttributeLower("sorted", value); }
+            set => SetAttributeLower("sorted", value);
         }
     }
 }

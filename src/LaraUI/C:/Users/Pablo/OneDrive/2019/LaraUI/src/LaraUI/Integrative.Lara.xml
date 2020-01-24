@@ -2436,6 +2436,13 @@
             JSON tools
             </summary>
         </member>
+        <member name="M:Integrative.Lara.LaraUI.ParseRequest``1">
+            <summary>
+            Shorthand for LaraUI.JSON.Parse(LaraUI.Service.RequestBody)
+            </summary>
+            <typeparam name="T">Type for parsing</typeparam>
+            <returns>Instance of T</returns>
+        </member>
         <member name="T:Integrative.Lara.LaraWebServiceAttribute">
             <summary>
             Declares a class as a web service that gets published with LaraUI.PublishAssemblies()

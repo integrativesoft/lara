@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public bool Reversed
         {
             get => HasAttributeLower("reversed");
-            set { SetFlagAttributeLower("reversed", value); }
+            set => SetFlagAttributeLower("reversed", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public int? Start
         {
             get => GetIntAttribute("start");
-            set { SetIntAttribute("start", value); }
+            set => SetIntAttribute("start", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
     }
 }

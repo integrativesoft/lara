@@ -46,7 +46,7 @@ namespace Integrative.Lara
 
         private static void VerifyTypeThrow(string tagName, Type componentType)
         {
-            if (!VerifyType(tagName, componentType, out string error))
+            if (!VerifyType(tagName, componentType, out var error))
             {
                 throw new InvalidOperationException(error);
             }

@@ -117,9 +117,9 @@ namespace Integrative.Lara
             unchecked
             {
                 const int p = 16777619;
-                int hash = (int)2166136261;
+                var hash = (int)2166136261;
 
-                for (int i = 0; i < data.Length; i++)
+                for (var i = 0; i < data.Length; i++)
                     hash = (hash ^ data[i]) * p;
 
                 hash += hash << 13;
@@ -155,7 +155,7 @@ namespace Integrative.Lara
         {
             if (headers.TryGetValue("If-None-Match", out var values))
             {
-                string eTagClient = values[values.Count - 1];
+                var eTagClient = values[values.Count - 1];
                 return ETag == eTagClient;
             }
             else

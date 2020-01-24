@@ -69,7 +69,7 @@ namespace Integrative.Lara.Tests.DOM
             var bridge = new Mock<IJSBridge>();
             context.Setup(x => x.JSBridge).Returns(bridge.Object);
             bridge.Setup(x => x.EventData).Returns("test");
-            context.Setup(x => x.Application).Returns(_context.Application);
+            context.Setup(x => x.Application).Returns(Context.Application);
         }
 
         [Fact]

@@ -70,9 +70,9 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            await _context.Application.Start();
-            string address = LaraUI.GetFirstURL(_context.Application.GetHost());
-            _context.Application.PublishFile("/", content);
+            await Context.Application.Start();
+            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            Context.Application.PublishFile("/", content);
             using var response = await _client.GetAsync(address);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -87,12 +87,12 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            await _context.Application.Start(new StartServerOptions
+            await Context.Application.Start(new StartServerOptions
             {
                 AllowLocalhostOnly = true
             });
-            string address = LaraUI.GetFirstURL(_context.Application.GetHost());
-            _context.Application.PublishFile("/", content);
+            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            Context.Application.PublishFile("/", content);
 
             var request = new HttpRequestMessage
             {
@@ -115,9 +115,9 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadSampleJpeg();
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
-            await _context.Application.Start();
-            string address = LaraUI.GetFirstURL(_context.Application.GetHost());
-            _context.Application.PublishFile("/", content);
+            await Context.Application.Start();
+            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            Context.Application.PublishFile("/", content);
 
             var request = new HttpRequestMessage
             {
@@ -139,9 +139,9 @@ namespace Integrative.Lara.Tests.Main
             var bytes = LoadCompressibleBmp();
             var content = new StaticContent(bytes, "image");
 
-            await _context.Application.Start();
-            var address = LaraUI.GetFirstURL(_context.Application.GetHost());
-            _context.Application.PublishFile("/", content);
+            await Context.Application.Start();
+            var address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            Context.Application.PublishFile("/", content);
             using var response = await _client.GetAsync(address);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -153,8 +153,8 @@ namespace Integrative.Lara.Tests.Main
         [Fact]
         public async void ContentNotFound()
         {
-            await _context.Application.Start();
-            var address = LaraUI.GetFirstURL(_context.Application.GetHost());
+            await Context.Application.Start();
+            var address = LaraUI.GetFirstURL(Context.Application.GetHost());
             using var response = await _client.GetAsync(address + "/lalala");
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

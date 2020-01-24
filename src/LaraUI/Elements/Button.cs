@@ -32,7 +32,7 @@ namespace Integrative.Lara
         public bool AutoFocus
         {
             get => HasAttributeLower("autofocus");
-            set { SetFlagAttributeLower("autofocus", value); }
+            set => SetFlagAttributeLower("autofocus", value);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Integrative.Lara
         public bool Disabled
         {
             get => HasAttribute("disabled");
-            set { SetFlagAttributeLower("disabled", value); }
+            set => SetFlagAttributeLower("disabled", value);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttributeLower("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
     }
 }

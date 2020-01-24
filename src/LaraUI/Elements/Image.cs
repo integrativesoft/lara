@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public string? Alt
         {
             get => GetAttributeLower("alt");
-            set { SetAttributeLower("alt", value); }
+            set => SetAttributeLower("alt", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? CrossOrigin
         {
             get => GetAttributeLower("crossorigin");
-            set { SetAttributeLower("crossorigin", value); }
+            set => SetAttributeLower("crossorigin", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public int? Height
         {
             get => GetIntAttribute("height");
-            set { SetIntAttribute("height", value); }
+            set => SetIntAttribute("height", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public bool IsMap
         {
             get => HasAttribute("ismap");
-            set { SetFlagAttributeLower("ismap", value); }
+            set => SetFlagAttributeLower("ismap", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public string? LongDesc
         {
             get => GetAttributeLower("longdesc");
-            set { SetAttributeLower("longdesc", value); }
+            set => SetAttributeLower("longdesc", value);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public string? Src
         {
             get => GetAttributeLower("src");
-            set { SetAttributeLower("src", value); }
+            set => SetAttributeLower("src", value);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Integrative.Lara
         public string? SrcSet
         {
             get => GetAttributeLower("srcset");
-            set { SetAttributeLower("srcset", value); }
+            set => SetAttributeLower("srcset", value);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Integrative.Lara
         public string? UseMap
         {
             get => GetAttributeLower("usemap");
-            set { SetAttributeLower("usemap", value); }
+            set => SetAttributeLower("usemap", value);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Integrative.Lara
         public int? Width
         {
             get => GetIntAttribute("width");
-            set { SetIntAttribute("width", value); }
+            set => SetIntAttribute("width", value);
         }
     }
 }

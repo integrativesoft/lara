@@ -79,7 +79,7 @@ namespace Integrative.Lara
 
         internal bool NeedsId => GetNeedsId();
 
-        internal bool GetNeedsId()
+        private bool GetNeedsId()
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -271,7 +271,7 @@ namespace Integrative.Lara
 
         internal int? GetIntAttribute(string nameLower)
         {
-            if (int.TryParse(GetAttributeLower(nameLower), out int value))
+            if (int.TryParse(GetAttributeLower(nameLower), out var value))
             {
                 return value;
             }
@@ -289,7 +289,7 @@ namespace Integrative.Lara
             }
             else
             {
-                string text = ((int)value).ToString(CultureInfo.InvariantCulture);
+                var text = ((int)value).ToString(CultureInfo.InvariantCulture);
                 SetAttributeLower(nameLower, text);
             }
         }
@@ -356,7 +356,7 @@ namespace Integrative.Lara
         public string? AccessKey
         {
             get => GetAttributeLower("accesskey");
-            set { SetAttributeLower("accesskey", value); }
+            set => SetAttributeLower("accesskey", value);
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Integrative.Lara
         public string? AutoCapitalize
         {
             get => GetAttributeLower("autocapitalize");
-            set { SetAttributeLower("autocapitalize", value); }
+            set => SetAttributeLower("autocapitalize", value);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Integrative.Lara
         public string? Class
         {
             get => GetAttributeLower("class");
-            set { SetAttributeLower("class", value); }
+            set => SetAttributeLower("class", value);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Integrative.Lara
         public string? ContentEditable
         {
             get => GetAttributeLower("contenteditable");
-            set { SetAttributeLower("contenteditable", value); }
+            set => SetAttributeLower("contenteditable", value);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Integrative.Lara
         public string? ContextMenu
         {
             get => GetAttributeLower("contextmenu");
-            set { SetAttributeLower("contextmenu", value); }
+            set => SetAttributeLower("contextmenu", value);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Integrative.Lara
         public string? Dir
         {
             get => GetAttributeLower("dir");
-            set { SetAttributeLower("dir", value); }
+            set => SetAttributeLower("dir", value);
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Integrative.Lara
         public string? Draggable
         {
             get => GetAttributeLower("draggable");
-            set { SetAttributeLower("draggable", value); }
+            set => SetAttributeLower("draggable", value);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Integrative.Lara
         public string? DropZone
         {
             get => GetAttributeLower("dropzone");
-            set { SetAttributeLower("dropzone", value); }
+            set => SetAttributeLower("dropzone", value);
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Integrative.Lara
         public bool Hidden
         {
             get => HasAttributeLower("hidden");
-            set { SetFlagAttributeLower("hidden", value); }
+            set => SetFlagAttributeLower("hidden", value);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace Integrative.Lara
         public bool InputMode
         {
             get => HasAttributeLower("inputmode");
-            set { SetFlagAttributeLower("inputmode", value); }
+            set => SetFlagAttributeLower("inputmode", value);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Integrative.Lara
         public string? Lang
         {
             get => GetAttributeLower("lang");
-            set { SetAttributeLower("lang", value); }
+            set => SetAttributeLower("lang", value);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Integrative.Lara
         public string? Spellcheck
         {
             get => GetAttributeLower("spellcheck");
-            set { SetAttributeLower("spellcheck", value); }
+            set => SetAttributeLower("spellcheck", value);
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Integrative.Lara
         public string? Style
         {
             get => GetAttributeLower("style");
-            set { SetAttributeLower("style", value); }
+            set => SetAttributeLower("style", value);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Integrative.Lara
         public string? TabIndex
         {
             get => GetAttributeLower("tabindex");
-            set { SetAttributeLower("tabindex", value); }
+            set => SetAttributeLower("tabindex", value);
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Integrative.Lara
         public string? Title
         {
             get => GetAttributeLower("title");
-            set { SetAttributeLower("title", value); }
+            set => SetAttributeLower("title", value);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Integrative.Lara
         public string? Translate
         {
             get => GetAttributeLower("translate");
-            set { SetAttributeLower("translate", value); }
+            set => SetAttributeLower("translate", value);
         }
 
         #endregion
@@ -573,7 +573,7 @@ namespace Integrative.Lara
         /// <returns>The 0-based child index, or -1 if not found.</returns>
         public int GetChildNodePosition(Node node)
         {
-            int index = 0;
+            var index = 0;
             foreach (var child in _children)
             {
                 if (child == node)
@@ -592,7 +592,7 @@ namespace Integrative.Lara
         /// <returns>The 0-based child index, or -1 if not found.</returns>
         public int GetChildElementPosition(Element element)
         {
-            int index = 0;
+            var index = 0;
             foreach (var child in _children)
             {
                 if (child == element)
@@ -806,7 +806,7 @@ namespace Integrative.Lara
         {
         }
 
-        internal virtual void OnChildAdded(Node child)
+        private protected virtual void OnChildAdded(Node child)
         {
         }
 
@@ -995,18 +995,13 @@ namespace Integrative.Lara
 
         private void RemoveEvent(string eventName)
         {
-            if (Events.ContainsKey(eventName))
+            if (!Events.ContainsKey(eventName)) return;
+            Events.Remove(eventName);
+            Document?.Enqueue(new UnsubscribeDelta
             {
-                Events.Remove(eventName);
-                if (Document != null)
-                {
-                    Document.Enqueue(new UnsubscribeDelta
-                    {
-                        ElementId = EnsureElementId(),
-                        EventName = eventName
-                    });
-                }
-            }
+                ElementId = EnsureElementId(),
+                EventName = eventName
+            });
         }
 
         private void FlushEvents()
@@ -1025,11 +1020,7 @@ namespace Integrative.Lara
 
         private ElementBindings EnsureBindings()
         {
-            if (_bindings == null)
-            {
-                _bindings = new ElementBindings(this);
-            }
-            return _bindings;
+            return _bindings ??= new ElementBindings(this);
         }
 
         /// <summary>

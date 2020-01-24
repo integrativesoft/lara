@@ -13,7 +13,7 @@ namespace Integrative.Lara.Tests.Middleware
 {
     public class EventParametersTesting
     {
-        public Guid _id = Guid.Parse("{2F97BE9D-1CC3-4EBD-BC93-EF748B774F1D}");
+        private readonly Guid _id = Guid.Parse("{2F97BE9D-1CC3-4EBD-BC93-EF748B774F1D}");
 
         [Fact]
         public void RoundTripMinimum()

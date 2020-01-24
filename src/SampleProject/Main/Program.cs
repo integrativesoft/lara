@@ -10,7 +10,7 @@ using SampleProject.KitchenSink;
 
 namespace SampleProject.Main
 {
-    internal class Program
+    internal static class Program
     {
         private static async Task Main()
         {

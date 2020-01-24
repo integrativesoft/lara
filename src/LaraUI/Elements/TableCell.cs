@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public int? ColSpan
         {
             get => GetIntAttribute("colspan");
-            set { SetIntAttribute("colspan", value); }
+            set => SetIntAttribute("colspan", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? Headers
         {
             get => GetAttributeLower("headers");
-            set { SetAttributeLower("headers", value); }
+            set => SetAttributeLower("headers", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public int? RowSpan
         {
             get => GetIntAttribute("rowspan");
-            set { SetIntAttribute("rowspan", value); }
+            set => SetIntAttribute("rowspan", value);
         }
     }
 }

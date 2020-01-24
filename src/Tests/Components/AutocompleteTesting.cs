@@ -45,7 +45,7 @@ namespace Integrative.Lara.Tests.Components
     {
         public AutocompleteTesting()
         {
-            _context.Application.PublishComponent(new WebComponentOptions
+            Context.Application.PublishComponent(new WebComponentOptions
             {
                 ComponentTagName = AutocompleteElement.CustomTag,
                 ComponentType = typeof(AutocompleteElement)
@@ -83,7 +83,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void AutocompleteStarts()
         {
-            LaraUI.InternalContext.Value = _context;
+            LaraUI.InternalContext.Value = Context;
             var x = new AutocompleteElement();
             var provider = new MyProvider();
             var options = new AutocompleteOptions
@@ -96,7 +96,7 @@ namespace Integrative.Lara.Tests.Components
             x.Start(options);
             var doc = new Document(new MyPage(), 100);
             var bridge = new Mock<IJSBridge>();
-            _context.JSBridge = bridge.Object;
+            Context.JSBridge = bridge.Object;
             
             var code = "LaraUI.autocompleteApply(context.Payload);";
             var payload = new AutocompletePayload
@@ -116,7 +116,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void AutocompleteStartStop()
         {
-            LaraUI.InternalContext.Value = _context;
+            LaraUI.InternalContext.Value = Context;
             var x = new AutocompleteElement();
             var provider = new MyProvider();
             var options = new AutocompleteOptions
@@ -129,7 +129,7 @@ namespace Integrative.Lara.Tests.Components
 
             var doc = new Document(new MyPage(), 100);
             var bridge = new Mock<IJSBridge>();
-            _context.JSBridge = bridge.Object;
+            Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
 
             x.Start(options);
@@ -142,7 +142,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void OnDisconnectStops()
         {
-            LaraUI.InternalContext.Value = _context;
+            LaraUI.InternalContext.Value = Context;
             var x = new AutocompleteElement();
             var provider = new MyProvider();
             var options = new AutocompleteOptions
@@ -155,7 +155,7 @@ namespace Integrative.Lara.Tests.Components
 
             var doc = new Document(new MyPage(), 100);
             var bridge = new Mock<IJSBridge>();
-            _context.JSBridge = bridge.Object;
+            Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
 
             x.Start(options);
@@ -196,7 +196,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public async void AutocompleteServiceRun()
         {
-            LaraUI.InternalContext.Value = _context;
+            LaraUI.InternalContext.Value = Context;
             var x = new AutocompleteElement();
             var provider = new MyProvider();
             var options = new AutocompleteOptions
@@ -208,7 +208,7 @@ namespace Integrative.Lara.Tests.Components
             };
             var doc = new Document(new MyPage(), 100);
             var bridge = new Mock<IJSBridge>();
-            _context.JSBridge = bridge.Object;
+            Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
             x.Start(options);
 
@@ -218,7 +218,7 @@ namespace Integrative.Lara.Tests.Components
                 Key = x.AutocompleteId,
                 Term = "B"
             };
-            _context.RequestBody = LaraUI.JSON.Stringify(request);
+            Context.RequestBody = LaraUI.JSON.Stringify(request);
             var text = await service.Execute();
             var response = LaraUI.JSON.Parse<AutocompleteResponse>(text);
             Assert.Equal(3, response.Suggestions!.Count);
@@ -230,7 +230,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void RegistryReplacesEntries()
         {
-            LaraUI.InternalContext.Value = _context;
+            LaraUI.InternalContext.Value = Context;
             var x = new AutocompleteRegistry();
             var auto1 = new AutocompleteElement();
             var auto2 = new AutocompleteElement();
@@ -243,14 +243,13 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public async void ExecuteNotFoundReturnsEmpty()
         {
-            var x = new AutocompleteService();
             var request = new AutocompleteRequest
             {
                 Key = "a",
                 Term = ""
             };
             var json = LaraUI.JSON.Stringify(request);
-            var result = await x.Execute(json);
+            var result = await AutocompleteService.Execute(json);
             Assert.Equal(string.Empty, result);
         }
 

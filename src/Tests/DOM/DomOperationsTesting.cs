@@ -501,7 +501,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifyAdoptedPassedToChildren()
         {
-            _context.Application.PublishComponent(new WebComponentOptions
+            Context.Application.PublishComponent(new WebComponentOptions
             {
                 ComponentTagName = "x-adoptable",
                 ComponentType = typeof(DummyAdoptable)
@@ -514,7 +514,7 @@ namespace Integrative.Lara.Tests.DOM
             var doc2 = CreateDocument();
             doc2.Body.AppendChild(div);
             Assert.Equal(1, x.AdoptedCount);
-            _context.Application.UnPublishWebComponent("x-adoptable");
+            Context.Application.UnPublishWebComponent("x-adoptable");
         }
 
         [Fact]

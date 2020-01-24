@@ -36,7 +36,7 @@ namespace Integrative.Lara
                 var parent = element.ParentElement;
                 if (parent != null)
                 {
-                    int index = parent.GetChildElementPosition(element);
+                    var index = parent.GetChildElementPosition(element);
                     locator.GetSteps().Add(index);
                     Build(locator, parent);
                 }

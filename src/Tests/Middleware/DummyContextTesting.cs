@@ -10,11 +10,11 @@ namespace Integrative.Lara.Tests.Middleware
 {
     public class DummyContextTesting : IDisposable
     {
-        internal readonly DummyContext _context = DummyContext.Create();
+        internal readonly DummyContext Context = DummyContext.Create();
 
         public void Dispose()
         {
-            _context.Dispose();
+            Context.Dispose();
         }
     }
 }

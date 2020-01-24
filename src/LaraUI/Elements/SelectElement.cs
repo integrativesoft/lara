@@ -48,7 +48,7 @@ namespace Integrative.Lara
         public bool Autofocus
         {
             get => HasAttributeLower("autofocus");
-            set { SetFlagAttributeLower("autofocus", value); }
+            set => SetFlagAttributeLower("autofocus", value);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Integrative.Lara
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
-            set { SetFlagAttributeLower("disabled", value); }
+            set => SetFlagAttributeLower("disabled", value);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Integrative.Lara
         public bool Multiple
         {
             get => HasAttributeLower("multiple");
-            set { SetFlagAttributeLower("multiple", value); }
+            set => SetFlagAttributeLower("multiple", value);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttributeLower("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Integrative.Lara
         public bool Required
         {
             get => HasAttributeLower("required");
-            set { SetFlagAttributeLower("required", value); }
+            set => SetFlagAttributeLower("required", value);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Integrative.Lara
         public int? Size
         {
             get => GetIntAttribute("size");
-            set { SetIntAttribute("size", value); }
+            set => SetIntAttribute("size", value);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
 
         internal override void AttributeChanged(string attribute, string? value)
@@ -144,7 +144,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal override void OnChildAdded(Node child)
+        private protected override void OnChildAdded(Node child)
         {
             var value = Value;
             if (string.IsNullOrEmpty(value))

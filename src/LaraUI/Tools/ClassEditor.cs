@@ -45,13 +45,13 @@ namespace Integrative.Lara
             {
                 return previous.Substring(0, previous.Length - name.Length - 1);
             }
-            int index = previous.IndexOf(" " + name + " ", System.StringComparison.InvariantCulture);
+            var index = previous.IndexOf(" " + name + " ", System.StringComparison.InvariantCulture);
             if (index == -1)
             {
                 return previous;
             }
-            string left = previous.Substring(0, index);
-            string right = previous.Substring(index + name.Length + 1);
+            var left = previous.Substring(0, index);
+            var right = previous.Substring(index + name.Length + 1);
             return left + right;
         }
 

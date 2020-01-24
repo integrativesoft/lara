@@ -15,7 +15,7 @@ namespace Integrative.Lara
         private const double DefaultTimerInterval = 20 * 1000;          // 20 seconds to trigger updates
         private const double DefaultExpireInterval = 60 * 1000;         // 60 seconds to expire
 
-        public new const double DefaultKeepAliveInterval = DefaultExpireInterval / 2.5;
+        internal const double BrowserAppKeepAliveInterval = DefaultExpireInterval / 2.5;
 
         private Connection? _connection;
 
@@ -34,7 +34,7 @@ namespace Integrative.Lara
             return host;
         }
 
-        public override double KeepAliveInterval => DefaultKeepAliveInterval;
+        public override double KeepAliveInterval => BrowserAppKeepAliveInterval;
 
         public override Connection CreateConnection(IPAddress remoteIp)
         {
@@ -43,7 +43,7 @@ namespace Integrative.Lara
                 throw new StatusForbiddenException(Resources.BrowserAppConnectionRejected);
             }
             _connection = base.CreateConnection(remoteIp);
-            _connection.Closing.Subscribe(() => _app.Stop());
+            _connection.Closing.Subscribe(() => App.Stop());
             return _connection;
         }
 

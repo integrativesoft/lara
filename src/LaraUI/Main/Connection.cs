@@ -57,6 +57,7 @@ namespace Integrative.Lara
             if (_documents.TryGetValue(documentId, out var document))
             {
                 await document.NotifyUnload();
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 if (document.Page is IDisposable disposable)
                 {
                     disposable.Dispose();

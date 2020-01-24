@@ -17,6 +17,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Initializes a new instance of the <see cref="DuplicateElementIdException"/> class.
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public DuplicateElementIdException()
         {
         }
@@ -25,6 +26,7 @@ namespace Integrative.Lara
         /// Initializes a new instance of the <see cref="DuplicateElementIdException"/> class.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
+        // ReSharper disable once MemberCanBePrivate.Global
         public DuplicateElementIdException(string message)
             : base(message)
         {
@@ -47,7 +49,7 @@ namespace Integrative.Lara
         /// <returns>Exception created</returns>
         public static DuplicateElementIdException Create(string id)
         {
-            string message = $"Duplicate element Id: {id}";
+            var message = $"Duplicate element Id: {id}";
             return new DuplicateElementIdException(message);
         }
     }

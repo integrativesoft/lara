@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public bool Download
         {
             get => HasAttribute("download");
-            set { SetFlagAttributeLower("download", value); }
+            set => SetFlagAttributeLower("download", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? HRef
         {
             get => GetAttribute("href");
-            set { SetAttributeLower("href", value); }
+            set => SetAttributeLower("href", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public string? HRefLang
         {
             get => GetAttribute("hreflang");
-            set { SetAttributeLower("hreflang", value); }
+            set => SetAttributeLower("hreflang", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public string? Media
         {
             get => GetAttribute("media");
-            set { SetAttributeLower("media", value); }
+            set => SetAttributeLower("media", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public string? Ping
         {
             get => GetAttribute("ping");
-            set { SetAttributeLower("ping", value); }
+            set => SetAttributeLower("ping", value);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public string? ReferrerPolicy
         {
             get => GetAttribute("referrerpolicy");
-            set { SetAttributeLower("referrerpolicy", value); }
+            set => SetAttributeLower("referrerpolicy", value);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Integrative.Lara
         public string? Rel
         {
             get => GetAttribute("rel");
-            set { SetAttributeLower("rel", value); }
+            set => SetAttributeLower("rel", value);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Integrative.Lara
         public string? Target
         {
             get => GetAttributeLower("target");
-            set { SetAttributeLower("target", value); }
+            set => SetAttributeLower("target", value);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
     }
 }

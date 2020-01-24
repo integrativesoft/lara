@@ -22,10 +22,10 @@ namespace Integrative.Lara
 
         public ClientLibraryHandler(RequestDelegate next) : base(next)
         {
-            Assembly assembly = GetCurrentAssembly();
-            string version = GetLibraryVersion(assembly);
+            var assembly = GetCurrentAssembly();
+            var version = GetLibraryVersion(assembly);
             _address = BuildLibraryAddress(version);
-            string js = LoadLibrary(assembly);
+            var js = LoadLibrary(assembly);
             _library = Encoding.UTF8.GetBytes(js);
         }
 
@@ -37,7 +37,7 @@ namespace Integrative.Lara
         private static string GetLibraryVersion(Assembly assembly)
         {
             var info = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = info.FileVersion;
+            var version = info.FileVersion;
             return version;
         }
 

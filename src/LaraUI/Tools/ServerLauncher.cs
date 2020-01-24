@@ -18,10 +18,6 @@ namespace Integrative.Lara
         public static async Task<IWebHost> StartServer(Application app, StartServerOptions options)
         {
             var host = CreateBrowserHost(app, options);
-            if (options.PublishAssembliesOnStart)
-            {
-                app.PublishAssemblies();
-            }
             await host.StartAsync(CancellationToken.None);
             return host;
         }
@@ -37,7 +33,7 @@ namespace Integrative.Lara
                 .Build();
         }
 
-        internal static void ConfigureApp(IApplicationBuilder app, Application laraApp, StartServerOptions options)
+        private static void ConfigureApp(IApplicationBuilder app, Application laraApp, StartServerOptions options)
         {
             ConfigureExceptions(app, options);
             app.UseLara(laraApp, options);

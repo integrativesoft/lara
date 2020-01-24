@@ -35,7 +35,7 @@ namespace Integrative.Lara
 
         public static void LaunchBrowser(IWebHost host)
         {
-            string address = GetFirstUrl(host);
+            var address = GetFirstUrl(host);
             LaunchBrowser(address);
         }
 
@@ -96,7 +96,7 @@ namespace Integrative.Lara
 
         public static byte[] Compress(byte[] data)
         {
-            MemoryStream output = new MemoryStream();
+            var output = new MemoryStream();
             using (var stream = new DeflateStream(output, CompressionLevel.Fastest))
             {
                 stream.Write(data, 0, data.Length);

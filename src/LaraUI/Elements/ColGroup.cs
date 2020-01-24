@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public int? Span
         {
             get => GetIntAttribute("span");
-            set { SetIntAttribute("span", value); }
+            set => SetIntAttribute("span", value);
         }
     }
 }

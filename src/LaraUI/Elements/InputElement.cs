@@ -36,7 +36,7 @@ namespace Integrative.Lara
         public string? Accept
         {
             get => GetAttributeLower("accept");
-            set { SetAttributeLower("accept", value); }
+            set => SetAttributeLower("accept", value);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Integrative.Lara
         public string? Alt
         {
             get => GetAttributeLower("alt");
-            set { SetAttributeLower("alt", value); }
+            set => SetAttributeLower("alt", value);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Integrative.Lara
         public string? Autocomplete
         {
             get => GetAttributeLower("autocomplete");
-            set { SetAttributeLower("autocomplete", value); }
+            set => SetAttributeLower("autocomplete", value);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Integrative.Lara
         public bool Autofocus
         {
             get => HasAttributeLower("autofocus");
-            set { SetFlagAttributeLower("autofocus", value); }
+            set => SetFlagAttributeLower("autofocus", value);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Integrative.Lara
         public bool Checked
         {
             get => HasAttributeLower("checked");
-            set { SetFlagAttributeLower("checked", value); }
+            set => SetFlagAttributeLower("checked", value);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Integrative.Lara
         public string? Dirname
         {
             get => GetAttributeLower("dirname");
-            set { SetAttributeLower("dirname", value); }
+            set => SetAttributeLower("dirname", value);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Integrative.Lara
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
-            set { SetFlagAttributeLower("disabled", value); }
+            set => SetFlagAttributeLower("disabled", value);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Integrative.Lara
         public int? Height
         {
             get => GetIntAttribute("height");
-            set { SetIntAttribute("height", value); }
+            set => SetIntAttribute("height", value);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Integrative.Lara
         public string? List
         {
             get => GetAttributeLower("list");
-            set { SetAttributeLower("list", value); }
+            set => SetAttributeLower("list", value);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Integrative.Lara
         public string? Max
         {
             get => GetAttributeLower("max");
-            set { SetAttributeLower("max", value); }
+            set => SetAttributeLower("max", value);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Integrative.Lara
         public int? MaxLength
         {
             get => GetIntAttribute("maxlength");
-            set { SetIntAttribute("maxlength", value); }
+            set => SetIntAttribute("maxlength", value);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Integrative.Lara
         public string? Min
         {
             get => GetAttributeLower("min");
-            set { SetAttributeLower("min", value); }
+            set => SetAttributeLower("min", value);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Integrative.Lara
         public bool Multiple
         {
             get => HasAttributeLower("multiple");
-            set { SetFlagAttributeLower("multiple", value); }
+            set => SetFlagAttributeLower("multiple", value);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttributeLower("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Integrative.Lara
         public string? Pattern
         {
             get => GetAttributeLower("pattern");
-            set { SetAttributeLower("pattern", value); }
+            set => SetAttributeLower("pattern", value);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Integrative.Lara
         public string? Placeholder
         {
             get => GetAttributeLower("placeholder");
-            set { SetAttributeLower("placeholder", value); }
+            set => SetAttributeLower("placeholder", value);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Integrative.Lara
         public bool Readonly
         {
             get => HasAttributeLower("readonly");
-            set { SetFlagAttributeLower("readonly", value); }
+            set => SetFlagAttributeLower("readonly", value);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Integrative.Lara
         public bool Required
         {
             get => HasAttributeLower("required");
-            set { SetFlagAttributeLower("required", value); }
+            set => SetFlagAttributeLower("required", value);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Integrative.Lara
         public int? Size
         {
             get => GetIntAttribute("size");
-            set { SetIntAttribute("size", value); }
+            set => SetIntAttribute("size", value);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Integrative.Lara
         public string? Src
         {
             get => GetAttributeLower("src");
-            set { SetAttributeLower("src", value); }
+            set => SetAttributeLower("src", value);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Integrative.Lara
         public string? Step
         {
             get => GetAttributeLower("step");
-            set { SetAttributeLower("step", value); }
+            set => SetAttributeLower("step", value);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Integrative.Lara
         public int? Width
         {
             get => GetIntAttribute("width");
-            set { SetIntAttribute("width", value); }
+            set => SetIntAttribute("width", value);
         }
 
         private readonly List<IFormFile> _files = new List<IFormFile>();

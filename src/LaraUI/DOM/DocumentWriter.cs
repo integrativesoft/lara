@@ -40,7 +40,7 @@ namespace Integrative.Lara
             _builder.Append("<html");
             if (!string.IsNullOrEmpty(_document.Lang))
             {
-                string lang = HttpUtility.HtmlAttributeEncode(_document.Lang);
+                var lang = HttpUtility.HtmlAttributeEncode(_document.Lang);
                 _builder.Append($" lang=\"{lang}\"");
             }
             _builder.AppendLine(">");
@@ -74,7 +74,7 @@ namespace Integrative.Lara
 
         private static bool IsInlineElement(Element element)
         {
-            bool hasChildren = false;
+            var hasChildren = false;
             foreach (var child in element.GetLightChildren())
             {
                 hasChildren = true;
@@ -98,7 +98,7 @@ namespace Integrative.Lara
 
         private void Indent(int indent)
         {
-            for (int index = 0; index < indent; index++)
+            for (var index = 0; index < indent; index++)
             {
                 _builder.Append('\t');
             }

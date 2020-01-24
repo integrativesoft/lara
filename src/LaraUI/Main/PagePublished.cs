@@ -83,7 +83,7 @@ namespace Integrative.Lara
             else
             {
                 document.OpenEventQueue();
-                string html = WriteDocument(execution.Document);
+                var html = WriteDocument(execution.Document);
                 await ReplyDocument(http, html, code);
             }
         }

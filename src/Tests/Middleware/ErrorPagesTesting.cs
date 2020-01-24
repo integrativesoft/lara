@@ -13,7 +13,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultNotFoundRuns()
         {
-            var pages = new ErrorPages(_context.Application.GetPublished());
+            var pages = new ErrorPages(Context.Application.GetPublished());
             var page = pages.GetPage(System.Net.HttpStatusCode.NotFound);
             Assert.NotNull(page);
         }
@@ -21,7 +21,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void DefaultServerErrorRuns()
         {
-            var pages = new ErrorPages(_context.Application.GetPublished());
+            var pages = new ErrorPages(Context.Application.GetPublished());
             var found = pages.TryGetPage(System.Net.HttpStatusCode.InternalServerError, out var page);
             Assert.True(found);
             Assert.NotNull(page);

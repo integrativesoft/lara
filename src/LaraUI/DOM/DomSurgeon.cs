@@ -122,23 +122,16 @@ namespace Integrative.Lara
 
         private static Document? GetPreviousDocument(Element? previousParent)
         {
-            if (previousParent == null)
-            {
-                return null;
-            }
-            else
-            {
-                return previousParent.Document;
-            }
+            return previousParent?.Document;
         }
 
         #endregion
 
         #region Operations
 
-        public void AppendInternal(Node child)
+        private void AppendInternal(Node child)
         {
-            bool needGenerateIds = NeedsId(child);
+            var needGenerateIds = NeedsId(child);
             PreventCycles(child);
             AddImmediateId(child);
             UpdateDocumentMappings(child);
@@ -149,7 +142,7 @@ namespace Integrative.Lara
         private void InsertChild(Node reference, int offset, Node child)
         {
             VerifyParentContainsChild(reference);
-            bool needGenerateIds = NeedsId(child);
+            var needGenerateIds = NeedsId(child);
             PreventCycles(child);
             AddImmediateId(child);
             UpdateDocumentMappings(child);
@@ -159,7 +152,7 @@ namespace Integrative.Lara
 
         private void InsertChild(int index, Node child)
         {
-            bool needGenerateIds = NeedsId(child);
+            var needGenerateIds = NeedsId(child);
             PreventCycles(child);
             AddImmediateId(child);
             UpdateDocumentMappings(child);
@@ -189,7 +182,7 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(Resources.NodeNotFoundInsideParent);
             }
-            int index = _parent.GetChildNodePosition(child);
+            var index = _parent.GetChildNodePosition(child);
             RemoveInternalCommon(child);
             NodeRemovedDelta.Enqueue(_parent, index);
         }
@@ -241,21 +234,18 @@ namespace Integrative.Lara
 
         private void UpdateDocumentMappings(Node child)
         {
-            bool newToDocument = NewToDocument(child, out var newDocument);
-            bool leavingPrevious = LeavingPrevious(child, out var previous);
-            if (newToDocument || leavingPrevious)
+            var newToDocument = NewToDocument(child, out var newDocument);
+            var leavingPrevious = LeavingPrevious(child, out var previous);
+            if (!newToDocument && !leavingPrevious) return;
+            var list = CollectNodes(child);
+            if (leavingPrevious)
             {
-                var list = CollectNodes(child);
-                if (leavingPrevious)
-                {
-                    RemoveFromPreviousDocument(list, previous!);
-                }
-                if (newToDocument)
-                {
-                    PreventDuplicateIds(list);
-                    AddToDocument(list, newDocument!);
-                }
+                RemoveFromPreviousDocument(list, previous!);
             }
+
+            if (!newToDocument) return;
+            PreventDuplicateIds(list);
+            AddToDocument(list, newDocument!);
         }
 
         private bool NewToDocument(Node child, [NotNullWhen(true)] out Document? newDocument)
@@ -297,16 +287,13 @@ namespace Integrative.Lara
             var hash = new HashSet<string>();
             foreach (var node in list)
             {
-                if (node is Element element
-                    && !string.IsNullOrEmpty(element.Id))
+                if (!(node is Element element) || string.IsNullOrEmpty(element.Id)) continue;
+                var id = element.Id;
+                if (hash.Contains(id) || DuplicateIdInDocument(document, id))
                 {
-                    string id = element.Id;
-                    if (hash.Contains(id) || DuplicateIdInDocument(document, id))
-                    {
-                        throw DuplicateElementIdException.Create(id);
-                    }
-                    hash.Add(id);
+                    throw DuplicateElementIdException.Create(id);
                 }
+                hash.Add(id);
             }
         }
 
@@ -316,7 +303,7 @@ namespace Integrative.Lara
                 && document.TryGetElementById(id, out _);
         }
 
-        private static void AddToDocument(List<Node> list, Document document)
+        private static void AddToDocument(IEnumerable<Node> list, Document document)
         {
             foreach (var node in list)
             {
@@ -328,7 +315,7 @@ namespace Integrative.Lara
             }
         }
 
-        private static void RemoveFromPreviousDocument(List<Node> list, Document document)
+        private static void RemoveFromPreviousDocument(IEnumerable<Node> list, Document document)
         {
             foreach (var node in list)
             {
@@ -355,7 +342,7 @@ namespace Integrative.Lara
 
         private void UpdateChildParentLinks(Node reference, int offset, Node child)
         {
-            int index = _parent.GetChildNodePosition(reference) + offset;
+            var index = _parent.GetChildNodePosition(reference) + offset;
             UpdateChildParentLinks(index, child);
         }
 

@@ -125,14 +125,7 @@ namespace Integrative.Lara
 
         internal static Document? GetContextDocument(IPageContext? context)
         {
-            if (context == null)
-            {
-                return null;
-            }
-            else
-            {
-                return context.Document;
-            }
+            return context?.Document;
         }
 
         #endregion
@@ -151,6 +144,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="options">The server options.</param>
         /// <returns>Task</returns>
+        // ReSharper disable once MemberCanBePrivate.Global
         public static async Task<IWebHost> StartServer(StartServerOptions options)
         {
             await DefaultApplication.Start(options);
@@ -197,7 +191,7 @@ namespace Integrative.Lara
         internal static bool TryGetComponent(string tagName, [NotNullWhen(true)] out Type? type)
         {
             var context = InternalContext.Value;
-            if (context != null && context.Application != null)
+            if (context?.Application != null)
             {
                 return Context.Application.TryGetComponent(tagName, out type);
             }
@@ -206,6 +200,17 @@ namespace Integrative.Lara
                 type = default;
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Shorthand for LaraUI.JSON.Parse(LaraUI.Service.RequestBody)
+        /// </summary>
+        /// <typeparam name="T">Type for parsing</typeparam>
+        /// <returns>Instance of T</returns>
+        public static T ParseRequest<T>()
+        where T : class
+        {
+            return JSON.Parse<T>(Service.RequestBody);
         }
 
         #endregion

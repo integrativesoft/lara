@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Integrative.Lara.Tests.Main
             var page = new MyRedirectPage();
             var document = new Document(page, BaseModeController.DefaultKeepAliveInterval);
             var cx = new Connection(Guid.NewGuid(), IPAddress.Loopback);
-            var context = new PageContext(_context.Application, http.Object, cx);
+            var context = new PageContext(Context.Application, http.Object, cx);
             await page.OnGet();
             await PagePublished.ProcessGetResult(http.Object, document, context, HttpStatusCode.OK);
             response.Verify(x => x.Redirect("https://www.google.com"));

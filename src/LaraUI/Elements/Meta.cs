@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public string? Content
         {
             get => GetAttributeLower("content");
-            set { SetAttributeLower("content", value); }
+            set => SetAttributeLower("content", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? HttpEquiv
         {
             get => GetAttributeLower("http-equiv");
-            set { SetAttributeLower("http-equiv", value); }
+            set => SetAttributeLower("http-equiv", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public string? Name
         {
             get => GetAttributeLower("name");
-            set { SetAttributeLower("name", value); }
+            set => SetAttributeLower("name", value);
         }
     }
 }

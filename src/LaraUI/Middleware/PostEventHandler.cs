@@ -160,7 +160,7 @@ namespace Integrative.Lara
                 () => NotifyEventHandler(post)))
             {
                 var document = post.GetDocument();
-                string queue = document.FlushQueue();
+                var queue = document.FlushQueue();
                 return await SendReply(post, queue);
             }
             else
@@ -258,7 +258,7 @@ namespace Integrative.Lara
 
         internal static async Task<Task> SendReply(PostEventContext post, string json)
         {
-            Task result = Task.CompletedTask;
+            var result = Task.CompletedTask;
             if (post.IsWebSocketRequest)
             {
                 if (post.SocketRemainsOpen())
@@ -299,7 +299,7 @@ namespace Integrative.Lara
 
         public static async Task FlushPartialChanges(WebSocket socket, Document document)
         {
-            string json = document.FlushQueue();
+            var json = document.FlushQueue();
             await FlushMessage(socket, json);
         }
 
@@ -328,7 +328,7 @@ namespace Integrative.Lara
             {
                 ResultType = type
             };
-            string json = reply.ToJSON();
+            var json = reply.ToJSON();
             await SendReply(post, json);
         }
     }

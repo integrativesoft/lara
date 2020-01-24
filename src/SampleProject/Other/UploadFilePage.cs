@@ -6,11 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 
 namespace SampleProject.Other
 {

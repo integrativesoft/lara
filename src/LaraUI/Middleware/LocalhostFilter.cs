@@ -42,7 +42,7 @@ namespace Integrative.Lara
             var remote = context.Connection.RemoteIpAddress;
             if (!IPAddress.IsLoopback(remote))
             {
-                string msg = $"Forbidden request from {remote}";
+                var msg = $"Forbidden request from {remote}";
                 _logger.LogInformation(msg);
                 return MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
             }

@@ -70,14 +70,12 @@ namespace Integrative.Lara
         /// </summary>
         protected override void OnConnect()
         {
-            if (_pending)
+            if (!_pending) return;
+            _pending = false;
+            DestroyAutocomplete();
+            if (Document != null && _options != null)
             {
-                _pending = false;
-                DestroyAutocomplete();
-                if (Document != null && _options != null)
-                {
-                    SubmitAutocomplete(Document, _options);
-                }
+                SubmitAutocomplete(Document, _options);
             }
         }
 
@@ -89,7 +87,7 @@ namespace Integrative.Lara
             DestroyAutocomplete();
         }
 
-        internal string AutocompleteId { get; set; } = string.Empty;
+        internal string AutocompleteId { get; private set; } = string.Empty;
 
         private void SubmitAutocomplete(Document document, AutocompleteOptions options)
         {
@@ -116,13 +114,11 @@ namespace Integrative.Lara
 
         private void DestroyAutocomplete()
         {
-            if (_applied)
-            {
-                _applied = false;
-                AutocompleteService.Unregister(AutocompleteId);
-                var code = $"LaraUI.autocompleteDestroy('{InnerInput.Id}');";
-                LaraUI.Page.JSBridge.Submit(code);
-            }
+            if (!_applied) return;
+            _applied = false;
+            AutocompleteService.Unregister(AutocompleteId);
+            var code = $"LaraUI.autocompleteDestroy('{InnerInput.Id}');";
+            LaraUI.Page.JSBridge.Submit(code);
         }
 
         /// <summary>

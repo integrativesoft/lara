@@ -31,7 +31,7 @@ namespace Integrative.Lara
         public bool Disabled
         {
             get => HasAttributeLower("disabled");
-            set { SetFlagAttributeLower("disabled", value); }
+            set => SetFlagAttributeLower("disabled", value);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Integrative.Lara
         public string? Label
         {
             get => GetAttributeLower("label");
-            set { SetAttributeLower("label", value); }
+            set => SetAttributeLower("label", value);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         public bool Selected
         {
             get => HasAttributeLower("selected");
-            set { SetFlagAttributeLower("selected", value); }
+            set => SetFlagAttributeLower("selected", value);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Integrative.Lara
         public string? Value
         {
             get => GetAttributeLower("value");
-            set { SetAttributeLower("value", value); }
+            set => SetAttributeLower("value", value);
         }
 
         internal void NotifyAdded(string parentValue)

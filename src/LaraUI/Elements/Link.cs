@@ -25,7 +25,7 @@ namespace Integrative.Lara
         public string? CrossOrigin
         {
             get => GetAttributeLower("crossorigin");
-            set { SetAttributeLower("crossorigin", value); }
+            set => SetAttributeLower("crossorigin", value);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         public string? HRef
         {
             get => GetAttributeLower("href");
-            set { SetAttributeLower("href", value); }
+            set => SetAttributeLower("href", value);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Integrative.Lara
         public string? HRefLang
         {
             get => GetAttributeLower("hreflang");
-            set { SetAttributeLower("hreflang", value); }
+            set => SetAttributeLower("hreflang", value);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Integrative.Lara
         public string? Media
         {
             get => GetAttributeLower("media");
-            set { SetAttributeLower("media", value); }
+            set => SetAttributeLower("media", value);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Integrative.Lara
         public string? Rel
         {
             get => GetAttributeLower("rel");
-            set { SetAttributeLower("rel", value); }
+            set => SetAttributeLower("rel", value);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public string? Sizes
         {
             get => GetAttributeLower("sizes");
-            set { SetAttributeLower("sizes", value); }
+            set => SetAttributeLower("sizes", value);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Integrative.Lara
         public string? Type
         {
             get => GetAttributeLower("type");
-            set { SetAttributeLower("type", value); }
+            set => SetAttributeLower("type", value);
         }
     }
 }

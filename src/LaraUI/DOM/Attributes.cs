@@ -88,17 +88,15 @@ namespace Integrative.Lara
 
         internal void SetFlagAttributeLower(string nameLower, bool value)
         {
-            bool current = _values.ContainsKey(nameLower);
-            if (value != current)
+            var current = _values.ContainsKey(nameLower);
+            if (value == current) return;
+            if (value)
             {
-                if (value)
-                {
-                    SetAttributeLower(nameLower, null);
-                }
-                else
-                {
-                    RemoveAttributeLower(nameLower);
-                }
+                SetAttributeLower(nameLower, null);
+            }
+            else
+            {
+                RemoveAttributeLower(nameLower);
             }
         }
 
@@ -129,7 +127,7 @@ namespace Integrative.Lara
 
         private void NotifyFlag(string nameLower, bool value)
         {
-            bool current = _values.ContainsKey(nameLower);
+            var current = _values.ContainsKey(nameLower);
             if (current == value)
             {
                 return;

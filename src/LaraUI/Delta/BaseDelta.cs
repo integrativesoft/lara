@@ -52,7 +52,7 @@ namespace Integrative.Lara
         [DataMember]
         public DeltaType Type { get; set; }
 
-        public BaseDelta(DeltaType type)
+        protected BaseDelta(DeltaType type)
         {
             Type = type;
         }

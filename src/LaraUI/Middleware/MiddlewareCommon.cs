@@ -66,7 +66,7 @@ namespace Integrative.Lara
         public static bool TryFindConnection(Application app, HttpContext http, [NotNullWhen(true)] out Connection? connection)
         {
             connection = null;
-            return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out string value)
+            return http.Request.Cookies.TryGetValue(GlobalConstants.CookieSessionId, out var value)
                 && Guid.TryParseExact(value, GlobalConstants.GuidFormat, out var guid)
                 && app.TryGetConnection(guid, out connection)
                 && connection.RemoteIp.Equals(http.Connection.RemoteIpAddress);

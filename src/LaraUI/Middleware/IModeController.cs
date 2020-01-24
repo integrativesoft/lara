@@ -39,11 +39,11 @@ namespace Integrative.Lara
         public const double DefaultKeepAliveInterval
             = StaleConnectionsCollector.DefaultExpireInterval / 2.5;  // at least 2 message attempts per expire period
 
-        protected readonly Application _app;
+        protected readonly Application App;
 
         public BaseModeController(Application app, ApplicationMode mode)
         {
-            _app = app;
+            App = app;
             Mode = mode;
         }
 
@@ -55,7 +55,7 @@ namespace Integrative.Lara
 
         public virtual Connection CreateConnection(IPAddress remoteIp)
         {
-            var connections = _app.GetPublished().Connections;
+            var connections = App.GetPublished().Connections;
             return connections.CreateConnection(remoteIp);
         }
 

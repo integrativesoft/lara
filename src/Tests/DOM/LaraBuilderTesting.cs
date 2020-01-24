@@ -208,7 +208,7 @@ namespace Integrative.Lara.Tests.DOM
             public int Counter
             {
                 get => _counter;
-                set { SetProperty(ref _counter, value); }
+                set => SetProperty(ref _counter, value);
             }
         }
 
