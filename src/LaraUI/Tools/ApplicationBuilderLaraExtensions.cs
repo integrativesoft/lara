@@ -27,6 +27,10 @@ namespace Integrative.Lara
             laraApp = laraApp ?? throw new ArgumentNullException(nameof(laraApp));
             options = options ?? throw new ArgumentNullException(nameof(options));
             laraApp.CreateModeController(options.Mode);
+            if (options.PublishAssembliesOnStart)
+            {
+                laraApp.PublishAssemblies();
+            }
             if (options.AllowLocalhostOnly || laraApp.AllowLocalhostOnly)
             {
                 app.UseMiddleware<LocalhostFilter>();
