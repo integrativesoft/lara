@@ -210,4 +210,7 @@
   <data name="TooManyPops" xml:space="preserve">
     <value>Too many Pop() calls.</value>
   </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>Resource not found</value>
+  </data>
 </root>

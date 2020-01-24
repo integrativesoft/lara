@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -44,7 +45,7 @@ namespace Integrative.Lara
         private static string BuildLibraryAddress(string version)
         {
             version = version.Replace('.', '-');
-            return GlobalConstants.LibraryAddress.Replace("{0}", version, System.StringComparison.InvariantCulture);
+            return GlobalConstants.LibraryAddress.Replace("{0}", version, StringComparison.InvariantCulture);
         }
 
         public static string GetLibraryPath()
@@ -57,6 +58,7 @@ namespace Integrative.Lara
         private static string LoadLibrary(Assembly assembly)
         {
             using var stream = assembly.GetManifestResourceStream(ResourceName);
+            if (stream == null) throw new InvalidOperationException(Resources.ResourceNotFound);
             using var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
@@ -64,6 +66,7 @@ namespace Integrative.Lara
         public static byte[] LoadFile(Assembly assembly, string name)
         {
             using var stream = assembly.GetManifestResourceStream(name);
+            if (stream == null) throw new InvalidOperationException(Resources.ResourceNotFound);
             var bytes = new byte[stream.Length];
             stream.Read(bytes, 0, bytes.Length);
             return bytes;
