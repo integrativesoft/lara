@@ -44,8 +44,8 @@
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <VisibleItems>ProtectedInternalAsProtected, NonBrowsable</VisibleItems>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.0\Integrative.Lara.xml" />
-      <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.0\Integrative.Lara.dll" />
+      <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.1\Integrative.Lara.dll" />
+      <DocumentationSource sourceFile="..\LaraUI\bin\Release\netstandard2.1\Integrative.Lara.xml" />
     </DocumentationSources>
     <CopyrightText>Copyright %28c%29 2019 Integrative Software LLC</CopyrightText>
     <NamespaceSummaries>
