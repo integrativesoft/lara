@@ -95,6 +95,6 @@ The source code contains a [sample project](https://github.com/integrativesoft/l
 
 ## Credits
 
-Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the license of DotCover.
+Thanks to [JetBrains](https://www.jetbrains.com/?from=LaraWebEngine) for the licenses of Rider and DotCover.
 
 [![JetBrains](support/jetbrains.svg)](https://www.jetbrains.com/?from=LaraWebEngine)
