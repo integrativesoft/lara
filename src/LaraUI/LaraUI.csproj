@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.8.3</Version>
+    <Version>0.8.4</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -70,10 +70,7 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>0.8.3 adds:
-- fixed number of bytes reported when uploading via web sockets
-- rejected connections not showing correct message error
-- fix issue where assemblies are not automatically loaded on start</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 
