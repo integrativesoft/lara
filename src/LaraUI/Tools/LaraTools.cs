@@ -4,6 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -11,28 +13,14 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Server.Features;
 
 [assembly: InternalsVisibleTo("Tests")]
 namespace Integrative.Lara
 {
     internal static class LaraTools
     {
-        private static readonly DataContractJsonSerializerSettings _jsonSettings;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
-        static LaraTools()
-        {
-            _jsonSettings = new DataContractJsonSerializerSettings
-            {
-                EmitTypeInformation = EmitTypeInformation.Never
-            };
-        }
-
         public static void LaunchBrowser(IWebHost host)
         {
             var address = GetFirstUrl(host);
@@ -76,7 +64,7 @@ namespace Integrative.Lara
             }
             var stream = new MemoryStream();
             using var reader = new StreamReader(stream);
-            var serializer = new DataContractJsonSerializer(type, _jsonSettings);
+            var serializer = new DataContractJsonSerializer(type);
             serializer.WriteObject(stream, instance);
             stream.Position = 0;
             return reader.ReadToEnd();
