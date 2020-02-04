@@ -24,7 +24,7 @@ namespace Integrative.Lara
     {
         private const string Address = "/lara_autocomplete";
 
-        private static readonly AutocompleteRegistry _map = new AutocompleteRegistry();
+        private static readonly AutocompleteRegistry _Map = new AutocompleteRegistry();
 
         public Task<string> Execute()
         {
@@ -34,7 +34,7 @@ namespace Integrative.Lara
         internal static async Task<string> Execute(string json)
         {
             var request = LaraUI.JSON.Parse<AutocompleteRequest>(json);
-            if (!_map.TryGet(request.Key, out var element))
+            if (!_Map.TryGet(request.Key, out var element))
             {
                 return string.Empty;
             }
@@ -52,14 +52,14 @@ namespace Integrative.Lara
 
         public static void Register(string key, AutocompleteElement element)
         {
-            _map.Set(key, element);
+            _Map.Set(key, element);
         }
 
         public static void Unregister(string key)
         {
-            _map.Remove(key);
+            _Map.Remove(key);
         }
 
-        public static int RegisteredCount => _map.Count;
+        public static int RegisteredCount => _Map.Count;
     }
 }

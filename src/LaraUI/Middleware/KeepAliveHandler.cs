@@ -13,8 +13,8 @@ namespace Integrative.Lara
 {
     internal class KeepAliveHandler : BaseHandler
     {
-        private static readonly Task<bool> _taskFalse = Task.FromResult(false);
-        private static readonly Task<bool> _taskTrue = Task.FromResult(true);
+        private static readonly Task<bool> _TaskFalse = Task.FromResult(false);
+        private static readonly Task<bool> _TaskTrue = Task.FromResult(true);
 
         private const string EventPrefix = "/_keepAlive";
         private const string AjaxMethod = "POST";
@@ -30,10 +30,10 @@ namespace Integrative.Lara
         {
             if (!IsMatch(http))
             {
-                return _taskFalse;
+                return _TaskFalse;
             }
             TryGetDocument(http, out _);
-            return _taskTrue;
+            return _TaskTrue;
         }
 
         private static bool IsMatch(HttpContext http)

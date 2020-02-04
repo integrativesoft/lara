@@ -86,7 +86,7 @@ namespace SampleProject.KitchenSink
             return $"Brewing a {size} {coffee}";
         }
 
-        private string ChooseRandom(string[] series)
+        private static string ChooseRandom(string[] series)
         {
             var random = new Random();
             var min = series.GetLowerBound(0);

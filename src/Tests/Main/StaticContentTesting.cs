@@ -17,7 +17,7 @@ namespace Integrative.Lara.Tests.Main
 {
     public class StaticContentTesting : DummyContextTesting
     {
-        private static readonly HttpClient _client;
+        private static readonly HttpClient _Client;
 
         static StaticContentTesting()
         {
@@ -25,7 +25,7 @@ namespace Integrative.Lara.Tests.Main
             {
                 AutomaticDecompression = DecompressionMethods.Deflate
             };
-            _client = new HttpClient(handler);
+            _Client = new HttpClient(handler);
         }            
 
         [Fact]
@@ -39,22 +39,22 @@ namespace Integrative.Lara.Tests.Main
             Assert.False(string.IsNullOrEmpty(content.ETag));
         }
 
-        private byte[] LoadSampleJpeg()
+        private static byte[] LoadSampleJpeg()
         {
             return LoadAsset("pexels-photo-248673.jpeg");
         }
 
-        private byte[] LoadCompressibleBmp()
+        private static byte[] LoadCompressibleBmp()
         {
             return LoadAsset("Compressible.bmp");
         }
 
-        private byte[] LoadAsset(string filename)
+        private static byte[] LoadAsset(string filename)
         {
             return LoadResource($"Integrative.Lara.Tests.Assets.{filename}");
         }
 
-        private byte[] LoadResource(string filename)
+        private static byte[] LoadResource(string filename)
         {
             var assembly = Assembly.GetAssembly(typeof(StaticContentTesting));
             using Stream? resFilestream = assembly!.GetManifestResourceStream(filename);
@@ -71,9 +71,9 @@ namespace Integrative.Lara.Tests.Main
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
             await Context.Application.Start();
-            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            var address = LaraUI.GetFirstURL(Context.Application.GetHost());
             Context.Application.PublishFile("/", content);
-            using var response = await _client.GetAsync(address);
+            using var response = await _Client.GetAsync(address);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
@@ -91,7 +91,7 @@ namespace Integrative.Lara.Tests.Main
             {
                 AllowLocalhostOnly = true
             });
-            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            var address = LaraUI.GetFirstURL(Context.Application.GetHost());
             Context.Application.PublishFile("/", content);
 
             var request = new HttpRequestMessage
@@ -101,7 +101,7 @@ namespace Integrative.Lara.Tests.Main
             };
             request.Headers.TryAddWithoutValidation("If-None-Match", "lalalalala");
 
-            using var response = await _client.SendAsync(request);
+            using var response = await _Client.SendAsync(request);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
@@ -116,7 +116,7 @@ namespace Integrative.Lara.Tests.Main
             var content = new StaticContent(bytes, ContentTypes.ImageJpeg);
 
             await Context.Application.Start();
-            string address = LaraUI.GetFirstURL(Context.Application.GetHost());
+            var address = LaraUI.GetFirstURL(Context.Application.GetHost());
             Context.Application.PublishFile("/", content);
 
             var request = new HttpRequestMessage
@@ -126,7 +126,7 @@ namespace Integrative.Lara.Tests.Main
             };
             request.Headers.TryAddWithoutValidation("If-None-Match", content.ETag);
 
-            using var response = await _client.SendAsync(request);
+            using var response = await _Client.SendAsync(request);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.NotModified, response.StatusCode);
             Assert.False(response.Headers.Contains("ETag"));
@@ -142,7 +142,7 @@ namespace Integrative.Lara.Tests.Main
             await Context.Application.Start();
             var address = LaraUI.GetFirstURL(Context.Application.GetHost());
             Context.Application.PublishFile("/", content);
-            using var response = await _client.GetAsync(address);
+            using var response = await _Client.GetAsync(address);
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
@@ -155,7 +155,7 @@ namespace Integrative.Lara.Tests.Main
         {
             await Context.Application.Start();
             var address = LaraUI.GetFirstURL(Context.Application.GetHost());
-            using var response = await _client.GetAsync(address + "/lalala");
+            using var response = await _Client.GetAsync(address + "/lalala");
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }

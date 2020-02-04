@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara.Tests.Middleware;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xunit;
 
@@ -39,7 +40,7 @@ namespace Integrative.Lara.Tests.DOM
             VerifyInnerData(x, "hello");
         }
 
-        private void VerifyInnerData(Element element, string data)
+        private static void VerifyInnerData(Element element, string data)
         {
             var node = element.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
@@ -266,7 +267,7 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 ModifiedHandler = (x, y) => data.Counter++
             });
-            bool found = false;
+            var found = false;
             try
             {
                 data.Counter = 3;
@@ -278,7 +279,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(found);
         }
 
-        private Element MyCreateCallback(MyData arg)
+        private static Element MyCreateCallback(MyData arg)
         {
             var span = Element.Create("span");
             span.BindAttribute(new BindAttributeOptions<MyData>
@@ -315,7 +316,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void BindableBaseSkipsUnncesaryEvents()
         {
-            bool raised = false;
+            var raised = false;
             var data = new MyData();
             data.PropertyChanged += (sender, args) => raised = true;
             data.Counter = 0;
@@ -347,17 +348,17 @@ namespace Integrative.Lara.Tests.DOM
             VerifyPositions(collection, div);
         }
 
-        private void VerifyPositions(ObservableCollection<MyData> collection, Element div)
+        private static void VerifyPositions(IReadOnlyList<MyData> collection, Element div)
         {
             Assert.Equal(collection.Count, div.ChildCount);
-            for (int index = 0; index < collection.Count; index++)
+            for (var index = 0; index < collection.Count; index++)
             {
                 var data = collection[index];
                 VerifyPosition(div, index, data.Counter.ToString());
             }
         }
 
-        private void VerifyPosition(Element div, int position, string value)
+        private static void VerifyPosition(Element div, int position, string value)
         {
             var child = (Element)div.GetChildAt(position);
             var current = child.GetAttribute("data-counter");
@@ -413,7 +414,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void BindableBaseHoldsEvents()
         {
-            int counter = 0;
+            var counter = 0;
             var data = new MyData();
             data.PropertyChanged += (sender, args) => counter++;
             data.BeginUpdate();

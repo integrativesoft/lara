@@ -75,12 +75,10 @@ namespace SampleProject.Components
             else if (attribute == "class")
             {
                 var root = _checkbox.ParentElement;
-                if (root != null)
-                {
-                    root.Class = GetAttribute("class");
-                    root.AddClass("form-group");
-                    root.AddClass("form-check");
-                }
+                if (root == null) return;
+                root.Class = GetAttribute("class");
+                root.AddClass("form-group");
+                root.AddClass("form-check");
             }
         }
     }

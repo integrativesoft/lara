@@ -34,12 +34,10 @@ namespace Integrative.Lara
 
         public void Dispose()
         {
-            if (!_disposed)
-            {
-                _disposed = true;
-                _published.Clear();
-                Connections.Dispose();
-            }
+            if (_disposed) return;
+            _disposed = true;
+            _published.Clear();
+            Connections.Dispose();
         }
 
         public void Publish(string path, IPublishedItem item)

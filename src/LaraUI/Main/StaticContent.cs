@@ -155,7 +155,7 @@ namespace Integrative.Lara
         {
             if (headers.TryGetValue("If-None-Match", out var values))
             {
-                var eTagClient = values[values.Count - 1];
+                var eTagClient = values[^1];
                 return ETag == eTagClient;
             }
             else
@@ -164,7 +164,7 @@ namespace Integrative.Lara
             }
         }
 
-        private void SendMatchStatus(HttpContext http)
+        private static void SendMatchStatus(HttpContext http)
         {
             MiddlewareCommon.SetStatusCode(http, HttpStatusCode.NotModified);
         }

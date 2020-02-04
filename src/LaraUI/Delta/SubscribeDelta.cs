@@ -29,11 +29,9 @@ namespace Integrative.Lara
 
         public static void Enqueue(Element element, EventSettings settings)
         {
-            if (element.TryGetEvents(out var document))
-            {
-                document.NotifyHasEvent();
-                document.Enqueue(CreateDelta(element.EnsureElementId(), settings));
-            }
+            if (!element.TryGetEvents(out var document)) return;
+            document.NotifyHasEvent();
+            document.Enqueue(CreateDelta(element.EnsureElementId(), settings));
         }
 
         public static void Enqueue(Document document, EventSettings settings)
@@ -95,12 +93,10 @@ namespace Integrative.Lara
                 Propagation = settings.Propagation,
                 UploadFiles = settings.UploadFiles
             };
-            if (settings.BlockOptions != null)
-            {
-                client.BlockElementId = settings.BlockOptions.BlockedElementId;
-                client.BlockHTML = settings.BlockOptions.ShowHtmlMessage;
-                client.BlockShownId = settings.BlockOptions.ShowElementId;
-            }
+            if (settings.BlockOptions == null) return client;
+            client.BlockElementId = settings.BlockOptions.BlockedElementId;
+            client.BlockHTML = settings.BlockOptions.ShowHtmlMessage;
+            client.BlockShownId = settings.BlockOptions.ShowElementId;
             return client;
         }
     }

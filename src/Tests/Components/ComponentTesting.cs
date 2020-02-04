@@ -52,6 +52,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-light")]
+    // ReSharper disable once UnusedType.Global
     internal class LightCom : WebComponent
     {
         public LightCom() : base("x-light")
@@ -214,27 +215,25 @@ namespace Integrative.Lara.Tests.Components
             Assert.DoesNotContain("lala", set);
         }
 
-        private IEnumerable<Node> GetAllDescendents(Element element)
+        private static IEnumerable<Node> GetAllDescendents(Element element)
         {
             return RecursiveExtension(element, x => x.GetAllDescendants());
         }
 
-        private IEnumerable<Node> GetFlattened(Element element)
+        private static IEnumerable<Node> GetFlattened(Element element)
         {
             return RecursiveExtension(element, x => x.GetLightChildren());
         }
 
-        private IEnumerable<Node> RecursiveExtension(Element root, Func<Element, IEnumerable<Node>> method)
+        private static IEnumerable<Node> RecursiveExtension(Element root, Func<Element, IEnumerable<Node>> method)
         {
             foreach (var node in method(root))
             {
                 yield return node;
-                if (node is Element child)
+                if (!(node is Element child)) continue;
+                foreach (var grandchild in RecursiveExtension(child, method))
                 {
-                    foreach (var grandchild in RecursiveExtension(child, method))
-                    {
-                        yield return grandchild;
-                    }
+                    yield return grandchild;
                 }
             }
         }
@@ -369,7 +368,7 @@ namespace Integrative.Lara.Tests.Components
         public void WebComponentsRequireDash()
         {
             var registry = new ComponentRegistry();
-            bool found = false;
+            var found = false;
             try
             {
                 registry.Register("baba", typeof(MyComponent));
@@ -385,7 +384,7 @@ namespace Integrative.Lara.Tests.Components
         public void WebComponentsMustInherit()
         {
             var registry = new ComponentRegistry();
-            bool found = false;
+            var found = false;
             try
             {
                 registry.Register("x-lolo", typeof(InputElement));
@@ -402,7 +401,7 @@ namespace Integrative.Lara.Tests.Components
         {
             var registry = new ComponentRegistry();
             registry.Register("x-baba", typeof(MyComponent));
-            bool found = false;
+            var found = false;
             try
             {
                 registry.Register("x-baba", typeof(MyComponent));
@@ -527,7 +526,7 @@ namespace Integrative.Lara.Tests.Components
         [Fact]
         public void TriggerEventRuns()
         {
-            int counter = 0;
+            var counter = 0;
             var x = new MyDummyComponent();
             x.On("click", () =>
             {

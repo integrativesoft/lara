@@ -44,12 +44,10 @@ namespace Integrative.Lara
 
         public void Dispose()
         {
-            if (!_disposed)
-            {
-                _disposed = true;
-                _timer.Stop();
-                _timer.Dispose();
-            }
+            if (_disposed) return;
+            _disposed = true;
+            _timer.Stop();
+            _timer.Dispose();
         }
 
         private async void TimerElapsedHandler(object sender, ElapsedEventArgs e)

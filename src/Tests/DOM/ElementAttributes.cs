@@ -110,7 +110,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var a = Element.Create("div");
             var b = Element.Create("div");
-            int index = b.GetChildElementPosition(a);
+            var index = b.GetChildElementPosition(a);
             Assert.Equal(-1, index);
         }
 
@@ -136,7 +136,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void ElementOnOptions()
         {
-            bool executed = false;
+            var executed = false;
             var div = Element.Create("div");
             div.On(new EventSettings
             {

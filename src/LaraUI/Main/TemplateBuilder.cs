@@ -8,14 +8,14 @@ using System.Globalization;
 
 namespace Integrative.Lara
 {
-    internal sealed class TemplateBuilder
+    internal static class TemplateBuilder
     {
-        private static readonly string _libraryUrl;
+        private static readonly string _LibraryUrl;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static TemplateBuilder()
         {
-            _libraryUrl = ClientLibraryHandler.GetLibraryPath();
+            _LibraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
         public static void Build(Document document, double keepAliveInterval)
@@ -38,7 +38,7 @@ namespace Integrative.Lara
             // LaraClient.js
             var script = new Script
             {
-                Src = _libraryUrl,
+                Src = _LibraryUrl,
                 Defer = true
             };
             head.AppendChild(script);

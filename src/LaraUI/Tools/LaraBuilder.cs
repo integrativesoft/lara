@@ -123,11 +123,9 @@ namespace Integrative.Lara
                 throw new InvalidOperationException(Resources.TooManyPops);
             }
             var pop = _stack.Pop();
-            if (_stack.Count > 0)
-            {
-                var current = _stack.Peek();
-                current.AppendChild(pop);
-            }
+            if (_stack.Count <= 0) return this;
+            var current = _stack.Peek();
+            current.AppendChild(pop);
             return this;
         }
 

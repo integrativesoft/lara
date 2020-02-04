@@ -40,7 +40,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(peek is SetValueDelta);
         }
 
-        private Document CreateDocument()
+        private static Document CreateDocument()
         {
             var guid = Guid.Parse("{0857AE93-8591-4CB6-887E-C449ABFCAA7A}");
             var page = new MyPage();
@@ -54,7 +54,7 @@ namespace Integrative.Lara.Tests.DOM
             element.Hidden = true;
             Assert.True(element.HasAttribute("hidden"));
             Assert.Null(element.GetAttribute("hidden"));
-            int count = 0;
+            var count = 0;
             foreach (var pair in element.Attributes)
             {
                 count++;
@@ -135,7 +135,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void MaxLevelDeep()
         {
-            bool found = false;
+            var found = false;
             try
             {
                 DocumentWriter.VerifyNestedLevel(DocumentWriter.MaxLevelDeep + 1);
@@ -166,7 +166,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void TagNameCannotHaveSpaces()
         {
-            bool found = false;
+            var found = false;
             try
             {
                 Element.Create(" a");

@@ -25,7 +25,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void OnStringAction()
         {
-            int counter = 0;
+            var counter = 0;
             _builder.On("click", () => counter++);
             await _root.NotifyEvent("click");
             Assert.Equal(1, counter);
@@ -71,7 +71,7 @@ namespace Integrative.Lara.Tests.DOM
         public void BindOptions()
         {
             var data = new MyData();
-            bool found = false;
+            var found = false;
             _builder.Bind(new BindHandlerOptions<MyData>
             {
                 ModifiedHandler = (x, y) => found = true,
@@ -85,7 +85,7 @@ namespace Integrative.Lara.Tests.DOM
         public void BindValueActions()
         {
             var data = new MyData();
-            bool found = false;
+            var found = false;
             _builder.Bind(data, () => found = true);
             data.Counter = 15;
             Assert.True(found);
@@ -134,7 +134,7 @@ namespace Integrative.Lara.Tests.DOM
             VerifyInnerText(_root, "3");
         }
 
-        private void VerifyInnerText(Element element, string data)
+        private static void VerifyInnerText(Element element, string data)
         {
             Assert.NotEmpty(element.Children);
             var node = element.GetChildAt(0) as TextNode;
@@ -220,7 +220,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(div);
             builder.AddTextNode("@@", false);
             var node = div.GetChildAt(0) as TextNode;
-            Assert.Equal("@@", node!.Data);
+            Assert.NotNull(node);
+            Assert.Equal("@@", node.Data);
         }
 
         [Fact]
@@ -242,7 +243,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(div);
             builder.InnerText("a<a");
             var node = div.GetChildAt(0) as TextNode;
-            Assert.Equal("a&lt;a", node!.Data);
+            Assert.NotNull(node);
+            Assert.Equal("a&lt;a", node.Data);
         }
 
         [Fact]
@@ -252,7 +254,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(div);
             builder.InnerData("a<a");
             var node = div.GetChildAt(0) as TextNode;
-            Assert.Equal("a<a", node!.Data);
+            Assert.NotNull(node);
+            Assert.Equal("a<a", node.Data);
         }
 
         [Fact]
@@ -262,7 +265,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(div);
             builder.AppendData("a<a");
             var node = div.GetChildAt(0) as TextNode;
-            Assert.Equal("a<a", node!.Data);
+            Assert.NotNull(node);
+            Assert.Equal("a<a", node.Data);
         }
 
         [Fact]

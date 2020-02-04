@@ -22,17 +22,13 @@ namespace Integrative.Lara
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
         {
-            if (http.Request.Method == "POST"
-                && http.Request.Path == "/_discard"
-                && DiscardParameters.TryParse(http, out var parameters)
-                && MiddlewareCommon.TryFindConnection(_app, http, out var connection))
-            {
-                await Task.Delay(DiscardDelay);
-                await connection.Discard(parameters.DocumentId);
-                await _app.ClearEmptyConnection(connection);
-                return true;
-            }
-            return false;
+            if (http.Request.Method != "POST" || http.Request.Path != "/_discard" ||
+                !DiscardParameters.TryParse(http, out var parameters) ||
+                !MiddlewareCommon.TryFindConnection(_app, http, out var connection)) return false;
+            await Task.Delay(DiscardDelay);
+            await connection.Discard(parameters.DocumentId);
+            await _app.ClearEmptyConnection(connection);
+            return true;
         }
     }
 }

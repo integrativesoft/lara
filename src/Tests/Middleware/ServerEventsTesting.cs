@@ -68,7 +68,7 @@ namespace Integrative.Lara.Tests.Middleware
             _document.OpenEventQueue();
             _document.Body.AppendText("hi");
             await _controller.ServerEventsOff();
-            bool found = false;
+            var found = false;
             try
             {
                 await _controller.ServerEventFlush();
@@ -151,7 +151,7 @@ namespace Integrative.Lara.Tests.Middleware
             await _controller.GetSocketCompletion(_socket.Object);
             var access = _document.StartServerEvent();
             access.Dispose();
-            bool found = false;
+            var found = false;
             try
             {
                 await access.FlushPartialChanges();

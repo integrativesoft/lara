@@ -76,11 +76,9 @@ namespace Integrative.Lara
 
         internal static void VerifyType(Type assemblyType, string attribute, Type requiredType)
         {
-            if (!requiredType.IsAssignableFrom(assemblyType))
-            {
-                var message = $"The class {assemblyType.FullName} marked as [{attribute}] needs to implement/inherit [{requiredType.Name}].";
-                throw new InvalidOperationException(message);
-            }
+            if (requiredType.IsAssignableFrom(assemblyType)) return;
+            var message = $"The class {assemblyType.FullName} marked as [{attribute}] needs to implement/inherit [{requiredType.Name}].";
+            throw new InvalidOperationException(message);
         }
 
         private static void LoadBinaryServices(Application app, Type type)

@@ -143,7 +143,7 @@ namespace Integrative.Lara.Tests.Middleware
             query.Add("ev", "lala");
             var next = new Mock<RequestDelegate>();
             var handler = new PostEventHandler(Context.Application, next.Object);
-            bool result = await handler.ProcessRequest(http.Object);
+            var result = await handler.ProcessRequest(http.Object);
             Assert.True(result);
         }
 
@@ -194,7 +194,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void UseLaraEmpty()
         {
             var app = new Mock<IApplicationBuilder>();
-            Assert.Same(app.Object, ApplicationBuilderLaraExtensions.UseLara(app.Object));
+            Assert.Same(app.Object, app.Object.UseLara());
         }
 
         [Fact]
@@ -242,6 +242,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void EmptyArraySegment()
         {
             var x = PostEventHandler.BuildArraySegment("");
+            Assert.NotNull(x.Array);
             Assert.Empty(x.Array);
         }
 
@@ -369,7 +370,7 @@ namespace Integrative.Lara.Tests.Middleware
             post.Verify(x => x.GetSocketCompletion());
         }
 
-        private Task<TaskCompletionSource<bool>> CompletionResult()
+        private static Task<TaskCompletionSource<bool>> CompletionResult()
         {
             var mock = new Mock<TaskCompletionSource<bool>>();
             return Task.FromResult(mock.Object);
@@ -487,7 +488,7 @@ namespace Integrative.Lara.Tests.Middleware
             session.Close();
         }
 
-        private void Session_Closing(object? sender, EventArgs e)
+        private static void Session_Closing(object? sender, EventArgs e)
         {
             throw new InvalidOperationException();
         }
@@ -638,12 +639,12 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(IPAddress.Loopback, x.IPAddress);
         }
 
-        private static readonly object _myLock = new object();
+        private static readonly object _MyLock = new object();
 
         [Fact]
         public void LaraUiDefaultStatic()
         {
-            lock (_myLock)
+            lock (_MyLock)
             {
                 LaraUI.Publish("/a", new StaticContent(Encoding.UTF8.GetBytes("hello"), "text"));
                 Assert.True(LaraUI.DefaultApplication.TryGetNode("/a", out _));
@@ -653,7 +654,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraUiDefaultPage()
         {
-            lock (_myLock)
+            lock (_MyLock)
             {
                 LaraUI.Publish("/b", () => new MyPage());
                 Assert.True(LaraUI.DefaultApplication.TryGetNode("/b", out _));
@@ -665,7 +666,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraUiDefaultService()
         {
-            lock (_myLock)
+            lock (_MyLock)
             {
                 LaraUI.Publish(new WebComponentOptions
                 {
@@ -721,14 +722,14 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public async void StopStops()
         {
-            int counter = 0;
+            var counter = 0;
             using var x = new Application();
             var host = new Mock<IWebHost>();
             x.SetHost(host.Object);
             var token = CancellationToken.None;
             host.Setup(x1 => x1.StopAsync(token)).Callback(() => counter++);
 
-            await x.Stop();
+            await x.Stop(token);
             Assert.Equal(1, counter);
         }
 

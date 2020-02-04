@@ -103,7 +103,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x1 = Element.Create("span");
             var x2 = Element.Create("span");
-            int index = x1.GetChildNodePosition(x2);
+            var index = x1.GetChildNodePosition(x2);
             Assert.Equal(-1, index);
         }
 
@@ -161,7 +161,7 @@ namespace Integrative.Lara.Tests.DOM
             doc.Body.AppendChild(new TextNode("hello"));
             var writer = new DocumentWriter(doc);
             writer.Print();
-            string result = writer.ToString();
+            var result = writer.ToString();
             Assert.Contains("/span>hello", result);
         }
 

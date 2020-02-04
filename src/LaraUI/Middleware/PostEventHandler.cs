@@ -22,7 +22,7 @@ namespace Integrative.Lara
         public const int MaxSizeBytes = 1024000;
 
         public static event EventHandler? EventComplete;
-        private static readonly EventArgs _eventArgs = new EventArgs();
+        private static readonly EventArgs _EventArgs = new EventArgs();
 
         private readonly Application _app;
 
@@ -209,14 +209,12 @@ namespace Integrative.Lara
         {
             document = document ?? throw new ArgumentNullException(nameof(document));
             message = message ?? throw new ArgumentNullException(nameof(message));
-            if (message.Values != null)
+            if (message.Values == null) return;
+            foreach (var row in message.Values)
             {
-                foreach (var row in message.Values)
+                if (document.TryGetElementById(row.ElementId, out var element))
                 {
-                    if (document.TryGetElementById(row.ElementId, out var element))
-                    {
-                        element.NotifyValue(row);
-                    }
+                    element.NotifyValue(row);
                 }
             }
         }
@@ -232,13 +230,11 @@ namespace Integrative.Lara
         private static void ProcessFile(Document document, IFormFile file)
         {
             var name = file.Name;
-            if (TryParsePrefix(name, GlobalConstants.FilePrefix, out var id))
+            if (!TryParsePrefix(name, GlobalConstants.FilePrefix, out var id)) return;
+            if (document.TryGetElementById(id, out var element)
+                && element is InputElement input)
             {
-                if (document.TryGetElementById(id, out var element)
-                    && element is InputElement input)
-                {
-                    input.AddFile(file);
-                }
+                input.AddFile(file);
             }
         }
 
@@ -275,7 +271,7 @@ namespace Integrative.Lara
             {
                 await SendAjaxReply(post.Http, json);
             }
-            EventComplete?.Invoke(post.Http, _eventArgs);
+            EventComplete?.Invoke(post.Http, _EventArgs);
             return result;
         }
 

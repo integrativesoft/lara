@@ -88,15 +88,15 @@ namespace Integrative.Lara
             return child.ParentElement;
         }
 
-        private static void AfterOperation(Node node, Element? previousParent)
+        private static void AfterOperation(Node node, Node previousParent)
         {
             if (node is Element child)
             {
-                AfterOperation(child, previousParent);
+                AfterOperationInternal(child, previousParent);
             }
         }
 
-        private static void AfterOperation(Element child, Element? previousParent)
+        private static void AfterOperationInternal(Element child, Node previousParent)
         {
             var previousDocument = GetPreviousDocument(previousParent);
             if (previousDocument == child.Document)
@@ -120,7 +120,7 @@ namespace Integrative.Lara
             }            
         }
 
-        private static Document? GetPreviousDocument(Element? previousParent)
+        private static Document? GetPreviousDocument(Node previousParent)
         {
             return previousParent?.Document;
         }
@@ -262,26 +262,24 @@ namespace Integrative.Lara
                 && child.Document != _parent.Document;
         }
 
-        private List<Node> CollectNodes(Node child)
+        private static List<Node> CollectNodes(Node child)
         {
             var list = new List<Node>();
             CollectElements(list, child);
             return list;
         }
 
-        private void CollectElements(List<Node> list, Node node)
+        private static void CollectElements(ICollection<Node> list, Node node)
         {
             list.Add(node);
-            if (node is Element element)
+            if (!(node is Element element)) return;
+            foreach (var child in element.GetAllDescendants())
             {
-                foreach (var child in element.GetAllDescendants())
-                {
-                    CollectElements(list, child);
-                }
+                CollectElements(list, child);
             }
         }
 
-        private void PreventDuplicateIds(List<Node> list)
+        private void PreventDuplicateIds(IEnumerable<Node> list)
         {
             var document = _parent.Document;
             var hash = new HashSet<string>();
@@ -383,16 +381,14 @@ namespace Integrative.Lara
 
         private static void GenerateRequiredIds(Node node)
         {
-            if (node is Element element)
+            if (!(node is Element element)) return;
+            if (element.NeedsId)
             {
-                if (element.NeedsId)
-                {
-                    element.EnsureElementId();
-                }
-                foreach (var child in element.Children)
-                {
-                    GenerateRequiredIds(child);
-                }
+                element.EnsureElementId();
+            }
+            foreach (var child in element.Children)
+            {
+                GenerateRequiredIds(child);
             }
         }
 

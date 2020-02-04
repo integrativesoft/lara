@@ -57,13 +57,11 @@ namespace Integrative.Lara
 
         private protected override void OnChildAdded(Node child)
         {
-            if (ParentElement is SelectElement parent && child is OptionElement option)
+            if (!(ParentElement is SelectElement parent) || !(child is OptionElement option)) return;
+            var value = parent.Value;
+            if (!string.IsNullOrEmpty(value))
             {
-                var value = parent.Value;
-                if (!string.IsNullOrEmpty(value))
-                {
-                    option.NotifyAdded(value);
-                }
+                option.NotifyAdded(value);
             }
         }
 

@@ -23,15 +23,13 @@ namespace Integrative.Lara
 
         public static void Enqueue(Element element, string? newValue)
         {
-            if (element.TryGetQueue(out var document))
+            if (!element.TryGetQueue(out var document)) return;
+            var locator = ElementLocator.FromElement(element);
+            document.Enqueue(new SetIdDelta
             {
-                var locator = ElementLocator.FromElement(element);
-                document.Enqueue(new SetIdDelta
-                {
-                    Locator = locator,
-                    NewId = newValue
-                });
-            }
+                Locator = locator,
+                NewId = newValue
+            });
         }
     }
 }

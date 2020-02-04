@@ -75,8 +75,8 @@ namespace Integrative.Lara.Tests.Main
             {
                 Value = 5
             };
-            string json = LaraUI.JSON.Stringify(start);
-            bool ok = LaraUI.JSON.TryParse<MyClass>(json, out var result);
+            var json = LaraUI.JSON.Stringify(start);
+            var ok = LaraUI.JSON.TryParse<MyClass>(json, out var result);
             Assert.True(ok);
             Assert.Equal(start.Value, result!.Value);
         }

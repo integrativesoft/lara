@@ -89,11 +89,9 @@ namespace Integrative.Lara
         private void PrintInlineElement(Element element)
         {
             PrintOpeningTag(element);
-            if (!HtmlReference.IsSelfClosingTag(element.TagName))
-            {
-                PrintInlineChildNodes(element);
-                PrintClosingTag(element, 0);
-            }
+            if (HtmlReference.IsSelfClosingTag(element.TagName)) return;
+            PrintInlineChildNodes(element);
+            PrintClosingTag(element, 0);
         }
 
         private void Indent(int indent)
@@ -119,13 +117,11 @@ namespace Integrative.Lara
                 _builder.Append(' ');
                 _builder.Append(pair.Key);
                 var value = pair.Value;
-                if (value != null)
-                {
-                    _builder.Append('=');
-                    _builder.Append('"');
-                    _builder.Append(HttpUtility.HtmlAttributeEncode(value));
-                    _builder.Append('"');
-                }
+                if (value == null) continue;
+                _builder.Append('=');
+                _builder.Append('"');
+                _builder.Append(HttpUtility.HtmlAttributeEncode(value));
+                _builder.Append('"');
             }
         }
 

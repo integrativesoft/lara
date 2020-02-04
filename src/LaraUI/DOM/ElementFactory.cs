@@ -12,12 +12,12 @@ namespace Integrative.Lara
 {
     internal static class ElementFactory
     {
-        private static readonly Dictionary<string, Type> _map;
+        private static readonly Dictionary<string, Type> _Map;
 
         [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static ElementFactory()
         {
-            _map = new Dictionary<string, Type>();
+            _Map = new Dictionary<string, Type>();
             Register<Anchor>("a");
             Register<BodyElement>("body");
             Register<Button>("button");
@@ -44,7 +44,7 @@ namespace Integrative.Lara
 
         private static void Register<T>(string lowerTagName) where T : Element
         {
-            _map.Add(lowerTagName, typeof(T));
+            _Map.Add(lowerTagName, typeof(T));
         }
 
         [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
@@ -74,7 +74,7 @@ namespace Integrative.Lara
 
         private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)
         {
-            return _map.TryGetValue(tagName, out type)
+            return _Map.TryGetValue(tagName, out type)
                 || LaraUI.TryGetComponent(tagName, out type);
         }
 

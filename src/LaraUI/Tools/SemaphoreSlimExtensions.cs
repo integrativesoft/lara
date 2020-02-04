@@ -40,11 +40,9 @@ namespace Integrative.Lara
 
             public void Dispose()
             {
-                if (!_disposed)
-                {
-                    _disposed = true;
-                    _semaphore.Release();
-                }
+                if (_disposed) return;
+                _disposed = true;
+                _semaphore.Release();
             }
         }
     }

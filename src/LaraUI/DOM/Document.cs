@@ -337,15 +337,13 @@ namespace Integrative.Lara
 
         private void RemoveEvent(string eventName)
         {
-            if (Events.ContainsKey(eventName))
+            if (!Events.ContainsKey(eventName)) return;
+            Events.Remove(eventName);
+            Enqueue(new UnsubscribeDelta
             {
-                Events.Remove(eventName);
-                Enqueue(new UnsubscribeDelta
-                {
-                    ElementId = string.Empty,
-                    EventName = eventName
-                });
-            }
+                ElementId = string.Empty,
+                EventName = eventName
+            });
         }
 
     }

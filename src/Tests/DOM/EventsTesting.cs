@@ -139,7 +139,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void AsyncEventPassesAlong()
         {
-            int counter = 0;
+            var counter = 0;
             var ev = new AsyncEvent();
             ev.Subscribe(() =>
             {
@@ -194,7 +194,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void DocumentEvent()
         {
-            int counter = 0;
+            var counter = 0;
             var x = new Document(new MyPage(), 100);
             x.On("keyup", () =>
             {

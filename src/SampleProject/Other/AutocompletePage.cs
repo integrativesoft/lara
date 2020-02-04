@@ -58,7 +58,7 @@ namespace SampleProject.Other
             {
                 Suggestions = suggestions
             };
-            for (int index = 0; index < _colors.Length; index++)
+            for (var index = 0; index < _colors.Length; index++)
             {
                 var color = _colors[index];
                 if (color.Contains(term))

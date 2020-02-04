@@ -96,7 +96,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, root.ChildCount);
         }
 
-        private void MyAddAction(LaraBuilder builder)
+        private static void MyAddAction(LaraBuilder builder)
         {
             builder.AddNode(new Button());
         }

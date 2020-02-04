@@ -34,12 +34,10 @@ namespace Integrative.Lara
             if (string.IsNullOrEmpty(element.Id))
             {
                 var parent = element.ParentElement;
-                if (parent != null)
-                {
-                    var index = parent.GetChildElementPosition(element);
-                    locator.GetSteps().Add(index);
-                    Build(locator, parent);
-                }
+                if (parent == null) return;
+                var index = parent.GetChildElementPosition(element);
+                locator.GetSteps().Add(index);
+                Build(locator, parent);
             }
             else
             {

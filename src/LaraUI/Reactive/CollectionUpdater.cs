@@ -51,11 +51,9 @@ namespace Integrative.Lara
         {
             var item = (T)_args.NewItems[0];
             var callback = _options.CreateCallback;
-            if (callback != null)
-            {
-                var childElement = callback(item);
-                _element.AppendChild(childElement);
-            }
+            if (callback == null) return;
+            var childElement = callback(item);
+            _element.AppendChild(childElement);
         }
 
         private void CollectionMove()
@@ -76,12 +74,10 @@ namespace Integrative.Lara
             var value = (T)_args.NewItems[0];
             var index = _args.OldStartingIndex;
             var callback = _options.CreateCallback;
-            if (callback != null)
-            {
-                var childElement = callback(value);
-                RemoveAt(index);
-                InsertAt(index, childElement);
-            }
+            if (callback == null) return;
+            var childElement = callback(value);
+            RemoveAt(index);
+            InsertAt(index, childElement);
         }
 
         private void RemoveAt(int index)
@@ -94,7 +90,7 @@ namespace Integrative.Lara
             _element.RemoveAt(index);
         }
 
-        private void InsertAt(int index, Element child)
+        private void InsertAt(int index, Node child)
         {
             _element.InsertChildAt(index, child);
         }
@@ -122,11 +118,9 @@ namespace Integrative.Lara
             foreach (var item in options.Collection)
             {
                 var callback = options.CreateCallback;
-                if (callback != null)
-                {
-                    var child = callback(item);
-                    element.AppendChild(child);
-                }
+                if (callback == null) continue;
+                var child = callback(item);
+                element.AppendChild(child);
             }
         }
     }

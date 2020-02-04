@@ -24,16 +24,14 @@ namespace Integrative.Lara
 
         public void NotifyChangeId(Element element, string? before, string? after)
         {
-            if (before != after)
+            if (before == after) return;
+            if (!string.IsNullOrEmpty(before))
             {
-                if (!string.IsNullOrEmpty(before))
-                {
-                    RemovePrevious(before);
-                }
-                if (!string.IsNullOrEmpty(after))
-                {
-                    AddAfter(element, after);
-                }
+                RemovePrevious(before);
+            }
+            if (!string.IsNullOrEmpty(after))
+            {
+                AddAfter(element, after);
             }
         }
 

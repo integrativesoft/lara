@@ -35,7 +35,7 @@ namespace SampleProject.KitchenSink
             @select.AddOption("6", "Sunday");
             advance.On("click", () =>
             {
-                int.TryParse(@select.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out int weekday);
+                int.TryParse(@select.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var weekday);
                 weekday = (weekday + 1) % 7;
                 @select.Value = weekday.ToString(CultureInfo.InvariantCulture);
                 return Task.CompletedTask;

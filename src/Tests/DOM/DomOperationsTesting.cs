@@ -124,7 +124,7 @@ namespace Integrative.Lara.Tests.DOM
 
         internal static void Throws<T>(Action action) where T : Exception
         {
-            bool error = false;
+            var error = false;
             try
             {
                 action();
@@ -138,7 +138,7 @@ namespace Integrative.Lara.Tests.DOM
 
         internal static async Task ThrowsAsync<T>(Func<Task> action) where T : Exception
         {
-            bool error = false;
+            var error = false;
             try
             {
                 await action();
@@ -376,7 +376,7 @@ namespace Integrative.Lara.Tests.DOM
         public void MissingEventNameThrows()
         {
             var settings = new EventSettings();
-            bool found = false;
+            var found = false;
             try
             {
                 settings.Verify();
@@ -402,7 +402,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public async void DocumentOnUnloadExecutes()
         {
-            int counter = 0;
+            var counter = 0;
             var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
             document.OnUnload += (sender, args) => counter++;
             await document.NotifyUnload();

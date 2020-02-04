@@ -45,11 +45,9 @@ namespace Integrative.Lara
 
         public void ServerEventsOn()
         {
-            if (!_serverEventsEnabled)
-            {
-                _document.Enqueue(new ServerEventsDelta());
-                _serverEventsEnabled = true;
-            }
+            if (_serverEventsEnabled) return;
+            _document.Enqueue(new ServerEventsDelta());
+            _serverEventsEnabled = true;
         }
 
         public Task ServerEventsOff()
@@ -60,7 +58,7 @@ namespace Integrative.Lara
 
         public Task NotifyUnload() => DiscardSocket();
 
-        internal async Task DiscardSocket()
+        private async Task DiscardSocket()
         {
             if (_serverEventsSocket != null)
             {
@@ -94,19 +92,15 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(Resources.ServerEventsNotEnabled);
             }
-            else if (!_document.HasPendingChanges)
+
+            if (!_document.HasPendingChanges)
             {
                 return false;
             }
-            else if (_serverEventsSocket == null)
-            {
-                _flushPending = true;
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+
+            if (_serverEventsSocket != null) return true;
+            _flushPending = true;
+            return false;
         }
 
         public async Task<TaskCompletionSource<bool>> GetSocketCompletion(WebSocket socket)

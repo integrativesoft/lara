@@ -80,7 +80,7 @@ namespace Integrative.Lara.Tests.Middleware
             var result = LaraUI.JSON.Parse<FormFile>(json);
             var output = Convert.FromBase64String(result.Content);
             Assert.Equal(256, bytes.Length);
-            for (int index = 0; index < 256; index++)
+            for (var index = 0; index < 256; index++)
             {
                 Assert.Equal(index, output[index]);
             }
@@ -89,7 +89,7 @@ namespace Integrative.Lara.Tests.Middleware
         private static byte[] BuildBytes()
         {
             var bytes = new byte[256];
-            for (int index = 0; index <= 255; index++)
+            for (var index = 0; index <= 255; index++)
             {
                 bytes[index] = (byte)index;
             }
@@ -197,8 +197,8 @@ namespace Integrative.Lara.Tests.Middleware
         public void EnumrableInterface()
         {
             var x = new FormFileCollection();
-            var y = x as IEnumerable<IFormFile>;
-            var enumerator = y.GetEnumerator();
+            var y = (IEnumerable<IFormFile>) x;
+            using var enumerator = y.GetEnumerator();
             Assert.False(enumerator.MoveNext());
         }
     }

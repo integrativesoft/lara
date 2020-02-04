@@ -76,11 +76,9 @@ namespace Integrative.Lara
 
         public void UnbindHandler()
         {
-            if (_genericHandler != null)
-            {
-                UnbindOptions(_genericHandler);
-                _genericHandler = null;
-            }
+            if (_genericHandler == null) return;
+            UnbindOptions(_genericHandler);
+            _genericHandler = null;
         }
 
         #endregion
@@ -121,11 +119,9 @@ namespace Integrative.Lara
 
         public void UnbindAttribute(string attribute)
         {
-            if (_attributeBindings.TryGetValue(attribute, out var options))
-            {
-                UnbindOptions(options);
-                _attributeBindings.Remove(attribute);
-            }
+            if (!_attributeBindings.TryGetValue(attribute, out var options)) return;
+            UnbindOptions(options);
+            _attributeBindings.Remove(attribute);
         }
 
         public void UnbindAllAttributes()
@@ -151,11 +147,9 @@ namespace Integrative.Lara
 
         public void UnbindInnerText()
         {
-            if (_innerTextBinding != null)
-            {
-                UnbindOptions(_innerTextBinding);
-                _innerTextBinding = null;
-            }
+            if (_innerTextBinding == null) return;
+            UnbindOptions(_innerTextBinding);
+            _innerTextBinding = null;
         }
 
         #endregion
@@ -174,12 +168,10 @@ namespace Integrative.Lara
 
         public void UnbindChildren()
         {
-            if (_childrenBinding != null)
-            {
-                _childrenBinding.Unsubscribe();
-                _childrenBinding.CollectionChanged -= Options_CollectionChanged;
-                _childrenBinding = null;
-            }
+            if (_childrenBinding == null) return;
+            _childrenBinding.Unsubscribe();
+            _childrenBinding.CollectionChanged -= Options_CollectionChanged;
+            _childrenBinding = null;
         }
 
         private void Options_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

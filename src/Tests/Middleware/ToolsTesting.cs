@@ -105,7 +105,7 @@ namespace Integrative.Lara.Tests.Middleware
             return BuildLocal(out _);
         }
 
-        private DocumentLocal<int> BuildLocal(out Document document)
+        private static DocumentLocal<int> BuildLocal(out Document document)
         {
             var context = new Mock<IPageContext>();
             document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
@@ -114,7 +114,7 @@ namespace Integrative.Lara.Tests.Middleware
             return new DocumentLocal<int>();
         }
 
-        private SessionLocal<int> GetSessionLocal(out Session session)
+        private static SessionLocal<int> GetSessionLocal(out Session session)
         {
             var context = new Mock<IPageContext>();
             var connection = new Connection(Guid.Parse("{B064124D-154D-4F49-89CF-CFC117509807}"), IPAddress.Loopback);
@@ -188,9 +188,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void SmaValueNullTrue()
         {
-            string? x1 = null;
-            string? x2 = null;
-            Assert.True(LaraTools.SameValue(x1, x2));
+            Assert.True(LaraTools.SameValue((string?) null, null));
         }
 
         [Fact]

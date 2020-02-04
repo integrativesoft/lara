@@ -29,7 +29,7 @@ namespace Integrative.Lara.Tests.Main
             var connectionId = Connections.CreateCryptographicallySecureGuid();
             var connection = new Connection(connectionId, IPAddress.Loopback);
             var document = connection.CreateDocument(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            int count = 0;
+            var count = 0;
             foreach (var pair in connection.GetDocuments())
             {
                 Assert.Same(document, pair.Value);

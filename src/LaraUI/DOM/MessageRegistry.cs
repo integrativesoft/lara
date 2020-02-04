@@ -69,17 +69,15 @@ namespace Integrative.Lara
 
         private MessageTypeRegistry GetRegistry(string messageId)
         {
-            if (!_map.TryGetValue(messageId, out var registry))
+            if (_map.TryGetValue(messageId, out var registry)) return registry;
+            registry = new MessageTypeRegistry();
+            _map.Add(messageId, registry);
+            _parent.Head.On("_" + messageId, () =>
             {
-                registry = new MessageTypeRegistry();
-                _map.Add(messageId, registry);
-                _parent.Head.On("_" + messageId, () =>
-                {
-                    var body = LaraUI.Page.JSBridge.EventData;
-                    var args = new MessageEventArgs(body);
-                    return RunAll(messageId, args);
-                });
-            }
+                var body = LaraUI.Page.JSBridge.EventData;
+                var args = new MessageEventArgs(body);
+                return RunAll(messageId, args);
+            });
 
             return registry;
         }

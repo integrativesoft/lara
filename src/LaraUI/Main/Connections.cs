@@ -90,12 +90,10 @@ namespace Integrative.Lara
 
         public void Dispose()
         {
-            if (!_disposed)
-            {
-                _disposed = true;
-                _connections.Clear();
-                _collector.Dispose();
-            }
+            if (_disposed) return;
+            _disposed = true;
+            _connections.Clear();
+            _collector.Dispose();
         }
     }
 }

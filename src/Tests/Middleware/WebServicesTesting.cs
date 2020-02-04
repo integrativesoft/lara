@@ -73,7 +73,7 @@ namespace Integrative.Lara.Tests.Middleware
         public void ParseThrowsBadRequestException()
         {
             var tool = new LaraJson();
-            bool found = false;
+            var found = false;
             try
             {
                 tool.Parse<MyData>("caca");
@@ -227,7 +227,7 @@ namespace Integrative.Lara.Tests.Middleware
             const string address = "/mypapapapa";
             using var app = new Application();
             app.PublishPage(address, () => new MyPage());
-            bool found = app.TryGetNode(address, out var item);
+            var found = app.TryGetNode(address, out var item);
             Assert.True(found);
             var page = item as PagePublished;
             Assert.NotNull(page);
