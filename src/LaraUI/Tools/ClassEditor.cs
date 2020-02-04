@@ -14,14 +14,12 @@ namespace Integrative.Lara
             {
                 return previous;
             }
-            else if (string.IsNullOrWhiteSpace(previous))
+
+            if (string.IsNullOrWhiteSpace(previous))
             {
                 return name;
             }
-            else
-            {
-                return previous.TrimEnd() + " " + name;
-            }
+            return previous.TrimEnd() + " " + name;
         }
 
         public static string? RemoveClass(string? previous, string name)
@@ -37,14 +35,16 @@ namespace Integrative.Lara
             {
                 return "";
             }
-            else if (previous.StartsWith(name + " ", System.StringComparison.InvariantCulture))
+
+            if (previous.StartsWith(name + " ", System.StringComparison.InvariantCulture))
             {
                 return previous.Substring(name.Length + 1);
             }
-            else if (previous.EndsWith(" " + name, System.StringComparison.InvariantCulture))
+            if (previous.EndsWith(" " + name, System.StringComparison.InvariantCulture))
             {
                 return previous.Substring(0, previous.Length - name.Length - 1);
             }
+
             var index = previous.IndexOf(" " + name + " ", System.StringComparison.InvariantCulture);
             if (index == -1)
             {
@@ -57,14 +57,7 @@ namespace Integrative.Lara
 
         public static string? ToggleClass(string? previous, string name, bool value)
         {
-            if (value)
-            {
-                return AddClass(previous, name);
-            }
-            else
-            {
-                return RemoveClass(previous, name);
-            }
+            return value ? AddClass(previous, name) : RemoveClass(previous, name);
         }
 
         public static string? ToggleClass(string? previous, string name)
@@ -79,18 +72,16 @@ namespace Integrative.Lara
             {
                 return true;
             }
-            else if (string.IsNullOrWhiteSpace(elementClass))
+
+            if (string.IsNullOrWhiteSpace(elementClass))
             {
                 return false;
             }
-            else
-            {
-                elementClass = elementClass.Trim();
-                return elementClass == className
-                    || elementClass.StartsWith(className + " ", System.StringComparison.InvariantCulture)
-                    || elementClass.EndsWith(" " + className, System.StringComparison.InvariantCulture)
-                    || elementClass.Contains(" " + className + " ", System.StringComparison.InvariantCulture);
-            }
+            elementClass = elementClass.Trim();
+            return elementClass == className
+                   || elementClass.StartsWith(className + " ", System.StringComparison.InvariantCulture)
+                   || elementClass.EndsWith(" " + className, System.StringComparison.InvariantCulture)
+                   || elementClass.Contains(" " + className + " ", System.StringComparison.InvariantCulture);
         }
 
     }

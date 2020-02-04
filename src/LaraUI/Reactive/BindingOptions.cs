@@ -64,10 +64,8 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(BindObject)));
             }
-            else
-            {
-                return BindObject;
-            }
+
+            return BindObject;
         }
 
         internal override void Subscribe()
@@ -326,7 +324,8 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(_attribute)));
             }
-            else if (Property == null)
+
+            if (Property == null)
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(Property)));
             }
@@ -407,7 +406,8 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(Collection)));
             }
-            else if (CreateCallback == null)
+
+            if (CreateCallback == null)
             {
                 throw new InvalidOperationException(MissingMemberText(nameof(CreateCallback)));
             }

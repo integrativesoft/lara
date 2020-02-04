@@ -38,22 +38,13 @@ namespace Integrative.Lara
             {
                 return string.IsNullOrEmpty(slotName);
             }
-            else
-            {
-                return name == slotName;
-            }
+
+            return name == slotName;
         }
 
         internal override IEnumerable<Node> GetLightSlotted()
         {
-            if (TryFindParentComponent(this, out var component))
-            {
-                return component.GetSlottedElements(Name);
-            }
-            else
-            {
-                return Enumerable.Repeat(this, 1);
-            }
+            return TryFindParentComponent(this, out var component) ? component.GetSlottedElements(Name) : Enumerable.Repeat(this, 1);
         }
 
         private static bool TryFindParentComponent(Node element, [NotNullWhen(true)] out WebComponent? component)
@@ -64,16 +55,11 @@ namespace Integrative.Lara
                 component = default;
                 return false;
             }
-            else if (parent is Shadow shadow)
-            {
-                component = shadow.ParentComponent;
-                return true;
-            }
-            else
-            {
-                // ReSharper disable once TailRecursiveCall
-                return TryFindParentComponent(parent, out component);
-            }
+
+            if (!(parent is Shadow shadow)) return TryFindParentComponent(parent, out component);
+            component = shadow.ParentComponent;
+            return true;
+            // ReSharper disable once TailRecursiveCall
         }
 
         internal override bool IsPrintable => false;

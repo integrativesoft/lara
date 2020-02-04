@@ -60,7 +60,7 @@ namespace Integrative.Lara
             }
         }
 
-        internal static async Task ReplyStatusCodeError(Application app, HttpContext http, StatusCodeException status, LaraOptions options)
+        private static async Task ReplyStatusCodeError(Application app, HttpContext http, StatusCodeException status, LaraOptions options)
         {
             if (app.ErrorPages.TryGetPage(status.StatusCode, out var page))
             {
@@ -90,14 +90,7 @@ namespace Integrative.Lara
 
         internal static Connection GetConnection(Application app, HttpContext http)
         {
-            if (MiddlewareCommon.TryFindConnection(app, http, out var connection))
-            {
-                return connection;
-            }
-            else
-            {
-                return CreateConnection(app, http);
-            }
+            return MiddlewareCommon.TryFindConnection(app, http, out var connection) ? connection : CreateConnection(app, http);
         }
 
         private static Connection CreateConnection(Application app, HttpContext http)

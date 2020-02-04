@@ -98,10 +98,8 @@ namespace Integrative.Lara
             {
                 return value == null;
             }
-            else
-            {
-                return previous.Equals(value);
-            }
+
+            return previous.Equals(value);
         }
     }
 }

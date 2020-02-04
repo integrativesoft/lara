@@ -33,14 +33,8 @@ namespace Integrative.Lara
             {
                 return ServerEventsStatus.Disabled;
             }
-            else if (socket == null)
-            {
-                return ServerEventsStatus.Connecting;
-            }
-            else
-            {
-                return ServerEventsStatus.Enabled;
-            }
+
+            return socket == null ? ServerEventsStatus.Connecting : ServerEventsStatus.Enabled;
         }
 
         public void ServerEventsOn()

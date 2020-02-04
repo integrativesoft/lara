@@ -40,16 +40,11 @@ namespace Integrative.Lara
         {
             context = context ?? throw new ArgumentNullException(nameof(context));
             var remote = context.Connection.RemoteIpAddress;
-            if (!IPAddress.IsLoopback(remote))
-            {
-                var msg = $"Forbidden request from {remote}";
-                _logger.LogInformation(msg);
-                return MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
-            }
-            else
-            {
-                return _next.Invoke(context);
-            }
+            if (IPAddress.IsLoopback(remote)) return _next.Invoke(context);
+            var msg = $"Forbidden request from {remote}";
+            _logger.LogInformation(msg);
+            return MiddlewareCommon.SendStatusReply(context, HttpStatusCode.Forbidden, Resources.Http403);
+
         }
     }
 }

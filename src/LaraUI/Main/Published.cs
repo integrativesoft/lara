@@ -73,10 +73,8 @@ namespace Integrative.Lara
             {
                 return path;
             }
-            else
-            {
-                return path + ">" + method;
-            }
+
+            return path + ">" + method;
         }
 
         internal static void ValidateMethod(string? method)

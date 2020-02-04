@@ -54,22 +54,19 @@ namespace Integrative.Lara
             {
                 throw new ArgumentException(Resources.InvalidTagName);
             }
-            else if (tagName.IndexOf(' ', StringComparison.InvariantCulture) >= 0)
+
+            if (tagName.IndexOf(' ', StringComparison.InvariantCulture) >= 0)
             {
                 throw new ArgumentException(Resources.TagNameSpaces);
             }
-            else
-            {
-                tagName = tagName.ToLowerInvariant();
-            }
+            tagName = tagName.ToLowerInvariant();
+
             if (FindTagName(tagName, out var type))
             {
                 return (Element)Activator.CreateInstance(type);
             }
-            else
-            {
-                return new GenericElement(tagName);
-            }
+
+            return new GenericElement(tagName);
         }
 
         private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)

@@ -52,17 +52,9 @@ namespace Integrative.Lara
         /// <summary>
         /// Initializes a new instance of the <see cref="TextNode"/> class.
         /// </summary>
-        /// <param name="text">The text for the node.</param>
-        public TextNode(string text) : this(text, true)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextNode"/> class.
-        /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="encode">if set to <c>true</c> encode.</param>
-        public TextNode(string? data, bool encode)
+        public TextNode(string? data, bool encode = true)
         {
             if (encode)
             {
@@ -127,14 +119,7 @@ namespace Integrative.Lara
 
         internal override string GetNodeInnerText()
         {
-            if (Data == null)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                return HttpUtility.HtmlDecode(Data);
-            }
+            return Data == null ? string.Empty : HttpUtility.HtmlDecode(Data);
         }
 
         internal override void SetNodeInnerText(string? value)

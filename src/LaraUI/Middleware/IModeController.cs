@@ -23,14 +23,7 @@ namespace Integrative.Lara
     {
         public static IModeController Create(Application app, ApplicationMode mode)
         {
-            if (mode == ApplicationMode.BrowserApp)
-            {
-                return new BrowserAppController(app);
-            }
-            else
-            {
-                return new BaseModeController(app, ApplicationMode.Default);
-            }
+            return mode == ApplicationMode.BrowserApp ? new BrowserAppController(app) : new BaseModeController(app, ApplicationMode.Default);
         }
     }
 

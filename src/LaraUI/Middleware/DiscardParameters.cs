@@ -31,11 +31,9 @@ namespace Integrative.Lara
                 };
                 return true;
             }
-            else
-            {
-                parameters = default;
-                return false;
-            }
+
+            parameters = default;
+            return false;
         }
     }
 }

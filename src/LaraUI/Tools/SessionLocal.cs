@@ -75,15 +75,13 @@ namespace Integrative.Lara
             {
                 return page.Session;
             }
-            else if (LaraUI.Context is IWebServiceContext service
+
+            if (LaraUI.Context is IWebServiceContext service
                 && service.TryGetSession(out var session))
             {
                 return session;
             }
-            else
-            {
-                throw new NoCurrentSessionException(Resources.NoCurrentSession);
-            }            
+            throw new NoCurrentSessionException(Resources.NoCurrentSession);
         }
 
     }

@@ -68,14 +68,13 @@ namespace SampleProject.Other
             {
                 return "No files uploaded";
             }
-            else
-            {
-                return "Uploaded: " + string.Join(", ", GetFileNames());
-            }
+
+            return "Uploaded: " + string.Join(", ", GetFileNames());
         }
 
         private IEnumerable<string> GetFileNames()
         {
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var file in _file.Files)
             {
                 var text = $"{file.FileName} ({file.Length} bytes)";

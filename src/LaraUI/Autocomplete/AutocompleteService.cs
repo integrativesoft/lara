@@ -43,11 +43,9 @@ namespace Integrative.Lara
             {
                 return string.Empty;
             }
-            else
-            {
-                var response = await options.Provider.GetAutocompleteList(request.Term);
-                return LaraUI.JSON.Stringify(response);
-            }
+
+            var response = await options.Provider.GetAutocompleteList(request.Term);
+            return LaraUI.JSON.Stringify(response);
         }
 
         public static void Register(string key, AutocompleteElement element)

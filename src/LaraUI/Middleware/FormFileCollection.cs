@@ -22,14 +22,7 @@ namespace Integrative.Lara
 
         private int GetCount()
         {
-            if (InnerList == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return InnerList.Count;
-            }
+            return InnerList?.Count ?? 0;
         }
 
         public IFormFile this[string name] => GetInnerList().Find(x => x.Name == name);
@@ -63,14 +56,7 @@ namespace Integrative.Lara
 
         private IEnumerator<IFormFile> GetEnumeratorInternal()
         {
-            if (InnerList == null)
-            {
-                return GetEmptyEnumerator();
-            }
-            else
-            {
-                return InnerList.GetEnumerator();
-            }
+            return InnerList?.GetEnumerator() ?? GetEmptyEnumerator();
         }
 
         private static IEnumerator<IFormFile> GetEmptyEnumerator()

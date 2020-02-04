@@ -195,11 +195,9 @@ namespace Integrative.Lara
             {
                 return Context.Application.TryGetComponent(tagName, out type);
             }
-            else
-            {
-                type = default;
-                return false;
-            }
+
+            type = default;
+            return false;
         }
 
         /// <summary>

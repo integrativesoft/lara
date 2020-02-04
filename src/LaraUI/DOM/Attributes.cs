@@ -145,14 +145,7 @@ namespace Integrative.Lara
 
         internal string? GetAttributeLower(string nameLower)
         {
-            if (_values.TryGetValue(nameLower, out var result))
-            {
-                return result;
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return _values.TryGetValue(nameLower, out var result) ? result : string.Empty;
         }
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()

@@ -27,11 +27,9 @@ namespace Integrative.Lara
                 session = connection.Session;
                 return true;
             }
-            else
-            {
-                session = default;
-                return false;
-            }
+
+            session = default;
+            return false;
         }
     }
 }

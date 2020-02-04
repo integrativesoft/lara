@@ -74,16 +74,10 @@ namespace Integrative.Lara
 
         internal override async Task<bool> ProcessRequest(HttpContext http)
         {
-            if (http.Request.Method == "GET"
-                && http.Request.Path == _address)
-            {
-                await SendLibrary(http);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (http.Request.Method != "GET" || http.Request.Path != _address) return false;
+            await SendLibrary(http);
+            return true;
+
         }
 
         private async Task SendLibrary(HttpContext http)

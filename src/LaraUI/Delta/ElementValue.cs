@@ -27,14 +27,7 @@ namespace Integrative.Lara
 
         private string GetCheckedSuffix()
         {
-            if (Checked)
-            {
-                return " checked";
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return Checked ? " checked" : string.Empty;
         }
     }
 }

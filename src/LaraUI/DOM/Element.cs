@@ -85,18 +85,8 @@ namespace Integrative.Lara
             {
                 return false;
             }
-            else if (Events.Count > 0)
-            {
-                return true;
-            }
-            else if (HtmlReference.RequiresId(TagName))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return Events.Count > 0 || HtmlReference.RequiresId(TagName);
         }
 
         /// <summary>
@@ -116,14 +106,7 @@ namespace Integrative.Lara
             {
                 suffix = " " + suffix;
             }
-            if (string.IsNullOrEmpty(_id))
-            {
-                return TagName;
-            }
-            else
-            {
-                return $"{TagName} #{_id}{suffix}";
-            }
+            return string.IsNullOrEmpty(_id) ? TagName : $"{TagName} #{_id}{suffix}";
         }
 
         #region Attributes
@@ -171,14 +154,7 @@ namespace Integrative.Lara
 
         private string GenerateElementId()
         {
-            if (Document == null)
-            {
-                return GlobalSerializer.GenerateElementId();
-            }
-            else
-            {
-                return Document.GenerateElementId();
-            }
+            return Document == null ? GlobalSerializer.GenerateElementId() : Document.GenerateElementId();
         }
 
         /// <summary>
@@ -275,10 +251,8 @@ namespace Integrative.Lara
             {
                 return value;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         internal void SetIntAttribute(string nameLower, int? value)
@@ -365,6 +339,7 @@ namespace Integrative.Lara
         /// <value>
         /// The automatic capitalize.
         /// </value>
+        // ReSharper disable once UnusedMember.Global
         public string? AutoCapitalize
         {
             get => GetAttributeLower("autocapitalize");
@@ -401,6 +376,7 @@ namespace Integrative.Lara
         /// <value>
         /// The context menu.
         /// </value>
+        // ReSharper disable once UnusedMember.Global
         public string? ContextMenu
         {
             get => GetAttributeLower("contextmenu");
@@ -461,6 +437,7 @@ namespace Integrative.Lara
         /// <value>
         ///   <c>true</c> if [input mode]; otherwise, <c>false</c>.
         /// </value>
+        // ReSharper disable once UnusedMember.Global
         public bool InputMode
         {
             get => HasAttributeLower("inputmode");
@@ -599,7 +576,8 @@ namespace Integrative.Lara
                 {
                     return index;
                 }
-                else if (child is Element)
+
+                if (child is Element)
                 {
                     index++;
                 }
@@ -618,18 +596,12 @@ namespace Integrative.Lara
             {
                 return true;
             }
-            else if (element == null || ParentElement == null)
+
+            if (element == null || ParentElement == null)
             {
                 return false;
             }
-            else if (ParentElement == element)
-            {
-                return true;
-            }
-            else
-            {
-                return ParentElement.DescendsFrom(element);
-            }
+            return ParentElement == element || ParentElement.DescendsFrom(element);
         }
 
         /// <summary>
@@ -903,18 +875,16 @@ namespace Integrative.Lara
                     Children = CopyLightChildren()
                 };
             }
-            else
+
+            var array = new ContentArrayNode
             {
-                var array = new ContentArrayNode
-                {
-                    Nodes = new List<ContentNode>()
-                };
-                foreach (var node in list)
-                {
-                    array.Nodes.Add(node.GetContentNode());
-                }
-                return array;
+                Nodes = new List<ContentNode>()
+            };
+            foreach (var node in list)
+            {
+                array.Nodes.Add(node.GetContentNode());
             }
+            return array;
         }
 
         private List<ContentAttribute> CopyAttributes()
@@ -1121,6 +1091,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
+        // ReSharper disable once VirtualMemberNeverOverridden.Global
         public virtual void BindFlagInput<T>(BindFlagInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -1247,16 +1218,14 @@ namespace Integrative.Lara
             {
                 return string.Empty;
             }
-            else if (ChildCount == 1)
+
+            if (ChildCount == 1)
             {
                 return GetChildAt(0).InnerText;
             }
-            else
-            {
-                var builder = new StringBuilder();
-                AppendNodeInnerText(builder);
-                return builder.ToString();
-            }
+            var builder = new StringBuilder();
+            AppendNodeInnerText(builder);
+            return builder.ToString();
         }
 
         internal override void AppendNodeInnerText(StringBuilder builder)
@@ -1327,13 +1296,7 @@ namespace Integrative.Lara
                 && IsPrintable
                 && Document != null;
         }
-
-        /*internal bool AcceptsEvents =>
-            IsSlotted
-            && IsPrintable
-            && Document != null;*/
-
-
+        
         #endregion
 
         #region Other methods
@@ -1341,6 +1304,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Focuses this element.
         /// </summary>
+        // ReSharper disable once VirtualMemberNeverOverridden.Global
         public virtual void Focus()
         {
             if (Document == null)

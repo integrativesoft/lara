@@ -111,6 +111,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="data">Array of bytes</param>
         /// <returns>Calculated hash</returns>
+        // ReSharper disable once MemberCanBePrivate.Global
         public static int ComputeHash(params byte[] data)
         {
             data = data ?? throw new ArgumentNullException(nameof(data));
@@ -119,8 +120,9 @@ namespace Integrative.Lara
                 const int p = 16777619;
                 var hash = (int)2166136261;
 
-                for (var i = 0; i < data.Length; i++)
-                    hash = (hash ^ data[i]) * p;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var c in data)
+                    hash = (hash ^ c) * p;
 
                 hash += hash << 13;
                 hash ^= hash >> 7;
@@ -153,15 +155,10 @@ namespace Integrative.Lara
 
         private bool IsMatchETag(IHeaderDictionary headers)
         {
-            if (headers.TryGetValue("If-None-Match", out var values))
-            {
-                var eTagClient = values[^1];
-                return ETag == eTagClient;
-            }
-            else
-            {
-                return false;
-            }
+            if (!headers.TryGetValue("If-None-Match", out var values)) return false;
+            var eTagClient = values[^1];
+            return ETag == eTagClient;
+
         }
 
         private static void SendMatchStatus(HttpContext http)

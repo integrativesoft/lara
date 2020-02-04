@@ -37,20 +37,16 @@ namespace Integrative.Lara
             {
                 return false;
             }
-            else if (http.WebSockets.IsWebSocketRequest)
+
+            if (http.WebSockets.IsWebSocketRequest)
             {
                 await ProcessWebSocketEvent(_app, http);
                 return true;
             }
-            else if (http.Request.Method == AjaxMethod)
-            {
-                await ProcessAjaxRequest(_app, http);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            if (http.Request.Method != AjaxMethod) return false;
+            await ProcessAjaxRequest(_app, http);
+            return true;
         }
 
         private static async Task ProcessWebSocketEvent(Application app, HttpContext http)
@@ -156,31 +152,21 @@ namespace Integrative.Lara
 
         internal static async Task<Task> RunEventHandler(PostEventContext post)
         {
-            if (await MiddlewareCommon.RunHandler(post.Http,
-                () => NotifyEventHandler(post)))
-            {
-                var document = post.GetDocument();
-                var queue = document.FlushQueue();
-                return await SendReply(post, queue);
-            }
-            else
-            {
-                return Task.CompletedTask;
-            }
+            if (!await MiddlewareCommon.RunHandler(post.Http,
+                () => NotifyEventHandler(post))) return Task.CompletedTask;
+            var document = post.GetDocument();
+            var queue = document.FlushQueue();
+            return await SendReply(post, queue);
+
         }
 
         private static Task NotifyEventHandler(PostEventContext post)
         {
             var parameters = post.GetParameters();
-            if (post.Element == null)
-            {
-                var document = post.GetDocument();
-                return document.NotifyEvent(parameters.EventName);
-            }
-            else
-            {
-                return post.Element.NotifyEvent(parameters.EventName);
-            }
+            if (post.Element != null) return post.Element.NotifyEvent(parameters.EventName);
+            var document = post.GetDocument();
+            return document.NotifyEvent(parameters.EventName);
+
         }
 
         internal static void ProcessMessageIfNeeded(PageContext context, EventParameters? parameters)
@@ -245,11 +231,9 @@ namespace Integrative.Lara
                 elementId = name.Substring(prefix.Length);
                 return true;
             }
-            else
-            {
-                elementId = default;
-                return false;
-            }
+
+            elementId = default;
+            return false;
         }
 
         internal static async Task<Task> SendReply(PostEventContext post, string json)
@@ -262,10 +246,8 @@ namespace Integrative.Lara
                     var completion = await post.GetSocketCompletion();
                     return completion.Task;
                 }
-                else
-                {
-                    await SendSocketReply(post, json);
-                }
+
+                await SendSocketReply(post, json);
             }
             else
             {
@@ -305,11 +287,9 @@ namespace Integrative.Lara
             {
                 return new ArraySegment<byte>(Array.Empty<byte>());
             }
-            else
-            {
-                var bytes = Encoding.UTF8.GetBytes(json);
-                return new ArraySegment<byte>(bytes);
-            }
+
+            var bytes = Encoding.UTF8.GetBytes(json);
+            return new ArraySegment<byte>(bytes);
         }
 
         private static async Task SendAjaxReply(HttpContext http, string json)

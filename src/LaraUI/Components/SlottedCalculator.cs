@@ -29,23 +29,21 @@ namespace Integrative.Lara
             {
                 return false;
             }
-            else if (parent is Slot)
+
+            if (parent is Slot)
             {
                 return false;
             }
-            else if (parent is Shadow shadow)
+            if (parent is Shadow shadow)
             {
                 return shadow.ParentComponent.IsSlotted;
             }
-            else if (parent is WebComponent component)
+            if (parent is WebComponent component)
             {
                 return node is Element element
-                    && component.IsSlotActive(element.GetAttributeLower("slot"));
+                       && component.IsSlotActive(element.GetAttributeLower("slot"));
             }
-            else
-            {
-                return parent.IsSlotted;
-            }
+            return parent.IsSlotted;
         }
 
         private static void UpdateChildren(Element element)

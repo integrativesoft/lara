@@ -59,16 +59,14 @@ namespace Integrative.Lara
                 error = $"The tag '{tagName}' is not registered as web component. To register a webcomponent, either (1) decorate it with [LaraWebComponent] and run LaraUI.PublishAssemblies(), or (2) use LaraUI.Publish().";
                 return false;
             }
-            else if (type != componentType)
+
+            if (type != componentType)
             {
                 error = $"The tag '{tagName}' is registered with the type '{type.FullName}' and not '{componentType.FullName}'.";
                 return false;
             }
-            else
-            {
-                error = string.Empty;
-                return true;
-            }
+            error = string.Empty;
+            return true;
         }
 
         /// <summary>
@@ -145,10 +143,8 @@ namespace Integrative.Lara
             {
                 return string.IsNullOrEmpty(slot);
             }
-            else
-            {
-                return slot == slotName;
-            }
+
+            return slot == slotName;
         }
 
         internal override void AttributeChanged(string attribute, string? value)

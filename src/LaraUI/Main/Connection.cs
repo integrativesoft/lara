@@ -33,15 +33,10 @@ namespace Integrative.Lara
 
         public bool TryGetDocument(Guid virtualId, out Document document)
         {
-            if (_documents.TryGetValue(virtualId, out document))
-            {
-                document.UpdateTimestamp();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!_documents.TryGetValue(virtualId, out document)) return false;
+            document.UpdateTimestamp();
+            return true;
+
         }
 
         public Document CreateDocument(IPage page, double keepAliveInterval)

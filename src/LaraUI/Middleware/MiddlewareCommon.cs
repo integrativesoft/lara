@@ -80,11 +80,9 @@ namespace Integrative.Lara
                 value = values[0];
                 return true;
             }
-            else
-            {
-                value = default;
-                return false;
-            }
+
+            value = default;
+            return false;
         }
 
         public static async Task<(bool, T?)>
@@ -111,7 +109,8 @@ namespace Integrative.Lara
             {
                 return (false, default);
             }
-            else if (result.Count > maxSize)
+
+            if (result.Count > maxSize)
             {
                 return (false, default);
             }

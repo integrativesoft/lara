@@ -23,15 +23,10 @@ namespace Integrative.Lara
         internal override async Task<bool> ProcessRequest(HttpContext http)
         {
             var combined = Published.CombinePathMethod(http.Request.Path, http.Request.Method);
-            if (_app.TryGetNode(combined, out var item))
-            {
-                await item.Run(_app, http, _options);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!_app.TryGetNode(combined, out var item)) return false;
+            await item.Run(_app, http, _options);
+            return true;
+
         }
     }
 }

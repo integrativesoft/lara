@@ -26,19 +26,17 @@ namespace Integrative.Lara
             {
                 throw new ArgumentException(Resources.DashRequired);
             }
-            else if (!type.IsSubclassOf(typeof(WebComponent)))
+
+            if (!type.IsSubclassOf(typeof(WebComponent)))
             {
                 throw new InvalidOperationException(Resources.MustInherit);
             }
-            else if (_components.TryGetValue(name, out var previous))
+            if (_components.TryGetValue(name, out var previous))
             {
                 var message = $"Duplicate entries for tag '{name}'. The class '{previous.FullName}' already registers the tag name.";
                 throw new InvalidOperationException(message);
             }
-            else
-            {
-                _components.Add(name, type);
-            }
+            _components.Add(name, type);
         }
 
         public void Unregister(string tagName)

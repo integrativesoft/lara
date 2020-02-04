@@ -49,18 +49,7 @@ namespace Integrative.Lara
 
         private bool AcceptConnection(IPAddress remoteIp)
         {
-            if (_connection != null)
-            {
-                return false;
-            }
-            else if (IPAddress.IsLoopback(remoteIp))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _connection == null && IPAddress.IsLoopback(remoteIp);
         }
 
         public override bool LocalhostOnly => true;
