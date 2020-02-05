@@ -84,7 +84,7 @@ namespace Integrative.Lara
 
         internal void PublishErrorPage()
         {
-            var address = ServerLauncher.ErrorAddress;
+            const string address = ServerLauncher.ErrorAddress;
             var page = new PagePublished(DefaultServerError, HttpStatusCode.InternalServerError);
             _published.Publish(address, page);
             var combined = Published.CombinePathMethod(address, "POST");
@@ -93,7 +93,7 @@ namespace Integrative.Lara
 
         internal void PublishErrorImage()
         {
-            var address = ServerLauncher.ErrorAddress + ".svg";
+            const string address = ServerLauncher.ErrorAddress + ".svg";
             var assembly = typeof(LaraUI).Assembly;
             var bytes = ClientLibraryHandler.LoadFile(assembly, "Integrative.Lara.Assets.Error.svg");
             _published.Publish(address, new StaticContent(bytes, "image/svg+xml"));

@@ -88,7 +88,7 @@ namespace Integrative.Lara
             return child.ParentElement;
         }
 
-        private static void AfterOperation(Node node, Node previousParent)
+        private static void AfterOperation(Node node, Node? previousParent)
         {
             if (node is Element child)
             {
@@ -96,7 +96,7 @@ namespace Integrative.Lara
             }
         }
 
-        private static void AfterOperationInternal(Element child, Node previousParent)
+        private static void AfterOperationInternal(Element child, Node? previousParent)
         {
             var previousDocument = GetPreviousDocument(previousParent);
             if (previousDocument == child.Document)
@@ -120,7 +120,7 @@ namespace Integrative.Lara
             }            
         }
 
-        private static Document? GetPreviousDocument(Node previousParent)
+        private static Document? GetPreviousDocument(Node? previousParent)
         {
             return previousParent?.Document;
         }
