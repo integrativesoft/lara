@@ -211,6 +211,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="token">Token to trigger shutdown</param>
         /// <returns>Task</returns>
+        // ReSharper disable once UnusedMember.Global
         public Task WaitForShutdown(CancellationToken token = default) => Host.WaitForShutdownAsync(token);
 
         internal IWebHost GetHost()

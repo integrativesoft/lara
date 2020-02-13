@@ -29,7 +29,7 @@ namespace Integrative.Lara
 
     internal class BaseModeController : IModeController
     {
-        public const double DefaultKeepAliveInterval
+        internal const double DefaultKeepAliveInterval
             = StaleConnectionsCollector.DefaultExpireInterval / 2.5;  // at least 2 message attempts per expire period
 
         protected readonly Application App;

@@ -24,8 +24,10 @@ namespace Integrative.Lara
 
         private static IWebHost CreateBrowserHost(Application laraApp, StartServerOptions options)
         {
+            var address = options.IPAddress;
+            var port = options.Port;
             return new WebHostBuilder()
-                .UseKestrel(kestrel => kestrel.Listen(options.IPAddress, options.Port))
+                .UseKestrel(kestrel => kestrel.Listen(address, port))
                 .Configure(app =>
                 {
                     ConfigureApp(app, laraApp, options);
@@ -37,6 +39,7 @@ namespace Integrative.Lara
         {
             ConfigureExceptions(app, options);
             app.UseLara(laraApp, options);
+            options.AdditionalConfiguration?.Invoke(app);
         }
 
         internal static void ConfigureExceptions(IApplicationBuilder app, StartServerOptions options)

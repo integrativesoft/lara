@@ -4,8 +4,10 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Diagnostics;
 using System.Net;
+using Microsoft.AspNetCore.Builder;
 
 namespace Integrative.Lara
 {
@@ -42,7 +44,7 @@ namespace Integrative.Lara
         /// <value>
         ///   <c>true</c> if [allow localhost only]; otherwise, <c>false</c>.
         /// </value>
-        public bool AllowLocalhostOnly { get; set; } = false;
+        public bool AllowLocalhostOnly { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Lara will show its default 'not found' page.
@@ -78,7 +80,7 @@ namespace Integrative.Lara
         /// <value>
         /// The port number.
         /// </value>
-        public int Port { get; set; } = 0;
+        public int Port { get; set; }
 
         /// <summary>
         /// Gets or sets the IP address where the host is listening. By default, this is the loopback address.
@@ -92,8 +94,15 @@ namespace Integrative.Lara
         /// <value>
         ///   <c>true</c> if [show exceptions]; otherwise, <c>false</c>.
         /// </value>
+        // ReSharper disable once MemberCanBePrivate.Global
         public bool ShowExceptions { get; set; }
 
+        /// <summary>
+        /// Defines an optional method to set additional configuration for the asp.net core instance
+        /// </summary>
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public Action<IApplicationBuilder>? AdditionalConfiguration { get; set; }
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="StartServerOptions"/> class.
         /// </summary>
