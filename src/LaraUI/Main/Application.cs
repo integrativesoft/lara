@@ -24,6 +24,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Web host instance created after calling the Start() method
         /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
         public IWebHost? Host { get; private set; }
 
         /// <summary>
@@ -175,6 +176,7 @@ namespace Integrative.Lara
         /// Starts the web server
         /// </summary>
         /// <returns>Task</returns>
+        // ReSharper disable once UnusedMember.Global
         public Task Start()
             => Start(new StartServerOptions());
 

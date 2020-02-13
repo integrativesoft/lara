@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Integrative.Lara
 {
@@ -101,7 +102,7 @@ namespace Integrative.Lara
         /// Defines an optional method to set additional configuration for the asp.net core instance
         /// </summary>
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Action<IApplicationBuilder>? AdditionalConfiguration { get; set; }
+        public Action<IWebHostBuilder>? AdditionalConfiguration { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="StartServerOptions"/> class.

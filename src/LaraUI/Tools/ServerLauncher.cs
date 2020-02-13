@@ -26,20 +26,20 @@ namespace Integrative.Lara
         {
             var address = options.IPAddress;
             var port = options.Port;
-            return new WebHostBuilder()
+            var builder = new WebHostBuilder()
                 .UseKestrel(kestrel => kestrel.Listen(address, port))
                 .Configure(app =>
                 {
                     ConfigureApp(app, laraApp, options);
-                })
-                .Build();
+                });
+            options.AdditionalConfiguration?.Invoke(builder);
+            return builder.Build();
         }
 
         private static void ConfigureApp(IApplicationBuilder app, Application laraApp, StartServerOptions options)
         {
             ConfigureExceptions(app, options);
             app.UseLara(laraApp, options);
-            options.AdditionalConfiguration?.Invoke(app);
         }
 
         internal static void ConfigureExceptions(IApplicationBuilder app, StartServerOptions options)
