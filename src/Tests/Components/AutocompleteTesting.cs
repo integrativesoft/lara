@@ -98,7 +98,7 @@ namespace Integrative.Lara.Tests.Components
             var bridge = new Mock<IJSBridge>();
             Context.JSBridge = bridge.Object;
             
-            var code = "LaraUI.autocompleteApply(context.Payload);";
+            const string code = "LaraUI.autocompleteApply(context.Payload);";
             var payload = new AutocompletePayload
             {
                 AutoFocus = options.AutoFocus,

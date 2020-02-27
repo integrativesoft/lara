@@ -775,7 +775,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void ETagFormatCorrect()
         {
-            var hash = 12345;
+            const int hash = 12345;
             var expected = "\"" + hash.ToString(CultureInfo.InvariantCulture) + "\"";
             var etag = StaticContent.FormatETag(hash);
             Assert.Equal(expected, etag);

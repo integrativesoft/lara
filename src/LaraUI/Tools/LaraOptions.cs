@@ -7,7 +7,6 @@ Author: Pablo Carbonell
 using System;
 using System.Diagnostics;
 using System.Net;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Integrative.Lara
