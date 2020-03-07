@@ -70,7 +70,8 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Version 0.8.4:
+- Fixed issue with BindValue and BindFlagValue methods on elements without ID assigned</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 
