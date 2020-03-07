@@ -1083,6 +1083,7 @@ namespace Integrative.Lara
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
+            EnsureElementId();
             EnsureBindings().BindInput(options);
         }
 
@@ -1097,6 +1098,7 @@ namespace Integrative.Lara
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
             options.Verify();
+            EnsureElementId();
             EnsureBindings().BindInput(options);
         }
 
