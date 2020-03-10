@@ -69,6 +69,14 @@ public void Configure(IApplicationBuilder app)
 } 
 ```
 
+## Creating Desktop applications
+
+The sample application above creates a program that launches a browser tab on the user's default browser, and terminates when the user closes the tab. However, you may want to create your own desktop container instead. Here's a few options:
+
+- [electron.js](https://www.electronjs.org/) combined with [electron-cgi](https://github.com/ruidfigueiredo/electron-cgi#readme) library
+- [Chromely](https://github.com/chromelyapps/Chromely)
+- [neutralinojs](https://github.com/neutralinojs/neutralinojs)
+
 ## Getting started
 
 There's no need to download this repository to use Lara, instead, there's a [NuGet package](https://www.nuget.org/packages/Integrative.Lara/).
