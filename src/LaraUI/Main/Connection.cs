@@ -65,10 +65,15 @@ namespace Integrative.Lara
 
         public bool IsEmpty => _documents.Count == 0;
 
+        private bool _closing;
+
         public async Task Close()
         {
+            if (_closing) return;
+            _closing = true;
             await Closing.InvokeAsync(this, new EventArgs());
             Session.Close();
+            _closing = false;
         }
     }
 }

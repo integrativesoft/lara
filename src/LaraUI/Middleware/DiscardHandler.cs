@@ -11,8 +11,6 @@ namespace Integrative.Lara
 {
     internal sealed class DiscardHandler : BaseHandler
     {
-        private const int DiscardDelay = 3000;
-
         private readonly Application _app;
 
         public DiscardHandler(Application app, RequestDelegate next) : base(next)
@@ -25,7 +23,7 @@ namespace Integrative.Lara
             if (http.Request.Method != "POST" || http.Request.Path != "/_discard" ||
                 !DiscardParameters.TryParse(http, out var parameters) ||
                 !MiddlewareCommon.TryFindConnection(_app, http, out var connection)) return false;
-            await Task.Delay(DiscardDelay);
+            await Task.Delay(_app.DiscardDelay);
             await connection.Discard(parameters.DocumentId);
             await _app.ClearEmptyConnection(connection);
             return true;

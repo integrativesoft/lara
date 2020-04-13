@@ -4,9 +4,9 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
+using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Integrative.Lara
 {
@@ -17,15 +17,18 @@ namespace Integrative.Lara
         double KeepAliveInterval { get; }
         ApplicationMode Mode { get; }
         bool LocalhostOnly { get; }
+        int DiscardDelay { get; }
     }
 
     internal static class ModeControllerFactory
     {
         public static IModeController Create(Application app, ApplicationMode mode)
         {
-            return mode == ApplicationMode.BrowserApp ? new BrowserAppController(app) : new BaseModeController(app, ApplicationMode.Default);
+            return mode == ApplicationMode.BrowserApp
+                ? new BrowserAppController(app)
+                : new BaseModeController(app, ApplicationMode.Default);
         }
-    }
+    }    
 
     internal class BaseModeController : IModeController
     {
@@ -33,6 +36,8 @@ namespace Integrative.Lara
             = StaleConnectionsCollector.DefaultExpireInterval / 2.5;  // at least 2 message attempts per expire period
 
         protected readonly Application App;
+
+        public virtual int DiscardDelay => 3000;
 
         public BaseModeController(Application app, ApplicationMode mode)
         {

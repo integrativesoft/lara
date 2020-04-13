@@ -229,6 +229,8 @@ namespace Integrative.Lara
 
         internal bool AllowLocalhostOnly => GetController().LocalhostOnly;
 
+        internal int DiscardDelay => GetController().DiscardDelay;
+
         #endregion
 
         #region Testing methods

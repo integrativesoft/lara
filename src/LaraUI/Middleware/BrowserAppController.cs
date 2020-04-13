@@ -4,9 +4,10 @@ Created: 11/2019
 Author: Pablo Carbonell
 */
 
-using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
@@ -18,6 +19,8 @@ namespace Integrative.Lara
         internal const double BrowserAppKeepAliveInterval = DefaultExpireInterval / 2.5;
 
         private Connection? _connection;
+
+        public override int DiscardDelay => 200;
 
         public BrowserAppController(Application app)
             : base(app, ApplicationMode.BrowserApp)
@@ -43,8 +46,26 @@ namespace Integrative.Lara
                 throw new StatusForbiddenException(Resources.BrowserAppConnectionRejected);
             }
             _connection = base.CreateConnection(remoteIp);
-            _connection.Closing.Subscribe(() => App.Stop());
+            _connection.Closing.Subscribe(Stop);
             return _connection;
+        }
+
+        private Task Stop()
+        {
+            using var source = new CancellationTokenSource();
+            var token = source.Token;
+            var tasks = new Task[]
+            {
+                App.Stop(token),
+                SignalStop(source)
+            };
+            return Task.WhenAll(tasks);
+        }
+
+        private Task SignalStop(CancellationTokenSource source)
+        {
+            source.Cancel();
+            return Task.CompletedTask;
         }
 
         private bool AcceptConnection(IPAddress remoteIp)
