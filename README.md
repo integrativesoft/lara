@@ -22,7 +22,7 @@ namespace SampleProject
             await app.Start(new StartServerOptions
             {
                 // launches user's default web browser and terminates when closed
-                Mode = ApplicationMode.BrowserApp,
+                Mode = ApplicationMode.BrowserApp,  // comment out to host as regular website instead
                 
                 // search for classes decorated with Lara attributes and load them
                 PublishAssembliesOnStart = true
