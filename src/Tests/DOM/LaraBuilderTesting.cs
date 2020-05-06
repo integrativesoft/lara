@@ -221,7 +221,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.AddTextNode("@@", false);
             var node = div.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("@@", node.Data);
+            Assert.Equal("@@", node!.Data);
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.InnerText("a<a");
             var node = div.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("a&lt;a", node.Data);
+            Assert.Equal("a&lt;a", node!.Data);
         }
 
         [Fact]
@@ -255,7 +255,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.InnerData("a<a");
             var node = div.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("a<a", node.Data);
+            Assert.Equal("a<a", node!.Data);
         }
 
         [Fact]
@@ -266,7 +266,7 @@ namespace Integrative.Lara.Tests.DOM
             builder.AppendData("a<a");
             var node = div.GetChildAt(0) as TextNode;
             Assert.NotNull(node);
-            Assert.Equal("a<a", node.Data);
+            Assert.Equal("a<a", node!.Data);
         }
 
         [Fact]
