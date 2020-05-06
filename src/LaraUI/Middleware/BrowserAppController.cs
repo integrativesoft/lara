@@ -62,7 +62,7 @@ namespace Integrative.Lara
             return Task.WhenAll(tasks);
         }
 
-        private Task SignalStop(CancellationTokenSource source)
+        private static Task SignalStop(CancellationTokenSource source)
         {
             source.Cancel();
             return Task.CompletedTask;
