@@ -14,11 +14,11 @@
     "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
-    "@types/node": "^13.13.5",
+    "@types/node": "^14.0.4",
     "clean-webpack-plugin": "^3.0.0",
-    "terser-webpack-plugin": "3.0.0",
-    "ts-loader": "^7.0.2",
-    "typescript": "^3.8.3",
+    "terser-webpack-plugin": "3.0.1",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
@@ -26,7 +26,7 @@
     "@types/debounce": "^1.2.0",
     "@types/jquery": "^3.3.38",
     "@types/jquery.blockui": "0.0.28",
-    "@types/jqueryui": "^1.12.10",
+    "@types/jqueryui": "^1.12.13",
     "debounce": "^1.2.0",
     "webpack-jquery-ui": "^2.0.1"
   }
