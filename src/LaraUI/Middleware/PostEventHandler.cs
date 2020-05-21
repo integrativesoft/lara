@@ -22,7 +22,7 @@ namespace Integrative.Lara
         public const int MaxSizeBytes = 1024000;
 
         public static event EventHandler? EventComplete;
-        private static readonly EventArgs _EventArgs = new EventArgs();
+        private static readonly EventArgs EventArgs = new EventArgs();
 
         private readonly Application _app;
 
@@ -253,7 +253,7 @@ namespace Integrative.Lara
             {
                 await SendAjaxReply(post.Http, json);
             }
-            EventComplete?.Invoke(post.Http, _EventArgs);
+            EventComplete?.Invoke(post.Http, EventArgs);
             return result;
         }
 

@@ -639,12 +639,12 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(IPAddress.Loopback, x.IPAddress);
         }
 
-        private static readonly object _MyLock = new object();
+        private static readonly object MyLock = new object();
 
         [Fact]
         public void LaraUiDefaultStatic()
         {
-            lock (_MyLock)
+            lock (MyLock)
             {
                 LaraUI.Publish("/a", new StaticContent(Encoding.UTF8.GetBytes("hello"), "text"));
                 Assert.True(LaraUI.DefaultApplication.TryGetNode("/a", out _));
@@ -654,7 +654,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraUiDefaultPage()
         {
-            lock (_MyLock)
+            lock (MyLock)
             {
                 LaraUI.Publish("/b", () => new MyPage());
                 Assert.True(LaraUI.DefaultApplication.TryGetNode("/b", out _));
@@ -666,7 +666,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraUiDefaultService()
         {
-            lock (_MyLock)
+            lock (MyLock)
             {
                 LaraUI.Publish(new WebComponentOptions
                 {

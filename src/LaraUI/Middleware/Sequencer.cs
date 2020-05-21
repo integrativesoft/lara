@@ -11,8 +11,8 @@ namespace Integrative.Lara
 {
     internal class Sequencer
     {
-        private static readonly Task<bool> _TaskProceed = Task.FromResult(true);
-        private static readonly Task<bool> _TaskAbort = Task.FromResult(false);
+        private static readonly Task<bool> TaskProceed = Task.FromResult(true);
+        private static readonly Task<bool> TaskAbort = Task.FromResult(false);
 
         private readonly object _lock;
         private readonly Dictionary<long, TaskCompletionSource<bool>> _pending;
@@ -29,7 +29,7 @@ namespace Integrative.Lara
         {
             if (turnNumber == 0)
             {
-                return _TaskProceed;
+                return TaskProceed;
             }
             TaskCompletionSource<bool>? completion;
             lock (_lock)
@@ -38,7 +38,7 @@ namespace Integrative.Lara
                 {
                     _next++;
                     FlushPending();
-                    return _TaskProceed;
+                    return TaskProceed;
                 }
 
                 if (turnNumber > _next)
@@ -48,7 +48,7 @@ namespace Integrative.Lara
                 }
                 else
                 {
-                    return _TaskAbort;
+                    return TaskAbort;
                 }
             }
             return completion.Task;

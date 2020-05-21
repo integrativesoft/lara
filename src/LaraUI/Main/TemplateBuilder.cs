@@ -10,12 +10,12 @@ namespace Integrative.Lara
 {
     internal static class TemplateBuilder
     {
-        private static readonly string _LibraryUrl;
+        private static readonly string LibraryUrl;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static TemplateBuilder()
         {
-            _LibraryUrl = ClientLibraryHandler.GetLibraryPath();
+            LibraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
         public static void Build(Document document, double keepAliveInterval)
@@ -38,7 +38,7 @@ namespace Integrative.Lara
             // LaraClient.js
             var script = new Script
             {
-                Src = _LibraryUrl,
+                Src = LibraryUrl,
                 Defer = true
             };
             head.AppendChild(script);

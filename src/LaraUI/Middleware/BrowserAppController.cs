@@ -54,7 +54,7 @@ namespace Integrative.Lara
         {
             using var source = new CancellationTokenSource();
             var token = source.Token;
-            var tasks = new Task[]
+            var tasks = new[]
             {
                 App.Stop(token),
                 SignalStop(source)
