@@ -24,12 +24,13 @@ namespace Integrative.Lara
         /// <param name="result">Class instance created</param>
         /// <returns>true when successful, false otherwise</returns>
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
+        // ReSharper disable once MemberCanBeMadeStatic.Global
         public bool TryParse<T>(string json, [NotNullWhen(true)] out T? result) where T : class
         {
             try
             {
                 result = LaraTools.Deserialize<T>(json);
-                return true;
+                return (result != null);
             }
             catch (SerializationException)
             {

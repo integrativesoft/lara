@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -92,7 +93,7 @@ namespace Integrative.Lara
             return output.ToArray();
         }
 
-        public static bool SameValue<T>(T previous, T value)
+        public static bool SameValue<T>([AllowNull] T previous, [AllowNull] T value)
         {
             if (previous == null)
             {

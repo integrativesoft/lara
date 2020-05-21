@@ -251,15 +251,15 @@ namespace Integrative.Lara
         private bool NewToDocument(Node child, [NotNullWhen(true)] out Document? newDocument)
         {
             newDocument = _parent.Document;
-            return _parent.Document != null
-                && child.Document != _parent.Document;
+            return newDocument != null
+                   && child.Document != newDocument;
         }
 
         private bool LeavingPrevious(Node child, [NotNullWhen(true)] out Document? previousDocument)
         {
             previousDocument = child.Document;
-            return child.Document != null
-                && child.Document != _parent.Document;
+            return previousDocument != null
+                   && previousDocument != _parent.Document;
         }
 
         private static List<Node> CollectNodes(Node child)

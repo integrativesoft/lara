@@ -1294,9 +1294,10 @@ namespace Integrative.Lara
         internal bool TryGetEvents([NotNullWhen(true)] out Document? document)
         {
             document = Document;
-            return IsSlotted
-                && IsPrintable
-                && Document != null;
+            return document != null
+                   && IsSlotted
+                   && IsPrintable
+                   && Document != null;
         }
         
         #endregion
