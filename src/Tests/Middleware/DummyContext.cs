@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace Integrative.Lara.Tests.Middleware
@@ -51,7 +52,7 @@ namespace Integrative.Lara.Tests.Middleware
             Application.Dispose();
         }
 
-        public bool TryGetSession(out Session? session)
+        public bool TryGetSession([NotNullWhen(true)] out Session? session)
         {
             throw new NotImplementedException();
         }
