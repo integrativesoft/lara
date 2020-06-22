@@ -503,8 +503,9 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void ServerLauncherUseDeveloperPage()
         {
+            var lara = new Application();
             var app = new Mock<IApplicationBuilder>();
-            ServerLauncher.ConfigureExceptions(app.Object, new StartServerOptions
+            ServerLauncher.ConfigureExceptions(app.Object, lara, new StartServerOptions
             {
                 ShowExceptions = true
             });
@@ -642,6 +643,7 @@ namespace Integrative.Lara.Tests.Middleware
         private static readonly object MyLock = new object();
 
         [Fact]
+        [Obsolete]
         public void LaraUiDefaultStatic()
         {
             lock (MyLock)
@@ -652,6 +654,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        [Obsolete]
         public void LaraUiDefaultPage()
         {
             lock (MyLock)
@@ -664,6 +667,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        [Obsolete]
         public void LaraUiDefaultService()
         {
             lock (MyLock)

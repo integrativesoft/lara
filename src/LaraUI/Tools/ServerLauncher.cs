@@ -38,11 +38,11 @@ namespace Integrative.Lara
 
         private static void ConfigureApp(IApplicationBuilder app, Application laraApp, StartServerOptions options)
         {
-            ConfigureExceptions(app, options);
+            ConfigureExceptions(app, laraApp, options);
             app.UseLara(laraApp, options);
         }
 
-        internal static void ConfigureExceptions(IApplicationBuilder app, StartServerOptions options)
+        internal static void ConfigureExceptions(IApplicationBuilder app, Application laraApp, StartServerOptions options)
         {
             if (options.ShowExceptions)
             {
@@ -51,7 +51,7 @@ namespace Integrative.Lara
             else
             {
                 app.UseExceptionHandler(ErrorAddress);
-                LaraUI.ErrorPages.PublishErrorPage();
+                laraApp.ErrorPages.PublishErrorPage();
             }
         }
     }

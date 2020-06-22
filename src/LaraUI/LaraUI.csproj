@@ -6,11 +6,11 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.8.7</Version>
+    <Version>0.8.8</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
-    <Description>Lara Web Engine is a lightweight C# Web UI framework for server-side DOM rendering.</Description>
+    <Description>Lara Web Engine is a lightweight C# framework for web user interface development.</Description>
     <Copyright>Copyright (c) Integrative Software LLC</Copyright>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
@@ -21,7 +21,7 @@
     <PackageProjectUrl>https://github.com/integrativesoft/lara</PackageProjectUrl>
     <RepositoryUrl>https://github.com/integrativesoft/lara</RepositoryUrl>
     <PackageTags>lara, web, html, html5, desktop, gui, cross, framework, mac, osx, platform, ui, blazor, razor</PackageTags>
-    <AssemblyVersion>0.8.7</AssemblyVersion>
+    <AssemblyVersion>0.8.8</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -70,9 +70,8 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>Version 0.8.7:
-- Bumped package dependencies.
-- Added PreventDefault option for events</PackageReleaseNotes>
+    <PackageReleaseNotes>Version 0.8.8:
+- Deprecated publishing into default static application</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 

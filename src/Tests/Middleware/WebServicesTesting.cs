@@ -235,6 +235,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        [Obsolete]
         public void UnpublishWebservice()
         {
             const string address = "/mylalala";

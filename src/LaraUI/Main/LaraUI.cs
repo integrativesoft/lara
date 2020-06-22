@@ -22,16 +22,20 @@ namespace Integrative.Lara
     {
         #region Default application (obsolete)
 
+        private const string PublishObsolete = "Publishing on the default static application has been deprecated, instead create an Application object.";
+
         internal static Application DefaultApplication { get; } = new Application();
 
         /// <summary>
         /// Defines default error pages
         /// </summary>
+        [Obsolete(PublishObsolete)]
         public static ErrorPages ErrorPages => DefaultApplication.ErrorPages;
 
         /// <summary>
         /// Removes all published elements
         /// </summary>
+        [Obsolete(PublishObsolete)]
         public static void ClearAll() => DefaultApplication.ClearAllPublished();
 
         /// <summary>
@@ -39,6 +43,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="address">The URL address of the page.</param>
         /// <param name="pageFactory">Handler that creates instances of the page</param>
+        [Obsolete(PublishObsolete)]
         public static void Publish(string address, Func<IPage> pageFactory)
             => DefaultApplication.PublishPage(address, pageFactory);
 
@@ -47,6 +52,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="address">The URL address of the content.</param>
         /// <param name="content">The static content to be published.</param>
+        [Obsolete(PublishObsolete)]
         public static void Publish(string address, StaticContent content)
             => DefaultApplication.PublishFile(address, content);
 
@@ -54,6 +60,7 @@ namespace Integrative.Lara
         /// Publishes a web service
         /// </summary>
         /// <param name="content">Web service settings</param>
+        [Obsolete(PublishObsolete)]
         public static void Publish(WebServiceContent content)
             => DefaultApplication.PublishService(content);
 
@@ -61,12 +68,14 @@ namespace Integrative.Lara
         /// Unpublishes an address and its associated content.
         /// </summary>
         /// <param name="path">The path.</param>
+        [Obsolete(PublishObsolete)]
         public static void UnPublish(string path)
             => DefaultApplication.UnPublish(path);
 
         /// <summary>
         /// Publishes all classes marked with the attributes [LaraPage] and [LaraWebService]
         /// </summary>
+        [Obsolete(PublishObsolete)]
         public static void PublishAssemblies()
             => AssembliesReader.LoadAssemblies(DefaultApplication);
 
@@ -75,6 +84,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="address">The URL address of the web service</param>
         /// <param name="method">The HTTP method of the web service</param>
+        [Obsolete(PublishObsolete)]
         public static void UnPublish(string address, string method)
             => DefaultApplication.UnPublish(address, method);
 
@@ -83,6 +93,7 @@ namespace Integrative.Lara
         /// Registers a specific web component
         /// </summary>
         /// <param name="options">Web component publush options</param>
+        [Obsolete(PublishObsolete)]
         public static void Publish(WebComponentOptions options)
             => DefaultApplication.PublishComponent(options);
 
@@ -90,6 +101,7 @@ namespace Integrative.Lara
         /// Unregisters a specific web component
         /// </summary>
         /// <param name="tagName">Tag name to unpublish</param>
+        [Obsolete(PublishObsolete)]
         public static void UnPublishWebComponent(string tagName)
             => DefaultApplication.UnPublishWebComponent(tagName);
 
