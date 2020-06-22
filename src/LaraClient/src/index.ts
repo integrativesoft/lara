@@ -59,8 +59,7 @@ function sendKeepAlive() {
 export enum PropagationType {
     Default = 0,
     StopPropagation = 1,
-    StopImmediatePropagation = 2,
-    AllowAll = 3
+    StopImmediatePropagation = 2
 }
 
 export interface PlugOptions {
@@ -73,6 +72,7 @@ export interface PlugOptions {
     LongRunning?: boolean;
     IgnoreSequence?: boolean;
     Propagation?: PropagationType;
+    PreventDefault?: boolean;
     UploadFiles?: boolean;
 }
 
@@ -82,9 +82,12 @@ export function plugEvent(el: EventTarget, ev: Event, options: PlugOptions): voi
 }
 
 function stopPropagation(ev: Event, options: PlugOptions): void {
+    if (options.PreventDefault) {
+        ev.preventDefault();
+    }
     if (options.Propagation == PropagationType.StopImmediatePropagation) {
         ev.stopImmediatePropagation();
-    } else if (options.Propagation != PropagationType.AllowAll) {
+    } else if (options.Propagation == PropagationType.StopPropagation) {
         ev.stopPropagation();
     }
 }

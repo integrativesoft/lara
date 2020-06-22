@@ -102,6 +102,11 @@ namespace Integrative.Lara
         /// </summary>
         public PropagationType Propagation { get; set; }
 
+        /// <summary>
+        /// Execute the event.PreventDefault() method to disable default behavior
+        /// </summary>
+        public bool PreventDefault { get; set; }
+
         internal void Verify()
         {
             if (string.IsNullOrEmpty(EventName))

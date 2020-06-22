@@ -81,6 +81,9 @@ namespace Integrative.Lara
         public PropagationType Propagation { get; set; }
 
         [DataMember(EmitDefaultValue = false)]
+        public bool PreventDefault { get; set; }
+
+        [DataMember(EmitDefaultValue = false)]
         public bool UploadFiles { get; set; }
 
         public static ClientEventSettings CreateFrom(EventSettings settings)
@@ -91,6 +94,7 @@ namespace Integrative.Lara
                 EventName = settings.EventName,
                 LongRunning = settings.LongRunning,
                 Propagation = settings.Propagation,
+                PreventDefault = settings.PreventDefault,
                 UploadFiles = settings.UploadFiles
             };
             if (settings.BlockOptions == null) return client;
