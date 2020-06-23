@@ -148,6 +148,7 @@ namespace Integrative.Lara
         /// Starts the web server. Use with 'await'.
         /// </summary>
         /// <returns>Task</returns>
+        [Obsolete(PublishObsolete)]
         public static Task<IWebHost> StartServer()
             => StartServer(new StartServerOptions());
 
@@ -157,6 +158,7 @@ namespace Integrative.Lara
         /// <param name="options">The server options.</param>
         /// <returns>Task</returns>
         // ReSharper disable once MemberCanBePrivate.Global
+        [Obsolete(PublishObsolete)]
         public static async Task<IWebHost> StartServer(StartServerOptions options)
         {
             await DefaultApplication.Start(options);

@@ -53,6 +53,7 @@ namespace Integrative.Lara
         /// <param name="app">The application.</param>
         /// <param name="options">The options.</param>
         /// <returns>app in parameters</returns>
+        [Obsolete("Specify which Lara Application to use in the parameters of the call")]
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
             => UseLara(app, LaraUI.DefaultApplication, options);
 
@@ -61,9 +62,22 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="app">The application.</param>
         /// <returns>app in parameters</returns>
+        [Obsolete("Specify which Lara Application to use in the parameters of the call")]
         public static IApplicationBuilder UseLara(this IApplicationBuilder app)
         {
             return UseLara(app, new LaraOptions());
         }
+
+        /// <summary>
+        /// Use the Lara Web Engine
+        /// </summary>
+        /// <param name="app">ASP.NET Core ApplicationBuilder</param>
+        /// <param name="laraApp">Lara Application</param>
+        /// <returns></returns>
+        public static IApplicationBuilder UseLara(this IApplicationBuilder app, Application laraApp)
+        {
+            return UseLara(app, laraApp, new LaraOptions());
+        }
+
     }
 }

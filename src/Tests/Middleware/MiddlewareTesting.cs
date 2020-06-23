@@ -191,6 +191,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        [Obsolete]
         public void UseLaraEmpty()
         {
             var app = new Mock<IApplicationBuilder>();
