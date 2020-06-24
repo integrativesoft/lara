@@ -71,7 +71,9 @@
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>Version 0.8.8:
-- Deprecated publishing into default static application</PackageReleaseNotes>
+- Deprecated publishing into default static application
+- Pass Lara Application instance in UseLara method
+- Bumped packages</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 
