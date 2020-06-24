@@ -57,12 +57,14 @@ Other resources available for building web pages are the [LaraBuilder](https://g
 
 ## Integrating Lara into an existing web server
 
-To add Lara to an existing ASP.NET Core server, use:
+To add Lara to an existing ASP.NET Core server, add to the Startup class or equivalent:
 
 ```csharp
+private readonly Application _laraApp = new Application();
+
 public void Configure(IApplicationBuilder app)  
 {  
-    app.UseLara(new LaraOptions
+    app.UseLara(_laraApp, new LaraOptions
     {
         // configuration options
     });
