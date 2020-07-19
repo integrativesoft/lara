@@ -22,6 +22,8 @@ namespace SampleProject
             await app.Start(new StartServerOptions
             {
                 Port = 8182,
+                
+                // looks for classes decorated with 'Lara' attributes
                 PublishAssembliesOnStart = true
             });
             await app.WaitForShutdown();
