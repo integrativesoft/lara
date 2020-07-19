@@ -6,7 +6,7 @@
     <AssemblyName>Integrative.Lara</AssemblyName>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
-    <Version>0.8.8</Version>
+    <Version>0.8.9</Version>
     <Authors>Integrative Software LLC</Authors>
     <Company>Integrative Software LLC</Company>
     <Product>Lara Web Engine</Product>
@@ -21,7 +21,7 @@
     <PackageProjectUrl>https://github.com/integrativesoft/lara</PackageProjectUrl>
     <RepositoryUrl>https://github.com/integrativesoft/lara</RepositoryUrl>
     <PackageTags>lara, web, html, html5, desktop, gui, cross, framework, mac, osx, platform, ui, blazor, razor</PackageTags>
-    <AssemblyVersion>0.8.8</AssemblyVersion>
+    <AssemblyVersion>0.8.9</AssemblyVersion>
     <FileVersion>$(Version)</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -70,9 +70,7 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
-    <PackageReleaseNotes>Version 0.8.8:
-- Deprecated publishing into default static application
-- Pass Lara Application instance in UseLara method
+    <PackageReleaseNotes>Version 0.8.9:
 - Bumped packages</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>

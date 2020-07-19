@@ -18,7 +18,7 @@ namespace SampleProject.Main
             KitchenSinkForm.PublishImages(app);
             await app.Start(new StartServerOptions
             {
-                Mode = ApplicationMode.BrowserApp,   // launches web browser and terminates when closed
+                Port = 8182,
                 PublishAssembliesOnStart = true,     // searches for classes with 'Lara' attributes
             });
             await app.WaitForShutdown();
