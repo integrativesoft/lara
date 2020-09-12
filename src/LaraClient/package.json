@@ -14,11 +14,11 @@
     "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.27",
+    "@types/node": "^14.10.1",
     "clean-webpack-plugin": "^3.0.0",
-    "terser-webpack-plugin": "3.0.8",
-    "ts-loader": "^8.0.2",
-    "typescript": "^3.9.7",
+    "terser-webpack-plugin": "4.2.0",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
