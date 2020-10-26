@@ -20,7 +20,7 @@ namespace Integrative.Lara
         /// </summary>
         public event EventHandler? Closing;
 
-        internal event EventHandler? AfterClose;
+        internal event EventHandler? CloseComplete;
 
         internal Session(Connection parent)
         {
@@ -39,7 +39,7 @@ namespace Integrative.Lara
             catch
             {
             }
-            AfterClose?.Invoke(this, args);
+            CloseComplete?.Invoke(this, args);
         }
 
         /// <summary>

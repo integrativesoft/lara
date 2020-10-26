@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
 const banner = 'Lara Web Engine\n'
-    + 'Copyright (c) 2019 Integrative Software LLC.\n'
+    + 'Copyright (c) 2019-2020 Integrative Software LLC.\n'
     + 'License: Apache-2.0';
 
 module.exports = env => {

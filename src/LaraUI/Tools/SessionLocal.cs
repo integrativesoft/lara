@@ -57,7 +57,7 @@ namespace Integrative.Lara
             else
             {
                 Store(value, session);
-                session.AfterClose += (sender, args) => _storage.Remove(session);
+                session.CloseComplete += (sender, args) => _storage.Remove(session);
             }
         }
 

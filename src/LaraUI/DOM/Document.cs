@@ -68,7 +68,7 @@ namespace Integrative.Lara
         /// </summary>
         public AsyncEvent OnUnloadAsync { get; } = new AsyncEvent();
 
-        internal event EventHandler? AfterUnload;
+        internal event EventHandler? UnloadComplete;
 
         /// <summary>
         /// Gets or sets the language. See 'lang' property for HTML5 documents.
@@ -243,7 +243,7 @@ namespace Integrative.Lara
             var args = new EventArgs();
             OnUnload?.Invoke(this, args);
             await OnUnloadAsync.InvokeAsync(this, args);
-            AfterUnload?.Invoke(this, new EventArgs());
+            UnloadComplete?.Invoke(this, new EventArgs());
             _sequencer.AbortAll();
         }
 

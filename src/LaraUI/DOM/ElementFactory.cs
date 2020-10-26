@@ -55,7 +55,7 @@ namespace Integrative.Lara
                 throw new ArgumentException(Resources.InvalidTagName);
             }
 
-            if (tagName.IndexOf(' ', StringComparison.InvariantCulture) >= 0)
+            if (tagName.Contains(' ', StringComparison.InvariantCulture))
             {
                 throw new ArgumentException(Resources.TagNameSpaces);
             }
