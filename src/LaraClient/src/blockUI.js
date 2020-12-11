@@ -12,8 +12,6 @@
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
 
-import { setTimeout } from "timers";
-
 ; (function () {
     /*jshint eqeqeq:false curly:false latedef:false */
     "use strict";

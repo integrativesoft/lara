@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --env.debug",
-    "release": "webpack --env.release",
+    "build": "webpack --env debug=1",
+    "release": "webpack --env release=1",
     "clean": "echo \"Webpack clean not needed\" && exit 0"
   },
   "devDependencies": {
