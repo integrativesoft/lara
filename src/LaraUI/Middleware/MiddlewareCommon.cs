@@ -34,7 +34,6 @@ namespace Integrative.Lara
         public static async Task WriteBuffer(HttpContext http, byte[] buffer)
         {
             await http.Response.Body.WriteAsync(buffer.AsMemory(0, buffer.Length));
-            http.Response.ContentLength = buffer.Length;
         }
 
         public static void SetStatusCode(HttpContext http, HttpStatusCode code)
