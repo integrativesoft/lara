@@ -7,6 +7,9 @@ before_install:
  - sudo apt install nuget
  - sudo apt-get install dotnet-sdk-2.1=2.1.300-1 
  - dotnet tool install coveralls.net --tool-path tools
+ - sudo npm cache clean -f
+ - sudo npm install -g n
+ - sudo n stable
 
 install:
   - nuget restore src/LaraUI.sln
