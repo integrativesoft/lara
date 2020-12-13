@@ -4,11 +4,10 @@ mono: none
 dotnet: 3.1.100
  
 before_install:
- - sudo apt update
- - sudo apt install nuget nodejs npm
+ - sudo apt-get update
+ - sudo apt-get install nuget nodejs npm dotnet-sdk-2.1=2.1.300-1
  - npm -v
  - node -v
- - sudo apt-get install dotnet-sdk-2.1=2.1.300-1 
  - dotnet tool install coveralls.net --tool-path tools
 
 install:
