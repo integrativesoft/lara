@@ -1,13 +1,16 @@
-language: node_js
+language: csharp
 solution: src/LaraUI.sln
 mono: none
 dotnet: 3.1.100
  
 before_install:
- - npm -v
- - node -v
  - sudo apt-get update
  - sudo apt-get install nuget dotnet-sdk-2.1=2.1.300-1
+ - curl -s -o $HOME/.nvm/nvm.sh https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh
+ - source $HOME/.nvm/nvm.sh
+ - nvm install stable
+ - npm -v
+ - node -v
  - dotnet tool install coveralls.net --tool-path tools
 
 install:
