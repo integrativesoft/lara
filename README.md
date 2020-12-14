@@ -1,8 +1,12 @@
-Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue)](https://github.com/integrativesoft/lara/blob/master/LICENSE) [![NuGet version](http://img.shields.io/nuget/v/Integrative.Lara.svg?nocache=1)](https://www.nuget.org/packages/Integrative.Lara/)  [![Download count](https://img.shields.io/nuget/dt/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Build Status](https://travis-ci.org/integrativesoft/lara.svg?branch=master&noCache=3)](https://travis-ci.org/integrativesoft/lara)  [![Coverage Status](https://coveralls.io/repos/github/integrativesoft/lara/badge.svg?branch=master&lala=3)](https://coveralls.io/github/integrativesoft/lara?branch=master)
+Lara Web Engine [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue)](https://github.com/integrativesoft/lara/blob/master/LICENSE) [![NuGet version](http://img.shields.io/nuget/v/Integrative.Lara.svg?nocache=1)](https://www.nuget.org/packages/Integrative.Lara/)  [![Download count](https://img.shields.io/nuget/dt/Integrative.Lara.svg)](https://www.nuget.org/packages/Integrative.Lara/)  [![Build Status](https://travis-ci.org/integrativesoft/lara.svg?branch=master&noCache=4)](https://travis-ci.org/integrativesoft/lara)  [![Coverage Status](https://coveralls.io/repos/github/integrativesoft/lara/badge.svg?branch=master&lala=3)](https://coveralls.io/github/integrativesoft/lara?branch=master)
 ==================
 
 
-**Lara** is a library for developing **web user interfaces**. Lara gives you full control of the client's HTML Document Object Model (DOM) from the server in C#, and avoids page reloads by exchanging differentials between server and client.
+**Lara** is a library for developing **web user interfaces** using C#, for either single-page-applications or multiple pages.
+
+* Gives you full control of the client's HTML Document Object Model (DOM) from the server in C#
+* Executes events and renders HTML on the server
+* Avoids page reloads by exchanging differentials between server and client
 
 >*"It is similar to server-side Blazor, but is much more lightweight and easier to install. For example, while any type of Blazor requires a whole SDK, Lara is just a NuGet package."* [ScientificProgrammer.net](https://scientificprogrammer.net/2019/08/18/pros-and-cons-of-blazor-for-web-development/?pagename=pros-and-cons-of-blazor)
 
