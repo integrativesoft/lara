@@ -4,20 +4,29 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
     /// <summary>
+    /// Select element
+    /// </summary>
+    [Obsolete("Use HtmlSelectElement instead")]
+    public class SelectElement : HtmlSelectElement
+    {
+    }
+
+    /// <summary>
     /// The 'select' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class SelectElement : Element
+    public class HtmlSelectElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SelectElement"/> class.
+        /// Initializes a new instance of the <see cref="HtmlSelectElement"/> class.
         /// </summary>
-        public SelectElement() : base("select")
+        public HtmlSelectElement() : base("select")
         {
         }
 
@@ -34,7 +43,7 @@ namespace Integrative.Lara
         /// <param name="text">The option's text.</param>
         public void AddOption(string value, string text)
         {
-            var option = new OptionElement
+            var option = new HtmlOptionElement
             {
                 Value = value
             };
@@ -151,11 +160,11 @@ namespace Integrative.Lara
             {
                 return;
             }
-            if (child is OptionElement option)
+            if (child is HtmlOptionElement option)
             {
                 option.NotifyAdded(value);
             }
-            else if (child is OptionGroup group)
+            else if (child is HtmlOptionGroupElement group)
             {
                 group.NotifyAdded(value);
             }
@@ -164,17 +173,17 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets the child options.
         /// </summary>
-        public IEnumerable<OptionElement> Options => GetOptions();
+        public IEnumerable<HtmlOptionElement> Options => GetOptions();
 
-        private IEnumerable<OptionElement> GetOptions()
+        private IEnumerable<HtmlOptionElement> GetOptions()
         {
             foreach (var child in Children)
             {
-                if (child is OptionElement option)
+                if (child is HtmlOptionElement option)
                 {
                     yield return option;
                 }
-                else if (child is OptionGroup group)
+                else if (child is HtmlOptionGroupElement group)
                 {
                     foreach (var grandchild in group.Options)
                     {

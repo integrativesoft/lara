@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Meter element
+    /// </summary>
+    [Obsolete("Use HtmlMeterElement")]
+    public class Meter : HtmlMeterElement
+    {
+    }
+
     /// <summary>
     /// The 'meter' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Meter : Element
+    public class HtmlMeterElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Meter"/> class.
+        /// Initializes a new instance of the <see cref="HtmlMeterElement"/> class.
         /// </summary>
-        public Meter() : base("meter")
+        public HtmlMeterElement() : base("meter")
         {
         }
 

@@ -15,13 +15,13 @@ namespace SampleProject.KitchenSink
 
         public MultiselectSample()
         {
-            var @select = new SelectElement
+            var @select = new HtmlSelectElement
             {
                 Id = "mymulti",
                 Class = "form-control",
                 Multiple = true
             };
-            var toggle = new Button
+            var toggle = new HtmlButtonElement
             {
                 Class = "btn btn-primary"
             };
@@ -34,7 +34,7 @@ namespace SampleProject.KitchenSink
             {
                 foreach (var child in @select.Children)
                 {
-                    if (child is OptionElement option)
+                    if (child is HtmlOptionElement option)
                     {
                         option.Selected = !option.Selected;
                     }

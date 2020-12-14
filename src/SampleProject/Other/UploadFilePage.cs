@@ -15,7 +15,7 @@ namespace SampleProject.Other
     {
         public const string Address = "/upload";
 
-        private readonly InputElement _file = new InputElement();
+        private readonly HtmlInputElement _file = new HtmlInputElement();
         private readonly Element _span = Element.Create("span");
 
         public Task OnGet()

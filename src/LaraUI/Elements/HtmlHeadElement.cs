@@ -4,18 +4,28 @@ Created: 12/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Head element
+    /// </summary>
+    [Obsolete("Use HtmlHeadElement instead")]
+    public class HeadElement : HtmlHeadElement
+    {
+    }
+
     /// <summary>
     /// HTML 'head' element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class HeadElement : Element
+    public class HtmlHeadElement : Element
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public HeadElement() : base("head")
+        public HtmlHeadElement() : base("head")
         {
         }
     }

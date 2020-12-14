@@ -440,7 +440,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InputNotifyValueUpdates()
         {
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             input.NotifyValue(new ElementEventValue
             {
                 Checked = true,
@@ -603,7 +603,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ButtonNotifyValue()
         {
-            var x = new Button();
+            var x = new HtmlButtonElement();
             x.NotifyValue(new ElementEventValue
             {
                 ElementId = x.EnsureElementId(),

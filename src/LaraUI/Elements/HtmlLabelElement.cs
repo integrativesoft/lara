@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Label element
+    /// </summary>
+    [Obsolete("Use HtmlLabelElement instead")]
+    public class Label : HtmlLabelElement
+    {
+    }
+
     /// <summary>
     /// The 'label' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Label : Element
+    public class HtmlLabelElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// Initializes a new instance of the <see cref="HtmlLabelElement"/> class.
         /// </summary>
-        public Label() : base("label")
+        public HtmlLabelElement() : base("label")
         {
         }
 

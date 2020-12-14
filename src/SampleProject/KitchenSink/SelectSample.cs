@@ -16,12 +16,12 @@ namespace SampleProject.KitchenSink
 
         public SelectSample()
         {
-            var @select = new SelectElement
+            var @select = new HtmlSelectElement
             {
                 Id = "myselect",
                 Class = "form-control",
             };
-            var advance = new Button
+            var advance = new HtmlButtonElement
             {
                 Class = "btn btn-primary"
             };

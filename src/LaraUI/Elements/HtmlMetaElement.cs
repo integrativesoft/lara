@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Meta element
+    /// </summary>
+    [Obsolete("Use HtmlMetaElement instead")]
+    public class Meta : HtmlMetaElement
+    {
+    }
+
     /// <summary>
     /// The 'meta' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Meta : Element
+    public class HtmlMetaElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Meta"/> class.
+        /// Initializes a new instance of the <see cref="HtmlMetaElement"/> class.
         /// </summary>
-        public Meta() : base("meta")
+        public HtmlMetaElement() : base("meta")
         {
         }
 

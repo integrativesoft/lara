@@ -18,27 +18,27 @@ namespace Integrative.Lara
         static ElementFactory()
         {
             Map = new Dictionary<string, Type>();
-            Register<Anchor>("a");
-            Register<BodyElement>("body");
-            Register<Button>("button");
-            Register<ColGroup>("colgroup");
-            Register<HeadElement>("head");
-            Register<Image>("img");
-            Register<InputElement>("input");
-            Register<Label>("label");
-            Register<Link>("link");
-            Register<ListItem>("li");
-            Register<Meta>("meta");
-            Register<Meter>("meter");
-            Register<OptionElement>("option");
-            Register<OptionGroup>("optgroup");
-            Register<OrderedList>("ol");
-            Register<Script>("script");
-            Register<SelectElement>("select");
-            Register<Table>("table");
-            Register<TableCell>("td");
-            Register<TableHeader>("th");
-            Register<TextArea>("textarea");
+            Register<HtmlAnchorElement>("a");
+            Register<HtmlBodyElement>("body");
+            Register<HtmlButtonElement>("button");
+            Register<HtmlColGroupElement>("colgroup");
+            Register<HtmlHeadElement>("head");
+            Register<HtmlImageElement>("img");
+            Register<HtmlInputElement>("input");
+            Register<HtmlLabelElement>("label");
+            Register<HtmlLinkElement>("link");
+            Register<HtmlLiElement>("li");
+            Register<HtmlMetaElement>("meta");
+            Register<HtmlMeterElement>("meter");
+            Register<HtmlOptionElement>("option");
+            Register<HtmlOptionGroupElement>("optgroup");
+            Register<HtmlOlElement>("ol");
+            Register<HtmlScriptElement>("script");
+            Register<HtmlSelectElement>("select");
+            Register<HtmlTableElement>("table");
+            Register<HtmlTableCellElement>("td");
+            Register<HtmlTableHeaderElement>("th");
+            Register<HtmlTextAreaElement>("textarea");
             Register<Slot>("slot");
         }
 

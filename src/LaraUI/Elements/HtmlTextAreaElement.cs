@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// TextArea element
+    /// </summary>
+    [Obsolete("Use HtmlTextArea instead")]
+    public class TextArea : HtmlTextAreaElement
+    {
+    }
+
     /// <summary>
     /// The 'textarea' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class TextArea : Element
+    public class HtmlTextAreaElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextArea"/> class.
+        /// Initializes a new instance of the <see cref="HtmlTextAreaElement"/> class.
         /// </summary>
-        public TextArea() : base("textarea")
+        public HtmlTextAreaElement() : base("textarea")
         {
         }
 

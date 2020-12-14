@@ -17,7 +17,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AccessKey()
         {
-            var x = new Button
+            var x = new HtmlButtonElement
             {
                 AccessKey = "1",
                 Class = "2",
@@ -66,7 +66,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ElementToString()
         {
-            var x = new Button();
+            var x = new HtmlButtonElement();
             Assert.Equal("button", x.ToString());
             x.Id = "hi";
             Assert.Equal("button #hi", x.ToString());
@@ -179,7 +179,7 @@ namespace Integrative.Lara.Tests.DOM
         public void CheckedFalseFlushed()
         {
             var doc = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            var x = new InputElement
+            var x = new HtmlInputElement
             {
                 Id = "x"
             };
@@ -199,7 +199,7 @@ namespace Integrative.Lara.Tests.DOM
         public void CheckedTrueFlushed()
         {
             var doc = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            var x = new InputElement
+            var x = new HtmlInputElement
             {
                 Id = "x"
             };

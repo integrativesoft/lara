@@ -22,7 +22,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Returns the inner input element
         /// </summary>
-        public InputElement InnerInput { get; } = new InputElement();
+        public HtmlInputElement InnerInput { get; } = new HtmlInputElement();
 
         /// <summary>
         /// Constructor

@@ -23,25 +23,25 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ElementProperties()
         {
-            TestElement<Anchor>("a");
-            TestElement<Button>("button");
-            TestElement<ColGroup>("colgroup");
-            TestElement<Image>("img");
-            TestElement<InputElement>("input");
-            TestElement<Label>("label");
-            TestElement<Link>("link");
-            TestElement<ListItem>("li");
-            TestElement<Meta>("meta");
-            TestElement<Meter>("meter");
-            TestElement<OptionElement>("option");
-            TestElement<OptionGroup>("optgroup");
-            TestElement<OrderedList>("ol");
-            TestElement<Script>("script");
-            TestElement<SelectElement>("select");
-            TestElement<Table>("table");
-            TestElement<TableCell>("td");
-            TestElement<TableHeader>("th");
-            TestElement<TextArea>("textarea");
+            TestElement<HtmlAnchorElement>("a");
+            TestElement<HtmlButtonElement>("button");
+            TestElement<HtmlColGroupElement>("colgroup");
+            TestElement<HtmlImageElement>("img");
+            TestElement<HtmlInputElement>("input");
+            TestElement<HtmlLabelElement>("label");
+            TestElement<HtmlLinkElement>("link");
+            TestElement<HtmlLiElement>("li");
+            TestElement<HtmlMetaElement>("meta");
+            TestElement<HtmlMeterElement>("meter");
+            TestElement<HtmlOptionElement>("option");
+            TestElement<HtmlOptionGroupElement>("optgroup");
+            TestElement<HtmlOlElement>("ol");
+            TestElement<HtmlScriptElement>("script");
+            TestElement<HtmlSelectElement>("select");
+            TestElement<HtmlTableElement>("table");
+            TestElement<HtmlTableCellElement>("td");
+            TestElement<HtmlTableHeaderElement>("th");
+            TestElement<HtmlTextAreaElement>("textarea");
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetIntAttribute()
         {
-            var input = new InputElement
+            var input = new HtmlInputElement
             {
                 Height = 10
             };
@@ -156,7 +156,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void RemoveClassRemovesClass()
         {
-            var button = new Button
+            var button = new HtmlButtonElement
             {
                 Class = "red blue green"
             };
@@ -167,7 +167,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddClassAddsClass()
         {
-            var button = new Button();
+            var button = new HtmlButtonElement();
             button.AddClass("red");
             Assert.Equal("red", button.Class);
         }
@@ -175,7 +175,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SetFlagAttributes()
         {
-            var button = new Button();
+            var button = new HtmlButtonElement();
             button.SetFlagAttribute("hidden", true);
             Assert.True(button.Hidden);
         }
@@ -183,7 +183,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InputAttributes()
         {
-            var input = new InputElement
+            var input = new HtmlInputElement
             {
                 MaxLength = 5,
                 Size = 3,
@@ -206,7 +206,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ImageProperties()
         {
-            var image = new Image
+            var image = new HtmlImageElement
             {
                 Height = 1,
                 Width = 2
@@ -218,7 +218,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void OrderedListAttributes()
         {
-            var ol = new OrderedList
+            var ol = new HtmlOlElement
             {
                 Start = 1
             };
@@ -228,7 +228,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void TextAreaProperties()
         {
-            var x = new TextArea
+            var x = new HtmlTextAreaElement
             {
                 Cols = 1,
                 MaxLength = 2,
@@ -242,7 +242,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifyValueTextArea()
         {
-            var x = new TextArea();
+            var x = new HtmlTextAreaElement();
             x.NotifyValue(new ElementEventValue
             {
                 Value = "lala"
@@ -253,7 +253,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void TableHeaderProperties()
         {
-            var x = new TableHeader
+            var x = new HtmlTableHeaderElement
             {
                 ColSpan = 1,
                 RowSpan = 2
@@ -320,7 +320,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void TableCellProperties()
         {
-            var x = new TableCell
+            var x = new HtmlTableCellElement
             {
                 ColSpan = 1,
                 RowSpan = 2
@@ -332,7 +332,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void ColGroupProperties()
         {
-            var x = new ColGroup
+            var x = new HtmlColGroupElement
             {
                 Span = 1
             };
@@ -342,20 +342,20 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void LoopSelectOptions()
         {
-            var select = new SelectElement();
-            var option1 = new OptionElement();
+            var select = new HtmlSelectElement();
+            var option1 = new HtmlOptionElement();
             var group = Element.Create("optgroup");
-            var option2 = new OptionElement();
+            var option2 = new HtmlOptionElement();
             group.AppendChild(option2);
             select.AppendChild(option1);
             select.AppendChild(group);
-            Assert.Equal( new List<OptionElement>{ option1, option2 }, select.Options);
+            Assert.Equal( new List<HtmlOptionElement>{ option1, option2 }, select.Options);
         }
 
         [Fact]
         public void SelectProperties()
         {
-            var select = new SelectElement
+            var select = new HtmlSelectElement
             {
                 Size = 3
             };
@@ -365,7 +365,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectNotifyValue()
         {
-            var select = new SelectElement();
+            var select = new HtmlSelectElement();
             select.NotifyValue(new ElementEventValue
             {
                 Value = "lala"
@@ -376,7 +376,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectAddOption()
         {
-            var x = new SelectElement();
+            var x = new HtmlSelectElement();
             x.AddOption("myvalue", "this is the text");
             var option = x.Options.FirstOrDefault();
             Assert.NotNull(option);
@@ -389,11 +389,11 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void OptionWithValueGetsSelected()
         {
-            var select = new SelectElement
+            var select = new HtmlSelectElement
             {
                 Value = "lolo"
             };
-            var option = new OptionElement
+            var option = new HtmlOptionElement
             {
                 Value = "lolo"
             };
@@ -404,15 +404,15 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddGroupWithSelectedOption()
         {
-            var select = new SelectElement
+            var select = new HtmlSelectElement
             {
                 Value = "lolo"
             };
-            var option = new OptionElement
+            var option = new HtmlOptionElement
             {
                 Value = "lolo"
             };
-            var group = new OptionGroup();
+            var group = new HtmlOptionGroupElement();
             group.AppendChild(option);
             select.AppendChild(group);
             Assert.True(option.Selected);
@@ -421,15 +421,15 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void AddSelectedOptionInGroup()
         {
-            var select = new SelectElement
+            var select = new HtmlSelectElement
             {
                 Value = "lolo"
             };
-            var option = new OptionElement
+            var option = new HtmlOptionElement
             {
                 Value = "lolo"
             };
-            var group = new OptionGroup();
+            var group = new HtmlOptionGroupElement();
             select.AppendChild(group);
             group.AppendChild(option);
             Assert.True(option.Selected);
@@ -438,16 +438,16 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SelectValueChangeOnChildOptions()
         {
-            var select = new SelectElement();
-            var opt1 = new OptionElement
+            var select = new HtmlSelectElement();
+            var opt1 = new HtmlOptionElement
             {
                 Value = "a"
             };
-            var opt2 = new OptionElement
+            var opt2 = new HtmlOptionElement
             {
                 Value = "b"
             };
-            var group = new OptionGroup();
+            var group = new HtmlOptionGroupElement();
             group.AppendChild(opt2);
             select.AppendChild(opt1);
             select.AppendChild(group);
@@ -463,7 +463,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void MeterProperties()
         {
-            var x = new Meter
+            var x = new HtmlMeterElement
             {
                 High = 80,
                 Low = 20,
@@ -483,7 +483,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void SomeTagsAlwaysNeedId()
         {
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             Assert.True(input.NeedsId);
         }
 

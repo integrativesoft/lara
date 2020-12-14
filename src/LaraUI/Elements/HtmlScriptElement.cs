@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Script element
+    /// </summary>
+    [Obsolete("Use HtmlScriptElement instead")]
+    public class Script : HtmlScriptElement
+    {
+    }
+
     /// <summary>
     /// The 'script' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Script : Element
+    public class HtmlScriptElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Script"/> class.
+        /// Initializes a new instance of the <see cref="HtmlScriptElement"/> class.
         /// </summary>
-        public Script() : base("script")
+        public HtmlScriptElement() : base("script")
         {
         }
 

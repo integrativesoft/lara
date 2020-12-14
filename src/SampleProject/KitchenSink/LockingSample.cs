@@ -15,7 +15,7 @@ namespace SampleProject.KitchenSink
 
         public LockingSample()
         {
-            var button = new Button
+            var button = new HtmlButtonElement
             {
                 Class = "btn btn-primary my-2"
             };

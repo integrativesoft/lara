@@ -121,7 +121,7 @@ namespace Integrative.Lara.Tests.Delta
         [Fact]
         public void ToggleClassToggles()
         {
-            var button = new Button();
+            var button = new HtmlButtonElement();
             button.ToggleClass("red", true);
             Assert.True(button.HasClass("red"));
             button.ToggleClass("red", false);

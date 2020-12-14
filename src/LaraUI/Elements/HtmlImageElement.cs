@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Image element
+    /// </summary>
+    [Obsolete("Use HtmlImageElement instead")]
+    public class Image : HtmlImageElement
+    {
+    }
+
     /// <summary>
     /// The 'img' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Image : Element
+    public class HtmlImageElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// Initializes a new instance of the <see cref="HtmlImageElement"/> class.
         /// </summary>
-        public Image() : base("img")
+        public HtmlImageElement() : base("img")
         {
         }
 

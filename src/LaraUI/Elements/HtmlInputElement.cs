@@ -5,20 +5,29 @@ Author: Pablo Carbonell
 */
 
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
     /// <summary>
+    /// Input element
+    /// </summary>
+    [Obsolete("Use HtmlInputElement instead")]
+    public class InputElement : HtmlInputElement
+    {
+    }
+
+    /// <summary>
     /// The 'input' HTML5 element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class InputElement : Element
+    public class HtmlInputElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InputElement"/> class.
+        /// Initializes a new instance of the <see cref="HtmlInputElement"/> class.
         /// </summary>
-        public InputElement() : base("input")
+        public HtmlInputElement() : base("input")
         {
         }
 

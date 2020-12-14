@@ -97,7 +97,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifySelectedSetsSelected()
         {
-            var option = new OptionElement();
+            var option = new HtmlOptionElement();
             option.NotifyValue(new ElementEventValue
             {
                 Checked = true,
@@ -181,7 +181,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifyFlagSkipsSameValue()
         {
-            var input = new InputElement
+            var input = new HtmlInputElement
             {
                 Checked = true
             };
@@ -192,7 +192,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void NotifyValueSkipsSameValue()
         {
-            var input = new InputElement
+            var input = new HtmlInputElement
             {
                 Value = "hello"
             };
@@ -256,7 +256,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var file = new Mock<IFormFile>();
             file.Setup(x1 => x1.Name).Returns("abc");
-            var x = new InputElement
+            var x = new HtmlInputElement
             {
                 Type = "file"
             };

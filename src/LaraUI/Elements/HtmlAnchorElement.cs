@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Anchor element
+    /// </summary>
+    [Obsolete("Use HtmlAnchorElement instead")]
+    public class Anchor : HtmlAnchorElement
+    {
+    }
+
     /// <summary>
     /// The HTML5 'a' element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Anchor : Element
+    public class HtmlAnchorElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Anchor"/> class.
+        /// Initializes a new instance of the <see cref="HtmlAnchorElement"/> class.
         /// </summary>
-        public Anchor() : base("a")
+        public HtmlAnchorElement() : base("a")
         {
         }
 

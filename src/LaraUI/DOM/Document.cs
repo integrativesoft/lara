@@ -84,7 +84,7 @@ namespace Integrative.Lara
         /// <value>
         /// The head.
         /// </value>
-        public HeadElement Head { get; }
+        public HtmlHeadElement Head { get; }
 
         /// <summary>
         /// The document's Body element.
@@ -92,7 +92,7 @@ namespace Integrative.Lara
         /// <value>
         /// The body.
         /// </value>
-        public BodyElement Body { get; }
+        public HtmlBodyElement Body { get; }
 
         internal DateTime LastUtc { get; private set; }
 
@@ -110,12 +110,12 @@ namespace Integrative.Lara
             _map = new DocumentIdMap();
             _queue = new Queue<BaseDelta>();
             Semaphore = new SemaphoreSlim(1);
-            Head = new HeadElement
+            Head = new HtmlHeadElement
             {
                 Document = this,
                 IsSlotted = true
             };
-            Body = new BodyElement
+            Body = new HtmlBodyElement
             {
                 Document = this,
                 IsSlotted = true

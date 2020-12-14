@@ -4,17 +4,27 @@ Created: 12/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
     /// <summary>
+    /// Body element
+    /// </summary>
+    [Obsolete("Use HtmlBodyElement")]
+    public class BodyElement : HtmlBodyElement
+    {
+    }
+
+    /// <summary>
     /// HTML 'body' element
     /// </summary>
-    public sealed class BodyElement : Element
+    public class HtmlBodyElement : Element
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public BodyElement() : base("body")
+        public HtmlBodyElement() : base("body")
         {
         }
     }

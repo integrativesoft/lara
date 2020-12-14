@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// ColGroup element
+    /// </summary>
+    [Obsolete("Use HtmlColGroupElement instead")]
+    public class ColGroup : HtmlColGroupElement
+    {
+    }
+
     /// <summary>
     /// The 'colgroup' HTML5 element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class ColGroup : Element
+    public class HtmlColGroupElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ColGroup"/> class.
+        /// Initializes a new instance of the <see cref="HtmlColGroupElement"/> class.
         /// </summary>
-        public ColGroup() : base("colgroup")
+        public HtmlColGroupElement() : base("colgroup")
         {
         }
 

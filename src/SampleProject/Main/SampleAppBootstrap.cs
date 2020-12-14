@@ -12,17 +12,17 @@ namespace SampleProject.Main
     {
         public static void AppendTo(Element head)
         {
-            head.AppendChild(new Link
+            head.AppendChild(new HtmlLinkElement
             {
                 Rel = "stylesheet",
                 HRef = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             });
-            head.AppendChild(new Script
+            head.AppendChild(new HtmlScriptElement
             {
                 Src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
                 Defer = true
             });
-            head.AppendChild(new Script
+            head.AppendChild(new HtmlScriptElement
             {
                 Src = "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
                 Defer = true

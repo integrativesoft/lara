@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Link element
+    /// </summary>
+    [Obsolete("Use HtmlLinkElement instead")]
+    public class Link : HtmlLinkElement
+    {
+    }
+
     /// <summary>
     /// The 'link' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Link : Element
+    public class HtmlLinkElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Link"/> class.
+        /// Initializes a new instance of the <see cref="HtmlLinkElement"/> class.
         /// </summary>
-        public Link() : base("link")
+        public HtmlLinkElement() : base("link")
         {
         }
 

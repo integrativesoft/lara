@@ -218,7 +218,7 @@ namespace Integrative.Lara
             var name = file.Name;
             if (!TryParsePrefix(name, GlobalConstants.FilePrefix, out var id)) return;
             if (document.TryGetElementById(id, out var element)
-                && element is InputElement input)
+                && element is HtmlInputElement input)
             {
                 input.AddFile(file);
             }

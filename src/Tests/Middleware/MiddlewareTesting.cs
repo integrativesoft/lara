@@ -231,7 +231,7 @@ namespace Integrative.Lara.Tests.Middleware
                 Socket = socket.Object,
                 DocumentInternal = document
             };
-            var button = new Button();
+            var button = new HtmlButtonElement();
             document.OpenEventQueue();
             document.Body.AppendChild(button);
             await page.Navigation.FlushPartialChanges();

@@ -23,7 +23,7 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(root);
             builder.Push("button", "red", "mybutton").Pop();
             Assert.NotEmpty(root.Children);
-            var first = root.Children.FirstOrDefault() as Button;
+            var first = root.Children.FirstOrDefault() as HtmlButtonElement;
             Assert.NotNull(first);
             Assert.Equal("red", first!.Class);
             Assert.Equal("mybutton", first.Id);
@@ -66,8 +66,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(root);
             var list = new List<Element>()
             {
-                new Button(),
-                new OptionElement()
+                new HtmlButtonElement(),
+                new HtmlOptionElement()
             };
             builder.AddNodes(list);
             Assert.Equal(2, root.ChildCount);
@@ -80,8 +80,8 @@ namespace Integrative.Lara.Tests.DOM
             var builder = new LaraBuilder(root);
             var list = new List<Node>()
             {
-                new Button(),
-                new OptionElement()
+                new HtmlButtonElement(),
+                new HtmlOptionElement()
             };
             builder.AddNodes(list);
             Assert.Equal(2, root.ChildCount);
@@ -98,7 +98,7 @@ namespace Integrative.Lara.Tests.DOM
 
         private static void MyAddAction(LaraBuilder builder)
         {
-            builder.AddNode(new Button());
+            builder.AddNode(new HtmlButtonElement());
         }
 
         [Fact]

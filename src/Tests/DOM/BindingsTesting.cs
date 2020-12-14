@@ -431,7 +431,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 MyValue = "hello"
             };
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             input.BindInput(new BindInputOptions<MyInputData>
             {
                 Attribute = "value",
@@ -450,7 +450,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 MyValue = "hello"
             };
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var builder = new LaraBuilder(input);
             builder.BindInput("value", data, x => x.MyValue);
             Assert.Equal("hello", input.Value);
@@ -465,7 +465,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 MyChecked = true
             };
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var builder = new LaraBuilder(input);
             builder.BindFlagInput("checked", data, x => x.MyChecked);
             Assert.True(input.Checked);
@@ -480,7 +480,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 MyValue = "hello"
             };
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var binding = new BindInputOptions<MyInputData>
             {
                 Attribute = "value",
@@ -500,7 +500,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 MyChecked = true
             };
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var binding = new BindFlagInputOptions<MyInputData>
             {
                 Attribute = "checked",
@@ -517,7 +517,7 @@ namespace Integrative.Lara.Tests.DOM
         public void InvalidSetterThrows()
         {
             var data = new MyInputData();
-            var x = new InputElement();
+            var x = new HtmlInputElement();
             Assert.ThrowsAny<ArgumentException>(() =>
             {
                 x.BindInput(new BindInputOptions<MyInputData>
@@ -532,7 +532,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InputBindingCollects()
         {
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var data = new MyInputData();
             input.BindInput(new BindInputOptions<MyInputData>
             {
@@ -547,7 +547,7 @@ namespace Integrative.Lara.Tests.DOM
         [Fact]
         public void InputBindingCollectsFlag()
         {
-            var input = new InputElement();
+            var input = new HtmlInputElement();
             var data = new MyInputData();
             input.BindFlagInput(new BindFlagInputOptions<MyInputData>
             {

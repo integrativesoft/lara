@@ -387,7 +387,7 @@ namespace Integrative.Lara.Tests.Components
             var found = false;
             try
             {
-                registry.Register("x-lolo", typeof(InputElement));
+                registry.Register("x-lolo", typeof(HtmlInputElement));
             }
             catch (InvalidOperationException)
             {

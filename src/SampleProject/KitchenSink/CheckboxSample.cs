@@ -15,13 +15,13 @@ namespace SampleProject.KitchenSink
 
         public CheckboxSample()
         {
-            var checkbox = new InputElement
+            var checkbox = new HtmlInputElement
             {
                 Id = "mycheckbox",
                 Type = "checkbox",
                 Class = "form-check-input"
             };
-            var toggle = new Button
+            var toggle = new HtmlButtonElement
             {
                 Class = "btn btn-primary",
             };

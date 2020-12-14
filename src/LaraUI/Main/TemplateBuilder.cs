@@ -36,7 +36,7 @@ namespace Integrative.Lara
             head.AppendChild(meta);
 
             // LaraClient.js
-            var script = new Script
+            var script = new HtmlScriptElement
             {
                 Src = LibraryUrl,
                 Defer = true

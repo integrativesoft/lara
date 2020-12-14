@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Ordered list
+    /// </summary>
+    [Obsolete("Use HtmlOlElement instead")]
+    public class OrderedList : HtmlOlElement
+    {
+    }
+
     /// <summary>
     /// The 'ol' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class OrderedList : Element
+    public class HtmlOlElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrderedList"/> class.
+        /// Initializes a new instance of the <see cref="HtmlOlElement"/> class.
         /// </summary>
-        public OrderedList() : base("ol")
+        public HtmlOlElement() : base("ol")
         {
         }
 

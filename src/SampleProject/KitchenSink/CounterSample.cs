@@ -12,13 +12,13 @@ namespace SampleProject.KitchenSink
 {
     internal sealed class CounterSample
     {
-        private readonly InputElement _number;
+        private readonly HtmlInputElement _number;
         
         public Element Root { get; }
 
         public CounterSample()
         {
-            _number = new InputElement
+            _number = new HtmlInputElement
             {
                 Id = "number",
                 Type = "number",

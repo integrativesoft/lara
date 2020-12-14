@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// LI element
+    /// </summary>
+    [Obsolete("Use HtmlLiElement instead")]
+    public class ListItem : HtmlLiElement
+    {
+    }
+
     /// <summary>
     /// The 'li' HTML5 element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class ListItem : Element
+    public class HtmlLiElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListItem"/> class.
+        /// Initializes a new instance of the <see cref="HtmlLiElement"/> class.
         /// </summary>
-        public ListItem() : base("li")
+        public HtmlLiElement() : base("li")
         {
         }
 

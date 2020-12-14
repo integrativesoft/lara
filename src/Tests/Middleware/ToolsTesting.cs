@@ -194,7 +194,7 @@ namespace Integrative.Lara.Tests.Middleware
         [Fact]
         public void LaraFlushEvent()
         {
-            var x = new InputElement();
+            var x = new HtmlInputElement();
             var builder = new LaraBuilder(x);
             builder.FlushEvent("click");
             x.NotifyEvent("click");

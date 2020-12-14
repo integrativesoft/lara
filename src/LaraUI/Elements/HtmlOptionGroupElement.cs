@@ -4,20 +4,29 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace Integrative.Lara
 {
     /// <summary>
+    /// Option group
+    /// </summary>
+    [Obsolete("Use HtmlOptionGroupElement instead")]
+    public class OptionGroup : HtmlOptionGroupElement
+    {
+    }
+
+    /// <summary>
     /// The 'optgroup' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class OptionGroup : Element
+    public class HtmlOptionGroupElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OptionGroup"/> class.
+        /// Initializes a new instance of the <see cref="HtmlOptionGroupElement"/> class.
         /// </summary>
-        public OptionGroup() : base("optgroup")
+        public HtmlOptionGroupElement() : base("optgroup")
         {
         }
 
@@ -42,13 +51,13 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets the child options.
         /// </summary>
-        public IEnumerable<OptionElement> Options => GetOptions();
+        public IEnumerable<HtmlOptionElement> Options => GetOptions();
 
-        private IEnumerable<OptionElement> GetOptions()
+        private IEnumerable<HtmlOptionElement> GetOptions()
         {
             foreach (var node in Children)
             {
-                if (node is OptionElement option)
+                if (node is HtmlOptionElement option)
                 {
                     yield return option;
                 }
@@ -57,7 +66,7 @@ namespace Integrative.Lara
 
         private protected override void OnChildAdded(Node child)
         {
-            if (!(ParentElement is SelectElement parent) || !(child is OptionElement option)) return;
+            if (!(ParentElement is HtmlSelectElement parent) || !(child is HtmlOptionElement option)) return;
             var value = parent.Value;
             if (!string.IsNullOrEmpty(value))
             {

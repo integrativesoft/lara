@@ -12,11 +12,11 @@ namespace SampleProject.Other
     [LaraPage(Address = "/server")]
     internal class ServerEventsPage : IPage
     {
-        private readonly Button _button;
+        private readonly HtmlButtonElement _button;
 
         public ServerEventsPage()
         {
-            _button = new Button()
+            _button = new HtmlButtonElement()
             {
                 Disabled = true
             };

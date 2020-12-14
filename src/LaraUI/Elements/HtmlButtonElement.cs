@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Button element
+    /// </summary>
+    [Obsolete("Use HtmlButtonElement instead")]
+    public class Button : HtmlButtonElement
+    {
+    }
+
     /// <summary>
     /// The 'button' HTML5 element
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class Button : Element
+    public class HtmlButtonElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Button"/> class.
+        /// Initializes a new instance of the <see cref="HtmlButtonElement"/> class.
         /// </summary>
-        public Button() : base("button")
+        public HtmlButtonElement() : base("button")
         {
             Type = "button";
         }

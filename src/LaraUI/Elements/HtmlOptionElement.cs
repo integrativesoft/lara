@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Option element
+    /// </summary>
+    [Obsolete("Use HtmlOptionElement instead")]
+    public class OptionElement : HtmlOptionElement
+    {
+    }
+
     /// <summary>
     /// The 'option' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class OptionElement : Element
+    public class HtmlOptionElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OptionElement"/> class.
+        /// Initializes a new instance of the <see cref="HtmlOptionElement"/> class.
         /// </summary>
-        public OptionElement() : base("option")
+        public HtmlOptionElement() : base("option")
         {
         }
 

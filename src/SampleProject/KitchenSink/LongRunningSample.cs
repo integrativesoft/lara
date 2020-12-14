@@ -12,7 +12,7 @@ namespace SampleProject.KitchenSink
 {
     internal class LongRunningSample
     {
-        private readonly Button _button = new Button();
+        private readonly HtmlButtonElement _button = new HtmlButtonElement();
         private readonly Element _card = Element.Create("div");
         private readonly Element _coffeeText = Element.Create("p");
         private readonly Element _counterText = Element.Create("p");

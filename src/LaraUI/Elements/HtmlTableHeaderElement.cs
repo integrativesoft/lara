@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Table header element
+    /// </summary>
+    [Obsolete("Use HtmlTableHeaderElement instead")]
+    public class TableHeader : HtmlTableHeaderElement
+    {
+    }
+
     /// <summary>
     /// The 'th' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class TableHeader : Element
+    public class HtmlTableHeaderElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableHeader"/> class.
+        /// Initializes a new instance of the <see cref="HtmlTableHeaderElement"/> class.
         /// </summary>
-        public TableHeader() : base("th")
+        public HtmlTableHeaderElement() : base("th")
         {
         }
 

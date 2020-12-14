@@ -4,18 +4,28 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
+
 namespace Integrative.Lara
 {
+    /// <summary>
+    /// Table cell element
+    /// </summary>
+    [Obsolete("Use HtmlTableCellElement instead")]
+    public class TableCell : HtmlTableCellElement
+    {
+    }
+
     /// <summary>
     /// The 'td' HTML5 element.
     /// </summary>
     /// <seealso cref="Element" />
-    public sealed class TableCell : Element
+    public class HtmlTableCellElement : Element
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableCell"/> class.
+        /// Initializes a new instance of the <see cref="HtmlTableCellElement"/> class.
         /// </summary>
-        public TableCell() : base("td")
+        public HtmlTableCellElement() : base("td")
         {
         }
 
