@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlLiElement(params Node[] items) : base("li", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'value' property.
         /// </summary>
         public string? Value

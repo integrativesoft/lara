@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlLabelElement(params Node[] items) : base("label", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'for' HTML5 attribute.
         /// </summary>
         public string? For

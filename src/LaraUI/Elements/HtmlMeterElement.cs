@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlMeterElement(params Node[] items) : base("meta", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'high' HTML5 attribute.
         /// </summary>
         public int? High

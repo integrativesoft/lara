@@ -28,5 +28,14 @@ namespace Integrative.Lara
         public HtmlHeadElement() : base("head")
         {
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlHeadElement(params Node[] items) : base("head", items)
+        {
+        }
+
     }
 }

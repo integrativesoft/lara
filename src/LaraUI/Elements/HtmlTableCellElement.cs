@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlTableCellElement(params Node[] items) : base("td", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'colspan' HTML5 attribute.
         /// </summary>
         public int? ColSpan

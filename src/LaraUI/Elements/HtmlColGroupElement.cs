@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlColGroupElement(params Node[] items) : base("colgroup", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'span' HTML5 attribute.
         /// </summary>
         public int? Span

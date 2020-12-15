@@ -27,5 +27,14 @@ namespace Integrative.Lara
         public HtmlBodyElement() : base("body")
         {
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items">Children</param>
+        public HtmlBodyElement(params Node[] items) : base("body", items)
+        {
+        }
+
     }
 }

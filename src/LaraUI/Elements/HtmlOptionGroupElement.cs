@@ -31,6 +31,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlOptionGroupElement(params Node[] items) : base("optgroup", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'disabled' HTML5 attribute.
         /// </summary>
         public bool Disabled
@@ -66,7 +74,7 @@ namespace Integrative.Lara
 
         private protected override void OnChildAdded(Node child)
         {
-            if (!(ParentElement is HtmlSelectElement parent) || !(child is HtmlOptionElement option)) return;
+            if (ParentElement is not HtmlSelectElement parent || child is not HtmlOptionElement option) return;
             var value = parent.Value;
             if (!string.IsNullOrEmpty(value))
             {

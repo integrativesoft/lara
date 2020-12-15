@@ -15,5 +15,9 @@ namespace Integrative.Lara
         internal GenericElement(string tagName) : base(tagName)
         {
         }
+
+        internal GenericElement(string tagName, params Node[] items) : base(tagName, items)
+        {
+        }
     }
 }

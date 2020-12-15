@@ -51,6 +51,23 @@ namespace Integrative.Lara
         public static Element Create(string tagName, string id) => ElementFactory.CreateElement(tagName, id);
 
         /// <summary>
+        /// Creates an element
+        /// </summary>
+        /// <param name="tagName">Element's tag name.</param>
+        /// <param name="items">Child elements</param>
+        /// <returns></returns>
+        public static Element Create(string tagName, params Node[] items) => ElementFactory.CreateElement(tagName, items);
+
+        /// <summary>
+        /// Creates an element
+        /// </summary>
+        /// <param name="tagName">Element's tag name.</param>
+        /// <param name="id">The identifier.</param>
+        /// <param name="items">Child elements</param>
+        /// <returns></returns>
+        public static Element Create(string tagName, string id, params Node[] items) => ElementFactory.CreateElement(tagName, id, items);
+
+        /// <summary>
         /// Creates a namespace-specific HTML5 element (e.g. SVG elements)
         /// </summary>
         /// <param name="ns">The namespace of the element</param>
@@ -59,6 +76,16 @@ namespace Integrative.Lara
         // ReSharper disable once InconsistentNaming
         public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
 
+        /// <summary>
+        /// Creates a namespace-specific HTML5 element (e.g. SVG elements)
+        /// </summary>
+        /// <param name="ns">The namespace of the element</param>
+        /// <param name="tagName">Element's tag name.</param>
+        /// <param name="items">Child elements</param>
+        /// <returns>Element created</returns>
+        // ReSharper disable once InconsistentNaming
+        public static Element CreateNS(string ns, string tagName, params Node[] items) => ElementFactory.CreateElementNS(ns, tagName, items);
+
         internal Element(string tagName)
         {
             tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
@@ -66,6 +93,14 @@ namespace Integrative.Lara
             _children = new List<Node>();
             Events = new Dictionary<string, EventSettings>();
             TagName = tagName.ToLowerInvariant();
+        }
+
+        internal Element(string tagName, params Node[] items) : this(tagName)
+        {
+            foreach (var item in items)
+            {
+                AppendChild(item);
+            }
         }
 
         /// <summary>

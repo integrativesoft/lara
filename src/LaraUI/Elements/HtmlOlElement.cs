@@ -30,6 +30,14 @@ namespace Integrative.Lara
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="items"></param>
+        public HtmlOlElement(params Node[] items) : base("ol", items)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the 'reversed' HTML5 attribute.
         /// </summary>
         public bool Reversed

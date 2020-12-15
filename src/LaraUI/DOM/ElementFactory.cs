@@ -48,6 +48,30 @@ namespace Integrative.Lara
 
         public static Element CreateElement(string tagName)
         {
+            tagName = VerifyTagName(tagName);
+
+            if (FindTagName(tagName, out var type))
+            {
+                return (Element)Activator.CreateInstance(type);
+            }
+
+            return new GenericElement(tagName);
+        }
+
+        public static Element CreateElement(string tagName, params Node[] items)
+        {
+            tagName = VerifyTagName(tagName);
+
+            if (FindTagName(tagName, out var type))
+            {
+                return (Element)Activator.CreateInstance(type, items);
+            }
+
+            return new GenericElement(tagName, items);
+        }
+
+        private static string VerifyTagName(string tagName)
+        {
             if (string.IsNullOrEmpty(tagName))
             {
                 throw new ArgumentException(Resources.InvalidTagName);
@@ -57,14 +81,8 @@ namespace Integrative.Lara
             {
                 throw new ArgumentException(Resources.TagNameSpaces);
             }
-            tagName = tagName.ToLowerInvariant();
 
-            if (FindTagName(tagName, out var type))
-            {
-                return (Element)Activator.CreateInstance(type);
-            }
-
-            return new GenericElement(tagName);
+            return tagName.ToLowerInvariant();
         }
 
         private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)
@@ -80,10 +98,23 @@ namespace Integrative.Lara
             return element;
         }
 
-        // ReSharper disable once InconsistentNaming
+        public static Element CreateElement(string tagName, string id, params Node[] items)
+        {
+            var element = CreateElement(tagName, items);
+            element.Id = id;
+            return element;
+        }
+
         public static Element CreateElementNS(string ns, string tagName)
         {
             var element = CreateElement(tagName);
+            element.SetAttribute("xlmns", ns);
+            return element;
+        }
+
+        public static Element CreateElementNS(string ns, string tagName, params Node[] items)
+        {
+            var element = CreateElement(tagName, items);
             element.SetAttribute("xlmns", ns);
             return element;
         }
