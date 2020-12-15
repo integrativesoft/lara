@@ -24,8 +24,6 @@ namespace Integrative.Lara
         /// <param name="next">Next middleware</param>
         /// <param name="app">Lara application</param>
         /// <param name="options">Configuration options</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required by framework")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "Required by framework")]
         // ReSharper disable once UnusedParameter.Local
         public NotFoundMiddleware(RequestDelegate next, Application app, LaraOptions options)
         {

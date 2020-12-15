@@ -250,8 +250,6 @@ namespace Integrative.Lara
         /// <summary>
         /// Attribute to bind
         /// </summary>
-        [SuppressMessage("Globalization",
-            "CA1308:Normalize strings to uppercase", Justification = "html attributes are lowercase")]
         public string Attribute
         {
             get => _attribute;
@@ -306,7 +304,7 @@ namespace Integrative.Lara
         private Action<TData, TValue> CompileSetter()
         {
             var property = GetProperty;
-            if (!(property.Body is MemberExpression member))
+            if (property.Body is not MemberExpression member)
             {
                 throw new ArgumentException(Resources.InvalidBindingExpression);
             }

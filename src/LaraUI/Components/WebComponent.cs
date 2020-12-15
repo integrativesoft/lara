@@ -73,7 +73,6 @@ namespace Integrative.Lara
         /// Obsolete
         /// </summary>
         [Obsolete("Not needed anymore, Shadow root is automatically created")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Deprecated")]
         protected void AttachShadow()
         {
         }

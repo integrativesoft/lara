@@ -184,7 +184,6 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="host">The host.</param>
         /// <returns>string with URL</returns>
-        [SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "Source of information is string")]
         // ReSharper disable once InconsistentNaming
         public static string GetFirstURL(IWebHost host)
         {

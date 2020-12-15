@@ -14,7 +14,6 @@ namespace Integrative.Lara
     {
         private static readonly Dictionary<string, Type> Map;
 
-        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static ElementFactory()
         {
             Map = new Dictionary<string, Type>();
@@ -47,7 +46,6 @@ namespace Integrative.Lara
             Map.Add(lowerTagName, typeof(T));
         }
 
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public static Element CreateElement(string tagName)
         {
             if (string.IsNullOrEmpty(tagName))

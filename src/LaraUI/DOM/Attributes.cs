@@ -21,10 +21,8 @@ namespace Integrative.Lara
             _values = new Dictionary<string, string?>();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public bool HasAttribute(string name) => HasAttributeLower(name.ToLowerInvariant());
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public string? GetAttribute(string name) => GetAttributeLower(name.ToLowerInvariant());
 
         internal bool HasAttributeLower(string nameLower)

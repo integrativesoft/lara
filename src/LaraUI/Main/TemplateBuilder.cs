@@ -12,7 +12,6 @@ namespace Integrative.Lara
     {
         private static readonly string LibraryUrl;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static TemplateBuilder()
         {
             LibraryUrl = ClientLibraryHandler.GetLibraryPath();

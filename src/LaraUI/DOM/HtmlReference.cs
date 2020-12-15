@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara
 {
@@ -14,7 +13,6 @@ namespace Integrative.Lara
         private static readonly HashSet<string> SelfClosingTags;
         private static readonly HashSet<string> DoesRequireId;
 
-        [SuppressMessage("Performance", "CA1810:Initialize reference type static fields inline", Justification = "Required behavior")]
         static HtmlReference()
         {
             SelfClosingTags = new HashSet<string>

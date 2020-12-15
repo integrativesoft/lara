@@ -23,7 +23,6 @@ namespace Integrative.Lara
         /// <param name="json">Source JSON string</param>
         /// <param name="result">Class instance created</param>
         /// <returns>true when successful, false otherwise</returns>
-        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         // ReSharper disable once MemberCanBeMadeStatic.Global
         public bool TryParse<T>(string json, [NotNullWhen(true)] out T? result) where T : class
         {
@@ -46,7 +45,6 @@ namespace Integrative.Lara
         /// <typeparam name="T">Class type</typeparam>
         /// <param name="json">JSON source text</param>
         /// <returns>Instance of deserialized class</returns>
-        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public T Parse<T>(string json) where T : class
         {
             T? result;
@@ -75,7 +73,6 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of class</typeparam>
         /// <param name="instance">Instance to serialize</param>
         /// <returns>JSON string</returns>
-        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public string Stringify<T>(T instance) => LaraTools.Serialize(instance);
 
         /// <summary>
@@ -84,7 +81,6 @@ namespace Integrative.Lara
         /// <param name="instance">Instance to serialize</param>
         /// <param name="type">Type of class</param>
         /// <returns>JSON string</returns>
-        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Need to be available from LaraUI.JSON")]
         public string Stringify(object instance, Type type) => LaraTools.Serialize(instance, type);
 
         internal LaraJson()

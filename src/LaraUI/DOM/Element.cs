@@ -59,7 +59,6 @@ namespace Integrative.Lara
         // ReSharper disable once InconsistentNaming
         public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
 
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         internal Element(string tagName)
         {
             tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
@@ -162,7 +161,6 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
         /// <param name="attributeValue">The value of the attribute.</param>
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetAttribute(string attributeName, string? attributeValue)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
@@ -216,7 +214,6 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="attributeName">Attribute's name</param>
         /// <param name="value">true to add, false to remove</param>
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void SetFlagAttribute(string attributeName, bool value)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
@@ -230,7 +227,6 @@ namespace Integrative.Lara
         /// Removes an attribute.
         /// </summary>
         /// <param name="attributeName">The name of the attribute.</param>
-        [SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "not localizable")]
         public void RemoveAttribute(string attributeName)
         {
             attributeName = attributeName ?? throw new ArgumentNullException(nameof(attributeName));
