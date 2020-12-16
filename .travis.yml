@@ -25,8 +25,8 @@ script:
  - cd ..
  - cd ..
  - dotnet build --configuration Debug src/LaraUI/LaraUI.csproj
- - dotnet build --configuration Debug --framework netcoreapp5.0 src/Tests/Tests.csproj
- - dotnet test --configuration Debug --framework netcoreapp5.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=results.xml
+ - dotnet build --configuration Debug --framework net5.0 src/Tests/Tests.csproj
+ - dotnet test --configuration Debug --framework net5.0 src/Tests/Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=results.xml
  
 after_script:
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
