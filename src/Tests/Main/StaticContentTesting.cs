@@ -77,7 +77,7 @@ namespace Integrative.Lara.Tests.Main
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
-            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(content.ETag, values?.FirstOrDefault());
             Assert.Equal(bytes, downloaded);
         }
 
@@ -105,7 +105,7 @@ namespace Integrative.Lara.Tests.Main
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
-            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(content.ETag, values?.FirstOrDefault());
             Assert.Equal(bytes, downloaded);
         }
 
@@ -146,7 +146,7 @@ namespace Integrative.Lara.Tests.Main
             var downloaded = await response.Content.ReadAsByteArrayAsync();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Headers.TryGetValues("ETag", out var values));
-            Assert.Equal(content.ETag, values.FirstOrDefault());
+            Assert.Equal(content.ETag, values?.FirstOrDefault());
             Assert.Equal(bytes, downloaded);
         }
 

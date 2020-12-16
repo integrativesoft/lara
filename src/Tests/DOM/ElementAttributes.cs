@@ -380,8 +380,8 @@ namespace Integrative.Lara.Tests.DOM
             x.AddOption("myvalue", "this is the text");
             var option = x.Options.FirstOrDefault();
             Assert.NotNull(option);
-            Assert.Equal("myvalue", option.Value);
-            var text = option.Children.FirstOrDefault() as TextNode;
+            Assert.Equal("myvalue", option?.Value);
+            var text = option?.Children.FirstOrDefault() as TextNode;
             Assert.NotNull(text);
             Assert.Equal("this is the text", text!.Data);
         }
