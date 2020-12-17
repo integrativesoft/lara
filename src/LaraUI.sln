@@ -19,6 +19,8 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "LaraDocumentation", "LaraDo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildHelper", "BuildHelper\BuildHelper.csproj", "{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boilerplate", "Boilerplate\Boilerplate.csproj", "{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,14 @@ Global
 		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|x64.ActiveCfg = Release|Any CPU
 		{6D3AB3AA-7456-45F8-977A-EBC326F5EF97}.Release|x64.Build.0 = Release|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB775C40-4D4B-4B5E-A665-07653EC6EFD6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

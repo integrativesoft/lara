@@ -4,6 +4,7 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Threading.Tasks;
 using Integrative.Lara;
 using SampleProject.KitchenSink;
@@ -21,6 +22,7 @@ namespace SampleProject.Main
                 Port = 8182,
                 PublishAssembliesOnStart = true,     // searches for classes with 'Lara' attributes
             });
+            Console.WriteLine("Listening on http://localhost:8182/");
             await app.WaitForShutdown();
         }
     }
