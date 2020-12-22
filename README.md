@@ -60,7 +60,7 @@ namespace SampleProject
 
 Other resources available for building web pages are the [LaraBuilder](https://github.com/integrativesoft/lara/wiki/LaraBuilder) class, [Web Components](https://github.com/integrativesoft/lara/wiki/Web-Components), and [Reactive Programming](https://github.com/integrativesoft/lara/wiki/Reactive-programming).
 
-## Integrating Lara into an existing web server
+## Integrating Lara into an existing ASP.NET Core server application
 
 To add Lara to an existing ASP.NET Core server, add to the Startup class or equivalent:
 
