@@ -56,7 +56,7 @@ namespace Integrative.Lara
             else
             {
                 _storage.Add(document, value);
-                document.UnloadComplete += (sender, args) => _storage.Remove(document);
+                document.UnloadComplete += (_, _) => _storage.Remove(document);
             }
         }
 

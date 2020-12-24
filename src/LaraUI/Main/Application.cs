@@ -65,9 +65,17 @@ namespace Integrative.Lara
         #region Publishing
 
         /// <summary>
+        /// Publishes a page with a component
+        /// </summary>
+        /// <param name="address">The URL address of the page</param>
+        /// <param name="nodeFactory">Handler that creates instances of the component</param>
+        public void PublishPage(string address, Func<Node> nodeFactory)
+            => _published.Publish(address, new PagePublished(() => new SingleElementPage(nodeFactory)));
+
+        /// <summary>
         /// Publishes a page.
         /// </summary>
-        /// <param name="address">The URL address of the page.</param>
+        /// <param name="address">The URL address of the page</param>
         /// <param name="pageFactory">Handler that creates instances of the page</param>
         public void PublishPage(string address, Func<IPage> pageFactory)
             => _published.Publish(address, new PagePublished(pageFactory));

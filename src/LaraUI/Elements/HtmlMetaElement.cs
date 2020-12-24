@@ -30,14 +30,6 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlMetaElement(params Node[] items) : base("meta", items)
-        {
-        }
-
-        /// <summary>
         /// Gets or sets the 'content' HTML5 attribute.
         /// </summary>
         public string? Content

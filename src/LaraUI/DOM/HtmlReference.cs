@@ -10,12 +10,12 @@ namespace Integrative.Lara
 {
     internal static class HtmlReference
     {
-        private static readonly HashSet<string> SelfClosingTags;
-        private static readonly HashSet<string> DoesRequireId;
+        private static readonly HashSet<string> _SelfClosingTags;
+        private static readonly HashSet<string> _DoesRequireId;
 
         static HtmlReference()
         {
-            SelfClosingTags = new HashSet<string>
+            _SelfClosingTags = new HashSet<string>
             {
                 "area",
                 "base",
@@ -34,16 +34,16 @@ namespace Integrative.Lara
                 "track",
                 "wbr"
             };
-            DoesRequireId = new HashSet<string>
+            _DoesRequireId = new HashSet<string>
             {
                 "input", "textarea", "select", "button", "option"
             };
         }
 
         public static bool IsSelfClosingTag(string tagNameLower)
-            => SelfClosingTags.Contains(tagNameLower);
+            => _SelfClosingTags.Contains(tagNameLower);
 
         public static bool RequiresId(string tagNameLower)
-            => DoesRequireId.Contains(tagNameLower);
+            => _DoesRequireId.Contains(tagNameLower);
     }
 }

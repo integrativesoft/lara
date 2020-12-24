@@ -24,10 +24,12 @@ namespace Integrative.Lara.Tests.Middleware
             try
             {
                 // ReSharper disable once ObjectCreationAsStatement
+#pragma warning disable CA1806 // Do not ignore method results
                 new DocumentLocal<int>
                 {
                     Value = 5
                 };
+#pragma warning restore CA1806 // Do not ignore method results
             }
             catch (InvalidOperationException)
             {
@@ -46,10 +48,12 @@ namespace Integrative.Lara.Tests.Middleware
             try
             {
                 // ReSharper disable once ObjectCreationAsStatement
+#pragma warning disable CA1806 // Do not ignore method results
                 new SessionLocal<int>
                 {
                     Value = 5
                 };
+#pragma warning restore CA1806 // Do not ignore method results
             }
             catch (InvalidOperationException)
             {
@@ -100,7 +104,7 @@ namespace Integrative.Lara.Tests.Middleware
             Assert.Equal(0, local.Value);
         }
 
-        private DocumentLocal<int> BuildLocal()
+        private static DocumentLocal<int> BuildLocal()
         {
             return BuildLocal(out _);
         }
@@ -124,7 +128,7 @@ namespace Integrative.Lara.Tests.Middleware
             return new SessionLocal<int>();
         }
 
-        private SessionLocal<int> GetSessionLocal()
+        private static SessionLocal<int> GetSessionLocal()
         {
             return GetSessionLocal(out _);
         }
@@ -192,6 +196,7 @@ namespace Integrative.Lara.Tests.Middleware
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void LaraFlushEvent()
         {
             var x = new HtmlInputElement();

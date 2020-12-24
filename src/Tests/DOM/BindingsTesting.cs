@@ -59,6 +59,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindInnerTextUpdates()
         {
             var data = new MyData();
@@ -73,6 +74,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindGenericExecutes()
         {
             var data = new MyData();
@@ -80,23 +82,25 @@ namespace Integrative.Lara.Tests.DOM
             div.Bind(new BindHandlerOptions<MyData>
             {
                 BindObject = data,
-                ModifiedHandler = (x, y) => div.InnerText = data.Counter.ToString()
+                ModifiedHandler = (_, _) => div.InnerText = data.Counter.ToString()
             });
             data.Counter = 5;
             VerifyInnerData(div, "5");
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindActionExecutes()
         {
             var data = new MyData();
             var div = Element.Create("div");
-            div.Bind(data, (x, y) => div.InnerText = data.Counter.ToString());
+            div.Bind(data, _ => div.InnerText = data.Counter.ToString());
             data.Counter = 5;
             VerifyInnerData(div, "5");
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindAttributeExecutes()
         {
             var data = new MyData();
@@ -112,6 +116,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindChildrenUpdates()
         {
             var collection = new ObservableCollection<MyData>
@@ -125,6 +130,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindAllUnbinds()
         {
             var collection = new ObservableCollection<MyData>();
@@ -132,14 +138,14 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             var span1 = Element.Create("span");
             var span2 = Element.Create("span");
-            span2.Bind(data, (x, y) => span2.InnerText = x.Counter.ToString());
+            span2.Bind(data, x => span2.InnerText = data.Counter.ToString());
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
                 BindObject = data,
                 Property = x => x.Counter.ToString()
             });
-            div.BindChildren(new BindChildrenOptions<MyData>(collection, x => Element.Create("div")));
+            div.BindChildren(new BindChildrenOptions<MyData>(collection, _ => Element.Create("div")));
             span1.BindInnerText(new BindInnerTextOptions<MyData>
             {
                 BindObject = data,
@@ -158,6 +164,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindAtributeRuns()
         {
             var x = Element.Create("div");
@@ -168,20 +175,14 @@ namespace Integrative.Lara.Tests.DOM
                 BindObject = data,
                 Property = y => y.Counter.ToString()
             });
-            x.BindAttribute(new BindAttributeOptions<MyData>
-            {
-                Attribute = "data-counter2",
-                BindObject = data,
-                Property = y => y.Counter.ToString()
-            });
             data.Counter = 5;
-            x.UnbindAttribute("data-counter");
+            x.UnbindAll();
             data.Counter = 10;
             Assert.Equal("5", x.GetAttribute("data-counter"));
-            Assert.Equal("10", x.GetAttribute("data-counter2"));
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindAttributeRemovesAllAttributes()
         {
             var x = Element.Create("div");
@@ -199,13 +200,14 @@ namespace Integrative.Lara.Tests.DOM
                 Property = y => y.Counter.ToString()
             });
             data.Counter = 5;
-            x.UnbindAttributes();
+            x.UnbindAll();
             data.Counter = 10;
             Assert.Equal("5", x.GetAttribute("data-counter"));
             Assert.Equal("5", x.GetAttribute("data-counter2"));
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindInnerTextWorks()
         {
             var div = Element.Create("div");
@@ -219,39 +221,39 @@ namespace Integrative.Lara.Tests.DOM
                 Property = x => x.Counter.ToString()
             });
             VerifyInnerData(div, "5");
-            div.UnbindInnerText();
+            div.UnbindAll();
             data.Counter = 10;
             VerifyInnerData(div, "5");
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindHandlerWorks()
         {
             var div = Element.Create("div");
             var data = new MyData();
-            div.Bind(data, (x, y) => div.InnerText = data.Counter.ToString());
+            div.Bind(data, _ => div.InnerText = data.Counter.ToString());
             data.Counter = 3;
-            div.UnbindHandler();
+            div.UnbindAll();
             data.Counter = 8;
             VerifyInnerData(div, "3");
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void UnbindChildrenWorks()
         {
             var collection = new ObservableCollection<MyData>();
             var div = Element.Create("div");
-            div.BindChildren(new BindChildrenOptions<MyData>(collection)
-            {
-                CreateCallback = x => Element.Create("span")
-            });
+            div.BindChildren(new BindChildrenOptions<MyData>(collection, _ => Element.Create("span")));
             collection.Add(new MyData());
-            div.UnbindChildren();
+            div.UnbindAll();
             collection.Clear();
             Assert.NotEmpty(div.Children);
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void GenericBindingDetectsCycles()
         {
             var div = Element.Create("div");
@@ -265,7 +267,7 @@ namespace Integrative.Lara.Tests.DOM
             div.Bind(new BindHandlerOptions<MyData>
             {
                 BindObject = data,
-                ModifiedHandler = (x, y) => data.Counter++
+                ModifiedHandler = (_, _) => data.Counter++
             });
             var found = false;
             try
@@ -279,6 +281,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.True(found);
         }
 
+        [Obsolete("old methods")]
         private static Element MyCreateCallback(MyData arg)
         {
             var span = Element.Create("span");
@@ -286,7 +289,7 @@ namespace Integrative.Lara.Tests.DOM
             {
                 BindObject = arg,
                 Attribute = "data-counter",
-                Property = x => arg.Counter.ToString()
+                Property = _ => arg.Counter.ToString()
             });
             return span;
         }
@@ -311,6 +314,8 @@ namespace Integrative.Lara.Tests.DOM
             }
 
             public bool IsEven => (_counter % 2) == 0;
+
+            public override string ToString() => Counter.ToString();
         }
 
         [Fact]
@@ -318,20 +323,18 @@ namespace Integrative.Lara.Tests.DOM
         {
             var raised = false;
             var data = new MyData();
-            data.PropertyChanged += (sender, args) => raised = true;
+            data.PropertyChanged += (_, _) => raised = true;
             data.Counter = 0;
             Assert.False(raised);
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void CollectionUpdaterMove()
         {
             var collection = new ObservableCollection<MyData>();
             var div = Element.Create("div");
-            div.BindChildren(new BindChildrenOptions<MyData>(collection)
-            {
-                CreateCallback = MyCreateCallback
-            });
+            div.BindChildren(new BindChildrenOptions<MyData>(collection, MyCreateCallback));
             collection.Add(new MyData(10));
             collection.Add(new MyData(20));
             collection.Add(new MyData(30));
@@ -366,7 +369,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void BindFlagAttributeBinds()
         {
             var div = Element.Create("div");
@@ -383,6 +386,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void BindToggleClassBinds()
         {
             var div = Element.Create("div");
@@ -399,7 +403,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void LaraFlagBinding()
         {
             var div = Element.Create("div");
@@ -416,7 +420,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var counter = 0;
             var data = new MyData();
-            data.PropertyChanged += (sender, args) => counter++;
+            data.PropertyChanged += (_, _) => counter++;
             data.BeginUpdate();
             data.Counter = 5;
             Assert.Equal(0, counter);
@@ -425,6 +429,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InputBindingGetter()
         {
             var data = new MyInputData
@@ -444,6 +449,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InputBindingGetterLara()
         {
             var data = new MyInputData
@@ -459,6 +465,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InputBindingGetterLaraFlag()
         {
             var data = new MyInputData
@@ -514,6 +521,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InvalidSetterThrows()
         {
             var data = new MyInputData();
@@ -530,6 +538,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InputBindingCollects()
         {
             var input = new HtmlInputElement();
@@ -545,6 +554,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void InputBindingCollectsFlag()
         {
             var input = new HtmlInputElement();
@@ -564,24 +574,6 @@ namespace Integrative.Lara.Tests.DOM
         {
             var text = BindOptions.MissingMemberText("lala");
             Assert.Equal("Missing binding options member: lala", text);
-        }
-
-        [Fact]
-        public void BindOptionschildrenMissingCallback()
-        {
-            var x = new BindChildrenOptions<MyInputData>(new ObservableCollection<MyInputData>());
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        [Fact]
-        public void BindInputMissingAttribute()
-        {
-            var x = new BindInputOptions<MyInputData>()
-            {
-                BindObject = new MyInputData(),
-                Property = x1 => "lala"
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
         }
 
         [Fact]
@@ -620,13 +612,13 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = new BindInnerTextOptions<MyInputData>
             {
-                Property = x1 => "lala"
+                Property = _ => "lala"
             };
             Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void LaraBindFlagAttribute()
         {
             var data = new MyInputData();

@@ -8,6 +8,7 @@ using Integrative.Lara.Tests.Main;
 using Integrative.Lara.Tests.Middleware;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -253,7 +254,7 @@ namespace Integrative.Lara.Tests.DOM
             var content = step.Node as ContentElementNode;
             Assert.NotNull(content);
             Assert.Equal("div", content!.TagName);
-            Assert.NotEmpty(content.Attributes);
+            Assert.NotNull(content.Attributes?.FirstOrDefault());
             var att = content.Attributes![0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
@@ -277,7 +278,7 @@ namespace Integrative.Lara.Tests.DOM
             var content = step.Node as ContentElementNode;
             Assert.NotNull(content);
             Assert.Equal("div", content!.TagName);
-            Assert.NotEmpty(content.Attributes);
+            Assert.NotNull(content.Attributes?.FirstOrDefault());
             var att = content.Attributes![0];
             Assert.Equal("id", att.Attribute);
             Assert.Equal("mydiv", att.Value);
@@ -404,7 +405,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var counter = 0;
             var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
-            document.OnUnload += (sender, args) => counter++;
+            document.OnUnload += (_, _) => counter++;
             await document.NotifyUnload();
             Assert.Equal(1, counter);
         }

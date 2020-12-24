@@ -27,5 +27,12 @@ namespace Integrative.Lara
         {
             ComponentTagName = customTagName;
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public LaraWebComponentAttribute() : this("")
+        {
+        }
     }
 }

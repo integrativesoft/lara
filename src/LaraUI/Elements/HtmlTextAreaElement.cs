@@ -29,14 +29,6 @@ namespace Integrative.Lara
         {
         }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlTextAreaElement(params Node[] items) : base("textarea", items)
-        {
-        }
-
         internal override void NotifyValue(ElementEventValue entry)
         {
             base.NotifyValue(entry);

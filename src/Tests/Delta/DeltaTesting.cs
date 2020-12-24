@@ -97,7 +97,6 @@ namespace Integrative.Lara.Tests.Delta
         {
             var x = new EventSettings
             {
-                Block = true,
                 BlockOptions = new BlockOptions
                 {
                     BlockedElementId = "a",

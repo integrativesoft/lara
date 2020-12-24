@@ -157,7 +157,7 @@
     <value>Input element cannot be null.</value>
   </data>
   <data name="InvalidBindingExpression" xml:space="preserve">
-    <value>Invalid expression for binding. Expecting a member expression.</value>
+    <value>Invalid expression for binding. Expecting a property setter.</value>
   </data>
   <data name="InvalidTagName" xml:space="preserve">
     <value>Invalid tag name.</value>

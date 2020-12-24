@@ -113,9 +113,12 @@ namespace Integrative.Lara
             foreach (LaraWebComponentAttribute entry in components)
             {
                 VerifyType(type, "LaraWebComponent", typeof(WebComponent));
+                var tagName = string.IsNullOrEmpty(entry.ComponentTagName)
+                    ? Element.GetDefaultTagName(type)
+                    : entry.ComponentTagName;
                 app.PublishComponent(new WebComponentOptions
                 {
-                    ComponentTagName = entry.ComponentTagName,
+                    ComponentTagName = tagName,
                     ComponentType = type
                 });
             }

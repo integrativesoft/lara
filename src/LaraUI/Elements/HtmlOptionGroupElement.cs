@@ -31,14 +31,6 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlOptionGroupElement(params Node[] items) : base("optgroup", items)
-        {
-        }
-
-        /// <summary>
         /// Gets or sets the 'disabled' HTML5 attribute.
         /// </summary>
         public bool Disabled

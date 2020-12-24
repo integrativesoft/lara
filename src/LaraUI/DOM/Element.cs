@@ -6,9 +6,11 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,57 +53,44 @@ namespace Integrative.Lara
         public static Element Create(string tagName, string id) => ElementFactory.CreateElement(tagName, id);
 
         /// <summary>
-        /// Creates an element
-        /// </summary>
-        /// <param name="tagName">Element's tag name.</param>
-        /// <param name="items">Child elements</param>
-        /// <returns></returns>
-        public static Element Create(string tagName, params Node[] items) => ElementFactory.CreateElement(tagName, items);
-
-        /// <summary>
-        /// Creates an element
-        /// </summary>
-        /// <param name="tagName">Element's tag name.</param>
-        /// <param name="id">The identifier.</param>
-        /// <param name="items">Child elements</param>
-        /// <returns></returns>
-        public static Element Create(string tagName, string id, params Node[] items) => ElementFactory.CreateElement(tagName, id, items);
-
-        /// <summary>
         /// Creates a namespace-specific HTML5 element (e.g. SVG elements)
         /// </summary>
         /// <param name="ns">The namespace of the element</param>
         /// <param name="tagName">Element's tag name.</param>
         /// <returns>Element created</returns>
         // ReSharper disable once InconsistentNaming
-        public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNS(ns, tagName);
+        public static Element CreateNS(string ns, string tagName) => ElementFactory.CreateElementNs(ns, tagName);
 
         /// <summary>
-        /// Creates a namespace-specific HTML5 element (e.g. SVG elements)
+        /// Constructor
         /// </summary>
-        /// <param name="ns">The namespace of the element</param>
-        /// <param name="tagName">Element's tag name.</param>
-        /// <param name="items">Child elements</param>
-        /// <returns>Element created</returns>
-        // ReSharper disable once InconsistentNaming
-        public static Element CreateNS(string ns, string tagName, params Node[] items) => ElementFactory.CreateElementNS(ns, tagName, items);
-
-        internal Element(string tagName)
+        /// <param name="tagName">element tag</param>
+        protected Element(string tagName)
         {
             tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
+            TagName = tagName.ToLowerInvariant();
             _attributes = new Attributes(this);
             _children = new List<Node>();
             Events = new Dictionary<string, EventSettings>();
-            TagName = tagName.ToLowerInvariant();
         }
 
-        internal Element(string tagName, params Node[] items) : this(tagName)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        protected Element()
         {
-            foreach (var item in items)
-            {
-                AppendChild(item);
-            }
+            TagName = GetDefaultTagName(GetType());
+            _attributes = new Attributes(this);
+            _children = new List<Node>();
+            Events = new Dictionary<string, EventSettings>();
         }
+
+        /// <summary>
+        /// Returns a default/suggested tag name for a type
+        /// </summary>
+        /// <param name="type">object type</param>
+        /// <returns>default/suggested tag name</returns>
+        public static string GetDefaultTagName(Type type) => type.FullName.Replace('.', '-').ToLowerInvariant();
 
         /// <summary>
         /// Gets the type of the node.
@@ -621,7 +610,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="element">The element that may be a parent.</param>
         /// <returns>True if the current element descends from the given element.</returns>
-        public bool DescendsFrom(Element element)
+        public bool DescendsFrom(Element? element)
         {
             if (this == element)
             {
@@ -994,6 +983,32 @@ namespace Integrative.Lara
             }
         }
 
+        /// <summary>
+        /// Registers an event and associates code to execute.
+        /// </summary>
+        /// <param name="eventName">Name of the event.</param>
+        /// <param name="handler">The handler to execute.</param>
+        public void On(string eventName, Action? handler)
+        {
+            eventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
+            if (handler == null)
+            {
+                RemoveEvent(eventName);
+            }
+            else
+            {
+                On(new EventSettings
+                {
+                    EventName = eventName,
+                    Handler = () =>
+                    {
+                        handler();
+                        return Task.CompletedTask;
+                    }
+                });
+            }
+        }
+
         private void RemoveEvent(string eventName)
         {
             if (!Events.ContainsKey(eventName)) return;
@@ -1017,27 +1032,45 @@ namespace Integrative.Lara
 
         #region Binding
 
-        private ElementBindings? _bindings;
+        private HashSet<BindingSubscription>? _subscriptions;
 
-        private ElementBindings EnsureBindings()
+        private ChildrenBindingSubscription? _childrenBinding;
+
+        private bool _applyingBinding;
+
+        internal void AddSubscription(INotifyPropertyChanged source, Action action)
         {
-            return _bindings ??= new ElementBindings(this);
+            _subscriptions ??= new HashSet<BindingSubscription>();
+            action();
+            _subscriptions.Add(new BindingSubscription(source, (_, _) =>
+            {
+                if (_applyingBinding)
+                {
+                    throw new InvalidOperationException("Cycle detected when applying updates on bindings");
+                }
+                _applyingBinding = true;
+                action();
+                _applyingBinding = false;
+            }));
         }
 
-        /// <summary>
-        /// Binds an element to an action to be triggered whenever the source data changes
-        /// </summary>
-        /// <typeparam name="T">Type of the source data</typeparam>
-        /// <param name="instance">Source data instance</param>
-        /// <param name="handler">Action to execute when source data is modified</param>
-        public void Bind<T>(T instance, Action<T, Element> handler)
-            where T : class, INotifyPropertyChanged
+        internal void SubscribeChildren(
+            INotifyCollectionChanged source,
+            NotifyCollectionChangedEventHandler handler)
         {
-            EnsureBindings().BindHandler(new BindHandlerOptions<T>
+            _childrenBinding?.Unsubscribe();
+            _childrenBinding = new ChildrenBindingSubscription(handler, source);
+        }
+
+        internal void ClearSubscriptions()
+        {
+            _childrenBinding?.Unsubscribe();
+            if (_subscriptions == null) return;
+            foreach (var item in _subscriptions)
             {
-                BindObject = instance,
-                ModifiedHandler = handler
-            });
+                item.Unsubscribe();
+            }
+            _subscriptions.Clear();
         }
 
         /// <summary>
@@ -1045,12 +1078,15 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Type of the source data</typeparam>
         /// <param name="options">Binding options</param>
+        [Obsolete("Use Bind(source, action) instead")]
         public void Bind<T>(BindHandlerOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureBindings().BindHandler(options);
+            var handler = options.ModifiedHandler ?? throw new ArgumentNullException("ModifiedHandler property cannot be null");
+            var source = options.BindObject ?? throw new ArgumentNullException("BindObject property cannot be null");
+
+            this.Bind(source, _ => handler(source, this));
         }
 
         /// <summary>
@@ -1058,12 +1094,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Attribute binding options</param>
+        [Obsolete("Use Bind(source, action) instead")]
         public void BindAttribute<T>(BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureBindings().BindAttribute(options);
+            var source = options.BindObject ?? throw new ArgumentNullException("BindObject member may not be null");
+            var property = options.Property ?? throw new ArgumentNullException("'Property' member may not be null");
+            var attribute = options.Attribute;
+            this.Bind(source, x => x.SetAttribute(attribute, property(source)));
         }
 
         /// <summary>
@@ -1071,7 +1109,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use BindToggleAttribute() instead.")]
+        [Obsolete("Use Bind(source, action) instead")]
         public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -1083,12 +1121,14 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
+        [Obsolete("Use Bind(source, action) instead")]
         public void BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureBindings().BindFlagAttribute(options);
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var attribute = options.Attribute.ToLowerInvariant();
+            var property = options.Property ?? throw new ArgumentNullException("'Property' cannot be null");
+            this.Bind(source, x => x.SetFlagAttributeLower(attribute, property(source)));
         }
 
         /// <summary>
@@ -1096,12 +1136,15 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
+        [Obsolete("Use Bind(source, action) instead")]
         public void BindToggleClass<T>(BindToggleClassOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureBindings().BindToggleClass(options);
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var property = options.Property ?? throw new ArgumentNullException("'Property' cannot be null");
+            var className = options.ClassName;
+            if (string.IsNullOrWhiteSpace(className)) throw new ArgumentException("ClassName cannot be empty");
+            this.Bind(source, x => x.ToggleClass(className, property(source)));
         }
 
         /// <summary>
@@ -1109,13 +1152,23 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
+        [Obsolete("Use BindInput(attribute, notifier, property) instead")]
         public void BindInput<T>(BindInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureElementId();
-            EnsureBindings().BindInput(options);
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
+            if (property.Body is not MemberExpression member)
+            {
+                throw new ArgumentException(Resources.InvalidBindingExpression);
+            }
+            var name = member.Member.Name;
+            var attribute = options.Attribute;
+            if (string.IsNullOrWhiteSpace(attribute))
+            {
+                throw new ArgumentException("Attribute cannot be empty");
+            }
+            this.BindInput(source, name, attribute);
         }
 
         /// <summary>
@@ -1123,23 +1176,32 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="options">Binding options</param>
-        // ReSharper disable once VirtualMemberNeverOverridden.Global
+        [Obsolete("Use BindInput instead")]
         public virtual void BindFlagInput<T>(BindFlagInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureElementId();
-            EnsureBindings().BindInput(options);
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
+            if (property.Body is not MemberExpression member)
+            {
+                throw new ArgumentException(Resources.InvalidBindingExpression);
+            }
+            var name = member.Member.Name;
+            var attribute = options.Attribute;
+            if (string.IsNullOrWhiteSpace(attribute))
+            {
+                throw new ArgumentException("Attribute cannot be empty");
+            }
+            this.BindInput(source, name, attribute);
         }
 
         /// <summary>
         /// Removes bindings for an attribute
         /// </summary>
         /// <param name="attribute">Attribute to remove bindings of</param>
+        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
         public void UnbindAttribute(string attribute)
         {
-            _bindings?.UnbindAttribute(attribute);
         }
 
         /// <summary>
@@ -1147,34 +1209,37 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Type of source data</typeparam>
         /// <param name="options">Inner text binding options</param>
+        [Obsolete("Use BindProperty instead")]
         public void BindInnerText<T>(BindInnerTextOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            EnsureBindings().BindInnerText(options);
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
+            this.Bind(source, x => x.InnerText = property(source));
         }
 
         /// <summary>
         /// Removes inner text bindings
         /// </summary>
+        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
         public void UnbindInnerText()
         {
-            EnsureBindings().UnbindInnerText();
         }
 
         /// <summary>
         /// Removes bindings for the generic handler
         /// </summary>
+        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
         public void UnbindHandler()
         {
-            _bindings?.UnbindHandler();
         }
 
         /// <summary>
         /// Removes bindings for any attributes
         /// </summary>
+        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
         public void UnbindAttributes()
         {
-            _bindings?.UnbindAllAttributes();
         }
 
         /// <summary>
@@ -1182,20 +1247,19 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="T">Type for items in the collection</typeparam>
         /// <param name="options">Children binding options</param>
+        [Obsolete("Use BindChildren(soure, factory) instead")]
         public void BindChildren<T>(BindChildrenOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            options.Verify();
-            EnsureBindings().BindChildren(options);
+            this.BindChildren(options.Collection, options.CreateCallback);
         }
 
         /// <summary>
         /// Removes all bindings for the list of children
         /// </summary>
+        [Obsolete("Has no effect anymore, use UnbindAll when needed")]
         public void UnbindChildren()
         {
-            _bindings?.UnbindChildren();
         }
 
         /// <summary>
@@ -1203,7 +1267,7 @@ namespace Integrative.Lara
         /// </summary>
         public void UnbindAll()
         {
-            _bindings?.UnbindAll();
+            ClearSubscriptions();
         }
 
         /// <summary>
@@ -1308,12 +1372,8 @@ namespace Integrative.Lara
 
         internal virtual void AttributeChanged(string attribute, string? value)
         {
-            _bindings?.NotifyAttributeChanged(attribute);
+            NotifyAttributeSubscribers(attribute, value);
         }
-
-        /*internal bool QueueOpen =>
-            AcceptsEvents
-            && Document.QueueingEvents;*/
 
         internal bool TryGetQueue([NotNullWhen(true)] out Document? document)
         {
@@ -1330,7 +1390,7 @@ namespace Integrative.Lara
                    && IsPrintable
                    && Document != null;
         }
-        
+
         #endregion
 
         #region Other methods
@@ -1357,6 +1417,50 @@ namespace Integrative.Lara
             var writer = new DocumentWriter();
             writer.PrintElement(this, 0);
             return writer.ToString();
+        }
+
+        #endregion
+
+        #region subscribe to attribute changes
+
+        internal Dictionary<string, AttributeObserver>? AttributeSubscribers;
+
+        /// <summary>
+        /// Subscribes to changes on an attribute
+        /// </summary>
+        /// <param name="attribute">attribute name</param>
+        /// <param name="handler">handler to execute</param>
+        public void SubscribeToAttribute(string attribute, Action<string?> handler)
+        {
+            if (AttributeSubscribers == null)
+            {
+                AttributeSubscribers = new Dictionary<string, AttributeObserver>();
+            }
+            if (!AttributeSubscribers.TryGetValue(attribute, out var record))
+            {
+                record = new AttributeObserver();
+                AttributeSubscribers.Add(attribute, record);
+            }
+            record.Subscribe(handler);
+        }
+
+        /// <summary>
+        /// Unsubscribes a handler to changes on an attribute
+        /// </summary>
+        /// <param name="attribute">attribute name</param>
+        /// <param name="handler">handler to execute</param>
+        public void UnsubscribeToAttribute(string attribute, Action<string?> handler)
+        {
+            if (AttributeSubscribers == null) return;
+            if (!AttributeSubscribers.TryGetValue(attribute, out var record)) return;
+            record.Unsubscribe(handler);
+        }
+
+        private void NotifyAttributeSubscribers(string attribute, string? value)
+        {
+            if (AttributeSubscribers == null) return;
+            if (!AttributeSubscribers.TryGetValue(attribute, out var record)) return;
+            record.Dispatch(value);
         }
 
         #endregion

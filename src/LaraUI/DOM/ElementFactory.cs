@@ -12,11 +12,11 @@ namespace Integrative.Lara
 {
     internal static class ElementFactory
     {
-        private static readonly Dictionary<string, Type> Map;
+        private static readonly Dictionary<string, Type> _Map;
 
         static ElementFactory()
         {
-            Map = new Dictionary<string, Type>();
+            _Map = new Dictionary<string, Type>();
             Register<HtmlAnchorElement>("a");
             Register<HtmlBodyElement>("body");
             Register<HtmlButtonElement>("button");
@@ -39,11 +39,13 @@ namespace Integrative.Lara
             Register<HtmlTableHeaderElement>("th");
             Register<HtmlTextAreaElement>("textarea");
             Register<Slot>("slot");
+            Register<HtmlSpanElement>("span");
+            Register<HtmlDivElement>("div");
         }
 
         private static void Register<T>(string lowerTagName) where T : Element
         {
-            Map.Add(lowerTagName, typeof(T));
+            _Map.Add(lowerTagName, typeof(T));
         }
 
         public static Element CreateElement(string tagName)
@@ -56,18 +58,6 @@ namespace Integrative.Lara
             }
 
             return new GenericElement(tagName);
-        }
-
-        public static Element CreateElement(string tagName, params Node[] items)
-        {
-            tagName = VerifyTagName(tagName);
-
-            if (FindTagName(tagName, out var type))
-            {
-                return (Element)Activator.CreateInstance(type, items);
-            }
-
-            return new GenericElement(tagName, items);
         }
 
         private static string VerifyTagName(string tagName)
@@ -87,8 +77,8 @@ namespace Integrative.Lara
 
         private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)
         {
-            return Map.TryGetValue(tagName, out type)
-                || LaraUI.TryGetComponent(tagName, out type);
+            return _Map.TryGetValue(tagName, out type)
+                || LaraUI.Context.Application.TryGetComponent(tagName, out type);
         }
 
         public static Element CreateElement(string tagName, string id)
@@ -98,23 +88,9 @@ namespace Integrative.Lara
             return element;
         }
 
-        public static Element CreateElement(string tagName, string id, params Node[] items)
-        {
-            var element = CreateElement(tagName, items);
-            element.Id = id;
-            return element;
-        }
-
-        public static Element CreateElementNS(string ns, string tagName)
+        public static Element CreateElementNs(string ns, string tagName)
         {
             var element = CreateElement(tagName);
-            element.SetAttribute("xlmns", ns);
-            return element;
-        }
-
-        public static Element CreateElementNS(string ns, string tagName, params Node[] items)
-        {
-            var element = CreateElement(tagName, items);
             element.SetAttribute("xlmns", ns);
             return element;
         }

@@ -16,6 +16,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Class to build pages more easily
     /// </summary>
+    [Obsolete("Use element extension methods instead for better element-specific typings")]
     public sealed class LaraBuilder
     {
         #region Constructor
@@ -441,7 +442,7 @@ namespace Integrative.Lara
             {
                 Attribute = attribute,
                 BindObject = instance,
-                Property = x => property()
+                Property = _ => property()
             });
         }
 
@@ -475,7 +476,7 @@ namespace Integrative.Lara
             {
                 Attribute = attribute,
                 BindObject = instance,
-                Property = x => property()
+                Property = _ => property()
             });
         }
 
@@ -494,7 +495,7 @@ namespace Integrative.Lara
             {
                 ClassName = className,
                 BindObject = instance,
-                Property = x => property()
+                Property = _ => property()
             });
         }
 
@@ -635,7 +636,7 @@ namespace Integrative.Lara
             return BindInnerText(new BindInnerTextOptions<T>
             {
                 BindObject = instance,
-                Property = x => property()
+                Property = _ => property()
             });
         }
 
@@ -692,7 +693,7 @@ namespace Integrative.Lara
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : class, INotifyPropertyChanged
         {
-            return BindChildren(new BindChildrenOptions<T>(collection, x => creator()));
+            return BindChildren(new BindChildrenOptions<T>(collection, _ => creator()));
         }
 
         /// <summary>
@@ -784,7 +785,7 @@ namespace Integrative.Lara
         {
             return Bind(new BindHandlerOptions<T>
             {
-                ModifiedHandler = (x, y) => action(),
+                ModifiedHandler = (_, _) => action(),
                 BindObject = instance
             });
         }

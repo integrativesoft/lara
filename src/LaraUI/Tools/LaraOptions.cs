@@ -34,9 +34,9 @@ namespace Integrative.Lara
     public class LaraOptions
     {
         /// <summary>
-        /// When set to true, upon starting the application the assemblies will be scanned for classes decorated with 'Lara' attributes and publish them.
+        /// Looks for classes decorated with Lara attributes and registers them. Default is True.
         /// </summary>
-        public bool PublishAssembliesOnStart { get; set; }
+        public bool PublishAssembliesOnStart { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether to allow localhost requests only.

@@ -4,12 +4,14 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Integrative.Lara
 {
+    [Obsolete("Using binding extensions class")]
     internal sealed class ElementBindings
     {
         private readonly Element _parent;

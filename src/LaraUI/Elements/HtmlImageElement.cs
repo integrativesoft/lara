@@ -50,10 +50,10 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'height' HTML5 attribute.
         /// </summary>
-        public int? Height
+        public string? Height
         {
-            get => GetIntAttribute("height");
-            set => SetIntAttribute("height", value);
+            get => GetAttribute("height");
+            set => SetAttribute("height", value);
         }
 
         /// <summary>
@@ -104,10 +104,10 @@ namespace Integrative.Lara
         /// <summary>
         /// Gets or sets the 'width' HTML5 attribute.
         /// </summary>
-        public int? Width
+        public string? Width
         {
-            get => GetIntAttribute("width");
-            set => SetIntAttribute("width", value);
+            get => GetAttribute("width");
+            set => SetAttribute("width", value);
         }
     }
 }

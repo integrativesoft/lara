@@ -74,8 +74,10 @@
   <PropertyGroup>
     <DocumentationFile>C:\Users\Pablo\OneDrive\2019\LaraUI\src\LaraUI\Integrative.Lara.xml</DocumentationFile>
     <PackageReleaseNotes>Version 0.9.0:
+- Overhaul and simplification of syntax for writing components
 - Upgraded unit tests and sample project to NET 5
-- HTML class names more similar to JavaScript</PackageReleaseNotes>
+- HTML class names more similar to JavaScript
+- Change default to block user input while executing events from false to true</PackageReleaseNotes>
     <PackageIcon>Integrative.png</PackageIcon>
   </PropertyGroup>
 

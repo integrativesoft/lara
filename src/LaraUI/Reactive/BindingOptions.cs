@@ -8,7 +8,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Integrative.Lara
@@ -303,16 +302,7 @@ namespace Integrative.Lara
 
         private Action<TData, TValue> CompileSetter()
         {
-            var property = GetProperty;
-            if (property.Body is not MemberExpression member)
-            {
-                throw new ArgumentException(Resources.InvalidBindingExpression);
-            }
-            var param = Expression.Parameter(typeof(TValue), "value");
-            var set = Expression.Lambda<Action<TData, TValue>>(
-                Expression.Assign(member, param), property.Parameters[0], param);
-            var action = set.Compile();
-            return action;
+            return BindingExtensions.CompileSetter(GetProperty);
         }
 
         internal override void Verify()
@@ -386,7 +376,7 @@ namespace Integrative.Lara
     /// </summary>
     /// <typeparam name="T">Type of items in observable collection</typeparam>
     public sealed class BindChildrenOptions<T> : BindChildrenOptions
-        where T : class, INotifyPropertyChanged
+        where T : class//, INotifyPropertyChanged
     {
         /// <summary>
         /// Collection that is tracked
@@ -396,28 +386,10 @@ namespace Integrative.Lara
         /// <summary>
         /// Method for creating elements
         /// </summary>
-        public Func<T, Element>? CreateCallback { get; set; }
+        public Func<T, Element> CreateCallback { get; set; }
 
         internal override void Verify()
         {
-            if (Collection == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(Collection)));
-            }
-
-            if (CreateCallback == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(CreateCallback)));
-            }
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="collection">Collection to bind</param>
-        public BindChildrenOptions(ObservableCollection<T> collection)
-        {
-            Collection = collection;
         }
 
         /// <summary>
@@ -426,16 +398,16 @@ namespace Integrative.Lara
         /// <param name="collection">Collection to bind</param>
         /// <param name="createCallback">Method for creating elements</param>
         public BindChildrenOptions(ObservableCollection<T> collection, Func<T, Element> createCallback)
-            : this(collection)
         {
             CreateCallback = createCallback;
+            Collection = collection;
         }
 
         internal override event NotifyCollectionChangedEventHandler? CollectionChanged;
 
         internal override void Apply(Element element, NotifyCollectionChangedEventArgs args)
         {
-            var updater = new CollectionUpdater<T>(this, element, args);
+            var updater = new CollectionUpdater<T>(CreateCallback, element, args);
             updater.Run();
         }
 

@@ -30,14 +30,6 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlScriptElement(params Node[] items) : base("script", items)
-        {
-        }
-
-        /// <summary>
         /// Gets or sets the 'async' HTML5 attribute.
         /// </summary>
         public bool Async

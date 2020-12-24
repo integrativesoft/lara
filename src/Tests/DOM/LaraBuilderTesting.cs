@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Integrative.Lara.Tests.DOM
 {
+    [Obsolete("old methods")]
     public class LaraBuilderTesting : DummyContextTesting
     {
         private readonly Element _root;
@@ -74,7 +75,7 @@ namespace Integrative.Lara.Tests.DOM
             var found = false;
             _builder.Bind(new BindHandlerOptions<MyData>
             {
-                ModifiedHandler = (x, y) => found = true,
+                ModifiedHandler = (_, _) => found = true,
                 BindObject = data
             });
             data.Counter = 15;
@@ -95,10 +96,7 @@ namespace Integrative.Lara.Tests.DOM
         public void BindChildrenOptions()
         {
             var list = new ObservableCollection<MyData>();
-            _builder.BindChildren(new BindChildrenOptions<MyData>(list)
-            {
-                CreateCallback = x => Element.Create("span")
-            });
+            _builder.BindChildren(new BindChildrenOptions<MyData>(list, _ => Element.Create("span")));
             list.Add(new MyData());
             Assert.NotEmpty(_root.Children);
         }
@@ -116,7 +114,7 @@ namespace Integrative.Lara.Tests.DOM
         public void BindChildenCollectionElement()
         {
             var list = new ObservableCollection<MyData>();
-            _builder.BindChildren(list, x => Element.Create("div"));
+            _builder.BindChildren(list, _ => Element.Create("div"));
             list.Add(new MyData());
             Assert.NotEmpty(_root.Children);
         }
@@ -213,7 +211,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void AddTextNode1()
         {
             var div = Element.Create("div");
@@ -225,7 +223,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void AddTextNode2()
         {
             var div = Element.Create("div");

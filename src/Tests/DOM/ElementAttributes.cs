@@ -208,11 +208,11 @@ namespace Integrative.Lara.Tests.DOM
         {
             var image = new HtmlImageElement
             {
-                Height = 1,
-                Width = 2
+                Height = "1",
+                Width = "2"
             };
-            Assert.Equal(1, image.Height);
-            Assert.Equal(2, image.Width);
+            Assert.Equal("1", image.Height);
+            Assert.Equal("2", image.Width);
         }
 
         [Fact]
@@ -267,7 +267,6 @@ namespace Integrative.Lara.Tests.DOM
         {
             var x = new EventSettings
             {
-                Block = true,
                 LongRunning = true,
                 BlockOptions = new BlockOptions
                 {

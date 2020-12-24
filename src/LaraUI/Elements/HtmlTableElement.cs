@@ -28,13 +28,5 @@ namespace Integrative.Lara
         public HtmlTableElement() : base("table")
         {
         }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlTableElement(params Node[] items) : base("table", items)
-        {
-        }
     }
 }

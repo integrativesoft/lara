@@ -17,6 +17,7 @@ namespace Integrative.Lara.Tests.DOM
     public class BuilderTesting : DummyContextTesting
     {
         [Fact]
+        [Obsolete("Old methods")]
         public void PushAdds()
         {
             var root = Element.Create("div");
@@ -30,6 +31,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void TooManyPops()
         {
             var root = Element.Create("div");
@@ -39,6 +41,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void AddSiblings()
         {
             var root = Element.Create("div");
@@ -49,6 +52,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void AddTextNodeEncodes()
         {
             var root = Element.Create("div");
@@ -60,6 +64,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void AddElements()
         {
             var root = Element.Create("div");
@@ -74,6 +79,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void AddNodes()
         {
             var root = Element.Create("div");
@@ -88,6 +94,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void AddAction()
         {
             var root = Element.Create("div");
@@ -96,12 +103,14 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Equal(1, root.ChildCount);
         }
 
+        [Obsolete("Old methods")]
         private static void MyAddAction(LaraBuilder builder)
         {
             builder.AddNode(new HtmlButtonElement());
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void SetAttribute()
         {
             var root = Element.Create("div");
@@ -111,6 +120,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void SetFlag()
         {
             var root = Element.Create("div");
@@ -120,6 +130,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public async void OnEvent()
         {
             var executed = false;
@@ -134,16 +145,12 @@ namespace Integrative.Lara.Tests.DOM
                     return Task.CompletedTask;
                 }
             });
-            /*var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
-            var http = new Mock<HttpContext>();
-            var mock = new Mock<IPage>();
-            var context = new PageContext(_context.Application,
-                http.Object, connection);*/
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public async void OnEventSimple()
         {
             var executed = false;
@@ -154,15 +161,12 @@ namespace Integrative.Lara.Tests.DOM
                 executed = true;
                 return Task.CompletedTask;
             });
-            //var http = new Mock<HttpContext>();
-            //var page = new Mock<IPage>();
-            //var connection = new Connection(Guid.NewGuid(), IPAddress.Loopback);
-            //var context = new PageContext(_context.Application, http.Object, connection);
             await root.NotifyEvent("click");
             Assert.True(executed);
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void PushClassName()
         {
             var root = Element.Create("div");
@@ -175,7 +179,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        // ReSharper disable once InconsistentNaming
+        [Obsolete("Old methods")]
         public void PushNS()
         {
             var root = Element.Create("div");
@@ -188,6 +192,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void PushElementClass()
         {
             var root = Element.Create("root");

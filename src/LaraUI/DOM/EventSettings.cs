@@ -55,12 +55,12 @@ namespace Integrative.Lara
         public int DebounceInterval { get; set; }
 
         /// <summary>
-        /// Block the UI while the event is executing?
+        /// Block UI input while the event is executing? Default is true
         /// </summary>
         /// <value>
         ///   <c>true</c> if block; otherwise, <c>false</c>.
         /// </value>
-        public bool Block { get; set; }
+        public bool Block { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the options for blocking the UI.

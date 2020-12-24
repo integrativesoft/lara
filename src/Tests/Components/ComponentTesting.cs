@@ -36,6 +36,7 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-com")]
+    [Obsolete("Old methods")]
     internal class Xcom : WebComponent
     {
         public Xcom() : base("x-com")
@@ -117,6 +118,7 @@ namespace Integrative.Lara.Tests.Components
         public void Dispose()
         {
             _app.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -127,10 +129,10 @@ namespace Integrative.Lara.Tests.Components
                 ComponentTagName = "x-caca",
                 ComponentType = typeof(MyComponent)
             });
-            Assert.True(LaraUI.TryGetComponent("x-caca", out var type));
+            Assert.True(LaraUI.Context.Application.TryGetComponent("x-caca", out var type));
             _app.UnPublishWebComponent("x-caca");
             Assert.Equal(typeof(MyComponent), type);
-            Assert.False(LaraUI.TryGetComponent("x-caca", out _));
+            Assert.False(LaraUI.Context.Application.TryGetComponent("x-caca", out _));
         }
 
         private class MyComponent : WebComponent
@@ -172,6 +174,7 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void WebComponentListsAllDescendents()
         {
             var x = new Xcom();
@@ -193,6 +196,7 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void FlattenedChildrenIncludesPrintedOnes()
         {
             var container = Element.Create("div");
@@ -230,7 +234,7 @@ namespace Integrative.Lara.Tests.Components
             foreach (var node in method(root))
             {
                 yield return node;
-                if (!(node is Element child)) continue;
+                if (node is not Element child) continue;
                 foreach (var grandchild in RecursiveExtension(child, method))
                 {
                     yield return grandchild;
@@ -239,6 +243,7 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void GetSlotElementFinds()
         {
             var x = new MySlotter();
@@ -317,13 +322,15 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void PublishAssembliesComponent()
         {
-            Assert.True(LaraUI.TryGetComponent("x-com", out var type));
+            Assert.True(LaraUI.Context.Application.TryGetComponent("x-com", out var type));
             Assert.Same(typeof(Xcom), type);
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void SlotsPrintHostElements()
         {
             var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
@@ -342,6 +349,7 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
+        [Obsolete("Old methods")]
         public void OrphanSlotPrintsItself()
         {
             var document = new Document(new MyPage(), BaseModeController.DefaultKeepAliveInterval);
@@ -414,29 +422,6 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
-        public void VerifyComponentRegistered()
-        {
-            var blown = false;
-            try
-            {
-                // ReSharper disable once ObjectCreationAsStatement
-                new MyUnregisteredComponent();
-            }
-            catch (InvalidOperationException)
-            {
-                blown = true;
-            }
-            Assert.True(blown);
-        }
-
-        private class MyUnregisteredComponent : WebComponent
-        {
-            public MyUnregisteredComponent() : base("x-cocos")
-            {
-            }
-        }
-
-        [Fact]
         public void VerifyComponentSameType()
         {
             Assert.False(WebComponent.VerifyType("x-com", typeof(MyComponent), out _));
@@ -472,7 +457,7 @@ namespace Integrative.Lara.Tests.Components
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("old method")]
         public void AttachShadowExecutes()
         {
             var x = new ObsoleteComponent();

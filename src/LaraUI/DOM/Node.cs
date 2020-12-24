@@ -27,7 +27,7 @@ namespace Integrative.Lara
     /// <summary>
     /// An abstract class that represents a node in an HTML5 document
     /// </summary>
-    public abstract class Node
+    public abstract class Node : BindableBase
     {
         /// <summary>
         /// Creates a node

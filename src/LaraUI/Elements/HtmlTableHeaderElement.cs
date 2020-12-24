@@ -30,14 +30,6 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlTableHeaderElement(params Node[] items) : base("th", items)
-        {
-        }
-
-        /// <summary>
         /// Gets or sets the 'abbr' HTML5 attribute.
         /// </summary>
         public string? Abbr

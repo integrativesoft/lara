@@ -12,7 +12,7 @@ namespace Integrative.Lara
     /// <summary>
     /// A text node.
     /// </summary>
-    /// <seealso cref="Integrative.Lara.Node" />
+    /// <seealso cref="Node" />
     public sealed class TextNode : Node
     {
         /// <summary>

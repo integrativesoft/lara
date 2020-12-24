@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using Microsoft.AspNetCore.Hosting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 namespace Integrative.Lara
 {
     /// <summary>
-    /// The main Lara static class
+    /// The main Lara static class  
     /// </summary>
     // ReSharper disable once InconsistentNaming
     public static class LaraUI
@@ -200,18 +199,6 @@ namespace Integrative.Lara
         #endregion
 
         #region Internal tools
-
-        internal static bool TryGetComponent(string tagName, [NotNullWhen(true)] out Type? type)
-        {
-            var context = InternalContext.Value;
-            if (context?.Application != null)
-            {
-                return Context.Application.TryGetComponent(tagName, out type);
-            }
-
-            type = default;
-            return false;
-        }
 
         /// <summary>
         /// Shorthand for LaraUI.JSON.Parse(LaraUI.Service.RequestBody)

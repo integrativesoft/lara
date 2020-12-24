@@ -17,12 +17,9 @@ namespace SampleProject.Main
         {
             using var app = new Application();
             KitchenSinkForm.PublishImages(app);
-            await app.Start(new StartServerOptions
-            {
-                Port = 8182,
-                PublishAssembliesOnStart = true,     // searches for classes with 'Lara' attributes
-            });
+            await app.Start(new StartServerOptions { Port = 8182 });
             Console.WriteLine("Listening on http://localhost:8182/");
+            LaraUI.LaunchBrowser("http://localhost:8182");
             await app.WaitForShutdown();
         }
     }

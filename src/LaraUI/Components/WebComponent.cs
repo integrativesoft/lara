@@ -36,6 +36,15 @@ namespace Integrative.Lara
             _shadow = new Shadow(this);
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        protected WebComponent()
+        {
+            VerifyTypeThrow(TagName, GetType());
+            _shadow = new Shadow(this);
+        }
+
         private void InitializeObservedAttributes()
         {
             if (_observedAttributes == null)
@@ -54,17 +63,27 @@ namespace Integrative.Lara
 
         internal static bool VerifyType(string tagName, Type componentType, out string error)
         {
-            if (!LaraUI.TryGetComponent(tagName, out var type))
+            // register component if not previous;y registered
+            var app = LaraUI.Context.Application;
+            if (!app.TryGetComponent(tagName, out var type))
             {
-                error = $"The tag '{tagName}' is not registered as web component. To register a webcomponent, either (1) decorate it with [LaraWebComponent] and run LaraUI.PublishAssemblies(), or (2) use LaraUI.Publish().";
-                return false;
+                app.PublishComponent(new WebComponentOptions
+                {
+                    ComponentTagName = tagName,
+                    ComponentType = componentType
+                });
+                error = "";
+                return true;
             }
 
+            // error if already registered for different type
             if (type != componentType)
             {
                 error = $"The tag '{tagName}' is registered with the type '{type.FullName}' and not '{componentType.FullName}'.";
                 return false;
             }
+
+            // already registered with matching type
             error = string.Empty;
             return true;
         }

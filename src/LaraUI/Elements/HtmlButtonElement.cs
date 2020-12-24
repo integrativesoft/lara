@@ -30,15 +30,6 @@ namespace Integrative.Lara
             Type = "button";
         }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="items"></param>
-        public HtmlButtonElement(params Node[] items) : base("button", items)
-        {
-            Type = "button";
-        }
-
         internal override void NotifyValue(ElementEventValue entry)
         {
             base.NotifyValue(entry);

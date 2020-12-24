@@ -90,7 +90,7 @@ namespace Integrative.Lara
             if (value == current) return;
             if (value)
             {
-                SetAttributeLower(nameLower, null);
+                SetAttributeLower(nameLower, "");
             }
             else
             {

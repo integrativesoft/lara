@@ -10,11 +10,11 @@ namespace Integrative.Lara
 {
     internal static class TemplateBuilder
     {
-        private static readonly string LibraryUrl;
+        private static readonly string _LibraryUrl;
 
         static TemplateBuilder()
         {
-            LibraryUrl = ClientLibraryHandler.GetLibraryPath();
+            _LibraryUrl = ClientLibraryHandler.GetLibraryPath();
         }
 
         public static void Build(Document document, double keepAliveInterval)
@@ -37,7 +37,7 @@ namespace Integrative.Lara
             // LaraClient.js
             var script = new HtmlScriptElement
             {
-                Src = LibraryUrl,
+                Src = _LibraryUrl,
                 Defer = true
             };
             head.AppendChild(script);

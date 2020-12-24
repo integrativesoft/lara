@@ -4,23 +4,24 @@ Created: 8/2019
 Author: Pablo Carbonell
 */
 
+using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Integrative.Lara
 {
     internal class CollectionUpdater<T>
-        where T : class, INotifyPropertyChanged
+        where T : class//, INotifyPropertyChanged
     {
-        private readonly BindChildrenOptions<T> _options;
         private readonly Element _element;
         private readonly NotifyCollectionChangedEventArgs _args;
+        private readonly Func<T, Element> _createCallback;
 
-        public CollectionUpdater(BindChildrenOptions<T> options,
+        public CollectionUpdater(Func<T, Element> createCallback,
             Element element,
             NotifyCollectionChangedEventArgs args)
         {
-            _options = options;
+            _createCallback = createCallback;
             _element = element;
             _args = args;
         }
@@ -50,9 +51,7 @@ namespace Integrative.Lara
         private void CollectionAdd()
         {
             var item = (T)_args.NewItems[0];
-            var callback = _options.CreateCallback;
-            if (callback == null) return;
-            var childElement = callback(item);
+            var childElement = _createCallback(item);
             _element.AppendChild(childElement);
         }
 
@@ -73,9 +72,7 @@ namespace Integrative.Lara
         {
             var value = (T)_args.NewItems[0];
             var index = _args.OldStartingIndex;
-            var callback = _options.CreateCallback;
-            if (callback == null) return;
-            var childElement = callback(value);
+            var childElement = _createCallback(value);
             RemoveAt(index);
             InsertAt(index, childElement);
         }
@@ -118,7 +115,6 @@ namespace Integrative.Lara
             foreach (var item in options.Collection)
             {
                 var callback = options.CreateCallback;
-                if (callback == null) continue;
                 var child = callback(item);
                 element.AppendChild(child);
             }

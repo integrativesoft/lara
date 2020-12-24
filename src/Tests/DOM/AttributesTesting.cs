@@ -53,13 +53,13 @@ namespace Integrative.Lara.Tests.DOM
             var element = Element.Create("span");
             element.Hidden = true;
             Assert.True(element.HasAttribute("hidden"));
-            Assert.Null(element.GetAttribute("hidden"));
+            Assert.Equal("", element.GetAttribute("hidden"));
             var count = 0;
             foreach (var pair in element.Attributes)
             {
                 count++;
                 Assert.Equal("hidden", pair.Key);
-                Assert.Null(pair.Value);
+                Assert.Equal("", pair.Value);
             }
             Assert.Equal(1, count);
             element.Hidden = false;
@@ -210,7 +210,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        [Obsolete]
+        [Obsolete("Old methods")]
         public void SetInnerText()
         {
             var x = Element.Create("div");

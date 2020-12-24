@@ -30,14 +30,6 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlAnchorElement"/> class.
-        /// </summary>
-        /// <param name="items">children</param>
-        public HtmlAnchorElement(params Node[] items) : base("a", items)
-        {
-        }
-
-        /// <summary>
         /// The 'download' HTML5 attribute.
         /// </summary>
         public bool Download

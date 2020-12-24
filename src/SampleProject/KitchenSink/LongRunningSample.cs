@@ -57,7 +57,6 @@ namespace SampleProject.KitchenSink
                 EventName = "click",
                 LongRunning = true,
                 Handler = ButtonHandler,
-                Block = true,
                 BlockOptions = new BlockOptions
                 {
                     ShowElementId = _card.EnsureElementId(),

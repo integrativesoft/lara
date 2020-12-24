@@ -26,7 +26,6 @@ namespace SampleProject.KitchenSink
             button.On(new EventSettings
             {
                 EventName = "click",
-                Block = true,
                 Handler = () => Task.Delay(1000),
                 BlockOptions = new BlockOptions
                 {
