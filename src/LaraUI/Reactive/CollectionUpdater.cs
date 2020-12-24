@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 
 namespace Integrative.Lara
 {

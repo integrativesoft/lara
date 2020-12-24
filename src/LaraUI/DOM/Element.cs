@@ -90,7 +90,11 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="type">object type</param>
         /// <returns>default/suggested tag name</returns>
-        public static string GetDefaultTagName(Type type) => type.FullName.Replace('.', '-').ToLowerInvariant();
+        public static string GetDefaultTagName(Type type)
+        {
+            var name = type.FullName ?? throw new ArgumentException("Invalid type name");
+            return name.Replace('.', '-').ToLowerInvariant();   
+        }
 
         /// <summary>
         /// Gets the type of the node.
@@ -1083,8 +1087,8 @@ namespace Integrative.Lara
             where T : class, INotifyPropertyChanged
         {
             options = options ?? throw new ArgumentNullException(nameof(options));
-            var handler = options.ModifiedHandler ?? throw new ArgumentNullException("ModifiedHandler property cannot be null");
-            var source = options.BindObject ?? throw new ArgumentNullException("BindObject property cannot be null");
+            var handler = options.ModifiedHandler ?? throw new ArgumentNullException(nameof(options.ModifiedHandler));
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
 
             this.Bind(source, _ => handler(source, this));
         }
@@ -1098,8 +1102,8 @@ namespace Integrative.Lara
         public void BindAttribute<T>(BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
-            var source = options.BindObject ?? throw new ArgumentNullException("BindObject member may not be null");
-            var property = options.Property ?? throw new ArgumentNullException("'Property' member may not be null");
+            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
             var attribute = options.Attribute;
             this.Bind(source, x => x.SetAttribute(attribute, property(source)));
         }
@@ -1127,7 +1131,7 @@ namespace Integrative.Lara
         {
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
             var attribute = options.Attribute.ToLowerInvariant();
-            var property = options.Property ?? throw new ArgumentNullException("'Property' cannot be null");
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
             this.Bind(source, x => x.SetFlagAttributeLower(attribute, property(source)));
         }
 
@@ -1141,7 +1145,7 @@ namespace Integrative.Lara
             where T : class, INotifyPropertyChanged
         {
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException("'Property' cannot be null");
+            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
             var className = options.ClassName;
             if (string.IsNullOrWhiteSpace(className)) throw new ArgumentException("ClassName cannot be empty");
             this.Bind(source, x => x.ToggleClass(className, property(source)));

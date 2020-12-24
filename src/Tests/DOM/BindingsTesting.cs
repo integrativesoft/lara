@@ -138,7 +138,7 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             var span1 = Element.Create("span");
             var span2 = Element.Create("span");
-            span2.Bind(data, x => span2.InnerText = data.Counter.ToString());
+            span2.Bind(data, _ => span2.InnerText = data.Counter.ToString());
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",

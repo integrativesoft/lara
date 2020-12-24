@@ -180,6 +180,7 @@ namespace Integrative.Lara.Tests.DOM
 
         [Fact]
         [Obsolete("Old methods")]
+        // ReSharper disable once InconsistentNaming
         public void PushNS()
         {
             var root = Element.Create("div");
