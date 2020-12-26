@@ -6,7 +6,6 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
@@ -17,15 +16,6 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class BindOptions
     {
-        internal abstract void Verify();
-        internal abstract void Subscribe();
-        internal abstract void Unsubscribe();
-        internal abstract void Apply(Element element);
-
-        internal static string MissingMemberText(string member)
-        {
-            return $"Missing binding options member: {member}";
-        }
     }
 
     /// <summary>
@@ -33,16 +23,6 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class BindPropertyOptions : BindOptions
     {
-        internal event PropertyChangedEventHandler? PropertyChanged;
-
-        internal virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(this, e);
-        }
-
-        internal virtual void Collect(Element element)
-        {
-        }
     }
 
     /// <summary>
@@ -56,39 +36,6 @@ namespace Integrative.Lara
         /// Instance to bind to
         /// </summary>
         public T? BindObject { get; set; }
-
-        internal T GetBindObject()
-        {
-            if (BindObject == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(BindObject)));
-            }
-
-            return BindObject;
-        }
-
-        internal override void Subscribe()
-        {
-            GetBindObject().PropertyChanged += Object_PropertyChanged;
-        }
-
-        internal override void Unsubscribe()
-        {
-            GetBindObject().PropertyChanged -= Object_PropertyChanged;
-        }
-
-        private void Object_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(e);
-        }
-
-        internal override void Verify()
-        {
-            if (BindObject == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(BindObject)));
-            }
-        }
     }
 
     /// <summary>
@@ -102,38 +49,6 @@ namespace Integrative.Lara
         /// Action to update the element whenever the data source is modified
         /// </summary>
         public Action<T, Element>? ModifiedHandler { get; set; }
-
-        private bool _applying;
-
-        internal override void Apply(Element element)
-        {
-            _applying = true;
-            ModifiedHandler?.Invoke(GetBindObject(), element);
-            _applying = false;
-        }
-
-        internal override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            VerifyApplying();
-            base.OnPropertyChanged(e);
-        }
-
-        private void VerifyApplying()
-        {
-            if (_applying)
-            {
-                throw new InvalidOperationException(Resources.BindingCycleDetected);
-            }
-        }
-
-        internal override void Verify()
-        {
-            base.Verify();
-            if (ModifiedHandler == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(ModifiedHandler)));
-            }
-        }
     }
 
     /// <summary>
@@ -148,21 +63,6 @@ namespace Integrative.Lara
         /// Function to retrieve the target value from instance that's tracked
         /// </summary>
         public Func<TData, TValue>? Property { get; set; }
-
-        internal Func<TData, TValue> GetProperty
-            => Property ?? throw new InvalidOperationException(MissingMemberText(nameof(Property)));
-
-        internal TValue GetCurrentValue()
-            => GetProperty(GetBindObject());
-
-        internal override void Verify()
-        {
-            base.Verify();
-            if (Property == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(Property)));
-            }
-        }
     }
 
     /// <summary>
@@ -172,11 +72,6 @@ namespace Integrative.Lara
     public sealed class BindInnerTextOptions<T> : BindPropertyOptions<T, string>
         where T : class, INotifyPropertyChanged
     {
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.InnerText = value;
-        }
     }
 
     /// <summary>
@@ -190,12 +85,6 @@ namespace Integrative.Lara
         /// Attribute to bind
         /// </summary>
         public string Attribute { get; set; } = string.Empty;
-
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.SetAttribute(Attribute, value);
-        }
     }
 
     /// <summary>
@@ -209,12 +98,6 @@ namespace Integrative.Lara
         /// Attribute to bind
         /// </summary>
         public string Attribute { get; set; } = string.Empty;
-
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.SetFlagAttribute(Attribute, value);
-        }
     }
 
     /// <summary>
@@ -228,12 +111,6 @@ namespace Integrative.Lara
         /// Element class to toggle
         /// </summary>
         public string ClassName { get; set; } = string.Empty;
-
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.ToggleClass(ClassName, value);
-        }
     }
 
     /// <summary>
@@ -244,122 +121,33 @@ namespace Integrative.Lara
     public abstract class BindInputOptions<TData, TValue> : BindPropertyOptions<TData>
         where TData : class, INotifyPropertyChanged
     {
-        private string _attribute = string.Empty;
-
         /// <summary>
         /// Attribute to bind
         /// </summary>
-        public string Attribute
-        {
-            get => _attribute;
-            set
-            {
-                value = value ?? throw new ArgumentNullException(nameof(Attribute));
-                _attribute = value.ToLowerInvariant();
-            }
-        }
+        public string Attribute { get; set; } = "";
 
         /// <summary>
         /// Bind model property
         /// </summary>
         public Expression<Func<TData, TValue>>? Property { get; set; }
-
-        private Func<TData, TValue>? _getter;
-        private Action<TData, TValue>? _setter;
-
-        internal Expression<Func<TData, TValue>> GetProperty
-            => Property ?? throw new InvalidOperationException(MissingMemberText(nameof(Property)));
-
-        internal Func<TData, TValue> GetGetter()
-        {
-            if (_getter == null)
-            {
-                _getter = GetProperty.Compile();
-            }
-            return _getter;
-        }
-        
-        internal Action<TData, TValue> GetSetter()
-        {
-            if (_setter == null)
-            {
-                _setter = CompileSetter();
-            }
-            return _setter;
-        }
-
-        internal TValue GetCurrentValue()
-        {
-            var getter = GetGetter();
-            return getter(GetBindObject());
-        }
-
-        internal void SetValue(TValue value)
-        {
-            var setter = GetSetter();
-            setter(GetBindObject(), value);
-        }
-
-        private Action<TData, TValue> CompileSetter()
-        {
-            return BindingExtensions.CompileSetter(GetProperty);
-        }
-
-        internal override void Verify()
-        {
-            base.Verify();
-            if (string.IsNullOrEmpty(_attribute))
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(_attribute)));
-            }
-
-            if (Property == null)
-            {
-                throw new InvalidOperationException(MissingMemberText(nameof(Property)));
-            }
-            _getter = GetGetter();
-            _setter = GetSetter();
-        }
     }
 
     /// <summary>
     /// Binding options for two-way binding of attributes
     /// </summary>
     /// <typeparam name="T">Data source type</typeparam>
-    public class BindInputOptions<T> : BindInputOptions<T, string?>
+    public sealed class BindInputOptions<T> : BindInputOptions<T, string?>
         where T : class, INotifyPropertyChanged
     {
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.SetAttributeLower(Attribute, value);
-        }
-
-        internal override void Collect(Element element)
-        {
-            var value = element.GetAttributeLower(Attribute) ?? string.Empty;
-            SetValue(value);
-        }
     }
 
     /// <summary>
     /// Binding options for two-way binding of flag attributes
     /// </summary>
     /// <typeparam name="T">Data source type</typeparam>
-    public class BindFlagInputOptions<T> : BindInputOptions<T, bool>
+    public sealed class BindFlagInputOptions<T> : BindInputOptions<T, bool>
         where T : class, INotifyPropertyChanged
     {
-        internal override void Apply(Element element)
-        {
-            var value = GetCurrentValue();
-            element.SetFlagAttributeLower(Attribute, value);
-        }
-
-        internal override void Collect(Element element)
-        {
-            var value = element.HasAttributeLower(Attribute);
-            SetValue(value);
-        }
     }
 
     /// <summary>
@@ -367,8 +155,6 @@ namespace Integrative.Lara
     /// </summary>
     public abstract class BindChildrenOptions : BindOptions
     {
-        internal abstract event NotifyCollectionChangedEventHandler? CollectionChanged;
-        internal abstract void Apply(Element element, NotifyCollectionChangedEventArgs args);
     }
 
     /// <summary>
@@ -386,11 +172,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Method for creating elements
         /// </summary>
-        public Func<T, Element> CreateCallback { get; set; }
-
-        internal override void Verify()
-        {
-        }
+        public Func<T, Element> CreateCallback { get; }
 
         /// <summary>
         /// Constructor
@@ -401,34 +183,6 @@ namespace Integrative.Lara
         {
             CreateCallback = createCallback;
             Collection = collection;
-        }
-
-        internal override event NotifyCollectionChangedEventHandler? CollectionChanged;
-
-        internal override void Apply(Element element, NotifyCollectionChangedEventArgs args)
-        {
-            var updater = new CollectionUpdater<T>(CreateCallback, element, args);
-            updater.Run();
-        }
-
-        internal override void Subscribe()
-        {
-            Collection.CollectionChanged += CollectionChangedHandler;
-        }
-
-        internal override void Unsubscribe()
-        {
-            Collection.CollectionChanged -= CollectionChangedHandler;
-        }
-
-        private void CollectionChangedHandler(object sender, NotifyCollectionChangedEventArgs args)
-        {
-            CollectionChanged?.Invoke(this, args);
-        }
-
-        internal override void Apply(Element element)
-        {
-            CollectionUpdater<T>.CollectionLoad(this, element);
         }
     }
 }

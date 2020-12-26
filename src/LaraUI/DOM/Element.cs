@@ -1066,7 +1066,7 @@ namespace Integrative.Lara
             _childrenBinding = new ChildrenBindingSubscription(handler, source);
         }
 
-        internal void ClearSubscriptions()
+        private void ClearSubscriptions()
         {
             _childrenBinding?.Unsubscribe();
             if (_subscriptions == null) return;
@@ -1427,7 +1427,7 @@ namespace Integrative.Lara
 
         #region subscribe to attribute changes
 
-        internal Dictionary<string, AttributeObserver>? AttributeSubscribers;
+        private Dictionary<string, AttributeObserver>? _attributeSubscribers;
 
         /// <summary>
         /// Subscribes to changes on an attribute
@@ -1436,14 +1436,11 @@ namespace Integrative.Lara
         /// <param name="handler">handler to execute</param>
         public void SubscribeToAttribute(string attribute, Action<string?> handler)
         {
-            if (AttributeSubscribers == null)
-            {
-                AttributeSubscribers = new Dictionary<string, AttributeObserver>();
-            }
-            if (!AttributeSubscribers.TryGetValue(attribute, out var record))
+            _attributeSubscribers ??= new Dictionary<string, AttributeObserver>();
+            if (!_attributeSubscribers.TryGetValue(attribute, out var record))
             {
                 record = new AttributeObserver();
-                AttributeSubscribers.Add(attribute, record);
+                _attributeSubscribers.Add(attribute, record);
             }
             record.Subscribe(handler);
         }
@@ -1455,15 +1452,15 @@ namespace Integrative.Lara
         /// <param name="handler">handler to execute</param>
         public void UnsubscribeToAttribute(string attribute, Action<string?> handler)
         {
-            if (AttributeSubscribers == null) return;
-            if (!AttributeSubscribers.TryGetValue(attribute, out var record)) return;
+            if (_attributeSubscribers == null) return;
+            if (!_attributeSubscribers.TryGetValue(attribute, out var record)) return;
             record.Unsubscribe(handler);
         }
 
         private void NotifyAttributeSubscribers(string attribute, string? value)
         {
-            if (AttributeSubscribers == null) return;
-            if (!AttributeSubscribers.TryGetValue(attribute, out var record)) return;
+            if (_attributeSubscribers == null) return;
+            if (!_attributeSubscribers.TryGetValue(attribute, out var record)) return;
             record.Dispatch(value);
         }
 

@@ -481,46 +481,6 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void InputBindingSetter()
-        {
-            var data = new MyInputData
-            {
-                MyValue = "hello"
-            };
-            var input = new HtmlInputElement();
-            var binding = new BindInputOptions<MyInputData>
-            {
-                Attribute = "value",
-                BindObject = data,
-                Property = x => x.MyValue
-            };
-            binding.Verify();
-            input.Value = "bye";
-            binding.Collect(input);
-            Assert.Equal("bye", data.MyValue);
-        }
-
-        [Fact]
-        public void InputBindingFlagSetter()
-        {
-            var data = new MyInputData
-            {
-                MyChecked = true
-            };
-            var input = new HtmlInputElement();
-            var binding = new BindFlagInputOptions<MyInputData>
-            {
-                Attribute = "checked",
-                BindObject = data,
-                Property = x => x.MyChecked
-            };
-            binding.Verify();
-            input.Checked = false;
-            binding.Collect(input);
-            Assert.False(data.MyChecked);
-        }
-
-        [Fact]
         [Obsolete("old methods")]
         public void InvalidSetterThrows()
         {
@@ -570,54 +530,6 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void MissingMemberText()
-        {
-            var text = BindOptions.MissingMemberText("lala");
-            Assert.Equal("Missing binding options member: lala", text);
-        }
-
-        [Fact]
-        public void BindInputMissingProperty()
-        {
-            var x = new BindInputOptions<MyInputData>()
-            {
-                BindObject = new MyInputData(),
-                Attribute = "value"
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        [Fact]
-        public void BindHandlerOptionsVerify()
-        {
-            var x = new BindHandlerOptions<MyInputData>
-            {
-                BindObject = new MyInputData()
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        [Fact]
-        public void BindInnerTextOptionsMissingProperty()
-        {
-            var x = new BindInnerTextOptions<MyInputData>
-            {
-                BindObject = new MyInputData()
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        [Fact]
-        public void BindInnerTextMissingData()
-        {
-            var x = new BindInnerTextOptions<MyInputData>
-            {
-                Property = _ => "lala"
-            };
-            Assert.ThrowsAny<InvalidOperationException>(() => x.Verify());
-        }
-
-        [Fact]
         [Obsolete("old method")]
         public void LaraBindFlagAttribute()
         {
@@ -633,6 +545,5 @@ namespace Integrative.Lara.Tests.DOM
             data.MyChecked = true;
             Assert.True(div.HasAttribute("class"));
         }
-
     }
 }
