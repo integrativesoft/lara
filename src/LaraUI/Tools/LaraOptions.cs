@@ -36,7 +36,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Looks for classes decorated with Lara attributes and registers them. Default is True.
         /// </summary>
-        public bool PublishAssembliesOnStart { get; set; } = true;
+        public bool PublishAssembliesOnStart { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to allow localhost requests only.
