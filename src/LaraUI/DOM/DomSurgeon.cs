@@ -272,7 +272,7 @@ namespace Integrative.Lara
         private static void CollectElements(ICollection<Node> list, Node node)
         {
             list.Add(node);
-            if (!(node is Element element)) return;
+            if (node is not Element element) return;
             foreach (var child in element.GetAllDescendants())
             {
                 CollectElements(list, child);
@@ -285,7 +285,7 @@ namespace Integrative.Lara
             var hash = new HashSet<string>();
             foreach (var node in list)
             {
-                if (!(node is Element element) || string.IsNullOrEmpty(element.Id)) continue;
+                if (node is not Element element || string.IsNullOrEmpty(element.Id)) continue;
                 var id = element.Id;
                 if (hash.Contains(id) || DuplicateIdInDocument(document, id))
                 {
@@ -381,7 +381,7 @@ namespace Integrative.Lara
 
         private static void GenerateRequiredIds(Node node)
         {
-            if (!(node is Element element)) return;
+            if (node is not Element element) return;
             if (element.NeedsId)
             {
                 element.EnsureElementId();

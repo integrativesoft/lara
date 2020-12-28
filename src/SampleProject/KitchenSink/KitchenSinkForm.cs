@@ -33,7 +33,7 @@ namespace SampleProject.KitchenSink
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "container p-4")
                 .AddNode(new CounterSample().Root)
-                .AddNode(new CheckboxSample().Root)
+                .AddNode(new CheckboxSample())
                 .AddNode(new SelectSample())
                 .AddNode(new MultiselectSample().Root)
                 .AddNode(new LockingSample().Root)

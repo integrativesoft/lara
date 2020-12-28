@@ -4,15 +4,14 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Integrative.Lara;
 
 namespace SampleProject.KitchenSink
 {
-    internal class CheckboxSample
+    internal class CheckboxSample : WebComponent
     {
-        public Element Root { get; }
-
         public CheckboxSample()
         {
             var checkbox = new HtmlInputElement
@@ -24,30 +23,51 @@ namespace SampleProject.KitchenSink
             var toggle = new HtmlButtonElement
             {
                 Class = "btn btn-primary",
+                InnerText = "Toggle"
             };
             toggle.On("click", () =>
             {
                 checkbox.Checked = !checkbox.Checked;
                 return Task.CompletedTask;
             });
-            Root = Element.Create("div");
-            Root.Class = "form-row";
-            var builder = new LaraBuilder(Root);
-            builder.Push("div", "form-group col-md-2 my-1")
-                .Push("div", "form-check")
-                    .Push(checkbox)
-                    .Pop()
-                    .Push("label", "form-check-label")
-                        .Attribute("for", checkbox.Id)
-                        .AppendText("Check me out")
-                    .Pop()
-                .Pop()
-            .Pop()
-            .Push("div", "form-group col-md-1")
-                .Push(toggle)
-                    .AppendText("Toggle")
-                .Pop()
-            .Pop();
+            ShadowRoot.Children = new List<Node>
+            {
+                new HtmlDivElement
+                {
+                    Class = "form-row",
+                    Children = new List<Node>
+                    {
+                        new HtmlDivElement
+                        {
+                            Class = "form-group col-md-2 my-1",
+                            Children = new List<Node>
+                            {
+                                new HtmlDivElement
+                                {
+                                    Class = "form-check",
+                                    Children = new List<Node>
+                                    {
+                                        checkbox,
+                                        new HtmlLabelElement
+                                        {
+                                            For = checkbox.Id,
+                                            InnerText = "Check me out"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        new HtmlDivElement
+                        {
+                            Class = "form-group col-md-1",
+                            Children = new List<Node>
+                            {
+                                toggle
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }

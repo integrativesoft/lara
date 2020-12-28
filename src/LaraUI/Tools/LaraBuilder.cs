@@ -16,7 +16,7 @@ namespace Integrative.Lara
     /// <summary>
     /// Class to build pages more easily
     /// </summary>
-    [Obsolete("Use element extension methods instead for better element-specific typings")]
+    [Obsolete("Use the Children collection property to compose elements")]
     public sealed class LaraBuilder
     {
         #region Constructor
