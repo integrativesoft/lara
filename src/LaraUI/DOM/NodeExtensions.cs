@@ -59,10 +59,7 @@ namespace Integrative.Lara
         public static T Child<T>(this T element, params Node[] elements)
             where T : Element
         {
-            foreach (var child in elements)
-            {
-                element.AppendChild(child);
-            }
+            element.AppendChild(elements);
             return element;
         }
 

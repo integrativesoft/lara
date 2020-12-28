@@ -673,12 +673,15 @@ namespace Integrative.Lara
         /// <summary>
         /// Appends a child node.
         /// </summary>
-        /// <param name="node">The node to append.</param>
-        public void AppendChild(Node node)
+        /// <param name="nodes">The node to append.</param>
+        public void AppendChild(params Node[] nodes)
         {
             var append = new DomSurgeon(this);
-            append.Append(node);
-            OnChildAdded(node);
+            foreach (var node in nodes)
+            {
+                append.Append(node);
+                OnChildAdded(node);
+            }
         }
 
         /// <summary>
