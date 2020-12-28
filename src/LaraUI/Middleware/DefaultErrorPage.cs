@@ -42,9 +42,9 @@ namespace Integrative.Lara
 
         private void ShowContent()
         {
-            LaraUI.Document.Body.Children(
-                new HtmlDivElement { Class = "container mt-2"} .Children(
-                    new HtmlDivElement { Class = "jumbotron" } .Children(
+            LaraUI.Document.Body.Child(
+                new HtmlDivElement { Class = "container mt-2"} .Child(
+                    new HtmlDivElement { Class = "jumbotron" } .Child(
                         new HtmlImageElement
                         {
                             Src = ServerLauncher.ErrorAddress + ".svg",

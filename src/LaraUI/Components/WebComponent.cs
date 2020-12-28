@@ -167,12 +167,14 @@ namespace Integrative.Lara
 
         internal override void AttributeChanged(string attribute, string? value)
         {
+            BeginUpdate();
             base.AttributeChanged(attribute, value);
             InitializeObservedAttributes();
             if (_observedAttributes != null && _observedAttributes.Contains(attribute))
             {
                 OnAttributeChanged(attribute);
             }
+            EndUpdate();
         }
 
         /// <summary>

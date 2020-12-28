@@ -10,7 +10,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -204,6 +203,18 @@ namespace Integrative.Lara
             else
             {
                 _attributes.SetAttributeLower(nameLower, value);
+            }
+        }
+
+        internal void ToggleAttributeLower(string nameLower, bool value)
+        {
+            if (value)
+            {
+                SetAttributeLower(nameLower, "");
+            }
+            else
+            {
+                RemoveAttribute(nameLower);
             }
         }
 
@@ -1040,7 +1051,8 @@ namespace Integrative.Lara
 
         private ChildrenBindingSubscription? _childrenBinding;
 
-        private bool _applyingBinding;
+        private int _applyingBinding;
+        private const int MaxApplyLevel = 5;
 
         internal void AddSubscription(INotifyPropertyChanged source, Action action)
         {
@@ -1048,13 +1060,13 @@ namespace Integrative.Lara
             action();
             _subscriptions.Add(new BindingSubscription(source, (_, _) =>
             {
-                if (_applyingBinding)
+                if (_applyingBinding > MaxApplyLevel)
                 {
                     throw new InvalidOperationException("Cycle detected when applying updates on bindings");
                 }
-                _applyingBinding = true;
+                _applyingBinding++;
                 action();
-                _applyingBinding = false;
+                _applyingBinding--;
             }));
         }
 
@@ -1078,210 +1090,11 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Binds an element to an action to be triggered whenever the source data changes
-        /// </summary>
-        /// <typeparam name="T">Type of the source data</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use Bind(source, action) instead")]
-        public void Bind<T>(BindHandlerOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            options = options ?? throw new ArgumentNullException(nameof(options));
-            var handler = options.ModifiedHandler ?? throw new ArgumentNullException(nameof(options.ModifiedHandler));
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-
-            this.Bind(source, _ => handler(source, this));
-        }
-
-        /// <summary>
-        /// Binds an attribute
-        /// </summary>
-        /// <typeparam name="T">Data type for data source instance</typeparam>
-        /// <param name="options">Attribute binding options</param>
-        [Obsolete("Use Bind(source, action) instead")]
-        public void BindAttribute<T>(BindAttributeOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            var attribute = options.Attribute;
-            this.Bind(source, x => x.SetAttribute(attribute, property(source)));
-        }
-
-        /// <summary>
-        /// Binds a flag attribute
-        /// </summary>
-        /// <typeparam name="T">Data type for data source instance</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use Bind(source, action) instead")]
-        public void BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            BindToggleAttribute(options);
-        }
-
-        /// <summary>
-        /// Binds a flag attribute
-        /// </summary>
-        /// <typeparam name="T">Data type for data source instance</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use Bind(source, action) instead")]
-        public void BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var attribute = options.Attribute.ToLowerInvariant();
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            this.Bind(source, x => x.SetFlagAttributeLower(attribute, property(source)));
-        }
-
-        /// <summary>
-        /// Bindings to toggle an element class
-        /// </summary>
-        /// <typeparam name="T">Data type for data source instance</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use Bind(source, action) instead")]
-        public void BindToggleClass<T>(BindToggleClassOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            var className = options.ClassName;
-            if (string.IsNullOrWhiteSpace(className)) throw new ArgumentException("ClassName cannot be empty");
-            this.Bind(source, x => x.ToggleClass(className, property(source)));
-        }
-
-        /// <summary>
-        /// Two-way bindings for element attributes (e.g. 'value' attribute populated by user)
-        /// </summary>
-        /// <typeparam name="T">Source data type</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use BindInput(attribute, notifier, property) instead")]
-        public void BindInput<T>(BindInputOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            if (property.Body is not MemberExpression member)
-            {
-                throw new ArgumentException(Resources.InvalidBindingExpression);
-            }
-            var name = member.Member.Name;
-            var attribute = options.Attribute;
-            if (string.IsNullOrWhiteSpace(attribute))
-            {
-                throw new ArgumentException("Attribute cannot be empty");
-            }
-            this.BindInput(source, name, attribute);
-        }
-
-        /// <summary>
-        /// Two-way bindings for element flag attributes (e.g. 'checked' attribute populated by user)
-        /// </summary>
-        /// <typeparam name="T">Source data type</typeparam>
-        /// <param name="options">Binding options</param>
-        [Obsolete("Use BindInput instead")]
-        public virtual void BindFlagInput<T>(BindFlagInputOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            if (property.Body is not MemberExpression member)
-            {
-                throw new ArgumentException(Resources.InvalidBindingExpression);
-            }
-            var name = member.Member.Name;
-            var attribute = options.Attribute;
-            if (string.IsNullOrWhiteSpace(attribute))
-            {
-                throw new ArgumentException("Attribute cannot be empty");
-            }
-            this.BindInput(source, name, attribute);
-        }
-
-        /// <summary>
-        /// Removes bindings for an attribute
-        /// </summary>
-        /// <param name="attribute">Attribute to remove bindings of</param>
-        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
-        public void UnbindAttribute(string attribute)
-        {
-        }
-
-        /// <summary>
-        /// Binds an element's inner text
-        /// </summary>
-        /// <typeparam name="T">Type of source data</typeparam>
-        /// <param name="options">Inner text binding options</param>
-        [Obsolete("Use BindProperty instead")]
-        public void BindInnerText<T>(BindInnerTextOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
-            var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            this.Bind(source, x => x.InnerText = property(source));
-        }
-
-        /// <summary>
-        /// Removes inner text bindings
-        /// </summary>
-        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
-        public void UnbindInnerText()
-        {
-        }
-
-        /// <summary>
-        /// Removes bindings for the generic handler
-        /// </summary>
-        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
-        public void UnbindHandler()
-        {
-        }
-
-        /// <summary>
-        /// Removes bindings for any attributes
-        /// </summary>
-        [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
-        public void UnbindAttributes()
-        {
-        }
-
-        /// <summary>
-        /// Binds the list of children to an observable collection
-        /// </summary>
-        /// <typeparam name="T">Type for items in the collection</typeparam>
-        /// <param name="options">Children binding options</param>
-        [Obsolete("Use BindChildren(soure, factory) instead")]
-        public void BindChildren<T>(BindChildrenOptions<T> options)
-            where T : class, INotifyPropertyChanged
-        {
-            this.BindChildren(options.Collection, options.CreateCallback);
-        }
-
-        /// <summary>
-        /// Removes all bindings for the list of children
-        /// </summary>
-        [Obsolete("Has no effect anymore, use UnbindAll when needed")]
-        public void UnbindChildren()
-        {
-        }
-
-        /// <summary>
         /// Removes all bindings for the element
         /// </summary>
         public void UnbindAll()
         {
             ClearSubscriptions();
-        }
-
-        /// <summary>
-        /// Clears all child nodes and replaces them with a single text node
-        /// </summary>
-        /// <param name="text">Text for the node</param>
-        [Obsolete("Use InnerText property instead.")]
-        public void SetInnerText(string text)
-        {
-            SetInnerEncode(text, true);
         }
 
         /// <summary>
@@ -1376,7 +1189,7 @@ namespace Integrative.Lara
 
         internal virtual void AttributeChanged(string attribute, string? value)
         {
-            NotifyAttributeSubscribers(attribute, value);
+            OnPropertyChanged(attribute);
         }
 
         internal bool TryGetQueue([NotNullWhen(true)] out Document? document)
@@ -1421,47 +1234,6 @@ namespace Integrative.Lara
             var writer = new DocumentWriter();
             writer.PrintElement(this, 0);
             return writer.ToString();
-        }
-
-        #endregion
-
-        #region subscribe to attribute changes
-
-        private Dictionary<string, AttributeObserver>? _attributeSubscribers;
-
-        /// <summary>
-        /// Subscribes to changes on an attribute
-        /// </summary>
-        /// <param name="attribute">attribute name</param>
-        /// <param name="handler">handler to execute</param>
-        public void SubscribeToAttribute(string attribute, Action<string?> handler)
-        {
-            _attributeSubscribers ??= new Dictionary<string, AttributeObserver>();
-            if (!_attributeSubscribers.TryGetValue(attribute, out var record))
-            {
-                record = new AttributeObserver();
-                _attributeSubscribers.Add(attribute, record);
-            }
-            record.Subscribe(handler);
-        }
-
-        /// <summary>
-        /// Unsubscribes a handler to changes on an attribute
-        /// </summary>
-        /// <param name="attribute">attribute name</param>
-        /// <param name="handler">handler to execute</param>
-        public void UnsubscribeToAttribute(string attribute, Action<string?> handler)
-        {
-            if (_attributeSubscribers == null) return;
-            if (!_attributeSubscribers.TryGetValue(attribute, out var record)) return;
-            record.Unsubscribe(handler);
-        }
-
-        private void NotifyAttributeSubscribers(string attribute, string? value)
-        {
-            if (_attributeSubscribers == null) return;
-            if (!_attributeSubscribers.TryGetValue(attribute, out var record)) return;
-            record.Dispatch(value);
         }
 
         #endregion

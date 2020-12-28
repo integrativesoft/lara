@@ -33,9 +33,11 @@ namespace Integrative.Lara
 
         internal override void NotifyValue(ElementEventValue entry)
         {
+            BeginUpdate();
             base.NotifyValue(entry);
             NotifyValue(entry.Value);
             NotifyChecked(entry.Checked);
+            EndUpdate();
             ClearFiles();
         }
 

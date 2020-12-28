@@ -34,7 +34,7 @@ namespace SampleProject.KitchenSink
             builder.Push("div", "container p-4")
                 .AddNode(new CounterSample().Root)
                 .AddNode(new CheckboxSample().Root)
-                .AddNode(new SelectSample().Root)
+                .AddNode(new SelectSample())
                 .AddNode(new MultiselectSample().Root)
                 .AddNode(new LockingSample().Root)
                 .AddNode(new LongRunningSample().Root)

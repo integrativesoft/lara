@@ -21,11 +21,27 @@ namespace Integrative.Lara
         /// </summary>
         /// <typeparam name="TNode"></typeparam>
         /// <param name="node"></param>
-        /// <param name="action"></param>
+        /// <param name="actions"></param>
         /// <returns>object invoked</returns>
-        public static TNode Wrap<TNode>(this TNode node, Action<TNode> action)
+        public static TNode Wrap<TNode>(this TNode node, params Action<TNode>[] actions)
         {
-            action(node);
+            foreach (var action in actions)
+            {
+                action(node);
+            }
+            return node;
+        }
+
+        /// <summary>
+        /// Returns the object itself
+        /// </summary>
+        /// <typeparam name="TNode">type of node</typeparam>
+        /// <param name="node">node</param>
+        /// <param name="result">node itself</param>
+        /// <returns>node itself</returns>
+        public static TNode Extract<TNode>(this TNode node, out TNode result)
+        {
+            result = node;
             return node;
         }
 
@@ -40,7 +56,7 @@ namespace Integrative.Lara
         /// <param name="element">parent</param>
         /// <param name="elements">child nodes</param>
         /// <returns></returns>
-        public static T Children<T>(this T element, params Node[] elements)
+        public static T Child<T>(this T element, params Node[] elements)
             where T : Element
         {
             foreach (var child in elements)

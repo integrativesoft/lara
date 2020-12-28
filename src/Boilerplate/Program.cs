@@ -33,9 +33,9 @@ namespace Boilerplate
 
         public MyCounterComponent()
         {
-            ShadowRoot.Children(
+            ShadowRoot.Child(
                 new HtmlDivElement()
-                    .Bind(this, x => x.InnerText = Value.ToString()),
+                    .OnSourceChange(this, x => x.InnerText = Value.ToString()),
                 new HtmlButtonElement {  InnerText = "Increase" }
                     .Event("click", () => Value++)
                 );

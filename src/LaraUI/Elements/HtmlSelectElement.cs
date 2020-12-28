@@ -116,10 +116,13 @@ namespace Integrative.Lara
 
         internal override void AttributeChanged(string attribute, string? value)
         {
+            BeginUpdate();
+            base.AttributeChanged(attribute, value);
             if (attribute == "value")
             {
                 UpdateChildOptions(value);
             }
+            EndUpdate();
         }
 
         private void UpdateChildOptions(string? value)

@@ -94,7 +94,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var data = new MyData();
             var div = Element.Create("div");
-            div.Bind(data, _ => div.InnerText = data.Counter.ToString());
+            div.OnSourceChange(data, _ => div.InnerText = data.Counter.ToString());
             data.Counter = 5;
             VerifyInnerData(div, "5");
         }
@@ -138,7 +138,7 @@ namespace Integrative.Lara.Tests.DOM
             var div = Element.Create("div");
             var span1 = Element.Create("span");
             var span2 = Element.Create("span");
-            span2.Bind(data, _ => span2.InnerText = data.Counter.ToString());
+            span2.OnSourceChange(data, _ => span2.InnerText = data.Counter.ToString());
             div.BindAttribute(new BindAttributeOptions<MyData>
             {
                 Attribute = "data-counter",
@@ -232,7 +232,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var div = Element.Create("div");
             var data = new MyData();
-            div.Bind(data, _ => div.InnerText = data.Counter.ToString());
+            div.OnSourceChange(data, _ => div.InnerText = data.Counter.ToString());
             data.Counter = 3;
             div.UnbindAll();
             data.Counter = 8;
