@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -556,12 +557,24 @@ namespace Integrative.Lara
         #region DOM tree queries
 
         /// <summary>
-        /// Gets the children.
+        /// Element's child nodes
         /// </summary>
         /// <value>
         /// The children.
         /// </value>
-        public IEnumerable<Node> Children => _children;
+        public IEnumerable<Node> Children
+        {
+            get => _children;
+            set
+            {
+                if (_children == value) return;
+                var list = Enumerable.ToArray(value);
+                BeginUpdate();
+                ClearChildren();
+                AppendChild(list);
+                EndUpdate();
+            }
+        }
 
         /// <summary>
         /// Returns the number of child nodes.
@@ -676,12 +689,14 @@ namespace Integrative.Lara
         /// <param name="nodes">The node to append.</param>
         public void AppendChild(params Node[] nodes)
         {
+            BeginUpdate();
             var append = new DomSurgeon(this);
             foreach (var node in nodes)
             {
                 append.Append(node);
                 OnChildAdded(node);
             }
+            EndUpdate();
         }
 
         /// <summary>
@@ -780,6 +795,7 @@ namespace Integrative.Lara
         {
             var remover = new DomSurgeon(this);
             remover.ClearChildren();
+            OnPropertyChanged(nameof(Children));
         }
 
         /// <summary>
@@ -818,6 +834,7 @@ namespace Integrative.Lara
 
         private protected virtual void OnChildAdded(Node child)
         {
+            OnPropertyChanged(nameof(Children));
         }
 
         /// <summary>

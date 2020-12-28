@@ -158,19 +158,21 @@ namespace Integrative.Lara
 
         private protected override void OnChildAdded(Node child)
         {
+            BeginUpdate();
+            base.OnChildAdded(child);
             var value = Value;
-            if (string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(value))
             {
-                return;
+                if (child is HtmlOptionElement option)
+                {
+                    option.NotifyAdded(value);
+                }
+                else if (child is HtmlOptionGroupElement group)
+                {
+                    group.NotifyAdded(value);
+                }
             }
-            if (child is HtmlOptionElement option)
-            {
-                option.NotifyAdded(value);
-            }
-            else if (child is HtmlOptionGroupElement group)
-            {
-                group.NotifyAdded(value);
-            }
+            EndUpdate();
         }
 
         /// <summary>

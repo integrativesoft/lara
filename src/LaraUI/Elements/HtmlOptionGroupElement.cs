@@ -66,12 +66,15 @@ namespace Integrative.Lara
 
         private protected override void OnChildAdded(Node child)
         {
-            if (ParentElement is not HtmlSelectElement parent || child is not HtmlOptionElement option) return;
-            var value = parent.Value;
-            if (!string.IsNullOrEmpty(value))
+            BeginUpdate();
+            base.OnChildAdded(child);
+            if (ParentElement is HtmlSelectElement parent
+                && child is HtmlOptionElement option
+                && !string.IsNullOrEmpty(parent.Value))
             {
-                option.NotifyAdded(value);
+                option.NotifyAdded(parent.Value);
             }
+            EndUpdate();
         }
 
         internal void NotifyAdded(string parentValue)
