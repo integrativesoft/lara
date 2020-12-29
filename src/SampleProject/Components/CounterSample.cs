@@ -15,11 +15,7 @@ namespace SampleProject.Components
 
         private static int TextToInt(string? value)
         {
-            if (int.TryParse(value, out var result))
-            {
-                return result;
-            }
-            return 0;
+            return int.TryParse(value, out var result) ? result : 0;
         }
 
         public CounterSample()

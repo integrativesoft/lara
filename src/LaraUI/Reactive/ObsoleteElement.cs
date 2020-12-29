@@ -116,11 +116,11 @@ namespace Integrative.Lara
                 ?? throw new ArgumentNullException(nameof(options.BindObject));
             var property = options.Property
                 ?? throw new ArgumentNullException(nameof(options.Property));
-            if (property.Body is not MemberExpression member)
+            if (property.Body is not MemberExpression)
             {
                 throw new ArgumentException(Resources.InvalidBindingExpression);
             }
-            var name = member.Member.Name;
+
             var attribute = options.Attribute;
             if (string.IsNullOrWhiteSpace(attribute))
             {
@@ -156,11 +156,11 @@ namespace Integrative.Lara
                 ?? throw new ArgumentNullException(nameof(options.BindObject));
             var property = options.Property
                 ?? throw new ArgumentNullException(nameof(options.Property));
-            if (property.Body is not MemberExpression member)
+            if (property.Body is not MemberExpression)
             {
                 throw new ArgumentException(Resources.InvalidBindingExpression);
             }
-            var name = member.Member.Name;
+
             var attribute = options.Attribute;
             if (string.IsNullOrWhiteSpace(attribute))
             {

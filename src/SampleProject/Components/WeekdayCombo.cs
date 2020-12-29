@@ -15,12 +15,12 @@ namespace SampleProject.Components
             "Friday", "Saturday", "Sunday" };
 
         private int _weekday;
-        public int Weekday { get => _weekday; set => SetProperty(ref _weekday, value); }
+        private int Weekday { get => _weekday; set => SetProperty(ref _weekday, value); }
 
         public WeekdayCombo()
         {
             var combo = new HtmlSelectElement { Class = "form-control", Id = "MyWeek" };
-            for (int index = 0; index < _WeekDays.Length; index++)
+            for (var index = 0; index < _WeekDays.Length; index++)
             {
                 combo.AddOption(index.ToString(), _WeekDays[index]);
             }

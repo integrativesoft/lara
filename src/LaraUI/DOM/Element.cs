@@ -246,10 +246,8 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException("Cannot remove element ID attribute");
             }
-            else
-            {
-                _attributes.RemoveAttributeLower(attributeName);
-            }
+
+            _attributes.RemoveAttributeLower(attributeName);
         }
 
         internal int? GetIntAttribute(string nameLower)
@@ -538,8 +536,8 @@ namespace Integrative.Lara
             get => _children;
             set
             {
-                if (_children == value) return;
-                var list = Enumerable.ToArray(value);
+                if (_children.Equals(value)) return;
+                var list = value.ToArray();
                 BeginUpdate();
                 ClearChildren();
                 AppendChild(list);

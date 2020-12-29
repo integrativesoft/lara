@@ -51,18 +51,12 @@ namespace Integrative.Lara
 
         public void NotifyRemoved(Element element)
         {
-            if (element.Id != null)
-            {
-                RemovePrevious(element.Id);
-            }
+            RemovePrevious(element.Id);
         }
 
         public void NotifyAdded(Element element)
         {
-            if (element.Id != null)
-            {
-                AddAfter(element, element.Id);
-            }
+            AddAfter(element, element.Id);
         }
     }
 }

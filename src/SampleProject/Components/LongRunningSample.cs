@@ -11,7 +11,7 @@ namespace SampleProject.Components
 {
     internal class LongRunningSample : WebComponent
     {
-        private readonly static string[] _steps = {
+        private static readonly string[] _Steps = {
             "Putting grounds into container",
             "Covering coffee and water mixture",
             "Filtering coffee and water mixture",
@@ -79,7 +79,7 @@ namespace SampleProject.Components
                 },
                 Handler = async () =>
                 {
-                    foreach (var step in _steps)
+                    foreach (var step in _Steps)
                     {
                         text.InnerText = step;
                         await LaraUI.FlushPartialChanges();

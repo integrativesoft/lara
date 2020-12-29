@@ -10,13 +10,19 @@ namespace SampleProject.Common
 {
     internal class Country
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public Country(string code, string name)
+        {
+            Code = code;
+            Name = name;
+        }
+
+        public string Code { get; init; }
+        public string Name { get; init; }
     }
 
-    internal class CountryList
+    internal static class CountryList
     {
-        private readonly static Dictionary<string, string> _Countries
+        private static readonly Dictionary<string, string> _Countries
             = new Dictionary<string, string>()
             {
                 { "AF", "Afghanistan" },
@@ -271,11 +277,7 @@ namespace SampleProject.Common
                 var nameUpper = pair.Value.ToUpperInvariant();
                 if (nameUpper.Contains(upper))
                 {
-                    yield return new Country
-                    {
-                        Code = pair.Key,
-                        Name = pair.Value
-                    };
+                    yield return new Country(pair.Key, pair.Value);
                 }
             }
         }        
