@@ -52,11 +52,9 @@ namespace Integrative.Lara
 
         private readonly ServerEventsController _serverEvents;
         private readonly MessageRegistry _messageRegistry;
-        private readonly Sequencer _sequencer = new Sequencer();
+        private readonly Sequencer _sequencer = new();
 
-        internal Dictionary<string, EventSettings> Events { get; } = new Dictionary<string, EventSettings>();
-
-        private int _serializer;
+        private Dictionary<string, EventSettings> Events { get; } = new();
 
         /// <summary>
         /// Occurs when the document is unloaded
@@ -66,7 +64,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Asynchronous unload event
         /// </summary>
-        public AsyncEvent OnUnloadAsync { get; } = new AsyncEvent();
+        public AsyncEvent OnUnloadAsync { get; } = new();
 
         internal event EventHandler? UnloadComplete;
 
@@ -153,19 +151,13 @@ namespace Integrative.Lara
             LastUtc = value;
         }
 
-        internal string GenerateElementId()
-        {
-            _serializer++;
-            return "_e" + _serializer.ToString(CultureInfo.InvariantCulture);
-        }
-
         internal void OnElementAdded(Element element)
             => _map.NotifyAdded(element);
 
         internal void OnElementRemoved(Element element)
             => _map.NotifyRemoved(element);
 
-        internal void NotifyChangeId(Element element, string? before, string? after)
+        internal void NotifyChangeId(Element element, string before, string after)
             => _map.NotifyChangeId(element, before, after);
 
         internal bool QueueingEvents { get; private set; }

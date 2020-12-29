@@ -22,17 +22,11 @@ namespace Integrative.Lara
             return _map.TryGetValue(id, out element);
         }
 
-        public void NotifyChangeId(Element element, string? before, string? after)
+        public void NotifyChangeId(Element element, string before, string after)
         {
             if (before == after) return;
-            if (!string.IsNullOrEmpty(before))
-            {
-                RemovePrevious(before);
-            }
-            if (!string.IsNullOrEmpty(after))
-            {
-                AddAfter(element, after);
-            }
+            RemovePrevious(before);
+            AddAfter(element, after);
         }
 
         private void RemovePrevious(string before)
