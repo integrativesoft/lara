@@ -98,7 +98,7 @@ namespace Integrative.Lara
             var payload = new AutocompletePayload
             {
                 AutoFocus = options.AutoFocus,
-                ElementId = InnerInput.EnsureElementId(),
+                ElementId = InnerInput.Id,
                 MinLength = options.MinLength,
                 Strict = options.Strict
             };
@@ -109,7 +109,7 @@ namespace Integrative.Lara
 
         private string GetAutocompleteKey(Document document)
         {
-            return InnerInput.EnsureElementId() + " " + document.VirtualIdString;
+            return InnerInput.Id + " " + document.VirtualIdString;
         }
 
         private void DestroyAutocomplete()

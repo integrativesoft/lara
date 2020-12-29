@@ -19,6 +19,7 @@ namespace Integrative.Lara
         {
             _element = element;
             _values = new Dictionary<string, string?>();
+            SetAttributeLower("id", element.Id);
         }
 
         public bool HasAttribute(string name) => HasAttributeLower(name.ToLowerInvariant());

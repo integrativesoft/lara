@@ -57,6 +57,7 @@ namespace Integrative.Lara.Tests.DOM
             var count = 0;
             foreach (var pair in element.Attributes)
             {
+                if (pair.Key == "id") continue;
                 count++;
                 Assert.Equal("hidden", pair.Key);
                 Assert.Equal("", pair.Value);

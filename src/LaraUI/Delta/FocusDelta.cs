@@ -22,7 +22,7 @@ namespace Integrative.Lara
         {
             element.Document?.Enqueue(new FocusDelta
             {
-                ElementId = element.EnsureElementId(),
+                ElementId = element.Id
             });
         }
     }

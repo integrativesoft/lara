@@ -27,7 +27,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new NodeRemovedDelta
                 {
-                    ParentId = parent.EnsureElementId(),
+                    ParentId = parent.Id,
                     ChildIndex = index,
                 });
             }

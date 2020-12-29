@@ -30,7 +30,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new SwapChildrenDelta
                 {
-                    ParentId = parent.EnsureElementId(),
+                    ParentId = parent.Id,
                     Index1 = index1,
                     Index2 = index2
                 });

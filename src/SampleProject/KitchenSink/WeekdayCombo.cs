@@ -5,7 +5,6 @@ Author: Pablo Carbonell
 */
 
 using Integrative.Lara;
-using System.Collections.Generic;
 
 namespace SampleProject.KitchenSink
 {
@@ -25,9 +24,9 @@ namespace SampleProject.KitchenSink
             {
                 combo.AddOption(index.ToString(), _WeekDays[index]);
             }
-            combo.OnSourceChange(this, _ => combo.Value = Weekday.ToString());
-            combo.OnChange(_ => Weekday = int.Parse(combo.Value ?? ""));
-            ShadowRoot.Children = new List<Node> { combo };
+            combo.Bind(this, _ => combo.Value = Weekday.ToString());
+            combo.BindBack(_ => Weekday = int.Parse(combo.Value ?? ""));
+            ShadowRoot.Children = new[] { combo };
         }
 
         public void NextDay()

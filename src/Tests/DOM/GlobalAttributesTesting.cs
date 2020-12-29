@@ -67,19 +67,9 @@ namespace Integrative.Lara.Tests.DOM
         public void ElementToString()
         {
             var x = new HtmlButtonElement();
-            Assert.Equal("button", x.ToString());
+            Assert.Equal($"button #{x.Id}", x.ToString());
             x.Id = "hi";
             Assert.Equal("button #hi", x.ToString());
-        }
-
-        [Fact]
-        public void ClearingIdRemovesAttribute()
-        {
-            var x = Element.Create("button", "mybutton");
-            Assert.Equal(NodeType.Element, x.NodeType);
-            Assert.True(x.HasAttribute("id"));
-            x.Id = null;
-            Assert.False(x.HasAttribute("id"));
         }
 
         [Fact]
@@ -88,14 +78,6 @@ namespace Integrative.Lara.Tests.DOM
             var x = Element.Create("button");
             x.SetAttribute("ID", "x");
             Assert.Equal("x", x.Id);
-        }
-
-        [Fact]
-        public void RemoveAttributeId()
-        {
-            var x = Element.Create("span", "x");
-            x.RemoveAttribute("id");
-            Assert.True(string.IsNullOrEmpty(x.Id));            
         }
 
         [Fact]

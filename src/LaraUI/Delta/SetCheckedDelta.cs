@@ -27,7 +27,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new SetCheckedDelta
                 {
-                    ElementId = element.EnsureElementId(),
+                    ElementId = element.Id,
                     Checked = value
                 });
             }

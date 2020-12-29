@@ -27,7 +27,7 @@ namespace Integrative.Lara
 
         internal Dictionary<string, EventSettings> Events { get; }
 
-        private string? _id;
+        private string _id;
 
         /// <summary>
         /// Element's tag name
@@ -67,8 +67,12 @@ namespace Integrative.Lara
         /// <param name="tagName">element tag</param>
         protected Element(string tagName)
         {
-            tagName = tagName ?? throw new ArgumentNullException(nameof(tagName));
+            if (string.IsNullOrWhiteSpace(tagName))
+            {
+                tagName = GetDefaultTagName(GetType());
+            }
             TagName = tagName.ToLowerInvariant();
+            _id = GlobalSerializer.GenerateElementId();
             _attributes = new Attributes(this);
             _children = new List<Node>();
             Events = new Dictionary<string, EventSettings>();
@@ -77,12 +81,8 @@ namespace Integrative.Lara
         /// <summary>
         /// Constructor
         /// </summary>
-        protected Element()
+        protected Element() : this("")
         {
-            TagName = GetDefaultTagName(GetType());
-            _attributes = new Attributes(this);
-            _children = new List<Node>();
-            Events = new Dictionary<string, EventSettings>();
         }
 
         /// <summary>
@@ -103,18 +103,6 @@ namespace Integrative.Lara
         /// The type of the node.
         /// </value>
         public sealed override NodeType NodeType => NodeType.Element;
-
-        internal bool NeedsId => GetNeedsId();
-
-        private bool GetNeedsId()
-        {
-            if (!string.IsNullOrEmpty(_id))
-            {
-                return false;
-            }
-
-            return Events.Count > 0 || HtmlReference.RequiresId(TagName);
-        }
 
         /// <summary>
         /// Converts to string.
@@ -144,7 +132,7 @@ namespace Integrative.Lara
         /// <value>
         /// The identifier.
         /// </value>
-        public string? Id
+        public string Id
         {
             get => _id;
             set
@@ -153,35 +141,14 @@ namespace Integrative.Lara
                 {
                     return;
                 }
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new InvalidOperationException("Element IDs cannot be empty");
+                }
                 Document?.NotifyChangeId(this, _id, value);
-                if (value is null)
-                {
-                    _attributes.RemoveAttributeLower("id");
-                }
-                else
-                {
-                    _attributes.SetAttributeLower("id", value);
-                }
+                _attributes.SetAttributeLower("id", value);
                 _id = value;
             }
-        }
-
-        /// <summary>
-        /// Returns the element's identifier, generating an ID if currently blank.
-        /// </summary>
-        /// <returns>Element's ID</returns>
-        public string EnsureElementId()
-        {
-            if (string.IsNullOrEmpty(Id))
-            {
-                Id = GenerateElementId();
-            }
-            return Id;
-        }
-
-        private string GenerateElementId()
-        {
-            return Document == null ? GlobalSerializer.GenerateElementId() : Document.GenerateElementId();
         }
 
         /// <summary>
@@ -199,6 +166,10 @@ namespace Integrative.Lara
         {
             if (nameLower == "id")
             {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Element IDs cannot be empty");
+                }
                 Id = value;
             }
             else
@@ -273,7 +244,7 @@ namespace Integrative.Lara
             attributeName = attributeName.ToLowerInvariant();
             if (attributeName == "id")
             {
-                Id = null;
+                throw new InvalidOperationException("Cannot remove element ID attribute");
             }
             else
             {
@@ -1050,7 +1021,7 @@ namespace Integrative.Lara
             Events.Remove(eventName);
             Document?.Enqueue(new UnsubscribeDelta
             {
-                ElementId = EnsureElementId(),
+                ElementId = Id,
                 EventName = eventName
             });
         }

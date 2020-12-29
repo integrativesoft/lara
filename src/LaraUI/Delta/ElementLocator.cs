@@ -17,36 +17,16 @@ namespace Integrative.Lara
         public string? StartingId { get; set; }
 
         [DataMember]
-        public List<int>? Steps { get; set; }
+        public List<int>? Steps { get; set; } // not in use anymore
 
         public static ElementLocator FromElement(Element element)
         {
             var locator = new ElementLocator
             {
-                Steps = new List<int>()
+                Steps = new List<int>(),
+                StartingId = element.Id
             };
-            Build(locator, element);
             return locator;
-        }
-
-        private static void Build(ElementLocator locator, Element element)
-        {
-            if (string.IsNullOrEmpty(element.Id))
-            {
-                var parent = element.ParentElement;
-                if (parent == null) return;
-                var index = parent.GetChildElementPosition(element);
-                locator.GetSteps().Add(index);
-                Build(locator, parent);
-            }
-            else
-            {
-                locator.StartingId = element.Id;
-            }
-        }
-        private List<int> GetSteps()
-        {
-            return Steps ?? throw new MissingMemberException(nameof(ElementLocator), nameof(Steps));
         }
     }
 }

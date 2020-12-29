@@ -25,7 +25,7 @@ namespace Integrative.Lara
         {
             var parent = node.ParentElement;
             if (parent == null || !parent.TryGetQueue(out var document)) return;
-            var parentId = parent.EnsureElementId();
+            var parentId = parent.Id;
             var content = node.GetContentNode();
             document.Enqueue(new NodeAddedDelta
             {

@@ -27,7 +27,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new AttributeRemovedDelta
                 {
-                    ElementId = element.EnsureElementId(),
+                    ElementId = element.Id,
                     Attribute = attribute
                 });
             }

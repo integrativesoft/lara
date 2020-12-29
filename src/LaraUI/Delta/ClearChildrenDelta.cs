@@ -24,7 +24,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new ClearChildrenDelta
                 {
-                    ElementId = element.EnsureElementId(),
+                    ElementId = element.Id,
                 });
             }
         }

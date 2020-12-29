@@ -31,7 +31,7 @@ namespace Integrative.Lara
         {
             if (!element.TryGetEvents(out var document)) return;
             document.NotifyHasEvent();
-            document.Enqueue(CreateDelta(element.EnsureElementId(), settings));
+            document.Enqueue(CreateDelta(element.Id, settings));
         }
 
         public static void Enqueue(Document document, EventSettings settings)

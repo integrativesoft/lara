@@ -35,7 +35,7 @@ namespace Boilerplate
         {
             ShadowRoot.Child(
                 new HtmlDivElement()
-                    .OnSourceChange(this, x => x.InnerText = Value.ToString()),
+                    .Bind(this, x => x.InnerText = Value.ToString()),
                 new HtmlButtonElement {  InnerText = "Increase" }
                     .Event("click", () => Value++)
                 );

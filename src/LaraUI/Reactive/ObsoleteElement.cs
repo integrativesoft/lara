@@ -15,13 +15,15 @@ namespace Integrative.Lara
     /// </summary>
     public static class ObsoleteElement
     {
+        private const string BindObsolete = "Use Bind(source, action) and BindBack(action) instead";
+
         /// <summary>
         /// Binds an element to an action to be triggered whenever the source data changes
         /// </summary>
         /// <typeparam name="T">Type of the source data</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void Bind<T>(this Element self, BindHandlerOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -29,7 +31,7 @@ namespace Integrative.Lara
             var handler = options.ModifiedHandler ?? throw new ArgumentNullException(nameof(options.ModifiedHandler));
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
 
-            self.OnSourceChange(source, _ => handler(source, self));
+            self.Bind(source, _ => handler(source, self));
         }
 
         /// <summary>
@@ -38,14 +40,14 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Attribute binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindAttribute<T>(this Element self, BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
             var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
             var attribute = options.Attribute;
-            self.OnSourceChange(source, x => x.SetAttribute(attribute, property(source)));
+            self.Bind(source, x => x.SetAttribute(attribute, property(source)));
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindFlagAttribute<T>(this Element self, BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -67,14 +69,14 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindToggleAttribute<T>(this Element self, BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
             var attribute = options.Attribute.ToLowerInvariant();
             var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            self.OnSourceChange(source, x => x.SetFlagAttributeLower(attribute, property(source)));
+            self.Bind(source, x => x.SetFlagAttributeLower(attribute, property(source)));
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindToggleClass<T>(this Element self, BindToggleClassOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -91,7 +93,7 @@ namespace Integrative.Lara
             var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
             var className = options.ClassName;
             if (string.IsNullOrWhiteSpace(className)) throw new ArgumentException("ClassName cannot be empty");
-            self.OnSourceChange(source, x => x.ToggleClass(className, property(source)));
+            self.Bind(source, x => x.ToggleClass(className, property(source)));
         }
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace Integrative.Lara
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange and OnChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindInput<T>(this Element self, BindInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -121,12 +123,12 @@ namespace Integrative.Lara
             attribute = attribute.ToLowerInvariant();
             var setter = CompileSetter(property);
             var getter = property.Compile();
-            self.OnSourceChange(source, _ =>
+            self.Bind(source, _ =>
             {
                 var value = getter(source);
                 self.SetAttributeLower(attribute, value);
             });
-            self.OnChange(_ =>
+            self.BindBack(_ =>
             {
                 var value = self.GetAttributeLower(attribute);
                 setter(source, value);
@@ -139,7 +141,7 @@ namespace Integrative.Lara
         /// <typeparam name="T">Source data type</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
-        [Obsolete("Use OnSourceChange and OnChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindFlagInput<T>(this Element self, BindFlagInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -160,12 +162,12 @@ namespace Integrative.Lara
             attribute = attribute.ToLowerInvariant();
             var setter = CompileSetter(property);
             var getter = property.Compile();
-            self.OnSourceChange(source, _ =>
+            self.Bind(source, _ =>
             {
                 var value = getter(source);
                 self.ToggleAttributeLower(attribute, value);
             });
-            self.OnChange(_ =>
+            self.BindBack(_ =>
             {
                 var value = self.HasAttributeLower(attribute);
                 setter(source, value);
@@ -201,13 +203,13 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of source data</typeparam>
         /// <param name="self"></param>
         /// <param name="options">Inner text binding options</param>
-        [Obsolete("Use OnSourceChange instead")]
+        [Obsolete(BindObsolete)]
         public static void BindInnerText<T>(this Element self, BindInnerTextOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
             var source = options.BindObject ?? throw new ArgumentNullException(nameof(options.BindObject));
             var property = options.Property ?? throw new ArgumentNullException(nameof(options.Property));
-            self.OnSourceChange(source, x => x.InnerText = property(source));
+            self.Bind(source, x => x.InnerText = property(source));
         }
 
         /// <summary>

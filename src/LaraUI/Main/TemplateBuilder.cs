@@ -20,11 +20,6 @@ namespace Integrative.Lara
         public static void Build(Document document, double keepAliveInterval)
         {
             var head = document.Head;
-            var body = document.Body;
-
-            // ensure ids
-            head.EnsureElementId();
-            body.EnsureElementId();
 
             // lang
             document.Lang = "en";

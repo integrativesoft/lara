@@ -32,7 +32,7 @@ namespace SampleProject.KitchenSink
             // Load custom controls in document body
             var builder = new LaraBuilder(document.Body);
             builder.Push("div", "container p-4")
-                .AddNode(new CounterSample().Root)
+                .AddNode(new CounterSample())
                 .AddNode(new CheckboxSample())
                 .AddNode(new SelectSample())
                 .AddNode(new MultiselectSample().Root)

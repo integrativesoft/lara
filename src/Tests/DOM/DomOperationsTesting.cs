@@ -285,24 +285,6 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void SetIdOnAttribute()
-        {
-            var div1 = Element.Create("div");
-            var div2 = Element.Create("div");
-            var doc = CreateDocument();
-            doc.Body.AppendChild(div1);
-            div1.AppendChild(div2);
-            doc.OpenEventQueue();
-            div2.SetAttribute("data-test", "x");
-            var queue = doc.GetQueue();
-            Assert.NotEmpty(queue);
-            var step = queue.Peek() as SetIdDelta;
-            Assert.NotNull(step);
-            Assert.Equal(div1.Id, step!.Locator!.StartingId);
-            Assert.Equal(div2.Id, step.NewId);
-        }
-
-        [Fact]
         public void FocusFailsOnGet()
         {
             var div = Element.Create("div");
@@ -445,7 +427,7 @@ namespace Integrative.Lara.Tests.DOM
             input.NotifyValue(new ElementEventValue
             {
                 Checked = true,
-                ElementId = input.EnsureElementId(),
+                ElementId = input.Id,
                 Value = "a"
             });
             Assert.True(input.Checked);
@@ -583,8 +565,8 @@ namespace Integrative.Lara.Tests.DOM
         public void ElementGetHtml()
         {
             var div = Element.Create("div");
-            var html = div.GetHtml();
-            Assert.StartsWith("<div></div>", html);
+            var html = div.GetHtml().Replace('\r', ' ').Replace('\n', ' ').Trim();
+            Assert.Equal($"<div id=\"{div.Id}\"></div>", html);
         }
 
         [Fact]
@@ -598,7 +580,7 @@ namespace Integrative.Lara.Tests.DOM
             Assert.Single(q);
             var first = q.Peek() as FocusDelta;
             Assert.NotNull(first);
-            Assert.Equal(div.EnsureElementId(), first!.ElementId);
+            Assert.Equal(div.Id, first!.ElementId);
         }
 
         [Fact]
@@ -607,7 +589,7 @@ namespace Integrative.Lara.Tests.DOM
             var x = new HtmlButtonElement();
             x.NotifyValue(new ElementEventValue
             {
-                ElementId = x.EnsureElementId(),
+                ElementId = x.Id,
                 Value = "test"
             });
             Assert.Equal("test", x.GetAttribute("value"));

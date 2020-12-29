@@ -480,13 +480,6 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void SomeTagsAlwaysNeedId()
-        {
-            var input = new HtmlInputElement();
-            Assert.True(input.NeedsId);
-        }
-
-        [Fact]
         public void ElementToStringSuffix()
         {
             var div = Element.Create("div");

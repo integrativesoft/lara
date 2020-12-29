@@ -31,7 +31,7 @@ namespace Integrative.Lara
             {
                 document.Enqueue(new NodeInsertedDelta
                 {
-                    ParentElementId = parent.EnsureElementId(),
+                    ParentElementId = parent.Id,
                     Index = index,
                     Node = node.GetContentNode()
                 });

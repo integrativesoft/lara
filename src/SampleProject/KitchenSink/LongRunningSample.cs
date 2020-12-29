@@ -59,7 +59,7 @@ namespace SampleProject.KitchenSink
                 Handler = ButtonHandler,
                 BlockOptions = new BlockOptions
                 {
-                    ShowElementId = _card.EnsureElementId(),
+                    ShowElementId = _card.Id,
                 }
             });
         }

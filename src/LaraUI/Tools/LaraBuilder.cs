@@ -31,7 +31,6 @@ namespace Integrative.Lara
         {
             startingElement = startingElement ?? throw new ArgumentNullException(nameof(startingElement));
             _stack = new Stack<Element>();
-            startingElement.EnsureElementId();
             _stack.Push(startingElement);
         }
 
@@ -305,9 +304,9 @@ namespace Integrative.Lara
         /// Creates an ID for the current element if it doesn't have one
         /// </summary>
         /// <returns>This instance</returns>
+        [Obsolete("Not needed anymore")]
         public LaraBuilder EnsureElementId()
         {
-            _stack.Peek().EnsureElementId();
             return this;
         }
 

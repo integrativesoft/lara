@@ -102,7 +102,7 @@ namespace Integrative.Lara.Tests.Components
             var payload = new AutocompletePayload
             {
                 AutoFocus = options.AutoFocus,
-                ElementId = x.InnerInput.EnsureElementId(),
+                ElementId = x.InnerInput.Id,
                 MinLength = options.MinLength,
                 Strict = options.Strict
             };

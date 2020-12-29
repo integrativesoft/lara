@@ -4,9 +4,8 @@ Created: 5/2019
 Author: Pablo Carbonell
 */
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Integrative.Lara;
+using System.Threading.Tasks;
 
 namespace SampleProject.KitchenSink
 {
@@ -30,22 +29,22 @@ namespace SampleProject.KitchenSink
                 checkbox.Checked = !checkbox.Checked;
                 return Task.CompletedTask;
             });
-            ShadowRoot.Children = new List<Node>
+            ShadowRoot.Children = new Node[]
             {
                 new HtmlDivElement
                 {
                     Class = "form-row",
-                    Children = new List<Node>
+                    Children = new Node[]
                     {
                         new HtmlDivElement
                         {
                             Class = "form-group col-md-2 my-1",
-                            Children = new List<Node>
+                            Children = new Node[]
                             {
                                 new HtmlDivElement
                                 {
                                     Class = "form-check",
-                                    Children = new List<Node>
+                                    Children = new Node[]
                                     {
                                         checkbox,
                                         new HtmlLabelElement
@@ -60,7 +59,7 @@ namespace SampleProject.KitchenSink
                         new HtmlDivElement
                         {
                             Class = "form-group col-md-1",
-                            Children = new List<Node>
+                            Children = new Node[]
                             {
                                 toggle
                             }

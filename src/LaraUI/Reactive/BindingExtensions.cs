@@ -25,7 +25,7 @@ namespace Integrative.Lara
         /// <param name="source"></param>
         /// <param name="onSourceChange"></param>
         /// <returns></returns>
-        public static TNode OnSourceChange<TNode>(
+        public static TNode Bind<TNode>(
             this TNode node,
             INotifyPropertyChanged source,
             Action<TNode> onSourceChange)
@@ -44,7 +44,7 @@ namespace Integrative.Lara
         /// <param name="node"></param>
         /// <param name="onChange"></param>
         /// <returns></returns>
-        public static TNode OnChange<TNode>(
+        public static TNode BindBack<TNode>(
             this TNode node,
             Action<TNode> onChange)
             where TNode : Element

@@ -50,7 +50,7 @@ namespace Integrative.Lara.Tests.Delta
             var first = q.Peek() as TextModifiedDelta;
             Assert.NotNull(first);
             Assert.Equal("test", first!.Text);
-            Assert.Equal(span.EnsureElementId(), first.ParentElementId);
+            Assert.Equal(span.Id, first.ParentElementId);
             Assert.Equal(0, first.ChildNodeIndex);
         }
 
