@@ -17,6 +17,7 @@ namespace Integrative.Lara
     /// Class to build pages more easily
     /// </summary>
     [Obsolete("Use the Children collection property to compose elements")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class LaraBuilder
     {
         #region Constructor
@@ -151,6 +152,7 @@ namespace Integrative.Lara
         /// <param name="encode">if set to <c>true</c> [encode].</param>
         /// <returns>This instance</returns>
         [Obsolete("Use AppendText() or AppendData() instead of AddTextNode")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder AddTextNode(string text, bool encode = true)
         {
             return AddTextNode(new TextNode(text, encode));
@@ -162,6 +164,7 @@ namespace Integrative.Lara
         /// <param name="node">The node.</param>
         /// <returns>This instance</returns>
         [Obsolete("Use AppendText() or AppendData() instead of AddTextNode")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder AddTextNode(TextNode node)
         {
             node = node ?? throw new ArgumentNullException(nameof(node));
@@ -305,6 +308,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <returns>This instance</returns>
         [Obsolete("Not needed anymore")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder EnsureElementId()
         {
             return this;
@@ -454,6 +458,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         [Obsolete("Use BindToggleAttribute() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<bool> property)
             where T : class, INotifyPropertyChanged
         {
@@ -518,6 +523,7 @@ namespace Integrative.Lara
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
         [Obsolete("Use BindToggleAttribute() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindFlagAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -578,6 +584,7 @@ namespace Integrative.Lara
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
         [Obsolete("Use instad the BindToggleAttribute() method.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindFlagAttribute<T>(string attribute, T instance, Func<T, bool> property)
             where T : class, INotifyPropertyChanged
         {

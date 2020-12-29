@@ -7,7 +7,7 @@ Author: Pablo Carbonell
 using Integrative.Lara;
 using System.Threading.Tasks;
 
-namespace SampleProject.KitchenSink
+namespace SampleProject.Components
 {
     internal class CheckboxSample : WebComponent
     {

@@ -40,6 +40,13 @@ namespace Integrative.Lara
             _published = new Published();
             ErrorPages = new ErrorPages(_published);
             ErrorPages.PublishErrorImage();
+            PublishService(new WebServiceContent
+            {
+                Address = AutocompleteService.Address,
+                ContentType = "application/json",
+                Method = "POST",
+                Factory = () => new AutocompleteService()
+            });
         }
 
         internal Published GetPublished() => _published;

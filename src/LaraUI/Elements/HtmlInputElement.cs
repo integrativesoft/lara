@@ -7,6 +7,7 @@ Author: Pablo Carbonell
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -14,6 +15,7 @@ namespace Integrative.Lara
     /// Input element
     /// </summary>
     [Obsolete("Use HtmlInputElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class InputElement : HtmlInputElement
     {
     }

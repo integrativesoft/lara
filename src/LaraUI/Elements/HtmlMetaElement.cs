@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -12,6 +13,7 @@ namespace Integrative.Lara
     /// Meta element
     /// </summary>
     [Obsolete("Use HtmlMetaElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class Meta : HtmlMetaElement
     {
     }

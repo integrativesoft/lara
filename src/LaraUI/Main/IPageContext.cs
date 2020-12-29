@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Microsoft.AspNetCore.Http;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -72,6 +73,7 @@ namespace Integrative.Lara
         /// <param name="messageId">Message type identifier</param>
         /// <param name="handler">The handler for the event.</param>
         [Obsolete("Use instead AddMessageListener() and RemoveMessageListener().")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         void OnMessage(string messageId, Func<Task> handler);
 
         /// <summary>

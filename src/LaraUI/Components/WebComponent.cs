@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Integrative.Lara
@@ -92,6 +93,7 @@ namespace Integrative.Lara
         /// Obsolete
         /// </summary>
         [Obsolete("Not needed anymore, Shadow root is automatically created")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected void AttachShadow()
         {
         }

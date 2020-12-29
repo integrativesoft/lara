@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using Microsoft.AspNetCore.Builder;
 using System;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -54,6 +55,7 @@ namespace Integrative.Lara
         /// <param name="options">The options.</param>
         /// <returns>app in parameters</returns>
         [Obsolete("Specify which Lara Application to use in the parameters of the call")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IApplicationBuilder UseLara(this IApplicationBuilder app, LaraOptions options)
             => UseLara(app, LaraUI.DefaultApplication, options);
 
@@ -63,6 +65,7 @@ namespace Integrative.Lara
         /// <param name="app">The application.</param>
         /// <returns>app in parameters</returns>
         [Obsolete("Specify which Lara Application to use in the parameters of the call")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IApplicationBuilder UseLara(this IApplicationBuilder app)
         {
             return UseLara(app, new LaraOptions());

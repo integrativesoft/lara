@@ -19,10 +19,9 @@ namespace Integrative.Lara
         public string Term { get; set; } = string.Empty;
     }
 
-    [LaraWebService(Address = Address)]
     internal class AutocompleteService : IWebService
     {
-        private const string Address = "/lara_autocomplete";
+        public const string Address = "/lara_autocomplete";
 
         private static readonly AutocompleteRegistry _Map = new AutocompleteRegistry();
 

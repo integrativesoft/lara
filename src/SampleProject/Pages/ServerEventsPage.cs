@@ -7,9 +7,8 @@ Author: Pablo Carbonell
 using System.Threading.Tasks;
 using Integrative.Lara;
 
-namespace SampleProject.Other
+namespace SampleProject.Pages
 {
-    [LaraPage(Address = "/server")]
     internal class ServerEventsPage : IPage
     {
         private readonly HtmlButtonElement _button;

@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -31,6 +32,7 @@ namespace Integrative.Lara
         }
 
         [Obsolete("Use instead AddMessageListener() and RemoveMessageListener().")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void OnMessage(string key, Func<Task> handler)
         {
             _parent.Document.OnMessage(key, handler);

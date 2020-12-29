@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -13,6 +14,7 @@ namespace Integrative.Lara
     /// Select element
     /// </summary>
     [Obsolete("Use HtmlSelectElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SelectElement : HtmlSelectElement
     {
     }
@@ -41,7 +43,7 @@ namespace Integrative.Lara
         /// </summary>
         /// <param name="value">The option's value.</param>
         /// <param name="text">The option's text.</param>
-        public void AddOption(string value, string text)
+        public HtmlOptionElement AddOption(string value, string text)
         {
             var option = new HtmlOptionElement
             {
@@ -49,6 +51,7 @@ namespace Integrative.Lara
             };
             option.AppendChild(new TextNode(text));
             AppendChild(option);
+            return option;
         }
 
         /// <summary>

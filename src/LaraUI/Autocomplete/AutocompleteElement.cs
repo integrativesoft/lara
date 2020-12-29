@@ -11,7 +11,6 @@ namespace Integrative.Lara
     /// <summary>
     /// Autocomplete web component
     /// </summary>
-    [LaraWebComponent(CustomTag)]
     public class AutocompleteElement : WebComponent
     {
         /// <summary>
@@ -31,6 +30,15 @@ namespace Integrative.Lara
         {
             InnerInput.Autocomplete = "off";
             ShadowRoot.AppendChild(InnerInput);
+        }
+
+        /// <summary>
+        /// Input element's class
+        /// </summary>
+        public override string? Class
+        {
+            get => InnerInput.Class;
+            set => InnerInput.Class = value;
         }
 
         private bool _pending, _applied;

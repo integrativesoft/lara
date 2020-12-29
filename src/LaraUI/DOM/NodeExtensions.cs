@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Integrative.Lara
@@ -39,8 +40,9 @@ namespace Integrative.Lara
         /// <param name="node">node</param>
         /// <param name="result">node itself</param>
         /// <returns>node itself</returns>
-        public static TNode Extract<TNode>(this TNode node, out TNode result)
+        public static TNode Extract<TNode>(this TNode node, [NotNull] out TNode result)
         {
+            node = node ?? throw new ArgumentNullException(nameof(node));
             result = node;
             return node;
         }

@@ -53,7 +53,6 @@ namespace Integrative.Lara.Tests.Components
     }
 
     [LaraWebComponent("x-light")]
-    // ReSharper disable once UnusedType.Global
     internal class LightCom : WebComponent
     {
         public LightCom() : base("x-light")

@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -12,6 +13,7 @@ namespace Integrative.Lara
     /// Table header element
     /// </summary>
     [Obsolete("Use HtmlTableHeaderElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class TableHeader : HtmlTableHeaderElement
     {
     }

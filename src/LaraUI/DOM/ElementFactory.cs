@@ -6,53 +6,58 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Integrative.Lara
 {
     internal static class ElementFactory
     {
-        private static readonly Dictionary<string, Type> _Map;
-
-        static ElementFactory()
-        {
-            _Map = new Dictionary<string, Type>();
-            Register<HtmlAnchorElement>("a");
-            Register<HtmlBodyElement>("body");
-            Register<HtmlButtonElement>("button");
-            Register<HtmlColGroupElement>("colgroup");
-            Register<HtmlHeadElement>("head");
-            Register<HtmlImageElement>("img");
-            Register<HtmlInputElement>("input");
-            Register<HtmlLabelElement>("label");
-            Register<HtmlLinkElement>("link");
-            Register<HtmlLiElement>("li");
-            Register<HtmlMetaElement>("meta");
-            Register<HtmlMeterElement>("meter");
-            Register<HtmlOptionElement>("option");
-            Register<HtmlOptionGroupElement>("optgroup");
-            Register<HtmlOlElement>("ol");
-            Register<HtmlScriptElement>("script");
-            Register<HtmlSelectElement>("select");
-            Register<HtmlTableElement>("table");
-            Register<HtmlTableCellElement>("td");
-            Register<HtmlTableHeaderElement>("th");
-            Register<HtmlTextAreaElement>("textarea");
-            Register<Slot>("slot");
-            Register<HtmlSpanElement>("span");
-            Register<HtmlDivElement>("div");
-        }
-
-        private static void Register<T>(string lowerTagName) where T : Element
-        {
-            _Map.Add(lowerTagName, typeof(T));
-        }
+        private readonly static Dictionary<string, Func<Element>> _Creators
+            = new Dictionary<string, Func<Element>>
+            {
+                { "a", () => new HtmlAnchorElement() },
+                { "body", () => new HtmlBodyElement() },
+                { "button", () => new HtmlButtonElement() },
+                { "colgroup", () => new HtmlColGroupElement() },
+                { "div", () => new HtmlDivElement() },
+                { "h1", () => new HtmlHeadingElement(1) },
+                { "h2", () => new HtmlHeadingElement(2) },
+                { "h3", () => new HtmlHeadingElement(3) },
+                { "h4", () => new HtmlHeadingElement(4) },
+                { "h5", () => new HtmlHeadingElement(5) },
+                { "h6", () => new HtmlHeadingElement(6) },
+                { "head", () => new HtmlHeadElement() },
+                { "img", () => new HtmlImageElement() },
+                { "input", () => new HtmlInputElement() },
+                { "label", () => new HtmlLabelElement() },
+                { "link", () => new HtmlLinkElement() },
+                { "li", () => new HtmlLiElement() },
+                { "meta", () => new HtmlMetaElement() },
+                { "meter", () => new HtmlMeterElement() },
+                { "option", () => new HtmlOptionElement() },
+                { "optgroup", () => new HtmlOptionGroupElement() },
+                { "ol", () => new HtmlOlElement() },
+                { "p", () => new HtmlParagraphElement() },
+                { "script", () => new HtmlScriptElement() },
+                { "select", () => new HtmlSelectElement() },
+                { "slot", () => new Slot() },
+                { "span", () => new HtmlSpanElement() },
+                { "table", () => new HtmlTableElement() },
+                { "tbody", () => new HtmlTableSectionElement(HtmlTableSectionType.Body) },
+                { "thead", () => new HtmlTableSectionElement(HtmlTableSectionType.Head) },
+                { "tfoot", () => new HtmlTableSectionElement(HtmlTableSectionType.Foot) },
+                { "td", () => new HtmlTableCellElement() },
+                { "th", () => new HtmlTableHeaderElement() },
+            };
 
         public static Element CreateElement(string tagName)
         {
             tagName = VerifyTagName(tagName);
 
-            if (FindTagName(tagName, out var type))
+            if (_Creators.TryGetValue(tagName, out var creator))
+            {
+                return creator();
+            }
+            if (LaraUI.Context.Application.TryGetComponent(tagName, out var type))
             {
                 return (Element)Activator.CreateInstance(type);
             }
@@ -73,12 +78,6 @@ namespace Integrative.Lara
             }
 
             return tagName.ToLowerInvariant();
-        }
-
-        private static bool FindTagName(string tagName, [NotNullWhen(true)] out Type? type)
-        {
-            return _Map.TryGetValue(tagName, out type)
-                || LaraUI.Context.Application.TryGetComponent(tagName, out type);
         }
 
         public static Element CreateElement(string tagName, string id)

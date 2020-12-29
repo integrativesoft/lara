@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 
-namespace SampleProject.Main
+namespace SampleProject.Common
 {
     internal static class SampleAppBootstrap
     {

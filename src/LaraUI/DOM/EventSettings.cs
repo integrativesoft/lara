@@ -94,6 +94,7 @@ namespace Integrative.Lara
         /// <summary>
         /// Defines JavaScript code to execute in order to determine if the event should trigger.
         /// When this property is set, the event is trigger only if the expression evaluates to true.
+        /// Example: "event.keyCode === 13"
         /// </summary>
         public string? EvalFilter { get; set; }
 

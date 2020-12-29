@@ -5,6 +5,7 @@ Author: Pablo Carbonell
 */
 
 using System;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -12,6 +13,7 @@ namespace Integrative.Lara
     /// Button element
     /// </summary>
     [Obsolete("Use HtmlButtonElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class Button : HtmlButtonElement
     {
     }

@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 
-namespace SampleProject.KitchenSink
+namespace SampleProject.Components
 {
     internal class CounterSample : WebComponent
     {
@@ -39,8 +39,7 @@ namespace SampleProject.KitchenSink
                                 new HtmlInputElement
                                 {
                                     Type = "number",
-                                    Class = "form-control",
-                                    //Id = "MyCounter"
+                                    Class = "form-control"
                                 }
                                 .Bind(this, x => x.Value = Counter.ToString())
                                 .BindBack(x => Counter = TextToInt(x.Value))

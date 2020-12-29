@@ -6,6 +6,7 @@ Author: Pablo Carbonell
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Integrative.Lara
 {
@@ -13,6 +14,7 @@ namespace Integrative.Lara
     /// Option group
     /// </summary>
     [Obsolete("Use HtmlOptionGroupElement instead")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class OptionGroup : HtmlOptionGroupElement
     {
     }

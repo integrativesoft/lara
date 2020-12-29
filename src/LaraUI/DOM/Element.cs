@@ -334,7 +334,7 @@ namespace Integrative.Lara
         /// <value>
         /// The access key.
         /// </value>
-        public string? AccessKey
+        public virtual string? AccessKey
         {
             get => GetAttributeLower("accesskey");
             set => SetAttributeLower("accesskey", value);
@@ -347,7 +347,7 @@ namespace Integrative.Lara
         /// The automatic capitalize.
         /// </value>
         // ReSharper disable once UnusedMember.Global
-        public string? AutoCapitalize
+        public virtual string? AutoCapitalize
         {
             get => GetAttributeLower("autocapitalize");
             set => SetAttributeLower("autocapitalize", value);
@@ -359,7 +359,7 @@ namespace Integrative.Lara
         /// <value>
         /// The class.
         /// </value>
-        public string? Class
+        public virtual string? Class
         {
             get => GetAttributeLower("class");
             set => SetAttributeLower("class", value);
@@ -371,7 +371,7 @@ namespace Integrative.Lara
         /// <value>
         /// The content editable.
         /// </value>
-        public string? ContentEditable
+        public virtual string? ContentEditable
         {
             get => GetAttributeLower("contenteditable");
             set => SetAttributeLower("contenteditable", value);
@@ -384,7 +384,7 @@ namespace Integrative.Lara
         /// The context menu.
         /// </value>
         // ReSharper disable once UnusedMember.Global
-        public string? ContextMenu
+        public virtual string? ContextMenu
         {
             get => GetAttributeLower("contextmenu");
             set => SetAttributeLower("contextmenu", value);
@@ -396,7 +396,7 @@ namespace Integrative.Lara
         /// <value>
         /// The dir.
         /// </value>
-        public string? Dir
+        public virtual string? Dir
         {
             get => GetAttributeLower("dir");
             set => SetAttributeLower("dir", value);
@@ -408,7 +408,7 @@ namespace Integrative.Lara
         /// <value>
         /// The draggable.
         /// </value>
-        public string? Draggable
+        public virtual string? Draggable
         {
             get => GetAttributeLower("draggable");
             set => SetAttributeLower("draggable", value);
@@ -420,7 +420,7 @@ namespace Integrative.Lara
         /// <value>
         /// The drop zone.
         /// </value>
-        public string? DropZone
+        public virtual string? DropZone
         {
             get => GetAttributeLower("dropzone");
             set => SetAttributeLower("dropzone", value);
@@ -432,7 +432,7 @@ namespace Integrative.Lara
         /// <value>
         ///   <c>true</c> if hidden; otherwise, <c>false</c>.
         /// </value>
-        public bool Hidden
+        public virtual bool Hidden
         {
             get => HasAttributeLower("hidden");
             set => SetFlagAttributeLower("hidden", value);
@@ -445,7 +445,7 @@ namespace Integrative.Lara
         ///   <c>true</c> if [input mode]; otherwise, <c>false</c>.
         /// </value>
         // ReSharper disable once UnusedMember.Global
-        public bool InputMode
+        public virtual bool InputMode
         {
             get => HasAttributeLower("inputmode");
             set => SetFlagAttributeLower("inputmode", value);
@@ -457,7 +457,7 @@ namespace Integrative.Lara
         /// <value>
         /// The language.
         /// </value>
-        public string? Lang
+        public virtual string? Lang
         {
             get => GetAttributeLower("lang");
             set => SetAttributeLower("lang", value);
@@ -469,7 +469,7 @@ namespace Integrative.Lara
         /// <value>
         /// The spellcheck.
         /// </value>
-        public string? Spellcheck
+        public virtual string? Spellcheck
         {
             get => GetAttributeLower("spellcheck");
             set => SetAttributeLower("spellcheck", value);
@@ -481,7 +481,7 @@ namespace Integrative.Lara
         /// <value>
         /// The style.
         /// </value>
-        public string? Style
+        public virtual string? Style
         {
             get => GetAttributeLower("style");
             set => SetAttributeLower("style", value);
@@ -493,7 +493,7 @@ namespace Integrative.Lara
         /// <value>
         /// The index of the tab.
         /// </value>
-        public string? TabIndex
+        public virtual string? TabIndex
         {
             get => GetAttributeLower("tabindex");
             set => SetAttributeLower("tabindex", value);
@@ -505,7 +505,7 @@ namespace Integrative.Lara
         /// <value>
         /// The title.
         /// </value>
-        public string? Title
+        public virtual string? Title
         {
             get => GetAttributeLower("title");
             set => SetAttributeLower("title", value);
@@ -517,7 +517,7 @@ namespace Integrative.Lara
         /// <value>
         /// The translate.
         /// </value>
-        public string? Translate
+        public virtual string? Translate
         {
             get => GetAttributeLower("translate");
             set => SetAttributeLower("translate", value);

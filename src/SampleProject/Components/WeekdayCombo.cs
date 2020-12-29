@@ -6,7 +6,7 @@ Author: Pablo Carbonell
 
 using Integrative.Lara;
 
-namespace SampleProject.KitchenSink
+namespace SampleProject.Components
 {
     public class WeekdayCombo : WebComponent
     {

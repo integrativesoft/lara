@@ -24,6 +24,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void Bind<T>(this Element self, BindHandlerOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -41,6 +42,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Attribute binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindAttribute<T>(this Element self, BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -57,6 +59,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindFlagAttribute<T>(this Element self, BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -70,6 +73,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindToggleAttribute<T>(this Element self, BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -86,6 +90,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindToggleClass<T>(this Element self, BindToggleClassOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -103,6 +108,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindInput<T>(this Element self, BindInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -142,6 +148,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindFlagInput<T>(this Element self, BindFlagInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -193,6 +200,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="attribute">Attribute to remove bindings of</param>
         [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void UnbindAttribute(this Element self, string attribute)
         {
         }
@@ -204,6 +212,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Inner text binding options</param>
         [Obsolete(BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindInnerText<T>(this Element self, BindInnerTextOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -216,6 +225,7 @@ namespace Integrative.Lara
         /// Removes inner text bindings
         /// </summary>
         [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void UnbindInnerText(this Element self)
         {
         }
@@ -224,6 +234,7 @@ namespace Integrative.Lara
         /// Removes bindings for the generic handler
         /// </summary>
         [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void UnbindHandler(this Element self)
         {
         }
@@ -232,6 +243,7 @@ namespace Integrative.Lara
         /// Removes bindings for any attributes
         /// </summary>
         [Obsolete("Has no effect anymore. Use UnbindAll instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void UnbindAttributes(this Element self)
         {
         }
@@ -243,6 +255,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="options">Children binding options</param>
         [Obsolete("Use BindChildren(source, factory) instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindChildren<T>(this Element self, BindChildrenOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -253,6 +266,7 @@ namespace Integrative.Lara
         /// Removes all bindings for the list of children
         /// </summary>
         [Obsolete("Has no effect anymore, use UnbindAll when needed")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void UnbindChildren(this Element self)
         {
         }
@@ -263,6 +277,7 @@ namespace Integrative.Lara
         /// <param name="self"></param>
         /// <param name="text">Text for the node</param>
         [Obsolete("Use InnerText property instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static void SetInnerText(this Element self, string text)
         {
             self.SetInnerEncode(text, true);
