@@ -113,12 +113,14 @@ namespace Integrative.Lara
                 Document = this,
                 IsSlotted = true
             };
+            OnElementAdded(Head);
             Body = new HtmlBodyElement
             {
                 Document = this,
                 IsSlotted = true
             };
             UpdateTimestamp();
+            OnElementAdded(Body);
             TemplateBuilder.Build(this, keepAliveInterval);
             _serverEvents = new ServerEventsController(this);
             _messageRegistry = new MessageRegistry(this);
@@ -214,6 +216,7 @@ namespace Integrative.Lara
         /// </summary>
         public bool HasPendingChanges => _queue.Count > 0;
 
+        [Obsolete("Support old methods")]
         internal void OnMessage(string key, Func<Task> handler)
         {
             Head.On("_" + key, handler);
