@@ -124,6 +124,14 @@ namespace Integrative.Lara
             return string.IsNullOrEmpty(_id) ? TagName : $"{TagName} #{_id}{suffix}";
         }
 
+        /// <summary>
+        /// Returns the ID by assigning one if needed
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Not needed anymore")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string EnsureElementId() => Id;
+
         #region Attributes
 
         /// <summary>
