@@ -61,7 +61,6 @@ namespace Boilerplate
 }
 ```
 
-Other resources available for building web pages are the [LaraBuilder](https://github.com/integrativesoft/lara/wiki/LaraBuilder) class, [Web Components](https://github.com/integrativesoft/lara/wiki/Web-Components), and [Reactive Programming](https://github.com/integrativesoft/lara/wiki/Reactive-programming).
 
 ## Adding Lara to an existing web server application
 
