@@ -16,43 +16,46 @@
 
 ```csharp
 using Integrative.Lara;
+using System;
 using System.Threading.Tasks;
 
-namespace SampleProject
+namespace Boilerplate
 {
-    class Program
+    public static class Program
     {
-        static async Task Main()
+        public static async Task Main()
         {
+            // create and start application
+            const int port = 8182;
             using var app = new Application();
-            await app.Start(new StartServerOptions
-            {
-                Port = 8182,
-                
-                // looks for classes decorated with 'Lara' attributes
-                PublishAssembliesOnStart = true
-            });
+            app.PublishPage("/", () => new MyCounterComponent { Value = 5 });
+            await app.Start(new StartServerOptions { Port = port });
+
+            // print address on console (set project's output type to WinExe to avoid console)
+            var address = $"http://localhost:{port}";
+            Console.WriteLine($"Listening on {address}/");
+
+            // helper function to launch browser (comment out as needed)
+            LaraUI.LaunchBrowser(address);
+
+            // wait for ASP.NET Core shutdown
             await app.WaitForShutdown();
         }
     }
 
-    [LaraPage(Address = "/")]
-    class MyPage : IPage
+    internal class MyCounterComponent : WebComponent
     {
-        int counter = 0;
+        private int _value;
+        public int Value { get => _value; set => SetProperty(ref _value, value); }
 
-        public Task OnGet()
+        public MyCounterComponent()
         {
-            var button = Element.Create("button");
-            button.InnerText = "Click me";
-            button.On("click", () =>
-            {
-                counter++;
-                button.InnerText = $"Clicked {counter} times";
-                return Task.CompletedTask;
-            });
-            LaraUI.Page.Document.Body.AppendChild(button);
-            return Task.CompletedTask;
+            ShadowRoot.Child(
+                new HtmlDivElement()
+                    .Bind(this, x => x.InnerText = Value.ToString()),
+                new HtmlButtonElement {  InnerText = "Increase" }
+                    .Event("click", () => Value++)
+                );
         }
     }
 }
