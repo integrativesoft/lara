@@ -12,7 +12,7 @@ namespace Integrative.Lara
 {
     internal sealed class DiscardParameters
     {
-        public Guid DocumentId { get; set; }
+        public Guid DocumentId { get; private set; }
 
         public static bool TryParse(HttpContext context, [NotNullWhen(true)] out DiscardParameters? parameters)
         {

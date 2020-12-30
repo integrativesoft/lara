@@ -17,7 +17,7 @@ namespace Integrative.Lara
         public Document Document
             => DocumentInternal ?? throw new MissingMemberException(nameof(PageContext), nameof(Document));
 
-        private readonly JSBridge _bridge;
+        private readonly JsBridge _bridge;
         private readonly Navigation _navigation;
         private readonly Connection _connection;
 
@@ -25,7 +25,7 @@ namespace Integrative.Lara
             : base(app, http)
         {
             _navigation = new Navigation(this);
-            _bridge = new JSBridge(this);
+            _bridge = new JsBridge(this);
             _connection = connection;
         }
 
@@ -33,7 +33,7 @@ namespace Integrative.Lara
 
         internal WebSocket? Socket { get; set; }
 
-        public IJSBridge JSBridge => _bridge;
+        public IJsBridge JSBridge => _bridge;
         public INavigation Navigation => _navigation;
 
         public string? RedirectLocation => _navigation.RedirectLocation;

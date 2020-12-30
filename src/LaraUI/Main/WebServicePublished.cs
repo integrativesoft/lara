@@ -13,7 +13,7 @@ namespace Integrative.Lara
     internal sealed class WebServicePublished : IPublishedItem
     {
         public Func<IWebService> Factory { get; }
-        public string ContentType { get; }
+        private string ContentType { get; }
 
         public WebServicePublished(WebServiceContent content)
         {

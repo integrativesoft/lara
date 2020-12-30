@@ -13,7 +13,7 @@ namespace Integrative.Lara
     internal sealed class BinaryServicePublished : IPublishedItem
     {
         public Func<IBinaryService> Factory { get; }
-        public string ContentType { get; }
+        private string ContentType { get; }
 
         public BinaryServicePublished(BinaryServiceContent content)
         {

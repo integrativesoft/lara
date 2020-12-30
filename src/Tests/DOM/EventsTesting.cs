@@ -66,7 +66,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             var context = new Mock<IPageContext>();
             LaraUI.InternalContext.Value = context.Object;
-            var bridge = new Mock<IJSBridge>();
+            var bridge = new Mock<IJsBridge>();
             context.Setup(x => x.JSBridge).Returns(bridge.Object);
             bridge.Setup(x => x.EventData).Returns("test");
             context.Setup(x => x.Application).Returns(Context.Application);

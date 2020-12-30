@@ -18,8 +18,8 @@ namespace Integrative.Lara
     internal sealed class PostEventHandler : BaseHandler
     {
         public const string EventPrefix = "/_event";
-        public const string AjaxMethod = "POST";
-        public const int MaxSizeBytes = 1024000;
+        private const string AjaxMethod = "POST";
+        private const int MaxSizeBytes = 1024000;
 
         public static event EventHandler? EventComplete;
         private static readonly EventArgs _EventArgs = new EventArgs();

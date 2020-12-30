@@ -37,8 +37,8 @@ namespace Integrative.Lara
         /// <summary>
         /// Associates a table section type with an element tag
         /// </summary>
-        public static readonly Dictionary<HtmlTableSectionType, string> SectionTags
-            = new Dictionary<HtmlTableSectionType, string>
+        private static readonly Dictionary<HtmlTableSectionType, string> _SectionTags
+            = new()
             {
                 { HtmlTableSectionType.Body, "tbody" },
                 { HtmlTableSectionType.Head, "thead" },
@@ -49,7 +49,7 @@ namespace Integrative.Lara
         /// constructor
         /// </summary>
         public HtmlTableSectionElement(HtmlTableSectionType type)
-            : base(SectionTags[type])
+            : base(_SectionTags[type])
         {
         }
     }

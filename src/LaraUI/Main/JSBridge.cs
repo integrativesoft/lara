@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 
 namespace Integrative.Lara
 {
-    // ReSharper disable once InconsistentNaming
-    internal sealed class JSBridge : IJSBridge
+    internal sealed class JsBridge : IJsBridge
     {
         private readonly PageContext _parent;
 
         public string? EventData { get; internal set; } = string.Empty;
 
-        public JSBridge(PageContext parent)
+        public JsBridge(PageContext parent)
         {
             _parent = parent;
         }

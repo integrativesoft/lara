@@ -28,9 +28,9 @@ namespace Integrative.Lara.Tests.Middleware
 
         public Document Document => throw new NotImplementedException();
 
-        private readonly Mock<IJSBridge> _bridge = new Mock<IJSBridge>();
+        private readonly Mock<IJsBridge> _bridge = new Mock<IJsBridge>();
 
-        public IJSBridge JSBridge { get; set; }
+        public IJsBridge JSBridge { get; set; }
 
         public INavigation Navigation => throw new NotImplementedException();
 

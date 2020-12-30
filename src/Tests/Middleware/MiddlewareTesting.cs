@@ -34,19 +34,6 @@ namespace Integrative.Lara.Tests.Middleware
         }
     }
 
-    internal class MyCustomErrorPage : IPage
-    {
-        public const string Text = "Custom error page";
-
-        public int Counter { get; private set; }
-
-        public Task OnGet()
-        {
-            LaraUI.Document.Body.AppendText(Text);
-            Counter++;
-            return Task.CompletedTask;
-        }
-    }
 
     public class MiddlewareTesting : DummyContextTesting
     {
@@ -709,6 +696,20 @@ namespace Integrative.Lara.Tests.Middleware
             LaraUI.InternalContext.Value = x.Object;
             Assert.Same(doc, LaraUI.Document);
             Assert.Null(LaraUI.GetContextDocument(null));
+        }
+
+        [Fact]
+        public async Task SingleComponentPageTest()
+        {
+            var x = new Mock<IPageContext>();
+            var doc = new Document(new MyPage(), 100);
+            x.Setup(x1 => x1.Document).Returns(doc);
+            LaraUI.InternalContext.Value = x.Object;
+            var page = new SingleElementPage(() => new HtmlAnchorElement());
+            await page.OnGet();
+            Assert.Equal(1, doc.Body.ChildCount);
+            var child = doc.Body.GetChildAt(0);
+            Assert.NotNull(child as HtmlAnchorElement);
         }
 
         [Fact]

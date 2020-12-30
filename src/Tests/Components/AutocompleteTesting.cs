@@ -95,7 +95,7 @@ namespace Integrative.Lara.Tests.Components
             };
             x.Start(options);
             var doc = new Document(new MyPage(), 100);
-            var bridge = new Mock<IJSBridge>();
+            var bridge = new Mock<IJsBridge>();
             Context.JSBridge = bridge.Object;
             
             const string code = "LaraUI.autocompleteApply(context.Payload);";
@@ -128,7 +128,7 @@ namespace Integrative.Lara.Tests.Components
             };
 
             var doc = new Document(new MyPage(), 100);
-            var bridge = new Mock<IJSBridge>();
+            var bridge = new Mock<IJsBridge>();
             Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
 
@@ -154,7 +154,7 @@ namespace Integrative.Lara.Tests.Components
             };
 
             var doc = new Document(new MyPage(), 100);
-            var bridge = new Mock<IJSBridge>();
+            var bridge = new Mock<IJsBridge>();
             Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
 
@@ -207,7 +207,7 @@ namespace Integrative.Lara.Tests.Components
                 Strict = true,                
             };
             var doc = new Document(new MyPage(), 100);
-            var bridge = new Mock<IJSBridge>();
+            var bridge = new Mock<IJsBridge>();
             Context.JSBridge = bridge.Object;
             doc.Body.AppendChild(x);
             x.Start(options);

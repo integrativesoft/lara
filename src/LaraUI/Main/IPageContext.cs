@@ -41,7 +41,7 @@ namespace Integrative.Lara
         /// Bridge to execute JavaScript on the client
         /// </summary>
         // ReSharper disable once InconsistentNaming
-        IJSBridge JSBridge { get; }
+        IJsBridge JSBridge { get; }
 
         /// <summary>
         /// Methods related to navigation
@@ -58,7 +58,7 @@ namespace Integrative.Lara
     /// Bridge to execute JavaScript on the client
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public interface IJSBridge
+    public interface IJsBridge
     {
         /// <summary>
         /// Submits the specified java script code to execute on the client. The code is executed after the current event finishes on the server and control returns to the client.

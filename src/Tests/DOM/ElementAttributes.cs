@@ -42,6 +42,9 @@ namespace Integrative.Lara.Tests.DOM
             TestElement<HtmlTableCellElement>("td");
             TestElement<HtmlTableHeaderElement>("th");
             TestElement<HtmlTextAreaElement>("textarea");
+            Assert.NotNull(Document.CreateElement("tbody") as HtmlTableSectionElement);
+            Assert.NotNull(Document.CreateElement("tfoot") as HtmlTableSectionElement);
+            Assert.NotNull(Document.CreateElement("thead") as HtmlTableSectionElement);
         }
 
         [Fact]
@@ -49,7 +52,7 @@ namespace Integrative.Lara.Tests.DOM
         {
             DomOperationsTesting.Throws<ArgumentException>(() => Element.Create(""));
         }
-
+        
         private void TestElement<T>(string tagName) where T : Element
         {
             var instance = Activator.CreateInstance(typeof(T)) as Element;

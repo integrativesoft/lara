@@ -11,7 +11,7 @@ namespace Integrative.Lara
 {
     internal class SingleElementPage : IPage
     {
-        public Func<Node> ContentFactory { get; }
+        private Func<Node> ContentFactory { get; }
 
         public SingleElementPage(Func<Node> contentFactory)
         {
