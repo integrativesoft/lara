@@ -102,6 +102,7 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
+        [Obsolete("old methods")]
         public void DocumentOnMessageRuns()
         {
             CreateMessageContext();
