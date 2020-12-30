@@ -37,7 +37,7 @@ namespace Boilerplate
             {
                 new HtmlDivElement()
                     .Bind(this, x => x.InnerText = Value.ToString()),
-                new HtmlButtonElement {  InnerText = "Increase" }
+                new HtmlButtonElement { InnerText = "Increase" }
                     .Event("click", () => Value++)
             };
         }
