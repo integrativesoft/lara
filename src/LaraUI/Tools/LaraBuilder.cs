@@ -16,8 +16,6 @@ namespace Integrative.Lara
     /// <summary>
     /// Class to build pages more easily
     /// </summary>
-    [Obsolete("Use the Children collection property to compose elements")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class LaraBuilder
     {
         #region Constructor
@@ -428,6 +426,47 @@ namespace Integrative.Lara
 
         #endregion
 
+        #region Bindings
+
+        /// <summary>
+        /// Executes code whenever a source object triggers the PropertyChanged event
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="onSourceChange"></param>
+        /// <returns></returns>
+        public LaraBuilder Bind(INotifyPropertyChanged source, Action<Element> onSourceChange)
+        {
+            BindingExtensions.Bind(_stack.Peek(), source, onSourceChange);
+            return this;
+        }
+
+        /// <summary>
+        /// Executes code whenever the element triggers the PropertyChanged event
+        /// </summary>
+        /// <param name="onChange"></param>
+        /// <returns></returns>
+        public LaraBuilder BindBack(Action<Element> onChange)
+        {
+            BindingExtensions.BindBack(_stack.Peek(), onChange);
+            return this;
+        }
+
+        /// <summary>
+        /// Updates the element's children collection based on an observable collection
+        /// </summary>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="childFactory"></param>
+        /// <returns></returns>
+        public LaraBuilder BindChildren<TValue>(ObservableCollection<TValue> source, Func<TValue, Element> childFactory)
+            where TValue : class, INotifyPropertyChanged
+        {
+            BindingExtensions.BindChildren(_stack.Peek(), source, childFactory);
+            return this;
+        }
+
+        #endregion
+
         #region Current element bindings
 
         /// <summary>
@@ -438,6 +477,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<string> property)
             where T : class, INotifyPropertyChanged
         {
@@ -473,6 +514,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<bool> property)
             where T : class, INotifyPropertyChanged
         {
@@ -492,6 +535,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<bool> property)
             where T : class, INotifyPropertyChanged
         {
@@ -509,6 +554,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindAttribute<T>(BindAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -536,6 +583,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleAttribute<T>(BindFlagAttributeOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -549,6 +598,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Data type for data source instance</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleClass<T>(BindToggleClassOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -564,6 +615,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindAttribute<T>(string attribute, T instance, Func<T, string> property)
             where T : class, INotifyPropertyChanged
         {
@@ -599,6 +652,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleAttribute<T>(string attribute, T instance, Func<T, bool> property)
             where T : class, INotifyPropertyChanged
         {
@@ -618,6 +673,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source instance</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindToggleClass<T>(string className, T instance, Func<T, bool> property)
             where T : class, INotifyPropertyChanged
         {
@@ -636,6 +693,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindInnerText<T>(T instance, Func<string> property)
             where T : class, INotifyPropertyChanged
         {
@@ -653,6 +712,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source</param>
         /// <param name="property">Data source's property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindInnerText<T>(T instance, Func<T, string> property)
             where T : class, INotifyPropertyChanged
         {
@@ -669,6 +730,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="options">Inner tetx binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindInnerText<T>(BindInnerTextOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -683,23 +746,11 @@ namespace Integrative.Lara
         /// <param name="collection">Observable collection</param>
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<T, Element> creator)
-            where T : class, INotifyPropertyChanged
-        {
-            return BindChildren(new BindChildrenOptions<T>(collection, creator));
-        }
-
-        /// <summary>
-        /// Adds bindings for the children collection
-        /// </summary>
-        /// <typeparam name="T">Type of elements in the ovservable collection</typeparam>
-        /// <param name="collection">Observable collection</param>
-        /// <param name="creator">Handler to create elements</param>
-        /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
             where T : class, INotifyPropertyChanged
         {
-            return BindChildren(new BindChildrenOptions<T>(collection, _ => creator()));
+            BindingExtensions.BindChildren(_stack.Peek(), collection, _ => creator());
+            return this;
         }
 
         /// <summary>
@@ -708,6 +759,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of elements in observable collection</typeparam>
         /// <param name="options">Children bindings options</param>
         /// <returns>This instance</returns>
+        [Obsolete("Use BindChildren(source, factory) instead")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindChildren<T>(BindChildrenOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -721,6 +774,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindInput<T>(BindInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -736,6 +791,8 @@ namespace Integrative.Lara
         /// <param name="data">Data source</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindInput<T>(string attribute, T data, Expression<Func<T, string?>> property)
             where T : class, INotifyPropertyChanged
         {
@@ -753,6 +810,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of data source</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindFlagInput<T>(BindFlagInputOptions<T> options)
             where T : class, INotifyPropertyChanged
         {
@@ -768,6 +827,8 @@ namespace Integrative.Lara
         /// <param name="data">Data source</param>
         /// <param name="property">Data source property</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindFlagInput<T>(string attribute, T data, Expression<Func<T, bool>> property)
             where T : class, INotifyPropertyChanged
         {
@@ -786,6 +847,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source</param>
         /// <param name="action">Action to update the element</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder Bind<T>(T instance, Action action)
             where T : class, INotifyPropertyChanged
         {
@@ -803,6 +866,8 @@ namespace Integrative.Lara
         /// <param name="instance">Data source</param>
         /// <param name="action">Action to update the element</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder Bind<T>(T instance, Action<T, Element> action)
             where T : class, INotifyPropertyChanged
         {
@@ -819,6 +884,8 @@ namespace Integrative.Lara
         /// <typeparam name="T">Type of the data source</typeparam>
         /// <param name="options">Binding options</param>
         /// <returns>This instance</returns>
+        [Obsolete(ObsoleteElement.BindObsolete)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder Bind<T>(BindHandlerOptions<T> options)
             where T : class, INotifyPropertyChanged
         {

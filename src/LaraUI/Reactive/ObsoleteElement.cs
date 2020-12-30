@@ -15,7 +15,7 @@ namespace Integrative.Lara
     /// </summary>
     public static class ObsoleteElement
     {
-        private const string BindObsolete = "Use Bind(source, action) and BindBack(action) instead";
+        internal const string BindObsolete = "Use Bind(source, action) and BindBack(action) instead";
 
         /// <summary>
         /// Binds an element to an action to be triggered whenever the source data changes

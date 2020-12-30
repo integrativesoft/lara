@@ -18,7 +18,7 @@ namespace Integrative.Lara
         #region bind properties
 
         /// <summary>
-        /// Executes code when a source object is modified
+        /// Executes code whenever a source object triggers the PropertyChanged event
         /// </summary>
         /// <typeparam name="TNode"></typeparam>
         /// <param name="node"></param>
@@ -38,7 +38,7 @@ namespace Integrative.Lara
         }
 
         /// <summary>
-        /// Executes code when the node is modified
+        /// Executes code whenever the element triggers the PropertyChanged event
         /// </summary>
         /// <typeparam name="TNode"></typeparam>
         /// <param name="node"></param>
@@ -59,7 +59,7 @@ namespace Integrative.Lara
         #region bind children
 
         /// <summary>
-        /// Bind element children with observable collection
+        /// Updates the element's children collection based on an observable collection
         /// </summary>
         /// <typeparam name="TParent"></typeparam>
         /// <typeparam name="TValue"></typeparam>
