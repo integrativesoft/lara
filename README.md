@@ -50,17 +50,17 @@ namespace Boilerplate
 
         public MyCounterComponent()
         {
-            ShadowRoot.Child(
+            ShadowRoot.Children = new Node[]
+            {
                 new HtmlDivElement()
                     .Bind(this, x => x.InnerText = Value.ToString()),
-                new HtmlButtonElement {  InnerText = "Increase" }
+                new HtmlButtonElement { InnerText = "Increase" }
                     .Event("click", () => Value++)
-                );
+            };
         }
     }
 }
 ```
-
 
 ## Adding Lara to an existing web server application
 
