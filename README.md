@@ -45,16 +45,17 @@ namespace Boilerplate
 
     internal class MyCounterComponent : WebComponent
     {
-        private int _value;
+        private int _value; // triggers PropertyChanged event
         public int Value { get => _value; set => SetProperty(ref _value, value); }
 
         public MyCounterComponent()
         {
             ShadowRoot.Children = new Node[]
             {
-                new HtmlDivElement()
+                new HtmlDivElement() // on PropertyChanged, assigns InnerText
                     .Bind(this, x => x.InnerText = Value.ToString()),
-                new HtmlButtonElement { InnerText = "Increase" }
+                new HtmlButtonElement
+                    { InnerText = "Increase" }
                     .Event("click", () => Value++)
             };
         }
