@@ -93,7 +93,7 @@ There's no need to download this repository to use Lara, instead, there's a [NuG
 
 To start, create a new project and add the NuGet package `Integrative.Lara`. In Visual Studio go to Tools -> NuGet Package Manager -> Manage NuGet packages for Solution, then search for the package 'Integrative.Lara'.
 
-In your project, copy and paste the [sample application](https://github.com/integrativesoft/lara/wiki/Sample-Application).
+In your project, copy and paste the sample application above.
 
 This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
