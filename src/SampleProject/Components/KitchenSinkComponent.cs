@@ -36,17 +36,29 @@ namespace SampleProject.Components
                                     Class = "mt-2",
                                     Children = new Node[]
                                     {
-                                        new HtmlAnchorElement
+                                        new HtmlDivElement
                                         {
-                                            HRef = "/upload",
-                                            Target = "_blank",
-                                            InnerText = "File upload example"
+                                            Children = new Node[]
+                                            {
+                                                new HtmlAnchorElement
+                                                {
+                                                    HRef = "/upload",
+                                                    Target = "_blank",
+                                                    InnerText = "File upload example"
+                                                }
+                                            }
                                         },
-                                        new HtmlAnchorElement
+                                        new HtmlDivElement
                                         {
-                                            HRef = "/server",
-                                            Target = "_blank",
-                                            InnerText = "Server-side events"
+                                            Children = new Node[]
+                                            {
+                                                new HtmlAnchorElement
+                                                {
+                                                    HRef = "/server",
+                                                    Target = "_blank",
+                                                    InnerText = "Server-side events"
+                                                }
+                                            }
                                         }
                                     }
                                 },

@@ -54,7 +54,7 @@ namespace Integrative.Lara
             }
             else if (nameLower == "id")
             {
-                SetIdDelta.Enqueue(_element, value);
+                SetIdDelta.Enqueue(_element, value ?? "");
             }
             else
             {

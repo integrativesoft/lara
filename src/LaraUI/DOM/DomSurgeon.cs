@@ -158,9 +158,17 @@ namespace Integrative.Lara
             {
                 throw new InvalidOperationException(Resources.NodeNotFoundInsideParent);
             }
-            var index = _parent.GetChildNodePosition(child);
-            RemoveInternalCommon(child);
-            NodeRemovedDelta.Enqueue(_parent, index);
+            if (child is Element childElement)
+            {
+                RemoveElementDelta.Enqueue(childElement);
+                RemoveInternalCommon(child);
+            }
+            else
+            {
+                var index = _parent.GetChildNodePosition(child);
+                RemoveInternalCommon(child);
+                NodeRemovedDelta.Enqueue(_parent, index);
+            }
         }
 
         private void RemoveInternal(int index)

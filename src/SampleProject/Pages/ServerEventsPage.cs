@@ -11,21 +11,18 @@ namespace SampleProject.Pages
 {
     internal class ServerEventsPage : IPage
     {
-        private readonly HtmlButtonElement _button;
+        private readonly HtmlSpanElement _span;
 
         public ServerEventsPage()
         {
-            _button = new HtmlButtonElement()
-            {
-                Disabled = true
-            };
-            _button.AppendText("before");
+            _span = new HtmlSpanElement();
+            _span.AppendText("waiting for server event...");
         }
 
         public Task OnGet()
         {
             LaraUI.Page.JSBridge.ServerEventsOn();
-            LaraUI.Page.Document.Body.AppendChild(_button);
+            LaraUI.Page.Document.Body.AppendChild(_span);
             Task.Run(DelayedTask);
             return Task.CompletedTask;
         }
@@ -34,8 +31,8 @@ namespace SampleProject.Pages
         {
             await Task.Delay(4000);
             using var access = LaraUI.Document.StartServerEvent();
-            _button.ClearChildren();
-            _button.AppendText("after");
+            _span.ClearChildren();
+            _span.AppendText("server event executed");
         }
     }
 }

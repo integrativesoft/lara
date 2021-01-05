@@ -15,10 +15,8 @@ namespace Integrative.Lara.Tests.Delta
         public void LocateElementWithId()
         {
             var x = Element.Create("span", "x");
-            var locator = ElementLocator.FromElement(x);
+            var locator = NodeLocator.FromNode(x);
             Assert.Equal(x.Id, locator.StartingId);
-            Assert.NotNull(locator.Steps);
-            Assert.Empty(locator.Steps);
         }
     }
 }

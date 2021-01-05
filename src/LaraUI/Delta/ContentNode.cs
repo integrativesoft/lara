@@ -12,13 +12,15 @@ namespace Integrative.Lara
     {
         Element = 1,
         Text = 2,
-        Array = 3
+        Array = 3,
+        Placeholder = 4
     }
 
     [DataContract]
     [KnownType(typeof(ContentTextNode))]
     [KnownType(typeof(ContentElementNode))]
     [KnownType(typeof(ContentArrayNode))]
+    [KnownType(typeof(ContentPlaceholder))]
     internal abstract class ContentNode
     {
         [DataMember]

@@ -32,7 +32,10 @@ export enum DeltaType {
   ServerEvents = 14,
   SwapChildren = 15,
   Subscribe = 16,
-  Unsubscribe = 17
+  Unsubscribe = 17,
+  RemoveElementId = 18,
+  Render = 19,
+  UnRender = 20
 }
 
 export interface BaseDelta {
@@ -77,9 +80,9 @@ export interface AttributeRemovedDelta extends BaseDelta {
   Attribute: string
 }
 
-export interface ElementLocator {
+export interface NodeLocator {
   StartingId: string
-  Steps: number[]
+  ChildIndex?: number
 }
 
 export interface FocusDelta extends BaseDelta {
@@ -87,7 +90,7 @@ export interface FocusDelta extends BaseDelta {
 }
 
 export interface SetIdDelta extends BaseDelta {
-  Locator: ElementLocator
+  OldId: string
   NewId: string
 }
 
@@ -130,4 +133,17 @@ export interface SubscribeDelta extends BaseDelta {
 export interface UnsubscribeDelta extends BaseDelta {
   ElementId: string
   EventName: string
+}
+
+export interface RemoveElement extends BaseDelta {
+  ElementId: string
+}
+
+export interface RenderDelta extends BaseDelta {
+  Locator: NodeLocator
+  Node: ContentNode
+}
+
+export interface UnRenderDelta extends BaseDelta {
+  Locator: NodeLocator
 }

@@ -223,20 +223,38 @@ namespace Integrative.Lara.Tests.DOM
         }
 
         [Fact]
-        public void RemoveNode()
+        public void RemoveTextNode()
         {
             var div = Element.Create("div", "mydiv");
             var doc = CreateDocument();
             doc.Body.AppendChild(new TextNode("hi"));
             doc.Body.AppendChild(div);
+            doc.Body.AppendChild(new TextNode("bye"));
             doc.OpenEventQueue();
-            div.Remove();
+            doc.Body.RemoveAt(2);
             var queue = doc.GetQueue();
             Assert.NotEmpty(queue);
             var step = queue.Peek() as NodeRemovedDelta;
             Assert.NotNull(step);
             Assert.Equal(doc.Body.Id, step!.ParentId);
-            Assert.Equal(1, step.ChildIndex);
+            Assert.Equal(2, step.ChildIndex);
+        }
+
+        [Fact]
+        public void RemoveElement()
+        {
+            var div = Element.Create("div", "mydiv");
+            var doc = CreateDocument();
+            doc.Body.AppendChild(new TextNode("hi"));
+            doc.Body.AppendChild(div);
+            doc.Body.AppendChild(new TextNode("bye"));
+            doc.OpenEventQueue();
+            div.Remove();
+            var queue = doc.GetQueue();
+            Assert.NotEmpty(queue);
+            var step = queue.Peek() as RemoveElementDelta;
+            Assert.NotNull(step);
+            Assert.Equal(div.Id, step?.ElementId);
         }
 
         [Fact]

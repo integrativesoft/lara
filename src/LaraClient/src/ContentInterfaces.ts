@@ -10,7 +10,9 @@ export enum ContentNodeType {
   // eslint-disable-next-line no-unused-vars
   Text = 2,
   // eslint-disable-next-line no-unused-vars
-  Array = 3
+  Array = 3,
+  // eslint-disable-next-line no-unused-vars
+  Placeholder = 4
 }
 
 export interface ContentNode {
@@ -35,4 +37,8 @@ export interface ContentElementNode extends ContentNode {
 
 export interface ContentArrayNode extends ContentNode {
   Nodes: ContentNode[]
+}
+
+export interface ContentPlaceholder extends ContentNode {
+  ElementId: string
 }

@@ -25,12 +25,7 @@ namespace Integrative.Lara
         internal static bool IsParentSlotting(Node node)
         {
             var parent = node.ParentElement;
-            if (parent == null)
-            {
-                return false;
-            }
-
-            if (parent is Slot)
+            if (parent == null || parent is Slot)
             {
                 return false;
             }

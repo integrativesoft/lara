@@ -896,18 +896,37 @@ namespace Integrative.Lara
 
         internal override ContentNode GetContentNode()
         {
+            if (!Render)
+            {
+                return GetUnrenderedContent();
+            }
+            return GetRenderedContent();
+        }
+
+        private ContentNode GetUnrenderedContent()
+        {
+            if (IsPrintable && IsSlotted)
+            {
+                return new ContentPlaceholder(Id);
+            }
+            else
+            {
+                return new ContentArrayNode { Nodes = new List<ContentNode>() };
+            }
+        }
+
+        private ContentNode GetRenderedContent()
+        {
             var list = new List<Node>(GetLightSlotted());
             if (list.Count == 1 && list[0] == this)
             {
-                return new ContentElementNode
-                {
-                    TagName = TagName,
-                    NS = GetAttributeLower("xlmns"),
-                    Attributes = CopyAttributes(),
-                    Children = CopyLightChildren()
-                };
+                return GetElementContent();
             }
+            return GetArrayContent(list);
+        }
 
+        private ContentNode GetArrayContent(List<Node> list)
+        {
             var array = new ContentArrayNode
             {
                 Nodes = new List<ContentNode>()
@@ -917,6 +936,17 @@ namespace Integrative.Lara
                 array.Nodes.Add(node.GetContentNode());
             }
             return array;
+        }
+
+        private ContentElementNode GetElementContent()
+        {
+            return new ContentElementNode
+            {
+                TagName = TagName,
+                NS = GetAttributeLower("xlmns"),
+                Attributes = CopyAttributes(),
+                Children = CopyLightChildren()
+            };
         }
 
         private List<ContentAttribute> CopyAttributes()
@@ -1156,6 +1186,31 @@ namespace Integrative.Lara
 
         #region Component-related
 
+        private bool _render = true;
+
+        /// <summary>
+        /// Set to false to prevent the element from rendering on the client's document
+        /// </summary>
+        public bool Render
+        {
+            get => _render;
+            set
+            {
+                if (value == _render) return;
+                SetProperty(ref _render, value);
+                if (Document == null || !IsSlotted) return;
+                var light = GetLightSlotted();
+                if (_render)
+                {
+                    RenderDelta.Enqueue(Document, light);
+                }
+                else
+                {
+                    UnRenderDelta.Enqueue(Document, light);
+                }
+            }
+        }
+
         internal virtual IEnumerable<Node> GetLightSlotted()
         {
             yield return this;
@@ -1192,8 +1247,8 @@ namespace Integrative.Lara
         internal bool TryGetQueue([NotNullWhen(true)] out Document? document)
         {
             return TryGetEvents(out document)
-                && Document != null
-                && Document.QueueingEvents;
+                && document != null
+                && document.QueueingEvents;
         }
 
         internal bool TryGetEvents([NotNullWhen(true)] out Document? document)
@@ -1202,7 +1257,7 @@ namespace Integrative.Lara
             return document != null
                    && IsSlotted
                    && IsPrintable
-                   && Document != null;
+                   && Render;
         }
 
         #endregion

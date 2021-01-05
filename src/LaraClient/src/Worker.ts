@@ -9,6 +9,7 @@ import {
   ContentElementNode,
   ContentNode,
   ContentNodeType,
+  ContentPlaceholder,
   ContentTextNode
 } from "./ContentInterfaces"
 import * as Delta from "./DeltaInterfaces"
@@ -91,6 +92,15 @@ function processStep(step: Delta.BaseDelta): void {
     case Delta.DeltaType.Unsubscribe:
       unsubscribe(step as Delta.UnsubscribeDelta)
       break
+    case Delta.DeltaType.RemoveElementId:
+      removeElementId(step as Delta.RemoveElement)
+      break
+    case Delta.DeltaType.Render:
+      render(step as Delta.RenderDelta)
+      break
+    case Delta.DeltaType.UnRender:
+      unRender(step as Delta.UnRenderDelta)
+      break
     default:
       // eslint-disable-next-line no-console
       console.log(
@@ -122,6 +132,23 @@ function insert(delta: Delta.NodeInsertedDelta): void {
   }
 }
 
+function render(delta: Delta.RenderDelta): void {
+  const stub = locateNode(delta.Locator)
+  const elements = createNodes(delta.Node)
+  if (elements.length == 0) {
+    stub.remove()
+    return
+  }
+  let last = elements.pop()
+  const parent = stub.parentElement
+  parent.replaceChild(last, stub)
+  while (elements.length) {
+    const pop = elements.pop()
+    parent.insertBefore(pop, last)
+    last = pop
+  }
+}
+
 function insertBeforeChildren(
   el: Element,
   before: ChildNode,
@@ -146,6 +173,8 @@ function pushNodes(node: ContentNode, list: Node[]): void {
     list.push(createElementNode(node as ContentElementNode))
   } else if (node.Type == ContentNodeType.Array) {
     pushArrayNodes(node as ContentArrayNode, list)
+  } else if (node.Type == ContentNodeType.Placeholder) {
+    list.push(createPlaceholder(node as ContentPlaceholder))
   } else {
     // eslint-disable-next-line no-console
     console.log(
@@ -180,6 +209,13 @@ function createElementNode(node: ContentElementNode): Element {
     }
   }
   return child
+}
+
+function createPlaceholder(node: ContentPlaceholder): Element {
+  const stub = document.createElement("script")
+  stub.id = node.ElementId
+  stub.type = "placeholder/lara"
+  return stub
 }
 
 function setAttribute(child: Element, attribute: string, value: string): void {
@@ -248,17 +284,8 @@ function focus(delta: Delta.FocusDelta): void {
 }
 
 function setId(delta: Delta.SetIdDelta): void {
-  const el = resolveElement(delta.Locator)
+  const el = document.getElementById(delta.OldId)
   el.id = delta.NewId
-}
-
-function resolveElement(locator: Delta.ElementLocator): HTMLElement {
-  let el = document.getElementById(locator.StartingId)
-  for (let index = locator.Steps.length - 1; index >= 0; index--) {
-    const step = locator.Steps[index]
-    el = el.children[step] as HTMLElement
-  }
-  return el
 }
 
 function setValue(delta: Delta.SetValueDelta): void {
@@ -304,4 +331,28 @@ function swapDom(obj1: Node, obj2: Node): void {
   obj2.parentNode.insertBefore(obj1, obj2)
   temp.parentNode.insertBefore(obj2, temp)
   temp.parentNode.removeChild(temp)
+}
+
+function removeElementId(delta: Delta.RemoveElement): void {
+  const element = document.getElementById(delta.ElementId)
+  element.remove()
+}
+
+function unRender(delta: Delta.UnRenderDelta): void {
+  const node = locateNode(delta.Locator)
+  const stub = document.createElement("script")
+  if (node instanceof Element) {
+    stub.id = node.id
+  }
+  stub.type = "placeholder/lara"
+  node.parentElement.replaceChild(stub, node)
+}
+
+function locateNode(locator: Delta.NodeLocator): ChildNode {
+  const element = document.getElementById(locator.StartingId)
+  const index = locator.ChildIndex
+  if (index == 0 || index > 0) {
+    return element.childNodes[index]
+  }
+  return element
 }
