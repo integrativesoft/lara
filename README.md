@@ -45,16 +45,17 @@ namespace Boilerplate
 
     internal class MyCounterComponent : WebComponent
     {
-        private int _value;
+        private int _value; // triggers PropertyChanged event
         public int Value { get => _value; set => SetProperty(ref _value, value); }
 
         public MyCounterComponent()
         {
             ShadowRoot.Children = new Node[]
             {
-                new HtmlDivElement()
+                new HtmlDivElement() // on PropertyChanged, assigns InnerText
                     .Bind(this, x => x.InnerText = Value.ToString()),
-                new HtmlButtonElement { InnerText = "Increase" }
+                new HtmlButtonElement
+                    { InnerText = "Increase" }
                     .Event("click", () => Value++)
             };
         }
@@ -92,7 +93,7 @@ There's no need to download this repository to use Lara, instead, there's a [NuG
 
 To start, create a new project and add the NuGet package `Integrative.Lara`. In Visual Studio go to Tools -> NuGet Package Manager -> Manage NuGet packages for Solution, then search for the package 'Integrative.Lara'.
 
-In your project, copy and paste the [sample application](https://github.com/integrativesoft/lara/wiki/Sample-Application).
+In your project, copy and paste the sample application above.
 
 This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
