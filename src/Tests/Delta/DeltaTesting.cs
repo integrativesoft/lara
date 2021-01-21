@@ -145,5 +145,21 @@ namespace Integrative.Lara.Tests.Delta
             };
             Assert.Equal("abc", x.Payload);
         }
+
+        [Fact]
+        public void DeltaRenderClass()
+        {
+            var document = new Document(new MyPage(), 100);
+            RenderDelta.Enqueue(document, new []{document.Body});
+            var queue = document.GetQueue();
+            Assert.Single(queue);
+            var delta = queue.Peek();
+            Assert.Equal(DeltaType.Render, delta.Type);
+            var render = delta as RenderDelta;
+            Assert.NotNull(render);
+            Assert.NotNull(render?.Locator);
+            Assert.NotNull(render?.Node);
+            Assert.Equal(document.Body.Id, render?.Locator?.StartingId);
+        }
     }
 }

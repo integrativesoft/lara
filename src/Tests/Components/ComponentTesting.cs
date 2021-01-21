@@ -521,5 +521,13 @@ namespace Integrative.Lara.Tests.Components
             x.TriggerEvent("lala");
             Assert.Equal(1, counter);
         }
+
+        [Fact]
+        public void ContentPlaceholderClass()
+        {
+            var x = new ContentPlaceholder("test");
+            Assert.Equal("test", x.ElementId);
+        }
+        
     }
 }
