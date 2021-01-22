@@ -10,7 +10,6 @@ using System.Collections.Specialized;
 namespace Integrative.Lara
 {
     internal class CollectionUpdater<T>
-        where T : class//, INotifyPropertyChanged
     {
         private readonly Element _element;
         private readonly NotifyCollectionChangedEventArgs _args;

@@ -257,7 +257,6 @@ namespace Integrative.Lara
         [Obsolete("Use BindChildren(source, factory) instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static void BindChildren<T>(this Element self, BindChildrenOptions<T> options)
-            where T : class, INotifyPropertyChanged
         {
             self.BindChildren(options.Collection, options.CreateCallback);
         }

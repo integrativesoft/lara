@@ -162,7 +162,6 @@ namespace Integrative.Lara
     /// </summary>
     /// <typeparam name="T">Type of items in observable collection</typeparam>
     public sealed class BindChildrenOptions<T> : BindChildrenOptions
-        where T : class//, INotifyPropertyChanged
     {
         /// <summary>
         /// Collection that is tracked

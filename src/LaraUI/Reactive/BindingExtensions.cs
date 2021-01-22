@@ -72,7 +72,6 @@ namespace Integrative.Lara
             ObservableCollection<TValue> source,
             Func<TValue, Element> childFactory)
             where TParent : Element
-            where TValue : class, INotifyPropertyChanged
         {
             element = element ?? throw new ArgumentNullException(nameof(element));
             source = source ?? throw new ArgumentNullException(nameof(source));

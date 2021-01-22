@@ -459,7 +459,6 @@ namespace Integrative.Lara
         /// <param name="childFactory"></param>
         /// <returns></returns>
         public LaraBuilder BindChildren<TValue>(ObservableCollection<TValue> source, Func<TValue, Element> childFactory)
-            where TValue : class, INotifyPropertyChanged
         {
             BindingExtensions.BindChildren(_stack.Peek(), source, childFactory);
             return this;
@@ -747,7 +746,7 @@ namespace Integrative.Lara
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
         public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
-            where T : class, INotifyPropertyChanged
+            //where T : class, INotifyPropertyChanged
         {
             BindingExtensions.BindChildren(_stack.Peek(), collection, _ => creator());
             return this;
@@ -762,7 +761,7 @@ namespace Integrative.Lara
         [Obsolete("Use BindChildren(source, factory) instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public LaraBuilder BindChildren<T>(BindChildrenOptions<T> options)
-            where T : class, INotifyPropertyChanged
+            //where T : class, INotifyPropertyChanged
         {
             _stack.Peek().BindChildren(options);
             return this;
