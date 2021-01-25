@@ -171,14 +171,14 @@ namespace Integrative.Lara
         /// <summary>
         /// Method for creating elements
         /// </summary>
-        public Func<T, Element> CreateCallback { get; }
+        public Func<T, Node> CreateCallback { get; }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="collection">Collection to bind</param>
         /// <param name="createCallback">Method for creating elements</param>
-        public BindChildrenOptions(ObservableCollection<T> collection, Func<T, Element> createCallback)
+        public BindChildrenOptions(ObservableCollection<T> collection, Func<T, Node> createCallback)
         {
             CreateCallback = createCallback;
             Collection = collection;

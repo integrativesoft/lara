@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public static TParent BindChildren<TParent, TValue>(
             this TParent element,
             ObservableCollection<TValue> source,
-            Func<TValue, Element> childFactory)
+            Func<TValue, Node> childFactory)
             where TParent : Element
         {
             element = element ?? throw new ArgumentNullException(nameof(element));
@@ -85,6 +85,28 @@ namespace Integrative.Lara
                 var updater = new CollectionUpdater<TValue>(childFactory, element, args);
                 updater.Run();
             });
+            return element;
+        }
+
+        /// <summary>
+        /// Creates element nodes based on a source observable collection
+        /// </summary>
+        /// <typeparam name="TParent"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="element"></param>
+        /// <param name="source"></param>
+        /// <param name="childFactory"></param>
+        /// <returns></returns>
+        public static TParent ForEach<TParent, TValue>(
+            this TParent element,
+            ObservableCollection<TValue> source,
+            Func<TValue, Element> childFactory)
+            where TParent : Element
+        {
+            element = element ?? throw new ArgumentNullException(nameof(element));
+            var fragment = new Fragment();
+            element.AppendChild(fragment);
+            fragment.BindChildren(source, childFactory);
             return element;
         }
 

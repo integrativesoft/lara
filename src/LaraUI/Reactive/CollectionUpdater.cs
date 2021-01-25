@@ -13,9 +13,9 @@ namespace Integrative.Lara
     {
         private readonly Element _element;
         private readonly NotifyCollectionChangedEventArgs _args;
-        private readonly Func<T, Element> _createCallback;
+        private readonly Func<T, Node> _createCallback;
 
-        public CollectionUpdater(Func<T, Element> createCallback,
+        public CollectionUpdater(Func<T, Node> createCallback,
             Element element,
             NotifyCollectionChangedEventArgs args)
         {
