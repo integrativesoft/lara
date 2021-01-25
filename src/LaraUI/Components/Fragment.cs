@@ -29,7 +29,7 @@ namespace Integrative.Lara
         /// <param name="source"></param>
         /// <param name="factory"></param>
         /// <returns></returns>
-        public static Fragment ForEach<TValue>(ObservableCollection<TValue> source, Func<TValue, Node> factory)
+        public static Fragment ForEach<TValue>(ObservableCollection<TValue> source, Func<TValue, Element> factory)
         {
             var fragment = new Fragment();
             fragment.BindChildren(source, factory);

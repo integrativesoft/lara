@@ -458,7 +458,7 @@ namespace Integrative.Lara
         /// <param name="source"></param>
         /// <param name="childFactory"></param>
         /// <returns></returns>
-        public LaraBuilder BindChildren<TValue>(ObservableCollection<TValue> source, Func<TValue, Node> childFactory)
+        public LaraBuilder BindChildren<TValue>(ObservableCollection<TValue> source, Func<TValue, Element> childFactory)
         {
             BindingExtensions.BindChildren(_stack.Peek(), source, childFactory);
             return this;
@@ -745,7 +745,7 @@ namespace Integrative.Lara
         /// <param name="collection">Observable collection</param>
         /// <param name="creator">Handler to create elements</param>
         /// <returns>This instance</returns>
-        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Node> creator)
+        public LaraBuilder BindChildren<T>(ObservableCollection<T> collection, Func<Element> creator)
         {
             BindingExtensions.BindChildren(_stack.Peek(), collection, _ => creator());
             return this;

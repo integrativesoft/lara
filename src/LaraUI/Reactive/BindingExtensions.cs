@@ -70,7 +70,7 @@ namespace Integrative.Lara
         public static TParent BindChildren<TParent, TValue>(
             this TParent element,
             ObservableCollection<TValue> source,
-            Func<TValue, Node> childFactory)
+            Func<TValue, Element> childFactory)
             where TParent : Element
         {
             element = element ?? throw new ArgumentNullException(nameof(element));
