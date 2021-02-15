@@ -3,10 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>SampleApp</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LaraUI\LaraUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Wiki\" />
   </ItemGroup>
 
 </Project>

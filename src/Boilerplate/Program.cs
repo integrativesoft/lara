@@ -1,8 +1,9 @@
 ﻿using Integrative.Lara;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace Boilerplate
+namespace SampleApp
 {
     public static class Program
     {
@@ -11,11 +12,11 @@ namespace Boilerplate
             // create and start application
             const int port = 8182;
             using var app = new Application();
-            app.PublishPage("/", () => new MyCounterComponent { Value = 5 });
+            app.PublishPage("/", () => new MyCounterComponent());
             await app.Start(new StartServerOptions { Port = port });
 
             // print address on console (set project's output type to WinExe to avoid console)
-            var address = $"http://localhost:{port}";
+            var address = $"http://localhost:{port}";                   
             Console.WriteLine($"Listening on {address}/");
 
             // helper function to launch browser (comment out as needed)
@@ -28,19 +29,16 @@ namespace Boilerplate
 
     internal class MyCounterComponent : WebComponent
     {
-        private int _value; // triggers PropertyChanged event
-        public int Value { get => _value; set => SetProperty(ref _value, value); }
+        private readonly ObservableCollection<string> _names = new ObservableCollection<string>();
 
         public MyCounterComponent()
         {
             ShadowRoot.Children = new Node[]
             {
-                new HtmlDivElement() // on PropertyChanged, assigns InnerText
-                    .Bind(this, x => x.InnerText = Value.ToString()),
-                new HtmlButtonElement
-                    { InnerText = "Increase" }
-                    .Event("click", () => Value++)
+                Fragment.ForEach(_names, (string name) => new HtmlDivElement { InnerText = name }),
             };
+            _names.Add("Sarah");
+            _names.Add("John");
         }
     }
 }
