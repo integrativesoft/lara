@@ -93,7 +93,8 @@ namespace Integrative.Lara
         public static string GetDefaultTagName(Type type)
         {
             var name = type.FullName ?? throw new ArgumentException("Invalid type name");
-            return name.Replace('.', '-').ToLowerInvariant();   
+            var tail = name.Replace('.', '-').ToLowerInvariant();
+            return $"x-{tail}";
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using Integrative.Lara;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace SampleApp
@@ -12,7 +11,7 @@ namespace SampleApp
             // create and start application
             const int port = 8182;
             using var app = new Application();
-            app.PublishPage("/", () => new MyCounterComponent());
+            app.PublishPage("/", () => new UserInputComponent());
             await app.Start(new StartServerOptions { Port = port });
 
             // print address on console (set project's output type to WinExe to avoid console)
@@ -29,16 +28,19 @@ namespace SampleApp
 
     internal class MyCounterComponent : WebComponent
     {
-        private readonly ObservableCollection<string> _names = new ObservableCollection<string>();
+        private int _value; // triggers PropertyChanged event
+        public int Value { get => _value; set => SetProperty(ref _value, value); }
 
         public MyCounterComponent()
         {
             ShadowRoot.Children = new Node[]
             {
-                Fragment.ForEach(_names, (string name) => new HtmlDivElement { InnerText = name }),
+                new HtmlDivElement() // on PropertyChanged, assigns InnerText
+                    .Bind(this, x => x.InnerText = Value.ToString()),
+                new HtmlButtonElement
+                    { InnerText = "Increase" }
+                    .Event("click", () => Value++)
             };
-            _names.Add("Sarah");
-            _names.Add("John");
         }
     }
 }
