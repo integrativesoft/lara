@@ -19,7 +19,7 @@ using Integrative.Lara;
 using System;
 using System.Threading.Tasks;
 
-namespace Boilerplate
+namespace SampleApp
 {
     public static class Program
     {
@@ -107,7 +107,7 @@ The source code contains a [sample project](https://github.com/integrativesoft/l
 
 ## How to contribute
 
-**Please send feedback!** Issues, questions, suggestions, requests for features, and success stories. Please let me know by either opening an issue or by [direct message](https://www.linkedin.com/in/pablocar/). Thank you!
+**Please send feedback!** Issues, questions, suggestions, requests for features, and success stories. Please let me know by either opening an issue. Thank you!
 
 **If you like Lara, please give it a star - it helps!**
 
