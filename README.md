@@ -91,9 +91,7 @@ To create a desktop container for your web app, here's a few options:
 
 There's no need to download this repository to use Lara, instead, there's a [NuGet package](https://www.nuget.org/packages/Integrative.Lara/).
 
-To start, create a new project and add the NuGet package `Integrative.Lara`. In Visual Studio go to Tools -> NuGet Package Manager -> Manage NuGet packages for Solution, then search for the package 'Integrative.Lara'.
-
-The [wiki](https://github.com/integrativesoft/lara/wiki) has the documentation for using Lara.
+Check out the [wiki](https://github.com/integrativesoft/lara/wiki) with documentation.
 
 ## How does Lara work?
 
