@@ -11,7 +11,7 @@ namespace SampleApp
             // create and start application
             const int port = 8182;
             using var app = new Application();
-            app.PublishPage("/", () => new DocumentContextExample());
+            app.PublishPage("/", () => new HttpContextExample());
             await app.Start(new StartServerOptions { Port = port });
 
             // print address on console (set project's output type to WinExe to avoid console)
