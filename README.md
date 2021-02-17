@@ -31,7 +31,7 @@ namespace SampleApp
             app.PublishPage("/", () => new MyCounterComponent { Value = 5 });
             await app.Start(new StartServerOptions { Port = port });
 
-            // print address on console (set project's output type to WinExe to avoid console)
+            // print address on console
             var address = $"http://localhost:{port}";
             Console.WriteLine($"Listening on {address}/");
 
@@ -92,10 +92,6 @@ To create a desktop container for your web app, here's a few options:
 There's no need to download this repository to use Lara, instead, there's a [NuGet package](https://www.nuget.org/packages/Integrative.Lara/).
 
 To start, create a new project and add the NuGet package `Integrative.Lara`. In Visual Studio go to Tools -> NuGet Package Manager -> Manage NuGet packages for Solution, then search for the package 'Integrative.Lara'.
-
-In your project, copy and paste the sample application above.
-
-This repository contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject).
 
 The [wiki](https://github.com/integrativesoft/lara/wiki) has the documentation for using Lara.
 
