@@ -91,13 +91,11 @@ To create a desktop container for your web app, here's a few options:
 
 There's no need to download this repository to use Lara, instead, there's a [NuGet package](https://www.nuget.org/packages/Integrative.Lara/).
 
-**Check out the [wiki](https://github.com/integrativesoft/lara/wiki) with documentation.**
+**Check out the [wiki documentation](https://github.com/integrativesoft/lara/wiki)**
 
 ## How does Lara work?
 
 Whenever the browser triggers a registered event (e.g. click on a button), it sends to the server a message saying that the button was clicked. The server executes the code associated with the event, manipulating the server's copy of the page, and replies a JSON message with the delta between server and client.
-
-The source code contains a [sample project](https://github.com/integrativesoft/lara/tree/master/src/SampleProject). The documentation is available in the [wiki](https://github.com/integrativesoft/lara/wiki).
 
 ## How to contribute
 
