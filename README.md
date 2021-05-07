@@ -6,10 +6,6 @@
 
 **Lara** is a library for developing **web user interfaces** using C#, for either single-page-applications or multiple pages.
 
-* Gives you full control of the client's HTML Document Object Model (DOM) from the server in C#
-* Executes events and renders HTML on the server
-* Avoids page reloads by exchanging differentials between server and client
-
 >*"It is similar to server-side Blazor, but is much more lightweight and easier to install. For example, while any type of Blazor requires a whole SDK, Lara is just a NuGet package."* [ScientificProgrammer.net](https://scientificprogrammer.net/2019/08/18/pros-and-cons-of-blazor-for-web-development/?pagename=pros-and-cons-of-blazor)
 
 ## Sample application
