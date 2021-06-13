@@ -80,6 +80,7 @@ function getValue(el: Element): string {
   if (el.hasAttribute("data-lara-value")) {
     return el.getAttribute("data-lara-value")
   } else if ("value" in el) {
+    // @ts-ignore
     return el["value"]
   } else {
     return ""
